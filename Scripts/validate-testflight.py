@@ -100,6 +100,7 @@ def main():
     for framework in ("Azahar", "MoltenVK"):
         check_manifest(ROOT / f"Resources/Privacy/{framework}.xcprivacy", reasons[framework])
     print("Metadata, field limits, private contact, internal-only export, icon and privacy checks passed")
+    print("Technical internal-beta packaging only; this does not clear copyright, licensing, export classification or public App Review. See TestFlight/AppStoreReadiness.json.")
     if args.ipa:
         check_ipa(args.ipa, metadata, reasons)
     if not args.archive:
@@ -144,6 +145,9 @@ def main():
         assert path.suffix.lower() not in {".3ds", ".cci", ".cxi", ".cia", ".elf", ".axf", ".p8", ".p12"}, path
     assert (app / "boot.3dsx").is_file()
     assert (app / "Azahar-LICENSE.txt").is_file() and (app / "MoltenVK-LICENSE.txt").is_file()
+    if int(metadata["build"]) >= 18:
+        assert (app / "ThirdPartyNotices.txt").read_bytes() == (ROOT / "Resources/ThirdPartyNotices.txt").read_bytes()
+        print("Complete dependency notices match the bundled offline copy")
     subprocess.run(["codesign", "--verify", "--deep", "--strict", str(app)], check=True)
     subprocess.run([sys.executable, str(ROOT / "Scripts/check-debug-symbols.py"),
                     str(app / info["CFBundleExecutable"]), str(archive / f"dSYMs/{app.name}.dSYM")], check=True)

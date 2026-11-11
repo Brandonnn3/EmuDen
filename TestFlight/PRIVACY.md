@@ -4,7 +4,7 @@ The app does not operate an account system, advertising SDK, analytics SDK or tr
 
 The app does not automatically upload its library, saves, Mii data, keys or logs. A user may explicitly share screenshots or diagnostic excerpts. Apple collects and delivers TestFlight diagnostics and tester feedback under its own TestFlight privacy terms; that behavior is distinct from automatic collection by the app. Imported software's behavior and user-enabled console services are outside a claim that all possible guest networking is impossible.
 
-For the current app's own App Privacy questionnaire, the prepared answer is **Data Not Collected**, with **no tracking**. This records the app's lack of telemetry or uploaded user content; artwork requests still expose ordinary network information to their hosts. Hosting-provider request retention has not been independently audited. Reassess the disclosure before external distribution and if analytics, accounts, cloud sync, advertising or new services are added. Do not claim that Apple itself collects no TestFlight data.
+The app's public **App Privacy answer is unconfirmed**. Its lack of a telemetry SDK does not determine whether artwork hosts retain request information. Verify relevant host/partner retention before declaring Data Not Collected; artwork requests expose ordinary network information to their hosts. The app adds no tracking functionality, but the final questionnaire/manifests must match the complete release behavior. Apple handles its own TestFlight diagnostics separately. See `AppStoreReadiness.json` and `Docs/Legal/REVIEW-2026-11-11.md`.
 
 ## Game artwork
 
@@ -32,3 +32,5 @@ Build 9 adds a system share-sheet action for the owner to export a session log. 
 References: [required-reason APIs](https://developer.apple.com/documentation/bundleresources/describing-use-of-required-reason-api), [approved reasons](https://developer.apple.com/documentation/bundleresources/app-privacy-configuration/nsprivacyaccessedapitypes/nsprivacyaccessedapitypereasons), [TestFlight privacy](https://www.apple.com/legal/privacy/data/en/test-flight/).
 
 Build 5 stores haptic and controller-layout preferences in this app's UserDefaults (`NSPrivacyAccessedAPICategoryUserDefaults`, CA92.1, own-app settings). Save-state checksums use the platform CryptoKit SHA-256 implementation locally. Save states and their timestamps stay in the app container.
+
+Build 18 adds bounded local snapshot history and JPEG thumbnails, with periodic active-play capture and background/exit saving. These files are not sent to the artwork or support sites. The public policy target is https://emuden-support.headyopossum2.chatgpt.site/privacy.html; source-only downloads are on GitHub. The public support email was expressly authorized by the owner, while review phone, personal/account data and signing credentials remain private. Hosting retention and App Store disclosures are still separate unresolved facts.

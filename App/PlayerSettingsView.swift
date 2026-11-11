@@ -7,6 +7,7 @@ struct PlayerSettingsView: View {
     @AppStorage("buttonHaptics") private var buttonHaptics = true
     @AppStorage("showFPS") private var showFPS = false
     @AppStorage("showFrameGraph") private var showGraph = false
+    @AppStorage("automaticResumeSaves") private var automaticResumeSaves = true
     @State private var showingDuo = false
     @State private var preferences = PlayerPreferences()
     @State private var custom = false
@@ -75,6 +76,14 @@ struct PlayerSettingsView: View {
                             Text("Balance adjusts flat layouts. The inner display keeps each screen on its side of the fold. Original proportions may leave borders; Fill stretches each screen.").font(.caption).foregroundStyle(ConsoleTheme.quiet)
                         }.disabled(!editable).cinematicCard().cinematicEntrance(delay: 0.12)
                         VStack(alignment: .leading, spacing: 16) {
+                            Label("Save history", systemImage: "clock.arrow.circlepath").font(.headline)
+                            Toggle("Automatic save points", isOn: $automaticResumeSaves).accessibilityIdentifier("automaticResumeSaves")
+                            Text("Keeps a resume point every five minutes of active play. Capturing a point briefly pauses the game. Backgrounding or closing a game also saves a resume point. Keep using the game's own save feature too.")
+                                .font(.caption).foregroundStyle(ConsoleTheme.quiet)
+                            Text("The pause menu's Save history keeps your latest 10 Quick Saves and 3 automatic points per game. These settings apply to every game.")
+                                .font(.caption).foregroundStyle(ConsoleTheme.quiet)
+                        }.cinematicCard().cinematicEntrance(delay: 0.16)
+                        VStack(alignment: .leading, spacing: 16) {
                             Label("While you play", systemImage: "waveform.path.ecg").font(.headline)
                             Toggle("Show FPS", isOn: $showFPS).accessibilityIdentifier("showFPS")
                             Toggle("Show frame-time graph", isOn: $showGraph).accessibilityIdentifier("showFrameGraph")
@@ -93,6 +102,7 @@ struct PlayerSettingsView: View {
             .onChange(of: preferences) { _, _ in persist() }
             .onChange(of: showFPS) { _, _ in menuAudio.play(.focus) }
             .onChange(of: showGraph) { _, _ in menuAudio.play(.focus) }
+            .onChange(of: automaticResumeSaves) { _, _ in menuAudio.play(.focus) }
             .onChange(of: buttonHaptics) { _, _ in menuAudio.play(.focus) }
             .onChange(of: custom) { _, enabled in
                 guard loaded, let game else { return }

@@ -1,3 +1,28 @@
+# Public release and build 18 preparation — 11 November 2026
+
+**Public App Store submission remains unconfirmed.** The owner authorized GPL-3.0-or-later for original EmuDen source contributions and public source/support publication, while keeping the generated images. Matching build-17 source is public and its anonymous download checksum is verified. Build 18 adds save history, queued background saving, periodic checkpoints, offline dependency notices and public policy/source links. Build 18 is signed and locally validated with four real dSYMs; source/policy publication is tracked by the final preparation report. These technical checks are not Apple approval.
+
+Generated artwork, archived builds 14–17 and their matching packages remain preserved. Keeping artwork does not establish publisher rights. Distribution terms, artwork basis, accurate privacy/export declarations and final release-device/review checks remain recorded in AppStoreReadiness.json. The artwork automation remains paused. Project QA Simulator data was moved onto the Samsung T7 after internal-disk exhaustion; original Simulator paths are retained as links. The original Duo Simulator was not moved.
+
+Run `python3 Scripts/validate-app-store-readiness.py` for the actual evidence status. It deliberately distinguishes technical internal-beta packaging from public-release decisions. [Review and primary sources](../Docs/Legal/REVIEW-2026-11-11.md).
+
+---
+
+# Build 18 — dated save history
+
+Pause → **Save history** provides thumbnails and dates for the latest **10 Quick Saves and 3 automatic points** per game. Load an earlier point with confirmation. Quick Load retains its one-step latest-manual behavior. The newest compatible manual/automatic point is offered on startup.
+
+Periodic Automatic save points default on every five minutes of active play and can be disabled in Player settings. Background/exit capture stays enabled; an in-flight save/load now finishes before a background resume capture is attempted. Capturing briefly pauses play, and OS termination/force-quit/storage failure can still prevent completion. Native in-game saves remain separate; core/system-resource changes can make older snapshots unavailable without deleting them. No missing state on the physical phone has been diagnosed or recovered.
+
+- Signed archive: `build/TestFlight/EmuDen-0.1.0-18.xcarchive`.
+- Matching source: `build/TestFlight/EmuDen-0.1.0-18-source.tar.gz` and the matching public source release recorded in the final preparation report.
+- Final evidence: `build/TestFlight/Build18-PreparationReport.json`.
+- [Implementation and limits](../Docs/BUILD-18.md).
+
+62 domain tests, two tooling checks, the passing Duo UI scenarios and a native single-screen background-capture check provide the current evidence. The latter verifies a new timestamp and payload checksum after a real app switch with periodic saving disabled. Secondary GUI retries and the cold Simulator poll timeout remain recorded. The five-minute production interval is unit-tested; the live periodic test uses a Simulator-only short interval. Only 3DS is playable. The emulator core and existing generated images are unchanged. There is no new physical-phone performance claim or App Store/TestFlight upload in this preparation.
+
+---
+
 # Build 17 — per-game graphics, timing and native widgets
 
 **EmuDen 0.1.0 (17)** is signed and locally validated for internal TestFlight preparation. Games can keep independent graphics profiles. Resolution and texture sampling apply live when play resumes; optional automatic quality, known-shader preparation, per-title cache management, frame timing and picture balance provide more control. Automatic quality and startup preparation are opt-in. Dark Moon's reported hitch was already at native 1×, so no resolution-based fix or new phone FPS gain is claimed.

@@ -1,4 +1,4 @@
-# EmuDen privacy policy — draft for later public hosting
+# EmuDen privacy policy reference
 
 Effective date: November 11, 2026
 
@@ -14,4 +14,6 @@ Deleting the app removes its local storage, subject to backups you control. Impo
 
 During TestFlight testing, Apple may collect crash reports, usage information and feedback and make them available to the developer under Apple's TestFlight terms. Feedback that you choose to send is used to investigate and improve the app. Avoid sending commercial game files, console encryption keys or personal Mii databases.
 
-For this internal beta, contact the developer through TestFlight feedback. A public support contact and hosted URL will be chosen before external distribution. This draft is not a live website.
+Internal testers may use TestFlight feedback. The separately authorized public contact and policy target are recorded below; no private review phone is published.
+
+Published policy target: https://emuden-support.headyopossum2.chatgpt.site/privacy.html. The owner separately authorized Godofwaa@gmail.com as the public privacy/support contact. The public page includes provider-policy links and does not claim that hosting logs or retention were audited. Final anonymous-access evidence is in the build-18 preparation report. The separate App Privacy questionnaire remains unconfirmed.

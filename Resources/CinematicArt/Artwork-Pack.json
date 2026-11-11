@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": 6,
+  "version": 7,
   "baseURL": "https://emuden-artwork-catalog.headyopossum2.chatgpt.site/",
   "selectionSource": "https://gamefaqs.gamespot.com/boards/997614-nintendo-3ds/76853179",
   "games": [
@@ -984,6 +984,42 @@
         "path": "images/dragon-quest-vii/scene-6508119192ac.jpg",
         "sha256": "6508119192ac949e9821dc48a7357ffd49e05130399fc62cd4c9d928ee2f6a8f",
         "bytes": 686717,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "key": "professor-layton-azran-legacy",
+      "title": "Professor Layton and the Azran Legacy",
+      "aliases": [],
+      "programIDs": [
+        "00040000000F2F00"
+      ],
+      "rank": null,
+      "bonus": true,
+      "cover": null,
+      "scene": {
+        "path": "images/professor-layton-azran-legacy/scene-e24b056a36ac.jpg",
+        "sha256": "e24b056a36aca94f76d3e5528711bc0060629cc1de8af8176d8dac4ac744f8bd",
+        "bytes": 605755,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "key": "professor-layton-miracle-mask",
+      "title": "Professor Layton and the Miracle Mask",
+      "aliases": [],
+      "programIDs": [
+        "00040000000A8500"
+      ],
+      "rank": null,
+      "bonus": true,
+      "cover": null,
+      "scene": {
+        "path": "images/professor-layton-miracle-mask/scene-d9a3a7d05eaa.jpg",
+        "sha256": "d9a3a7d05eaad6d6169d06978b9a4f505240665115dd1e3304d7fb7854e12bb4",
+        "bytes": 599486,
         "width": 1536,
         "height": 1024
       }

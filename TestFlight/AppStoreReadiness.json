@@ -1,0 +1,68 @@
+{
+  "reviewDate": "2026-11-11",
+  "auditedBuild": "18",
+  "publicReleaseCleared": false,
+  "reviewDocument": "Docs/Legal/REVIEW-2026-11-11.md",
+  "criteria": [
+    {
+      "id": "artwork-rights",
+      "status": "pending",
+      "evidence": [],
+      "resolution": "Document an applicable basis for the particular artwork use: license/service terms or an evaluated exception. Assess cover thumbnails separately from the public generated-character collection; replace material where no basis is established."
+    },
+    {
+      "id": "corresponding-source",
+      "status": "pending",
+      "evidence": [],
+      "resolution": "Original EmuDen contributions are explicitly GPL-3.0-or-later. Build-17 source is public with anonymous checksum verification; verify final build-18 matching release and maintain recipient access."
+    },
+    {
+      "id": "store-license-compatibility",
+      "status": "pending",
+      "evidence": [],
+      "resolution": "Document compliance with the applicable GPLv3, store terms, EULA and distribution conditions; seek qualified advice for unresolved issues. GPL-family licensing is not an automatic App Store ban."
+    },
+    {
+      "id": "dependency-notices",
+      "status": "pending",
+      "evidence": [],
+      "resolution": "84 full notice/license texts and hashed inventory are generated and accessible offline. Verify the final signed bundle and source delivery; other distribution terms are tracked separately."
+    },
+    {
+      "id": "public-support-privacy",
+      "status": "pending",
+      "evidence": [],
+      "resolution": "Pages, authorized public email and in-app links are implemented. Verify final anonymous deployment; App Privacy/host retention remains separate."
+    },
+    {
+      "id": "privacy-disclosure",
+      "status": "pending",
+      "evidence": [],
+      "resolution": "Verify host retention and accurate data disclosures, or remove automatic external artwork requests."
+    },
+    {
+      "id": "export-compliance",
+      "status": "pending",
+      "evidence": [],
+      "resolution": "Complete applicable encryption/export classification and required documentation."
+    },
+    {
+      "id": "emulator-content-age",
+      "status": "pending",
+      "evidence": [],
+      "resolution": "Resolve applicable guideline 4.7 index, universal-link and age-control requirements for the bundled demo/local imports."
+    },
+    {
+      "id": "branding-clearance",
+      "status": "pending",
+      "evidence": [],
+      "resolution": "Complete appropriate name/icon/presentation clearance for intended markets."
+    },
+    {
+      "id": "release-quality",
+      "status": "pending",
+      "evidence": [],
+      "resolution": "Verify the final release on supported physical devices, remove unsupported public placeholders, and match metadata/screenshots to it."
+    }
+  ]
+}

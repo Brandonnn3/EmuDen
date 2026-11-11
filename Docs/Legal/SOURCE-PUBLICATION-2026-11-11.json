@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-11",
+  "repository": "https://github.com/Brandonnn3/EmuDen",
+  "build17": {
+    "repository": "https://github.com/Brandonnn3/EmuDen",
+    "build": "17",
+    "anonymousDownload": "https://github.com/Brandonnn3/EmuDen/releases/download/v0.1.0-build.17/EmuDen-0.1.0-17-source.tar.gz",
+    "bytes": 107538752,
+    "sha256": "c20ee7f7e893748b9e23127df127ff42b4b6681b9d6b268e4f673656087741ec",
+    "verified": true
+  },
+  "build18": {
+    "release": "https://github.com/Brandonnn3/EmuDen/releases/tag/v0.1.0-build.18",
+    "matchingPackage": "EmuDen-0.1.0-18-source.tar.gz",
+    "verificationRecord": "build/TestFlight/Build18-PreparationReport.json (generated after packaging/publication; not part of its own source package)"
+  },
+  "ownerLicense": "GPL-3.0-or-later for original contributions in build 17 onward; inherited rights remain",
+  "privateDataExcluded": true
+}

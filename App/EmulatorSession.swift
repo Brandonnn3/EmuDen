@@ -24,6 +24,7 @@ final class EmulatorSession: ObservableObject {
     @Published private(set) var stateBusy = false
     @Published private(set) var quickDate: Date?
     @Published private(set) var resumeDate: Date?
+    @Published private(set) var saveHistory = [SaveStateStore.Entry]()
     @Published private(set) var hasOlderSnapshots = false
     @Published var offerResume = false
     @Published var notice: String?
@@ -35,6 +36,10 @@ final class EmulatorSession: ObservableObject {
     private var closed = false
     private var stateStore: SaveStateStore?
     private var wantsResume = false
+    private var autosaveClock = StateAutosaveClock()
+    private var backgroundSave: Task<Void, Never>?
+    private var inBackground = false
+    private var backgroundSaveRequested = false
     private let haptic = UIImpactFeedbackGenerator(style: .light)
     private var preferences = PlayerPreferences()
     private var quality = AutomaticQuality(ceiling: 1)
@@ -73,10 +78,11 @@ final class EmulatorSession: ObservableObject {
             stateStore = SaveStateStore(saves: saves, game: url)
             hasOlderSnapshots = stateStore?.hasOlderSnapshots ?? false
             refreshStates()
-            wantsResume = resumeDate != nil && !ProcessInfo.processInfo.arguments.contains("--fresh-start")
+            wantsResume = !saveHistory.isEmpty && !ProcessInfo.processInfo.arguments.contains("--fresh-start")
         }
         haptic.prepare()
 #if targetEnvironment(simulator)
+        if ProcessInfo.processInfo.arguments.contains("--autosave-test") { autosaveClock.interval = 5 }
         if ProcessInfo.processInfo.arguments.contains("--golf-regression") {
             regressionDirectory = saves.appendingPathComponent("GolfRegression")
             try? FileManager.default.createDirectory(at: regressionDirectory!, withIntermediateDirectories: true)
@@ -126,6 +132,13 @@ final class EmulatorSession: ObservableObject {
                 self.bridge.configureResolution(resolution, asyncShaders: self.preferences.asyncShaders,
                     textureSampling: self.preferences.sampling.rawValue, prepareShaders: self.preferences.prepareShaders)
             }
+            let defaults = UserDefaults.standard
+            let enabled = defaults.object(forKey: "automaticResumeSaves") == nil || defaults.bool(forKey: "automaticResumeSaves")
+            if self.autosaveClock.due(now: ProcessInfo.processInfo.systemUptime,
+                active: !self.booting && !self.paused && !self.closing && !self.stateBusy && !self.inBackground && self.frames > 0 && self.stateStore != nil,
+                enabled: enabled) {
+                Task { await self.save(.resume) }
+            }
         }
         let center = NotificationCenter.default
         for name in [Notification.Name.GCControllerDidConnect, .GCControllerDidDisconnect] {
@@ -135,6 +148,15 @@ final class EmulatorSession: ObservableObject {
         }
         observers.append(center.addObserver(forName: AVAudioSession.interruptionNotification, object: nil, queue: .main) { [weak self] _ in
             Task { @MainActor in self?.setPaused(true) }
+        })
+        observers.append(center.addObserver(forName: UIApplication.willResignActiveNotification, object: nil, queue: .main) { [weak self] _ in
+            Task { @MainActor in self?.suspend() }
+        })
+        observers.append(center.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] _ in
+            Task { @MainActor in self?.background() }
+        })
+        observers.append(center.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: .main) { [weak self] _ in
+            Task { @MainActor in self?.foreground() }
         })
         connectControllers()
         guard let url else { booting = false; return }
@@ -185,7 +207,11 @@ final class EmulatorSession: ObservableObject {
     }
     private func refreshStates() {
         quickDate = stateStore?.date(.quick); resumeDate = stateStore?.date(.resume)
+        saveHistory = stateStore?.entries ?? []
     }
+    func previewData(_ entry: SaveStateStore.Entry) -> Data? { stateStore?.previewData(entry) }
+    func suspend() { inBackground = true; setPaused(true) }
+    func foreground() { inBackground = false; backgroundSaveRequested = false }
     private func checkResumeOffer() {
         if wantsResume && !booting && frames > 0 {
             wantsResume = false; setPaused(true); offerResume = true
@@ -318,39 +344,64 @@ final class EmulatorSession: ObservableObject {
                         userInfo: [NSLocalizedDescriptionKey: error ?? "State capture failed."])) }
                 }
             }
-            try await Task.detached(priority: .userInitiated) { try store.write(data, slot: slot) }.value
-            refreshStates(); notice = slot == .quick ? "Quick save ready" : "Resume point saved"
+            let preview: Data? = top.map { image in
+                let format = UIGraphicsImageRendererFormat(); format.scale = 1
+                let size = CGSize(width: 320, height: 192)
+                return UIGraphicsImageRenderer(size: size, format: format).image { _ in image.draw(in: CGRect(origin: .zero, size: size)) }.jpegData(compressionQuality: 0.75)
+            } ?? nil
+            try await Task.detached(priority: .userInitiated) { try store.write(data, slot: slot, preview: preview) }.value
+            refreshStates(); autosaveClock.saved(); notice = slot == .quick ? "Quick save ready" : "Resume point saved"
             success = true
         } catch { message = error.localizedDescription }
         stateBusy = false
-        setPaused(wasPaused)
+        setPaused(wasPaused || inBackground)
         return success
     }
     func load(_ slot: SaveStateStore.Slot) async {
+        await restore(slot: slot, entry: nil)
+    }
+    func load(_ entry: SaveStateStore.Entry, resuming: Bool = false) async {
+        await restore(slot: entry.slot, entry: entry, resuming: resuming)
+    }
+    private func restore(slot: SaveStateStore.Slot, entry: SaveStateStore.Entry?, resuming: Bool = false) async {
         guard !stateBusy, !booting, !closed, let store = stateStore else { return }
         stateBusy = true
         let wasPaused = paused; setPaused(true)
         do {
-            let data = try await Task.detached(priority: .userInitiated) { try store.read(slot) }.value
+            let data = try await Task.detached(priority: .userInitiated) {
+                if let entry { return try store.read(entry) }
+                return try store.read(slot)
+            }.value
             let error: String? = await withCheckedContinuation { continuation in
                 bridge.restoreState(data) { continuation.resume(returning: $0) }
             }
             if let error { message = error }
-            else { notice = slot == .quick ? "Quick save loaded" : "Session resumed" }
+            else {
+                autosaveClock.saved()
+                notice = resuming || slot == .resume ? "Session resumed" : (entry == nil ? "Quick save loaded" : "Save point loaded")
+            }
         } catch { message = error.localizedDescription }
         stateBusy = false
-        setPaused(wasPaused)
+        setPaused(wasPaused || inBackground)
     }
     func background() {
+        inBackground = true
         setPaused(true)
-        guard !stateBusy, !booting, !closed else { return }
+        guard !booting, !closed, !closing, !backgroundSaveRequested, backgroundSave == nil else { return }
+        backgroundSaveRequested = true
         var task = UIBackgroundTaskIdentifier.invalid
         task = UIApplication.shared.beginBackgroundTask(withName: "Save emulation session") {
+            self.backgroundSave?.cancel()
             if task != .invalid { UIApplication.shared.endBackgroundTask(task); task = .invalid }
         }
-        Task {
-            await save(.resume)
+        backgroundSave = Task {
+            // Finish an in-flight Quick Save/load before capturing the background resume point.
+            for _ in 0..<100 where stateBusy && !Task.isCancelled {
+                try? await Task.sleep(for: .milliseconds(200))
+            }
+            if !Task.isCancelled && !closed && !closing { await save(.resume) }
             if task != .invalid { UIApplication.shared.endBackgroundTask(task) }
+            backgroundSave = nil
         }
     }
     func releaseTouchControls() {

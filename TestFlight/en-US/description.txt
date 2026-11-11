@@ -1,18 +1,13 @@
-Your collection. Your console.
+EmuDen brings your compatible game collection into a native iPhone and iPad library, with Nintendo 3DS emulation and layouts designed for two screens.
 
-EmuDen brings a colorful console-style library to iPhone and iPad. Keep your handheld favorites together, choose a game and get back to playing.
+• Import your own compatible, decrypted game files through Files.
+• Play with touchscreen controls or a compatible game controller.
+• Choose screen layouts, picture sizing and 1×–3× internal resolution.
+• Keep graphics preferences for each game and view optional performance information.
+• Use persistent in-game saves, Quick Save, Quick Load and resume points.
+• Open recent games with Continue Playing and Recent Games widgets.
+• Choose your own cover, background and profile images locally.
 
-The current version supports Nintendo 3DS emulation:
-• Native library with search and recent play
-• File import for compatible, decrypted games and homebrew
-• Dual-screen layouts with lower-screen touch
-• On-screen controls and compatible extended gamepads
-• Adaptive layouts for iPhone Duo
-• On-device Metal GPU rendering, audio and persistent in-game saves
-• Local console system-data import for games that need it
+This release supports Nintendo 3DS only. Compatibility and performance vary by title and device. Original Mii models may require authorized console-provided resources. No commercial games, Nintendo system archives, firmware or console keys are included or offered for download. Only import files you have the right to use.
 
-No commercial games or Nintendo console resources are included. Bring your own compatible files that you are authorized to use. An included open-source Homebrew Menu provides a way to try the core without a commercial game.
-
-This early version supports 3DS only. Game compatibility and speed vary. Original Mii faces require console-provided system data; the included guest-face fallback is not a replacement for original Mii models. Save states, cheats, network play and other console cores are not available.
-
-EmuDen is an independent project and is not affiliated with or endorsed by Nintendo or other console manufacturers. Their names are used only to identify compatibility.
+EmuDen is independently developed and is not affiliated with or endorsed by Nintendo. Nintendo 3DS is a trademark of Nintendo.

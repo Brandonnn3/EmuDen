@@ -15,6 +15,7 @@ struct PlayerView: View {
     @State private var showingSettings = false
     @State private var showingGameMenu = false
     @State private var showingLayout = false
+    @State private var showingSaveHistory = false
     @State private var closingMenu = false
     @State private var showingResumePrompt = false
     @State private var showingSessionMessage = false
@@ -29,7 +30,7 @@ struct PlayerView: View {
     @State private var pendingWidgetSwitch = false
     private var headerPinned: Bool {
         launch.diagnostic || session.booting || session.paused || session.closing || session.stateBusy ||
-        showingGameMenu || showingSettings || showingLayout || session.offerResume || session.message != nil ||
+        showingGameMenu || showingSettings || showingLayout || showingSaveHistory || session.offerResume || session.message != nil ||
         scenePhase != .active || UIAccessibility.isVoiceOverRunning
     }
     private var controlsVisible: Bool { showControls && !session.hasController }
@@ -91,7 +92,8 @@ struct PlayerView: View {
         .onChange(of: session.stateBusy) { _, _ in finishWidgetSwitch() }
         .onChange(of: scenePhase) { _, phase in
             if phase == .background { rememberScene(); session.background() }
-            else if phase == .inactive { session.setPaused(true) }
+            else if phase == .inactive { session.suspend() }
+            else if phase == .active { session.foreground() }
         }
         .task(id: session.notice) {
             guard session.notice != nil else { return }
@@ -102,15 +104,24 @@ struct PlayerView: View {
         .onChange(of: headerPinned, initial: true) { _, _ in resetHeaderTimer() }
         .onChange(of: showingGameMenu) { _, visible in
             menuAudio.setActive(visible && scenePhase == .active)
-            if !visible { closingMenu = false; if !session.closing { Task { @MainActor in session.setPaused(menuWasPaused) } } }
+            if !visible {
+                closingMenu = false
+                if !session.closing { Task { @MainActor in
+                    if scenePhase == .active { session.setPaused(menuWasPaused) } else { session.suspend() }
+                } }
+            }
         }
         .onChange(of: scenePhase) { _, phase in menuAudio.setActive(showingGameMenu && phase == .active) }
         .onChange(of: session.offerResume) { _, offered in showingResumePrompt = offered }
         .onChange(of: session.message) { _, message in showingSessionMessage = message != nil }
         .alert("Resume your session?", isPresented: $showingResumePrompt) {
-            Button("Resume session") { Task { session.offerResume = false; await session.load(.resume); session.setPaused(false) } }
+            Button("Resume session") { Task {
+                session.offerResume = false
+                if let latest = session.saveHistory.first { await session.load(latest, resuming: true) }
+                session.setPaused(false)
+            } }
             Button("Start normally") { Task { @MainActor in session.offerResume = false; session.setPaused(false) } }
-        } message: { Text("A resume point is available from \(session.resumeDate?.formatted(date: .abbreviated, time: .shortened) ?? "your last session"). Your game's own saves are also kept separately.") }
+        } message: { Text("Your latest snapshot is from \(session.saveHistory.first?.date.formatted(date: .abbreviated, time: .shortened) ?? "your last session"). Earlier points are in the pause menu's Save history. Your game's own saves are kept separately.") }
         .alert("EmuDen message", isPresented: $showingSessionMessage) {
             Button("OK") { Task { @MainActor in session.message = nil } }
             Button("Return without resume point") { Task { @MainActor in session.message = nil; session.closeWithoutState { dismiss() } } }
@@ -264,6 +275,8 @@ struct PlayerView: View {
                                 .cinematicGlass(radius: 28, interactive: true).accessibilityLabel("Quick Save").disabled(session.booting || launch.diagnostic)
                             Button { performState(.quick, load: true) } label: { CinematicActionLabel(title: "Quick load", symbol: "square.and.arrow.up", disclosure: false) }
                                 .cinematicGlass(radius: 28, interactive: true).accessibilityLabel("Quick Load").disabled(session.quickDate == nil || session.booting)
+                            Button { menuAudio.play(.open); showingSaveHistory = true } label: { CinematicActionLabel(title: "Save history", symbol: "clock.arrow.circlepath") }
+                                .cinematicGlass(radius: 28, interactive: true).accessibilityIdentifier("openSaveHistory").disabled(session.booting || launch.diagnostic)
                             Button { menuAudio.play(.open); showingLayout = true } label: { CinematicActionLabel(title: "Screen layout", symbol: "rectangle.split.1x2") }
                                 .cinematicGlass(radius: 28, interactive: true).accessibilityIdentifier("openGameDuoLayout")
                             Button { menuAudio.play(.back); close() } label: { CinematicActionLabel(title: "Return to library", symbol: "arrow.uturn.backward", disclosure: false) }
@@ -278,6 +291,16 @@ struct PlayerView: View {
             }.frame(width: area.size.width, height: area.size.height).clipped()
                 .sheet(isPresented: $showingSettings, onDismiss: { refreshPreferences(); session.updateGraphics(preferences) }) {
                     PlayerSettingsView(game: currentGame, isPlaying: !launch.diagnostic, controllerConnected: session.hasController, topPreview: session.top, bottomPreview: session.bottom)
+                }
+                .sheet(isPresented: $showingSaveHistory) {
+                    SaveStateHistoryView(session: session) { entry in
+                        showingSaveHistory = false; closingMenu = true; menuAudio.play(.confirm)
+                        Task {
+                            await session.load(entry)
+                            closingMenu = false
+                            if session.message == nil { menuAudio.play(.save); showingGameMenu = false }
+                        }
+                    }
                 }
                 .fullScreenCover(isPresented: $showingLayout) { DuoLayoutSettingsView(controllerConnected: session.hasController, topPreview: session.top, bottomPreview: session.bottom) }
         }.tint(.white).accessibilityAddTraits(.isModal)
@@ -433,6 +456,79 @@ struct PlayerView: View {
     }
     private func rememberScene() { if !launch.diagnostic, session.frames >= 120, let image = session.top { onPreview(image) } }
     private func close() { rememberScene(); session.close { dismiss() } }
+}
+
+private struct SaveStateHistoryView: View {
+    @ObservedObject var session: EmulatorSession
+    let onLoad: (SaveStateStore.Entry) -> Void
+    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var menuAudio: MenuAudio
+    @State private var selected: SaveStateStore.Entry?
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 0) {
+                CinematicPageHeading(title: "Save history", subtitle: "Return to an earlier moment", symbol: "clock.arrow.circlepath", onClose: { menuAudio.play(.back); dismiss() }, closeID: "saveHistoryDone")
+                    .padding(24).frame(maxWidth: 740).frame(maxWidth: .infinity)
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 22) {
+                        Text("Snapshots restore the whole session, including the game's save memory at that moment. The game's own Save / Continue feature is separate. Keep using it too.")
+                            .font(.subheadline).foregroundStyle(ConsoleTheme.quiet)
+                        ForEach(SaveStateStore.Slot.allCases, id: \.self) { slot in
+                            let entries = session.saveHistory.filter { $0.slot == slot }
+                            VStack(alignment: .leading, spacing: 12) {
+                                HStack {
+                                    Label(slot == .quick ? "Quick Saves" : "Automatic points", systemImage: slot == .quick ? "bookmark.fill" : "clock.fill").font(.headline)
+                                    Spacer()
+                                    Text("\(entries.count) / \(slot == .quick ? 10 : 3)").font(.caption).monospacedDigit().foregroundStyle(ConsoleTheme.quiet)
+                                }
+                                if entries.isEmpty {
+                                    Text(slot == .quick ? "Choose Quick Save in the pause menu to keep a moment here." : "A point is kept when you close or background the game, and every five minutes of active play when enabled.")
+                                        .font(.subheadline).foregroundStyle(ConsoleTheme.quiet)
+                                }
+                                ForEach(Array(entries.enumerated()), id: \.element.id) { index, entry in
+                                    Button { menuAudio.play(.focus); selected = entry } label: {
+                                        HStack(spacing: 14) {
+                                            SaveStateThumbnail(data: session.previewData(entry)).frame(width: 100, height: 60).clipShape(RoundedRectangle(cornerRadius: 12))
+                                            VStack(alignment: .leading, spacing: 4) {
+                                                Text(entry.date.formatted(date: .abbreviated, time: .standard)).font(.subheadline.weight(.semibold))
+                                                Text(index == 0 ? "Latest · \(ByteCountFormatter.string(fromByteCount: Int64(entry.bytes), countStyle: .file))" : ByteCountFormatter.string(fromByteCount: Int64(entry.bytes), countStyle: .file))
+                                                    .font(.caption).foregroundStyle(ConsoleTheme.quiet)
+                                            }.frame(maxWidth: .infinity, alignment: .leading)
+                                            Image(systemName: "arrow.uturn.backward").foregroundStyle(ConsoleTheme.quiet)
+                                        }.padding(12).cinematicGlass(radius: 18, interactive: true)
+                                    }.accessibilityIdentifier("saveHistory-\(slot.rawValue)-\(index)")
+                                        .accessibilityValue(entry.date.formatted(date: .abbreviated, time: .standard))
+                                }
+                            }.cinematicCard()
+                        }
+                        if session.hasOlderSnapshots {
+                            Label("Older snapshots are preserved on disk, but can't be restored with the current core or imported system resources. In-game saves remain available.", systemImage: "info.circle")
+                                .font(.caption).foregroundStyle(ConsoleTheme.quiet).cinematicCard()
+                        }
+                        Text("Keeps the latest 10 manual and 3 automatic points per game. Older points are replaced as new ones are saved. Removing the app may remove local saves.")
+                            .font(.caption).foregroundStyle(ConsoleTheme.quiet)
+                    }.padding(24).frame(maxWidth: 740).frame(maxWidth: .infinity)
+                }.scrollIndicators(.hidden)
+            }.background {
+                ConsoleTheme.ink.ignoresSafeArea()
+                if let image = session.top { Image(uiImage: image).resizable().scaledToFill().blur(radius: 35).opacity(0.2).ignoresSafeArea() }
+            }.toolbar(.hidden, for: .navigationBar)
+        }.foregroundStyle(.white).tint(ConsoleTheme.blue).buttonStyle(ConsolePressStyle()).statusBarHidden(true)
+            .confirmationDialog("Load this save point?", isPresented: Binding(get: { selected != nil }, set: { if !$0 { selected = nil } }), titleVisibility: .visible) {
+                if let selected { Button("Load save point") { onLoad(selected); self.selected = nil } }
+            } message: { Text("This replaces the current session with the selected snapshot. Other snapshots stay in your history.") }
+    }
+}
+
+private struct SaveStateThumbnail: View {
+    let data: Data?
+    var body: some View {
+        ZStack {
+            Color.black.opacity(0.4)
+            if let data, let image = ArtworkStore.decode(data, maxSize: 320) { Image(uiImage: image).resizable().scaledToFit() }
+            else { Image(systemName: "bookmark").font(.title2).foregroundStyle(ConsoleTheme.quiet) }
+        }.accessibilityHidden(true)
+    }
 }
 
 private struct ControlButton: View {

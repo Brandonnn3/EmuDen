@@ -1,6 +1,10 @@
 # EmuDen for iPhone and iPad
 
+**Public-release hold:** EmuDen remains an internal beta. Public source/support publication is authorized; remaining artwork, distribution/privacy/export and final review requirements are tracked separately. The artwork expansion is paused. See [the legal/App Review audit](Docs/Legal/REVIEW-2026-11-11.md) and `python3 Scripts/validate-app-store-readiness.py`.
+
 Native SwiftUI emulator app on the Samsung T7 SSD. Open `EmulatorApp.xcodeproj`, choose the **Emulator** scheme and **Emulator - iPhone Duo (iOS 27.1)**, then Run. A separate simulator core is bundled for Apple Silicon Macs; the physical-device core is also included. The simulator is independent of your physical **B Duo** and of the original Duo simulator used by GameProject. The existing Xcode team is configured; change the bundle ID/team if needed.
+
+**Build 18:** Dated Save history keeps 10 manual and 3 automatic points, with thumbnails and earlier-point loading. Periodic checkpoints count five minutes of active play, background saving waits for an in-flight operation, and startup offers the newest compatible snapshot. Settings adds public policy/source links and offline dependency notices. Original app source is GPL-3.0-or-later; publisher artwork retains separate rights. See [build 18 notes](Docs/BUILD-18.md) and [artifact status](TestFlight/STATUS.md).
 
 **Build 17:** Per-game graphics profiles, live resolution/texture changes, optional automatic quality, known-shader preparation, a frame-time graph, screen balance and per-game shader-cache management. Native Continue Playing/Recent Games widgets use cached artwork and save before switching sessions. Settings also offers a local profile-picture chooser; Mii resource archives contain shared models rather than a personal avatar. See [build 17 notes](Docs/BUILD-17.md) and [actual previews](Docs/Preview/Build17-README.md). Phone performance gains remain unmeasured.
 
@@ -10,7 +14,7 @@ Native SwiftUI emulator app on the Samsung T7 SSD. Open `EmulatorApp.xcodeproj`,
 
 **Build 14:** Asynchronous frame transfers, native 1×/2×/3× resolution choices, a fading player header and an optional FPS counter. The final matched Mario Golf Simulator comparison reduced median emulation-thread frame cost from 15.07 to 12.01 ms; this is not a phone FPS result. Higher resolutions improve clarity, while 1× remains the fastest default. Tap the top screen to restore controls after they fade. The core and save formats remain unchanged. A new glass app icon and growing artwork catalog match the theme. See [build notes](Docs/BUILD-14.md) and [artifact status](TestFlight/STATUS.md).
 
-The live [artwork collection](https://emuden-artwork-catalog.headyopossum2.chatgpt.site) provides 40 original scene backgrounds and 24 new covers, keyed by retail ID and exact title aliases. Images download on demand, remain cached offline, and stop downloading during emulation. User-selected images keep priority. The approved Option A layout and search dock fix remain.
+The live [artwork collection](https://emuden-artwork-catalog.headyopossum2.chatgpt.site) provides 42 original scene backgrounds and 24 new covers, keyed by retail ID and exact title aliases. Images download on demand, remain cached offline, and stop downloading during emulation. User-selected images keep priority. The approved Option A layout and search dock fix remain.
 
 The owner's previous phone testing reached Mario Golf's Castle Club with the generic fallback, with severe gameplay frame drops; Animal Crossing was smoother. The build-6 Mario Golf character-selector check verifies the downloaded Mii resources in that scene. Sustained phone performance and other Mii-dependent modes remain unverified. [Performance notes](Docs/PERFORMANCE.md) · [Player previews](Docs/Preview/Build14-README.md).
 

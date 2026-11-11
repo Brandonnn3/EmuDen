@@ -207,8 +207,8 @@
       "programIDs": [
         "00040000000F2F00"
       ],
-      "status": "pending",
-      "note": ""
+      "status": "accepted",
+      "note": "Built-in image_gen; visually inspected and accepted 2026-11-11. Original 1536×1024 PNG master unchanged. Prompt/provenance: batch-2026-11-11-1813.json. Scene only; existing cover fallback retained."
     },
     {
       "key": "professor-layton-miracle-mask",
@@ -217,8 +217,8 @@
       "programIDs": [
         "00040000000A8500"
       ],
-      "status": "pending",
-      "note": ""
+      "status": "accepted",
+      "note": "Built-in image_gen; visually inspected and accepted 2026-11-11. Original 1536×1024 PNG master unchanged. Prompt/provenance: batch-2026-11-11-1813.json. Scene only; existing cover fallback retained."
     },
     {
       "key": "luigis-mansion-3ds",
@@ -229,8 +229,8 @@
         "00040000001D1900",
         "00040000001D1A00"
       ],
-      "status": "pending",
-      "note": ""
+      "status": "blocked",
+      "note": "Image tool output rejected (moderation_blocked). Retain existing fallback; do not retry automatically. See batch-2026-11-11-1813.json."
     },
     {
       "key": "mario-tennis-open",
@@ -239,8 +239,8 @@
       "programIDs": [
         "000400000007C700"
       ],
-      "status": "pending",
-      "note": ""
+      "status": "blocked",
+      "note": "Image tool output rejected (moderation_blocked). Retain existing fallback; do not retry automatically. See batch-2026-11-11-1813.json."
     },
     {
       "key": "new-super-mario-bros-2",

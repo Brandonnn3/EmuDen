@@ -1,43 +1,32 @@
 # EmuDen — internal TestFlight handoff
 
-This package prepares **EmuDen 0.1.0 (7)** for internal testing on iPhone and iPad. The current core supports 3DS. DS, GameCube, PlayStation and PlayStation 2 are future work, not advertised as available.
+Current signed artifacts are **EmuDen 0.1.0 (18)**. Only Nintendo 3DS is playable. See [STATUS.md](STATUS.md) for the technical evidence and artifact paths.
 
-See [STATUS.md](STATUS.md) for the exact completion state. Build 7 passed the documented local archive and simulator checks. See STATUS.md for current artifacts; the earlier build 4 signed IPA remains preserved. Xcode created the live EmuDen app record with the chosen name/SKU/bundle ID/language. Build 3 was uploaded by the owner; the agent has not uploaded build 7; the remaining TestFlight text is prepared locally for entry after upload.
+**Public App Store submission is on hold.** Technical build validation is separate from copyright permissions, GPL distribution obligations, privacy/export declarations and Apple's review decision. Read [the legal/App Review audit](../Docs/Legal/REVIEW-2026-11-11.md) and run `python3 Scripts/validate-app-store-readiness.py` before preparing a public release. The artwork automation is paused; the existing public artwork site has not yet been changed.
 
-The app's bundle ID remains `com.brandonaleman.Emulator`, preserving continuity with the existing phone build. The visible product, icon, library header and display name are EmuDen. The Xcode project and scheme remain named `Emulator` internally.
+## Internal handoff
 
-## Upload handoff
+1. Reuse the existing **EmuDen** app record, bundle ID `com.brandonaleman.Emulator`, SKU `EMUDEN-IOS-001`. Do not create a duplicate.
+2. The archive is `build/TestFlight/EmuDen-0.1.0-18.xcarchive`; matching source is `build/TestFlight/EmuDen-0.1.0-18-source.tar.gz`. The archive has four real matching dSYMs, including the WidgetKit extension. Builds 14–17 remain preserved.
+3. The configured export is **TestFlight Internal Only** with destination `export`. No build-18 upload, physical-phone install or distribution IPA export has been performed by the agent. Do not treat this configuration as a completed public submission.
+4. Complete actual encryption/export answers from `EXPORT-COMPLIANCE.md` before assigning a processed build. The embedded core includes third-party cryptography; an exemption has not been certified.
+5. Internal testers must be eligible App Store Connect team members. Private review contact and phone remain in `Private/Contact.json`. The owner separately authorized publishing Godofwaa@gmail.com as the support/privacy email; no review phone or account/signing data is public.
+6. Use `en-US/what-to-test.txt` and `en-US/beta-description.txt` for internal beta information. Deliver the applicable matching source/notices to binary recipients as required; matching source releases are now available from https://github.com/Brandonnn3/EmuDen, with source-page links and anonymous checksum verification.
 
-1. The app record is already created: **EmuDen**, `com.brandonaleman.Emulator`, team `NKC9X96J5A`, SKU `EMUDEN-IOS-001`, English (United States). Do not create a second record for this bundle ID.
-2. Open `build/TestFlight/EmuDen-0.1.0-7.xcarchive` in Xcode Organizer and select **Distribute App → TestFlight Internal Only**. This archive includes all three matching dSYMs. The existing signed-in Xcode account handled cloud-managed distribution signing for build 4; distribution signing for build 7 happens in this flow. A build-7 IPA has not been exported yet. Build 4's signed IPA is preserved at `build/TestFlight/EmuDen-0.1.0-4-Internal/EmuDen.ipa`.
-3. Validate, then upload. This preparation does not upload a build, publish the app, submit an external beta, invite testers, or accept agreements.
-4. After processing, complete any encryption question using the technical inventory in `EXPORT-COMPLIANCE.md`. Do not describe this app as using only Apple's cryptography: the emulator includes third-party cryptographic code.
-5. Create the internal group **EmuDen — Internal**. Add the uploaded build and your existing App Store Connect team user. Internal testers must be eligible team members; a feedback email alone does not make someone an internal tester.
-6. Paste `en-US/what-to-test.txt` into What to Test and `en-US/beta-description.txt` into Beta App Description. Feedback email and optional future beta-review contact details are saved in `Private/Contact.json`, excluded from source packages and version control.
+## Public release prerequisites
 
-Public support/privacy URLs, App Store screenshots, age-rating publication and external Beta App Review are deferred for this internal beta. Draft privacy/support copy is included for later hosting. No fake URLs have been entered. Internal builds still need Apple processing and appropriate signing.
+`AppStoreReadiness.json` records unresolved artwork rights, combined-work/source licensing, GPL/store terms, dependency notices, public support/privacy links, privacy disclosure, encryption/export classification, emulator-content/age requirements, branding and final device testing. Its fields are evidence records, not an Apple approval or a legal opinion. Public URL fields point to the separately prepared support/privacy/source Site; verify anonymous access in the latest preparation report. The App Privacy answer remains unconfirmed; do not submit it as a final declaration.
 
-## Prepared information
+The App Store description draft now reflects implemented save-state/widget features. The final binary, screenshots, policy pages, license/source access and metadata must be reviewed together. The owner authorized public source/support publication and retained artwork. No Apple agreement, legal classification or publisher permission has been accepted or invented. The source grant does not convey third-party artwork rights.
 
-- `AppInformation.json`: name, subtitle, language, bundle ID, SKU, version/build, categories and internal group.
-- `en-US/`: beta description, What to Test, review notes and future App Store description/promotional text/keywords.
-- `PRIVACY.md`: on-device data behavior and the privacy-manifest reasons used by the app and each embedded framework.
-- `EXPORT-COMPLIANCE.md`: cryptography inventory and the remaining App Store Connect declaration.
-- `Private/Contact.json`: supplied feedback email and beta-review contact. The phone number is not bundled in the app or public drafts.
-- `ExportOptions.plist`: an **internal-only**, local-export configuration. Its destination is `export`, not `upload`.
-- `SOURCE.md`: source-package contents and rebuild instructions for the GPL-based core.
+## Files and validation
 
-## Rebuild
+- `AppInformation.json`: current identity, internal distribution intent and public-release hold.
+- `en-US/`: local descriptions, review notes and test instructions.
+- `PRIVACY.md`, `EXPORT-COMPLIANCE.md`, `SOURCE.md`: current implementation, unresolved declarations and source rebuilding.
+- `Private/Contact.json`: private internal feedback/review contact; excluded from source packages.
+- `ExportOptions.plist`: local internal-only export configuration, never an automatic upload.
 
-Run `Scripts/archive-testflight.sh` from the SSD project. It archives the Release configuration and validates local packaging. It never uploads. The optional local export command is:
+`Scripts/archive-testflight.sh` builds and runs technical packaging checks. Preserve existing archives and increment the build before archiving any modified app. It does not certify legal compliance. Do not overwrite existing matching source packages when working on new changes.
 
-```sh
-xcodebuild -exportArchive \
-  -archivePath build/TestFlight/EmuDen-0.1.0-7.xcarchive \
-  -exportOptionsPlist TestFlight/ExportOptions.plist \
-  -exportPath build/TestFlight/Export
-```
-
-Re-export requires App Store distribution signing access. The local CLI could not access the Xcode account, but the signed-in GUI account successfully exported using **Cloud Managed Apple Distribution**. Build 4 was exported successfully through that GUI flow; build 5 currently has a validated local archive. No build 5 upload was performed.
-
-Apple references: [upload builds](https://developer.apple.com/help/app-store-connect/manage-builds/upload-builds), [internal testers](https://developer.apple.com/help/app-store-connect/test-a-beta-version/add-internal-testers/), [test information](https://developer.apple.com/help/app-store-connect/test-a-beta-version/provide-test-information/).
+Apple references: [upload builds](https://developer.apple.com/help/app-store-connect/manage-builds/upload-builds), [internal testers](https://developer.apple.com/help/app-store-connect/test-a-beta-version/add-internal-testers/), [test information](https://developer.apple.com/help/app-store-connect/test-a-beta-version/provide-test-information/), [review guidelines](https://developer.apple.com/app-store/review/guidelines/).

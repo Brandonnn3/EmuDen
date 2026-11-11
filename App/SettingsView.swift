@@ -1,5 +1,6 @@
 import SwiftUI
 import UniformTypeIdentifiers
+import QuickLook
 
 struct SystemSetupView: View {
     @EnvironmentObject private var library: GameLibrary
@@ -13,6 +14,7 @@ struct SystemSetupView: View {
     @State private var importingAvatar = false
     @State private var showingWidgets = false
     @State private var soundOptions = false
+    @State private var noticeURL: URL?
     @AppStorage("buttonHaptics") private var haptics = true
     @AppStorage("asyncShaderCompilation") private var asyncShaders = true
     @AppStorage("showFPS") private var showFPS = false
@@ -33,6 +35,7 @@ struct SystemSetupView: View {
             .sheet(isPresented: $playerSettings) { PlayerSettingsView() }
             .sheet(isPresented: $showingWidgets) { WidgetShowcaseView() }
             .sheet(isPresented: $miiSetup) { MiiSetupView() }
+            .quickLookPreview($noticeURL)
             .fullScreenCover(isPresented: $duoLayout) { DuoLayoutSettingsView() }
             .fileImporter(isPresented: $importingMii, allowedContentTypes: [.item]) { importFile($0, archive: true) }
             .fileImporter(isPresented: $importingFolder, allowedContentTypes: [.folder]) { importFile($0, archive: false) }
@@ -57,6 +60,15 @@ struct SystemSetupView: View {
                         VStack(spacing: 18) { performanceCard; appearanceCard }.frame(maxWidth: .infinity)
                         VStack(spacing: 18) { miiCard; layoutCard }.frame(maxWidth: .infinity)
                     }.cinematicEntrance(delay: 0.04)
+                    VStack(alignment: .leading, spacing: 14) {
+                        Label("About EmuDen", systemImage: "info.circle").font(.headline)
+                        Link("Privacy policy", destination: URL(string: "https://emuden-support.headyopossum2.chatgpt.site/privacy.html")!).frame(minHeight: 44).accessibilityIdentifier("privacyPolicyLink")
+                        Link("Support", destination: URL(string: "https://emuden-support.headyopossum2.chatgpt.site/support.html")!).frame(minHeight: 44).accessibilityIdentifier("supportLink")
+                        Link("Source code & rebuilding", destination: URL(string: "https://emuden-support.headyopossum2.chatgpt.site/source.html")!).frame(minHeight: 44).accessibilityIdentifier("correspondingSourceLink")
+                        Button("Open-source notices", systemImage: "doc.text") {
+                            noticeURL = Bundle.main.url(forResource: "ThirdPartyNotices", withExtension: "txt")
+                        }.frame(minHeight: 44).accessibilityIdentifier("openSourceNotices")
+                    }.frame(maxWidth: .infinity, alignment: .leading).cinematicCard()
                     DisclosureGroup("Help, tests & open-source notices") {
                         VStack(alignment: .leading, spacing: 12) {
                             Button("Launch 3DS test", systemImage: "play.rectangle", action: testCore).frame(minHeight: 44)
@@ -176,7 +188,7 @@ struct MiiSetupView: View {
                             .font(.headline).frame(maxWidth: .infinity).padding(17)
                             .foregroundStyle(ConsoleTheme.ink).background(.white, in: Capsule())
                     }.buttonStyle(ConsolePressStyle()).accessibilityLabel("Mii resource archive")
-                    Text("Choose your decrypted Mii .app archive or errfix.3dsx in Files. You don’t need to launch the installer.")
+                    Text("Choose a decrypted Mii resource archive you have the right to use. Files are imported locally; no system data is downloaded.")
                         .font(.subheadline).foregroundStyle(ConsoleTheme.quiet)
                     if imported {
                         Label("Imported. Open your game normally to use the new faces; in-game saves are kept.", systemImage: "checkmark.circle")

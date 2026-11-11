@@ -633,6 +633,68 @@ final class EmulatorUITests: XCTestCase {
         returnToLibrary(app)
         XCTAssertTrue(app.staticTexts["EMUDEN"].waitForExistence(timeout: 10))
     }
+    @MainActor func testAutomaticSavePointSurvivesUncleanRelaunch() {
+        // The shortened interval is compiled only for Simulator; device builds use five minutes.
+        continueAfterFailure = false
+        let app = XCUIApplication(); app.launchArguments = ["--boot-homebrew", "--fresh-start", "--autosave-test", "-automaticResumeSaves", "YES"]; app.launch()
+        assertGamePixels(app)
+        XCTAssertTrue(app.staticTexts["Resume point saved"].waitForExistence(timeout: 45))
+        app.terminate(); app.launchArguments = ["--boot-homebrew"]; app.launch()
+        XCTAssertTrue(app.buttons["Resume session"].waitForExistence(timeout: 45)); app.buttons["Resume session"].tap()
+        XCTAssertTrue(app.staticTexts["Session resumed"].waitForExistence(timeout: 45)); assertGamePixels(app)
+        openGameMenu(app); app.buttons["openSaveHistory"].tap()
+        let automatic = app.buttons["saveHistory-resume-0"]
+        XCTAssertTrue(automatic.waitForExistence(timeout: 10)); reveal(automatic, in: app)
+        attach(app, "Periodic automatic snapshot after forced relaunch")
+        app.buttons["saveHistoryDone"].tap(); returnToLibrary(app)
+    }
+    @MainActor func testSaveHistoryLoadsEarlierPointAndSurvivesRelaunch() {
+        continueAfterFailure = false
+        let app = XCUIApplication(); app.launchArguments = ["--boot-homebrew", "--fresh-start"]; app.launch()
+        assertGamePixels(app)
+        for _ in 0..<2 {
+            openGameMenu(app); app.buttons["Quick Save"].tap()
+            XCTAssertTrue(app.staticTexts["Quick save ready"].waitForExistence(timeout: 45))
+            XCTAssertTrue(app.buttons["showPlayerControls"].waitForExistence(timeout: 10))
+        }
+        openGameMenu(app); app.buttons["openSaveHistory"].tap()
+        let older = app.buttons["saveHistory-quick-1"]
+        XCTAssertTrue(older.waitForExistence(timeout: 10)); reveal(older, in: app)
+        let previousAutomatic = app.buttons["saveHistory-resume-0"].exists ? (app.buttons["saveHistory-resume-0"].value as? String ?? "") : ""
+        attach(app, "Dated save history with game thumbnails")
+        older.tap(); app.buttons["Load save point"].tap()
+        XCTAssertTrue(app.staticTexts["Save point loaded"].waitForExistence(timeout: 45)); assertGamePixels(app)
+        XCUIDevice.shared.press(.home)
+        sleep(2)
+        XCTAssertNotEqual(app.state, .runningForeground, "Exercise a real background transition")
+        app.activate()
+        openGameMenu(app); app.buttons["openSaveHistory"].tap()
+        let automatic = app.buttons["saveHistory-resume-0"]
+        XCTAssertTrue(automatic.waitForExistence(timeout: 45)); reveal(automatic, in: app)
+        XCTAssertNotEqual(automatic.value as? String ?? "", previousAutomatic, "Backgrounding must create a new point, not merely show an existing one")
+        attach(app, "Background resume point kept separately")
+        app.buttons["saveHistoryDone"].tap(); returnToLibrary(app)
+        app.terminate(); app.launchArguments = ["--boot-homebrew"]; app.launch()
+        XCTAssertTrue(app.buttons["Resume session"].waitForExistence(timeout: 45)); app.buttons["Resume session"].tap()
+        XCTAssertTrue(app.staticTexts["Session resumed"].waitForExistence(timeout: 45)); assertGamePixels(app)
+        openGameMenu(app); app.buttons["openSaveHistory"].tap()
+        XCTAssertTrue(older.waitForExistence(timeout: 10)); reveal(older, in: app)
+        older.tap(); app.buttons["Load save point"].tap()
+        XCTAssertTrue(app.staticTexts["Save point loaded"].waitForExistence(timeout: 45)); assertGamePixels(app)
+        returnToLibrary(app)
+    }
+    @MainActor func testPublicPolicyLinksAndOfflineNoticesAreAccessible() {
+        continueAfterFailure = false
+        let app = XCUIApplication(); app.launch()
+        XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 20)); app.buttons["System setup"].tap()
+        let privacy = app.descendants(matching: .any)["privacyPolicyLink"]
+        reveal(privacy, in: app); XCTAssertTrue(privacy.exists)
+        XCTAssertTrue(app.descendants(matching: .any)["supportLink"].exists)
+        XCTAssertTrue(app.descendants(matching: .any)["correspondingSourceLink"].exists)
+        let notices = app.buttons["openSourceNotices"]; reveal(notices, in: app); notices.tap()
+        XCTAssertTrue(app.navigationBars["ThirdPartyNotices"].waitForExistence(timeout: 10))
+        attach(app, "Offline open-source notices")
+    }
     @MainActor func testQuickSaveLoadAndResumeAfterRelaunch() {
         let app = XCUIApplication(); app.launchArguments = ["--boot-homebrew", "--fresh-start"]; app.launch()
         assertGamePixels(app)
@@ -668,7 +730,12 @@ final class EmulatorUITests: XCTestCase {
         XCTAssertTrue(menu.waitForExistence(timeout: 5))
     }
     @MainActor private func openGameMenu(_ app: XCUIApplication) {
-        showPlayerHeader(app); app.buttons["Game menu"].tap()
+        // A cold Simulator AX lookup can outlast the three-second toolbar timeout.
+        for _ in 0..<2 {
+            showPlayerHeader(app); app.buttons["Game menu"].tap()
+            if app.buttons["Quick Save"].waitForExistence(timeout: 2) { return }
+        }
+        XCTFail("Game menu did not open after waking its controls")
     }
     @MainActor private func returnToLibrary(_ app: XCUIApplication) {
         let menuBack = app.buttons["gameMenuBack"]

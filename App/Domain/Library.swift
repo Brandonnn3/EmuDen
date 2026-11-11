@@ -25,7 +25,7 @@ public enum ImportError: LocalizedError {
         case .invalidROM: return "This file does not contain a recognized 3DS header. Choose an extracted, decrypted game or 3DS homebrew executable."
         case .unsafeFile: return "The selected folder contains a symbolic link or an unsupported file. Export a regular folder and try again."
         case .invalidSystemFolder: return "Choose the folder containing nand and/or sysdata from your own 3DS emulator user directory. The nand folder itself also works."
-        case .invalidMiiArchive: return "This file doesn’t contain a complete, decrypted Mii resource archive. Choose your Mii .app archive or a resource installer such as errfix.3dsx. A saved Mii database (CFL_DB.dat) alone does not contain the face models."
+        case .invalidMiiArchive: return "This file doesn’t contain a complete, decrypted Mii resource archive. Choose a Mii resource archive you have the right to use. A saved Mii database (CFL_DB.dat) alone does not contain the face models."
         case .corruptCatalog: return "The game library could not be read. Your games have been preserved. Restore library.json before importing more games."
         }
     }
@@ -38,7 +38,7 @@ public struct MiiStatus: Equatable, Sendable {
     public var detail: String {
         archiveFound
         ? "Mii face resources are installed. After a new import, games start normally once so old resume points cannot restore the guest face. Your in-game saves are kept. A personal Mii database is separate; compatibility varies by game."
-        : "Some games need Mii face models. Import a Mii .app archive or errfix.3dsx below to replace the guest face. This supplies the models; it doesn’t create or choose your personal Mii."
+        : "Some games need Mii face models. Import an authorized Mii resource archive to replace the guest face. This supplies the models; it doesn’t create or choose your personal Mii."
     }
 }
 

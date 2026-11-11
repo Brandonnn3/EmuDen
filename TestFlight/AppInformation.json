@@ -10,14 +10,14 @@
   "bundleId": "com.brandonaleman.Emulator",
   "sku": "EMUDEN-IOS-001",
   "version": "0.1.0",
-  "build": "17",
+  "build": "18",
   "primaryCategory": "GAMES",
   "secondaryCategory": "ENTERTAINMENT",
   "copyright": "2026 Brandon Aleman",
   "distribution": "TestFlight internal testing only",
-  "internalGroup": "EmuDen \u2014 Internal",
+  "internalGroup": "EmuDen — Internal",
   "demoAccountRequired": false,
-  "dataCollectionByApp": "None",
+  "dataCollectionByApp": "Unconfirmed pending artwork-host retention review",
   "tracking": false,
   "currentEmulation": [
     "Nintendo 3DS"
@@ -29,7 +29,11 @@
     "PlayStation 2",
     "PlayStation Portable"
   ],
-  "supportURL": null,
-  "privacyPolicyURL": null,
-  "contactFile": "Private/Contact.json"
+  "supportURL": "https://emuden-support.headyopossum2.chatgpt.site/support.html",
+  "privacyPolicyURL": "https://emuden-support.headyopossum2.chatgpt.site/privacy.html",
+  "contactFile": "Private/Contact.json",
+  "publicReleaseStatus": "Preparation authorized; artwork and remaining review questions unresolved",
+  "publicReadinessFile": "AppStoreReadiness.json",
+  "sourceURL": "https://emuden-support.headyopossum2.chatgpt.site/source.html",
+  "sourceLicense": "GPL-3.0-or-later for original EmuDen source contributions; third-party components retain their licenses"
 }

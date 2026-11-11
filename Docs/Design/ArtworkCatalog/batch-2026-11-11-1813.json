@@ -1,0 +1,167 @@
+{
+  "startedAtUTC": "2026-11-11T18:13:00.260Z",
+  "tool": "built-in image_gen",
+  "state": "published and anonymously verified",
+  "previousCatalogVersion": 6,
+  "siteProjectID": "appgprj_6af37270360881919fa6b473672db145",
+  "games": [
+    {
+      "key": "professor-layton-azran-legacy",
+      "title": "Professor Layton and the Azran Legacy",
+      "programIDs": [
+        "00040000000F2F00"
+      ],
+      "idEvidence": {
+        "source": "Resources/CinematicArt/Title-IDs.json",
+        "matches": {
+          "00040000000F2F00": "Professor Layton and the Azran Legacy"
+        }
+      },
+      "prompt": "An original fan illustration inspired by Professor Layton and the Azran Legacy. Professor Hershel Layton in his tall brown top hat and dark coat stands with his small blue-capped apprentice Luke on the right of a snowy cliffside observatory. Their warmly lit brass-and-wood expedition airship is moored beside ancient glacial ruins; intricate weathered stone architecture and ice arches stretch toward a turquoise frozen valley under a violet twilight. Quiet mystery, inviting exploration and refined storybook adventure, cool crystalline colors balanced by amber cabin light. Landscape 1536x1024 pixels, 3:2 aspect ratio. One original premium cinematic landscape illustration for EmuDen’s game-library background. Compose recognizable subjects on the right half, leaving the left third and lower quarter calm and moderately dark for white interface overlays. Fill edge to edge with dimensional stylized materials, sophisticated cinematic lighting and atmospheric depth. Original fan art, not an official asset or a gameplay screenshot. No text, letters, logos, labels, interface, borders, watermarks or cover layout.",
+      "status": "accepted",
+      "master": "ArtworkMasters/3ds/professor-layton-azran-legacy/scene.png",
+      "sha256": "2e251be757778f9eaedf60f80a5b10b13fc78bf516c5735746d2843167b44d90",
+      "width": 1536,
+      "height": 1024,
+      "generatedSource": "/Users/brandonaleman/.codex/generated_images/01a1b7ff-189e-7f03-a958-9b24dd4ea411/exec-0ea64458-4110-412e-9add-92e06fe54a49.png",
+      "inspection": "Viewed actual output: Layton and Luke on the right beside a warmly lit expedition airship, icy ruins and turquoise valley, calm dark left/lower area. Clean silhouettes and geometry; no text, logos, interface or borders. Accepted original fan illustration."
+    },
+    {
+      "key": "professor-layton-miracle-mask",
+      "title": "Professor Layton and the Miracle Mask",
+      "programIDs": [
+        "00040000000A8500"
+      ],
+      "idEvidence": {
+        "source": "Resources/CinematicArt/Title-IDs.json",
+        "matches": {
+          "00040000000A8500": "Professor Layton and the Miracle Mask"
+        }
+      },
+      "prompt": "An original fan illustration inspired by Professor Layton and the Miracle Mask. Professor Hershel Layton in a tall brown top hat and his apprentice Luke stand on the right of a warm stone balcony, surveying a lavish desert carnival city at dusk. Venetian-inspired festival masks hang as decorative sculpted objects, domed sandstone towers, a distant Ferris wheel and lantern-lit plazas emerge from rose-gold desert haze. An elegant, enigmatic masked gentleman in a dark cloak stands on a distant rooftop. Sophisticated storybook mystery atmosphere and cinematic architectural depth. Landscape 1536x1024 pixels, 3:2 aspect ratio. One original premium cinematic landscape illustration for EmuDen’s game-library background. Compose recognizable subjects on the right half, leaving the left third and lower quarter calm and moderately dark for white interface overlays. Fill edge to edge with dimensional stylized materials, sophisticated cinematic lighting and atmospheric depth. Original fan art, not an official asset or a gameplay screenshot. No text, letters, logos, labels, interface, borders, watermarks or cover layout.",
+      "status": "accepted",
+      "master": "ArtworkMasters/3ds/professor-layton-miracle-mask/scene.png",
+      "sha256": "a1a5fbca42ad19499c42d8e6141ee34d2844a395b28ec07c1c0d185b0a3632fc",
+      "width": 1536,
+      "height": 1024,
+      "generatedSource": "/Users/brandonaleman/.codex/generated_images/01a1b7ff-189e-7f03-a958-9b24dd4ea411/exec-d76d408d-e47e-45f3-93a8-9a217f110cfb.png",
+      "inspection": "Viewed actual output: Layton and Luke on right balcony, ornamental masks, layered desert carnival city and Ferris wheel at warm dusk; dark calm left/lower space. No text, logos, interface or borders. Accepted original fan illustration."
+    },
+    {
+      "key": "luigis-mansion-3ds",
+      "title": "Luigi’s Mansion",
+      "programIDs": [
+        "00040000001D1800",
+        "00040000001D1900",
+        "00040000001D1A00"
+      ],
+      "idEvidence": {
+        "source": "Resources/CinematicArt/Title-IDs.json",
+        "matches": {
+          "00040000001D1800": "Luigi’s Mansion",
+          "00040000001D1900": "Luigi’s Mansion",
+          "00040000001D1A00": "Luigi’s Mansion"
+        }
+      },
+      "prompt": "An original fan illustration inspired by Luigi’s Mansion, the Nintendo 3DS remake of the original mansion adventure. Luigi, in a green cap without lettering, green shirt and blue overalls, stands on the right in a grand old haunted-mansion foyer, holding a flashlight and wearing his red ghost-catching vacuum backpack. A friendly translucent pale ghost peeks around a carved banister. Crooked portraits with indistinct painted silhouettes, antique wood paneling, curling staircase, a dusty chandelier and drifting cool mist. Gentle spooky comedy, emerald and moonlit blue shadows contrasted with the warm flashlight beam; beautiful dimensional stylized illustration. Landscape 1536x1024 pixels, 3:2 aspect ratio. One original premium cinematic landscape illustration for EmuDen’s game-library background. Compose recognizable subjects on the right half, leaving the left third and lower quarter calm and moderately dark for white interface overlays. Fill edge to edge with dimensional stylized materials, sophisticated cinematic lighting and atmospheric depth. Original fan art, not an official asset or a gameplay screenshot. No text, letters, logos, labels, interface, borders, watermarks or cover layout.",
+      "status": "blocked",
+      "error": "image generation failed: http 400 Bad Request: Some(\"{\\n  \\\"error\\\": {\\n    \\\"message\\\": \\\"Your request was rejected by the safety system. If you believe this is an error, contact us at help.openai.com and include the request ID 835b98a4-26aa-478f-aa0d-a3dd56d877e9.\\\",\\n    \\\"type\\\": \\\"image_generation_user_error\\\",\\n    \\\"param\\\": null,\\n    \\\"code\\\": \\\"moderation_blocked\\\",\\n    \\\"moderation_details\\\": {\\n      \\\"moderation_stage\\\": \\\"output\\\",\\n      \\\"categories\\\": [\\n        \\\"other\\\"\\n      ]\\n    }\\n  }\\n}\")",
+      "note": "Image-tool output rejection; retain existing fallback, no retry or bypass."
+    },
+    {
+      "key": "mario-tennis-open",
+      "title": "Mario Tennis Open",
+      "programIDs": [
+        "000400000007C700"
+      ],
+      "idEvidence": {
+        "source": "Resources/CinematicArt/Title-IDs.json",
+        "matches": {
+          "000400000007C700": "Mario Tennis Open"
+        }
+      },
+      "prompt": "An original fan illustration inspired by Mario Tennis Open. Mario, wearing a plain red cap without lettering, red shirt and blue overalls, stands on the right beside Princess Peach in pink tennis attire, each holding a tennis racket at the edge of a pristine grass court. A bright yellow tennis ball rests near the sideline. A charming fantasy tournament stadium surrounds the court, with rounded green hills, castle-like cream towers, colorful blank pennants and distant spectators rendered as soft shapes. Golden late-afternoon light and energetic premium sports-adventure atmosphere; dynamic but uncluttered scene, no match interface. Landscape 1536x1024 pixels, 3:2 aspect ratio. One original premium cinematic landscape illustration for EmuDen’s game-library background. Compose recognizable subjects on the right half, leaving the left third and lower quarter calm and moderately dark for white interface overlays. Fill edge to edge with dimensional stylized materials, sophisticated cinematic lighting and atmospheric depth. Original fan art, not an official asset or a gameplay screenshot. No text, letters, logos, labels, interface, borders, watermarks or cover layout.",
+      "status": "blocked",
+      "error": "image generation failed: http 400 Bad Request: Some(\"{\\n  \\\"error\\\": {\\n    \\\"message\\\": \\\"Your request was rejected by the safety system. If you believe this is an error, contact us at help.openai.com and include the request ID 52611158-3f70-437a-ab5b-6b4cc8a62196.\\\",\\n    \\\"type\\\": \\\"image_generation_user_error\\\",\\n    \\\"param\\\": null,\\n    \\\"code\\\": \\\"moderation_blocked\\\",\\n    \\\"moderation_details\\\": {\\n      \\\"moderation_stage\\\": \\\"output\\\",\\n      \\\"categories\\\": [\\n        \\\"other\\\"\\n      ]\\n    }\\n  }\\n}\")",
+      "note": "Image-tool output rejection; retain existing fallback, no retry or bypass."
+    }
+  ],
+  "freezeManifest": "build/Artwork-Heartbeat-20261111-1813/frozen-hashes.json",
+  "updatedAtUTC": "2026-11-11T18:19:34.146608+00:00",
+  "catalogVersion": 7,
+  "validationReport": "build/Artwork-Heartbeat-20261111-1813/validation.json",
+  "domainTests": {
+    "passed": 12,
+    "failed": 0,
+    "log": "build/Artwork-Heartbeat-20261111-1813/tests.log"
+  },
+  "newAssetsVerified": [
+    {
+      "key": "professor-layton-azran-legacy",
+      "asset": {
+        "path": "images/professor-layton-azran-legacy/scene-e24b056a36ac.jpg",
+        "sha256": "e24b056a36aca94f76d3e5528711bc0060629cc1de8af8176d8dac4ac744f8bd",
+        "bytes": 605755,
+        "width": 1536,
+        "height": 1024
+      },
+      "masterHashUnchanged": true
+    },
+    {
+      "key": "professor-layton-miracle-mask",
+      "asset": {
+        "path": "images/professor-layton-miracle-mask/scene-d9a3a7d05eaa.jpg",
+        "sha256": "d9a3a7d05eaad6d6169d06978b9a4f505240665115dd1e3304d7fb7854e12bb4",
+        "bytes": 599486,
+        "width": 1536,
+        "height": 1024
+      },
+      "masterHashUnchanged": true
+    }
+  ],
+  "priorImageURLsRetained": 65,
+  "allPriorImageHashesUnchanged": true,
+  "allPriorCatalogRowsUnchanged": true,
+  "gameScenes": 42,
+  "covers": 24,
+  "appBridgeAndWidgetSourcesUnchanged": true,
+  "signedArchivesAndSourcePackages14Through17Unchanged": true,
+  "site": {
+    "projectID": "appgprj_6af37270360881919fa6b473672db145",
+    "commitSHA": "494a6460ed092e3eabb7ac0c2ea4b85d8f1fb4b7",
+    "archive": "build/Artwork-Heartbeat-20261111-1813/deploy.tar.gz",
+    "savedVersionID": "appgprj_6af37270360881919fa6b473672db145~appgver_52f0712af6108191aa5556e1ff6e61a6",
+    "versionNumber": 6,
+    "audience": "public, unchanged",
+    "archiveVerification": {
+      "files": 72,
+      "onlyStaticPublicAssetsAndHostingManifest": true,
+      "allPackagedFilesMatchSource": true,
+      "hostingManifestRelocatedByHelper": "dist/.openai/hosting.json",
+      "archiveSHA256": "dae27291bdb4ba4abc006bb6f0b5f621e50d91495e0ffa9e1c97255b080f4e5f",
+      "previous65ImageURLsIncluded": true
+    },
+    "deploymentID": "appgdep_6af4b24fd10081918ed8d415bd888019",
+    "deploymentStatus": "succeeded",
+    "url": "https://emuden-artwork-catalog.headyopossum2.chatgpt.site"
+  },
+  "liveVerification": {
+    "allImagesAvailableWithNetworkingDisabled": true,
+    "bytesVerified": 1205241,
+    "cacheDirectory": "/Volumes/SamsungT7/EmulatorApp/build/LiveArtworkSmoke-FE22DC9C-A6BF-4D62-923C-493766BD60CC",
+    "catalogVersion": 7,
+    "entries": 42,
+    "imagesVerified": 2,
+    "liveVersionUpgrade": true,
+    "transport": "Actual RemoteArtworkCatalog Swift client, anonymous HTTPS with a fresh ephemeral session; no supplied login credentials or authorization headers",
+    "url": "https://emuden-artwork-catalog.headyopossum2.chatgpt.site/"
+  },
+  "completedAtUTC": "2026-11-11T18:23:16.831781+00:00",
+  "queueCounts": {
+    "blocked": 7,
+    "accepted": 14,
+    "pending": 23
+  },
+  "remainingWork": "23 pending entries; 7 blocked by image-tool output rejections. Continue bounded scheduled passes without retrying blocked titles. Stop by 2026-11-12 08:00 America/New_York. No pending publication.",
+  "allFrozenHashesVerifiedAfterPublication": true
+}

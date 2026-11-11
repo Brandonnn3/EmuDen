@@ -1,0 +1,509 @@
+{
+  "sources": [
+    {
+      "source": "Bridge/libretro.h",
+      "sha256": "5b6d8fe1056a39591ee6c479512eed4a6f6efd8f89f64f10cf8b4757a2aa48a0",
+      "bytes": 361176,
+      "noticeText": "leading license comment"
+    },
+    {
+      "source": "Bridge/libretro_vulkan.h",
+      "sha256": "c6c11e4c4e792c0466e494bcfc8c10fa3d83f9b1d70e0fbf6307720d9f79823e",
+      "bytes": 24532,
+      "noticeText": "leading license comment"
+    },
+    {
+      "source": "Resources/Homebrew-NOTICE.txt",
+      "sha256": "2b9cd5f5d75d6d136378e97a0de21031c0cac8ea63a22bf5bf2cd99aeee8e067",
+      "bytes": 7015,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Resources/MenuAudio/NOTICE.txt",
+      "sha256": "94edb471902e1b4f6b8910b1b7e4b27c6258ab7576083954ef9643bfdfdf158b",
+      "bytes": 351,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/LICENSE.txt",
+      "sha256": "52b66866c785f554207a4685d3d6f5f067938050f61c4cdc0a05b4bf20c6e037",
+      "bytes": 36597,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/boost/LICENSE_1_0.txt",
+      "sha256": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566",
+      "bytes": 1338,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/catch2/LICENSE.txt",
+      "sha256": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566",
+      "bytes": 1338,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/cpp-jwt/LICENSE",
+      "sha256": "b94e67785852db5abe84b362aa4d950d98a02e1969caa2321df71672bf433631",
+      "bytes": 1074,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/cryptopp/LICENSE",
+      "sha256": "5bb6b564ac9bb3663c0d76d18dea5a3bcd863476870a95dd3806068d65c3c4f0",
+      "bytes": 4080,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/cubeb/LICENSE",
+      "sha256": "44c6b5ae5ec3fe2fbc608b00e6f4896f4d2d5c7e525fcbaa3eaa3cf2f3d5a983",
+      "bytes": 732,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/cubeb/cmake/sanitizers-cmake/LICENSE",
+      "sha256": "4b67e7ae8c91e68e1a929eb1cbaa4c773c6d19aa91aaa12c390cf9560d1c9799",
+      "bytes": 1154,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/cubeb/googletest/LICENSE",
+      "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138",
+      "bytes": 1475,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/cubeb/src/cubeb-coreaudio-rs/LICENSE",
+      "sha256": "6e6f56aff5bbf3cbc60747e152fb1a719bd0716aaf6d711c554f57d92e96297c",
+      "bytes": 731,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/cubeb/src/cubeb-pulse-rs/LICENSE",
+      "sha256": "44c6b5ae5ec3fe2fbc608b00e6f4896f4d2d5c7e525fcbaa3eaa3cf2f3d5a983",
+      "bytes": 732,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/dds-ktx/LICENSE",
+      "sha256": "70c7fbd0f0df984c63a1ae6497b961745eb06672b8108d77c82af3498bf59d20",
+      "bytes": 1322,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/discord-rpc/LICENSE",
+      "sha256": "12054cc15e274c9a10966fd7d8740c12dbd679dec2468e370818d899f9a3a634",
+      "bytes": 1053,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/dllwalker/LICENSE.txt",
+      "sha256": "9449028d45cc170c57a915677441f943a93b8b6862849f5373c771f38e798363",
+      "bytes": 1304,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/dynarmic/LICENSE.txt",
+      "sha256": "14ef8e5ce8e564bbbe28bc7a306de80c786124de34955b2b4e868cb64bbe9faa",
+      "bytes": 651,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/dynarmic/externals/biscuit/LICENSE.md",
+      "sha256": "fab5d630b6474d7729a9cd8bff584e3c5d685259815228a12477015852a42596",
+      "bytes": 1057,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/dynarmic/externals/catch/LICENSE.txt",
+      "sha256": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566",
+      "bytes": 1338,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/dynarmic/externals/fmt/LICENSE",
+      "sha256": "07580f2a3b35709ce703d523f447b242f6dfec7582a8c0df102c7fa2849375f8",
+      "bytes": 1431,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/dynarmic/externals/mcl/LICENSE",
+      "sha256": "63343a4ec1a8ae9a0183dafe2663c1ea5a95eb583c1447ec2e93c9c9f02817ee",
+      "bytes": 1066,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/dynarmic/externals/oaknut/LICENSE",
+      "sha256": "8b689195ab4141a20f92a525d1f268893a1e44d51adf2fb5b4caec8769a33dbd",
+      "bytes": 1084,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/dynarmic/externals/robin-map/LICENSE",
+      "sha256": "11f2c685ba565a31aef1219f63a7a8845602c97bff70016b9e3278dfe51a2ec5",
+      "bytes": 1102,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/dynarmic/externals/xbyak/COPYRIGHT",
+      "sha256": "7e411d5c5d38501a504843f58afb6824439c828872b35d2ff1e892e73fd1a30d",
+      "bytes": 1501,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/dynarmic/externals/zycore/LICENSE",
+      "sha256": "7991ec4481a82c51d196f7440fda34c578aab51f8b9c7023935c6e03b57638bd",
+      "bytes": 1122,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/dynarmic/externals/zydis/LICENSE",
+      "sha256": "e5e99718209e94baaf3e9cbf6f64aa3329c9e73c63b1ab47e10f29d81974e6f3",
+      "bytes": 1122,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/dynarmic/externals/zydis/dependencies/zycore/LICENSE",
+      "sha256": "7991ec4481a82c51d196f7440fda34c578aab51f8b9c7023935c6e03b57638bd",
+      "bytes": 1122,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/enet/LICENSE",
+      "sha256": "a29cd246638974da7c6edf423a0a69d4a6f7d759940b7cfa9a2bc3442ac3834c",
+      "bytes": 1060,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/faad2/faad2/COPYING",
+      "sha256": "d3baf3a54943cf12a994c85867a18dec84f810901b2f2878ddfd77efcc3c150f",
+      "bytes": 18272,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/fmt/LICENSE",
+      "sha256": "07580f2a3b35709ce703d523f447b242f6dfec7582a8c0df102c7fa2849375f8",
+      "bytes": 1431,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/glslang/LICENSE.txt",
+      "sha256": "adb783e734e906d1f46db5df29991dbde84bdb0ceab502ac2febb44fe3c2b5f4",
+      "bytes": 54705,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/inih/inih/LICENSE.txt",
+      "sha256": "9ae3b39e83e9158e44b67733baa3bb2d84e80efdcfb14a5820210a42c7abdf7f",
+      "bytes": 1510,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/libadrenotools/LICENSE",
+      "sha256": "7ea796e199e46093c2f5c391697bce5abeacd02b7216aa0a84e5839afb5584f3",
+      "bytes": 1299,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/libadrenotools/lib/linkernsbypass/LICENSE",
+      "sha256": "7ea796e199e46093c2f5c391697bce5abeacd02b7216aa0a84e5839afb5584f3",
+      "bytes": 1299,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/libressl/COPYING",
+      "sha256": "5c63613f008f16a9c0025c096bbd736cecf720494d121b5c5203e0ec6e5955b1",
+      "bytes": 6500,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/libusb/libusb/COPYING",
+      "sha256": "5df07007198989c622f5d41de8d703e7bef3d0e79d62e24332ee739a452af62a",
+      "bytes": 26436,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/libyuv/LICENSE",
+      "sha256": "2b2cc1180c7e6988328ad2033b04b80117419db9c4c584918bbb3cfec7e9364f",
+      "bytes": 1506,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/lodepng/lodepng/LICENSE",
+      "sha256": "bdafa318b8e637d600ca1b60545e894881977a16a16b74809c95e805701621e3",
+      "bytes": 886,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/microtar/LICENSE",
+      "sha256": "235ac8c3e43c67ced4a89fad8af65dc9f92a7627e5ce3e0016627b7505ead0ae",
+      "bytes": 1047,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/nihstro/license.txt",
+      "sha256": "27506f579df456adae7c4cab1264c99c895177fa1c7aa9743ab1f3bf77a66ff5",
+      "bytes": 1506,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/oaknut/LICENSE",
+      "sha256": "8b689195ab4141a20f92a525d1f268893a1e44d51adf2fb5b4caec8769a33dbd",
+      "bytes": 1084,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/openal-soft/COPYING",
+      "sha256": "d808ce217e5b611854da622b57ec29fe545584c48bc5352fae72a4b6e5074a15",
+      "bytes": 23330,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/openal-soft/LICENSE-pffft",
+      "sha256": "64056328b3e7bc104e24ef96accc1a7abead156f0c02d1b87c97e3f3a28030de",
+      "bytes": 1669,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/openal-soft/fmt-11.0.2/LICENSE",
+      "sha256": "07580f2a3b35709ce703d523f447b242f6dfec7582a8c0df102c7fa2849375f8",
+      "bytes": 1431,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/sdl2/SDL/LICENSE.txt",
+      "sha256": "97f35b302b361680ec1e891e95d2d52097bb95abff361434916d99dc1305f127",
+      "bytes": 884,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/sdl2/SDL/Xcode/SDL/pkg-support/resources/License.txt",
+      "sha256": "37b975b5273734ea157fb1e363d06191036f289eca7767f736967816bedd156f",
+      "bytes": 909,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/sdl2/SDL/Xcode-iOS/Demos/data/bitmapfont/license.txt",
+      "sha256": "5059bc9c2f37b7e7a557685ae9330ecfd798537bdfde94de63a9c721c92a8856",
+      "bytes": 13091,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/sdl2/SDL/src/hidapi/LICENSE-bsd.txt",
+      "sha256": "30eb1bef29b46f8ba7ab8b416035dbd93cb034a45481dd97815b944284582cd2",
+      "bytes": 1534,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/sdl2/SDL/src/hidapi/LICENSE-gpl3.txt",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/sdl2/SDL/src/hidapi/LICENSE-orig.txt",
+      "sha256": "fb5436aa63d1b71a8dfbf74ecaf1a5b4e1ec4df7f80074d11fec99284f69ca5f",
+      "bytes": 264,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/sdl2/SDL/src/hidapi/LICENSE.txt",
+      "sha256": "7d3b087c34f35d4d538e3bcddd1ff8f66e92f9ef336881999482800ddf840913",
+      "bytes": 530,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/sdl2/SDL/src/video/yuv2rgb/LICENSE",
+      "sha256": "f7d74004cc75778cae46c5f0139f244d67c07ef64cf51937e8272352197dcb18",
+      "bytes": 1480,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/sdl2/SDL/test/COPYING",
+      "sha256": "d5a549e4a7b88cb696d0db15b21830061131ed361257ab399a33ca08ce0b33d5",
+      "bytes": 210,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/sdl2/SDL/visualtest/COPYING.txt",
+      "sha256": "dae65ccf728227eff8e10194437078a5628047b9f55d796039688e7ca8e3aa4e",
+      "bytes": 947,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/sirit/sirit/LICENSE.txt",
+      "sha256": "85037eeef55658177becb552477576a41bbc933705534b529c4c4818bb490480",
+      "bytes": 1492,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/sirit/sirit/externals/SPIRV-Headers/LICENSE",
+      "sha256": "ff04ae7e6a468587fe59434fee2e67c0e2a749b592c794b764ff80f30b94a084",
+      "bytes": 4812,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/soundtouch/COPYING.TXT",
+      "sha256": "84c6d82dc7de80f5b73f231edfd3ddc5b53513908117452bfa37ea36bb4b7e0a",
+      "bytes": 24389,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/spirv-headers/LICENSE",
+      "sha256": "ff04ae7e6a468587fe59434fee2e67c0e2a749b592c794b764ff80f30b94a084",
+      "bytes": 4812,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/spirv-tools/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/spirv-tools/utils/vscode/src/lsp/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/teakra/LICENSE",
+      "sha256": "84ac887a2ae105eacfb5aeb1921502ef91e0bd230bb2e6de3e8507f79177adf5",
+      "bytes": 1067,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/vma/LICENSE.txt",
+      "sha256": "8d70e4cf2a9941f6454da71cd60e38484dd3e34810c824760d550e982af6d97a",
+      "bytes": 1099,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/vulkan-headers/LICENSE.md",
+      "sha256": "ac24e5ea920e4318e4d02c4086ae51f53cfb03feed06c18df1019e7ada1ec7bc",
+      "bytes": 458,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/xbyak/COPYRIGHT",
+      "sha256": "7e411d5c5d38501a504843f58afb6824439c828872b35d2ff1e892e73fd1a30d",
+      "bytes": 1501,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/xxHash/LICENSE",
+      "sha256": "6ffedbc0f7878612d2b23589f1ff2ab15633e1df7963a5d9fc750ec5500c7e7a",
+      "bytes": 1389,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/xxHash/cli/COPYING",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "bytes": 18092,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/xxHash/tests/bench/LICENSE",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "bytes": 18092,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/xxHash/tests/collisions/LICENSE",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "bytes": 18092,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/zstd/COPYING",
+      "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
+      "bytes": 18091,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/zstd/LICENSE",
+      "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+      "bytes": 1549,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/MoltenVK/Source/External/SPIRV-Cross/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/MoltenVK/Source/External/SPIRV-Tools/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/MoltenVK/Source/External/SPIRV-Tools/external/spirv-headers/LICENSE",
+      "sha256": "ea43b1de38a6f90c488800d66dec1ed671e68cda530266bc96951fb5b6307613",
+      "bytes": 23503,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/MoltenVK/Source/External/SPIRV-Tools/utils/vscode/src/lsp/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/MoltenVK/Source/External/Volk/LICENSE.md",
+      "sha256": "04a0693a84f19e53d281ca98bbb0c86ca77251ab13769c6168e6684feb9a1436",
+      "bytes": 1066,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/MoltenVK/Source/External/Vulkan-Headers/LICENSE.md",
+      "sha256": "95ad366d23fadf701d355bc45fb8b82ae2d700239471d35d41286ac3b08ff903",
+      "bytes": 495,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/MoltenVK/Source/External/Vulkan-Tools/LICENSE.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/MoltenVK/Source/External/cereal/LICENSE",
+      "sha256": "58604a126af6a671ea390ee3d5b3e42228aa59b2858fb7af1d5b20b31739ccbb",
+      "bytes": 1542,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/MoltenVK/Source/External/cereal/include/cereal/external/LICENSE",
+      "sha256": "642e7003561473f4f1f3dd09e053ee2a6ecfb0563e961a3392e914295f9d350c",
+      "bytes": 921,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/MoltenVK/Source/External/cereal/include/cereal/external/rapidjson/LICENSE",
+      "sha256": "dc2ef044e52a4c0ea784f9b54229775ce5275505cc09f21283dfa301e9c962fa",
+      "bytes": 678,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/MoltenVK/Source/External/cereal/include/cereal/external/rapidjson/msinttypes/LICENSE",
+      "sha256": "bf3c9bf6a176c890c7387c71f9ae5bcaf9d33324b9d4a5f8524a6f8bf3063097",
+      "bytes": 1569,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/MoltenVK/Source/External/cereal/include/cereal/external/rapidxml/license.txt",
+      "sha256": "794bf3b2ecf5cf0c740ac6c524d66ce6284c4b1de1f983d21a242b8abbeb9720",
+      "bytes": 2804,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/MoltenVK/Source/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358,
+      "noticeText": "complete file"
+    }
+  ],
+  "noticeSHA256": "fa6db9f242fcc06cb031120ef8a556a90428c67096546a390914d467deecb413"
+}

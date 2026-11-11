@@ -35,6 +35,8 @@ if [ "$PLATFORM_NAME" = iphonesimulator ]; then
   mv "$metal/MoltenVK.arm64" "$metal/MoltenVK"
 fi
 cp "$SRCROOT/Vendor/MoltenVK/MoltenVK/LICENSE" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/MoltenVK-LICENSE.txt"
+python3 "$SRCROOT/Scripts/generate-third-party-notices.py" --check
+cp "$SRCROOT/Resources/ThirdPartyNotices.txt" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/ThirdPartyNotices.txt"
 if [ "$ACTION" = install ] && [ "$PLATFORM_NAME" = iphoneos ]; then
   core_symbols="$SRCROOT/Vendor/Azahar/Azahar.framework.dSYM"
   metal_symbols="$SRCROOT/Vendor/MoltenVK/Device/MoltenVK.framework.dSYM"

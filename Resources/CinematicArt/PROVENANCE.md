@@ -1,5 +1,7 @@
 # Option A illustration assets
 
+**Legal review hold, 11 November 2026:** this file records how images were made, not permission from owners of depicted characters, games or box art. Publisher rights have not been documented. No existing image is cleared for public distribution merely because it was generated with AI or approved as a visual design. See `Docs/Legal/REVIEW-2026-11-11.md`. The artwork expansion job is paused; masters and signed releases remain preserved.
+
 These are illustrative menu textures, not emulator screenshots or game/system files. They never start emulation or produce preview audio.
 
 - `Approved-A-Wide.png`: unmodified copy of the owner-approved `Docs/Mockups/Duo-Inner-v1/A-Cinematic-Inner-Home.png` concept.

@@ -521,6 +521,26 @@
       ],
       "rank": null,
       "bonus": true
+    },
+    {
+      "key": "professor-layton-azran-legacy",
+      "title": "Professor Layton and the Azran Legacy",
+      "aliases": [],
+      "programIDs": [
+        "00040000000F2F00"
+      ],
+      "rank": null,
+      "bonus": true
+    },
+    {
+      "key": "professor-layton-miracle-mask",
+      "title": "Professor Layton and the Miracle Mask",
+      "aliases": [],
+      "programIDs": [
+        "00040000000A8500"
+      ],
+      "rank": null,
+      "bonus": true
     }
   ],
   "note": "Artwork matching only; original game titles, files and save identities remain unchanged. No title IDs for demos/trailers/updates are intentionally included. Later library expansions are unranked additions; they do not change the original first-25 ranking."
