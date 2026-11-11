@@ -1,0 +1,1 @@
+emulator,retro,handheld,homebrew,controller,gamepad,library,dual screen,3ds

@@ -1,0 +1,158 @@
+{
+  "startedAtUTC": "2026-11-11T13:47:57.318Z",
+  "tool": "built-in image_gen",
+  "state": "published and anonymously verified",
+  "games": [
+    {
+      "key": "monster-hunter-generations",
+      "title": "Monster Hunter Generations",
+      "programIDs": [
+        "0004000000187000"
+      ],
+      "idEvidence": {
+        "source": "Resources/CinematicArt/Title-IDs.json",
+        "matches": {
+          "0004000000187000": "Monster Hunter Generations"
+        }
+      },
+      "prompt": "An original fan illustration inspired by Monster Hunter Generations. A majestic red Rathalos wyvern rests on an ancient rocky ridge at the right above an immense lush forest valley, its broad patterned wings partly opened, distant jagged mountains, waterfall mist, small village lanterns far below and a dramatic warm sunrise. Quiet anticipation of exploration, peaceful wildlife moment, no combat or injury. Landscape 1536x1024, aspect ratio 3:2. One original premium cinematic scene for EmuDen’s game-library background. Sophisticated atmospheric depth, beautiful lighting and careful materials. Environmental composition with the recognizable subject on the right half; calm moderately dark left third and lower quarter for white app UI. Fill edge to edge. No text, letters, logos, labels, borders, watermarks, interface, cover layout or simulated gameplay screenshot. Original game-inspired fan illustration.",
+      "status": "accepted",
+      "master": "ArtworkMasters/3ds/monster-hunter-generations/scene.png",
+      "sha256": "9ab26e3f6d12f362029afc9ba20cd615dc8687af59eca98866705e7278607dde",
+      "width": 1536,
+      "height": 1024,
+      "generatedSource": "/Users/brandonaleman/.codex/generated_images/01a1b7ff-189e-7f03-a958-9b24dd4ea411/exec-303ff506-e570-4235-93ad-44a01ac7cba2.png",
+      "inspection": "Viewed generated image: red wyvern resting on right ridge, richly lit forest valley, dark calm left/lower area suitable for UI, clean anatomy and dimensional detail, no lettering/logo/border/interface or combat injury. Accepted as original fan illustration."
+    },
+    {
+      "key": "mario-and-luigi-dream-team",
+      "title": "Mario & Luigi: Dream Team",
+      "programIDs": [
+        "00040000000D5A00"
+      ],
+      "idEvidence": {
+        "source": "Resources/CinematicArt/Title-IDs.json",
+        "matches": {
+          "00040000000D5A00": "Mario & Luigi: Dream Team"
+        }
+      },
+      "prompt": "An original fan illustration inspired by Mario & Luigi: Dream Team. Mario in his red cap and blue overalls and Luigi in green stand together on a floating dream-island terrace at the right. Beyond them whimsical layered tropical islands float among glowing lavender-blue clouds, curling dream portals and soft star-like lights; distant Piillo-style stone ruins and palms. Playful, richly dimensional and cinematic, with a calm left-hand cloudscape. Landscape 1536x1024, aspect ratio 3:2. One original premium cinematic scene for EmuDen’s game-library background. Sophisticated atmospheric depth, beautiful lighting and careful materials. Environmental composition with the recognizable subject on the right half; calm moderately dark left third and lower quarter for white app UI. Fill edge to edge. No text, letters, logos, labels, borders, watermarks, interface, cover layout or simulated gameplay screenshot. Original game-inspired fan illustration.",
+      "status": "blocked",
+      "reason": "Built-in image_gen rejected its output. moderation_blocked, category other; no retry or bypass attempted.",
+      "requestID": "383560f1-4d16-4474-a181-2f043a02218d"
+    },
+    {
+      "key": "paper-mario-sticker-star",
+      "title": "Paper Mario: Sticker Star",
+      "programIDs": [
+        "00040000000A5E00"
+      ],
+      "idEvidence": {
+        "source": "Resources/CinematicArt/Title-IDs.json",
+        "matches": {
+          "00040000000A5E00": "Paper Mario: Sticker Star"
+        }
+      },
+      "prompt": "An original fan illustration inspired by Paper Mario: Sticker Star. Paper Mario, a charming flat paper plumber in a red cap and blue overalls, stands at the right on a beautifully crafted layered paper forest path, with a tiny crown-shaped paper companion nearby. A magical handcrafted landscape of folded emerald trees, cream paper mountains, bright folded blossoms and a glowing paper comet in a distant twilight sky. Tangible cut-paper textures and restrained gold highlights, no interface stickers or text. Landscape 1536x1024, aspect ratio 3:2. One original premium cinematic scene for EmuDen’s game-library background. Sophisticated atmospheric depth, beautiful lighting and careful materials. Environmental composition with the recognizable subject on the right half; calm moderately dark left third and lower quarter for white app UI. Fill edge to edge. No text, letters, logos, labels, borders, watermarks, interface, cover layout or simulated gameplay screenshot. Original game-inspired fan illustration.",
+      "status": "blocked",
+      "reason": "Built-in image_gen rejected its output. moderation_blocked, category other; no retry or bypass attempted.",
+      "requestID": "1c8d50a4-2fc2-4df5-b85e-ebd5e7961c77"
+    },
+    {
+      "key": "rhythm-heaven-megamix",
+      "title": "Rhythm Heaven Megamix",
+      "programIDs": [
+        "000400000018A400"
+      ],
+      "idEvidence": {
+        "source": "Resources/CinematicArt/Title-IDs.json",
+        "matches": {
+          "000400000018A400": "Rhythm Heaven Megamix"
+        }
+      },
+      "prompt": "An original fan illustration inspired by Rhythm Heaven Megamix. A joyful whimsical rhythm world at twilight: a small group of white round-headed black-clad chorus singers perform together on a floating circular stage on the right, surrounded by sculptural musical toy shapes, warm lantern-like light orbs and tiny colorful floating platforms receding into a blue-violet sky. Clean graphic character shapes translated into premium softly shaded three-dimensional illustration, playful musical energy, calm atmospheric left side. Landscape 1536x1024, aspect ratio 3:2. One original premium cinematic scene for EmuDen’s game-library background. Sophisticated atmospheric depth, beautiful lighting and careful materials. Environmental composition with the recognizable subject on the right half; calm moderately dark left third and lower quarter for white app UI. Fill edge to edge. No text, letters, logos, labels, borders, watermarks, interface, cover layout or simulated gameplay screenshot. Original game-inspired fan illustration.",
+      "status": "accepted",
+      "master": "ArtworkMasters/3ds/rhythm-heaven-megamix/scene.png",
+      "sha256": "3a97ced82f61e6973bd41f2d3f602adc076321e8dc93ea17d3ba2efe86c1eb14",
+      "width": 1536,
+      "height": 1024,
+      "generatedSource": "/Users/brandonaleman/.codex/generated_images/01a1b7ff-189e-7f03-a958-9b24dd4ea411/exec-9cd0a401-efbe-4f9e-a233-581e0c6cd7b8.png",
+      "inspection": "Viewed generated image: joyful round-headed chorus characters on right stage, warm musical toy world, calm dark blue left and lower clouds for white UI. Clean dimensional shapes, no lettering/logo/watermark/border/interface. Accepted as original fan illustration."
+    }
+  ],
+  "frozenSourceHashes": {
+    "build/TestFlight/EmuDen-0.1.0-14-source.tar.gz": "7e1b8ad531021204138dfcb6254909a97f9b92a9b2146ebd6cd8c84042478f01",
+    "build/TestFlight/EmuDen-0.1.0-15-source.tar.gz": "7d8a0a20f450d941b94aa7b107cfc421cf6ecacfe756f9d1209be0b2e08c8fd0",
+    "build/TestFlight/EmuDen-0.1.0-16-source.tar.gz": "8b07d0f94d048a61b9f47db6b18e30f02a679899cce4085f8e044c98205fda25"
+  },
+  "previousCatalogVersion": 4,
+  "siteProjectID": "appgprj_6af37270360881919fa6b473672db145",
+  "catalogVersion": 5,
+  "validationReport": "build/Artwork-Heartbeat-20261111-1347/validation.json",
+  "domainTests": {
+    "passed": 11,
+    "failed": 0,
+    "log": "build/Artwork-Heartbeat-20261111-1347/tests.log"
+  },
+  "newAssetsVerified": [
+    {
+      "key": "monster-hunter-generations",
+      "asset": {
+        "path": "images/monster-hunter-generations/scene-67f30c54e9f5.jpg",
+        "sha256": "67f30c54e9f572fa52cfc43033d793fa4ea85bf9ce69b1ba6fd59a1e6c6a2bb8",
+        "bytes": 714111,
+        "width": 1536,
+        "height": 1024
+      },
+      "masterHashUnchanged": true
+    },
+    {
+      "key": "rhythm-heaven-megamix",
+      "asset": {
+        "path": "images/rhythm-heaven-megamix/scene-63b9d336e995.jpg",
+        "sha256": "63b9d336e995f042329d8c82e839f1335a34f84ce2d03dd3e6824c2a7bf71984",
+        "bytes": 341001,
+        "width": 1536,
+        "height": 1024
+      },
+      "masterHashUnchanged": true
+    }
+  ],
+  "allPriorImageHashesUnchanged": true,
+  "priorImageURLsRetained": 59,
+  "allPriorCatalogRowsUnchanged": true,
+  "gameScenes": 36,
+  "covers": 24,
+  "site": {
+    "projectID": "appgprj_6af37270360881919fa6b473672db145",
+    "commitSHA": "0c7e01bb6cf5b64f6fc379a75f3d429548d2fcf2",
+    "archive": "build/Artwork-Heartbeat-20261111-1347/deploy-clean.tar.gz",
+    "audience": "public, unchanged",
+    "savedVersionID": "appgprj_6af37270360881919fa6b473672db145~appgver_3bd0e3bfe0388191bb5aed30dde6e3b0",
+    "versionNumber": 4,
+    "deploymentID": "appgdep_6af474a1871c81918f4adc643ea3586c",
+    "deploymentStatus": "succeeded",
+    "url": "https://emuden-artwork-catalog.headyopossum2.chatgpt.site"
+  },
+  "appAndBridgeSourcesUnchangedFromBuild16": true,
+  "signedSourcePackages14_15_16Unchanged": true,
+  "queueCounts": {
+    "accepted": 8,
+    "pending": 31,
+    "blocked": 5
+  },
+  "completedAtUTC": "2026-11-11T14:00:43.717928+00:00",
+  "liveVerification": {
+    "allImagesAvailableWithNetworkingDisabled": true,
+    "bytesVerified": 1055112,
+    "cacheDirectory": "/Volumes/SamsungT7/EmulatorApp/build/LiveArtworkSmoke-9FBE6C41-2C34-4455-84B0-436B98762CCB",
+    "catalogVersion": 5,
+    "entries": 36,
+    "imagesVerified": 2,
+    "liveVersionUpgrade": true,
+    "transport": "Actual RemoteArtworkCatalog Swift client, anonymous HTTPS with a fresh ephemeral session; no supplied login credentials or authorization headers",
+    "url": "https://emuden-artwork-catalog.headyopossum2.chatgpt.site/",
+    "report": "build/Artwork-Heartbeat-20261111-1347/live-check.json"
+  },
+  "remainingWork": "31 pending entries; 5 blocked by image-tool output rejections. Resume eligible pending entries on the existing schedule, without retrying blocked titles. Stop by 2026-11-12 08:00 America/New_York. No pending publication."
+}

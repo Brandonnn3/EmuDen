@@ -1,0 +1,35 @@
+{
+  "name": "EmuDen",
+  "subtitle": "Your console collection",
+  "primaryLocale": "en-US",
+  "platform": "IOS",
+  "deviceFamilies": [
+    "iPhone",
+    "iPad"
+  ],
+  "bundleId": "com.brandonaleman.Emulator",
+  "sku": "EMUDEN-IOS-001",
+  "version": "0.1.0",
+  "build": "17",
+  "primaryCategory": "GAMES",
+  "secondaryCategory": "ENTERTAINMENT",
+  "copyright": "2026 Brandon Aleman",
+  "distribution": "TestFlight internal testing only",
+  "internalGroup": "EmuDen \u2014 Internal",
+  "demoAccountRequired": false,
+  "dataCollectionByApp": "None",
+  "tracking": false,
+  "currentEmulation": [
+    "Nintendo 3DS"
+  ],
+  "futureWorkNotAdvertisedAsAvailable": [
+    "Nintendo DS",
+    "Nintendo GameCube",
+    "PlayStation",
+    "PlayStation 2",
+    "PlayStation Portable"
+  ],
+  "supportURL": null,
+  "privacyPolicyURL": null,
+  "contactFile": "Private/Contact.json"
+}

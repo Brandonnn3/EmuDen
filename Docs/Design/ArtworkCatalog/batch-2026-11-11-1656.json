@@ -1,0 +1,221 @@
+{
+  "startedAtUTC": "2026-11-11T16:56:59.450Z",
+  "tool": "built-in image_gen",
+  "state": "published and anonymously verified",
+  "games": [
+    {
+      "key": "steamworld-dig",
+      "title": "SteamWorld Dig",
+      "programIDs": [
+        "00040000000B7C00"
+      ],
+      "idEvidence": {
+        "source": "Resources/CinematicArt/Title-IDs.json",
+        "matches": {
+          "00040000000B7C00": "SteamWorld Dig"
+        }
+      },
+      "prompt": "An original fan illustration inspired by SteamWorld Dig. Rusty, a friendly orange-brass steam-powered mining robot with a red neckerchief and cowboy hat, stands on a rocky ledge on the right, looking into a vast subterranean frontier cavern. Glowing turquoise mineral crystals and distant old rail tracks, weathered timber supports, warm lanterns and delicate hanging roots. Beautiful copper, teal and deep indigo atmosphere, quiet sense of discovery and mechanical adventure. Landscape 1536x1024, 3:2 aspect ratio. One original premium cinematic landscape for EmuDen’s game-library background. Environmental composition with the recognizable subjects on the right half and calm moderately dark left third and lower quarter for white UI. Sophisticated lighting, dimensional stylized illustration and atmospheric depth. Fill edge to edge. No text, letters, logos, interface, labels, borders, watermarks, cover layout or simulated gameplay screenshot. Original game-inspired fan art.",
+      "status": "accepted",
+      "master": "ArtworkMasters/3ds/steamworld-dig/scene.png",
+      "sha256": "48bb27211640b9365c0222b61015e381be8f29415929ee64ba48bbd2a1f477b6",
+      "width": 1536,
+      "height": 1024,
+      "generatedSource": "/Users/brandonaleman/.codex/generated_images/01a1b7ff-189e-7f03-a958-9b24dd4ea411/exec-ac36dd92-560c-4dd9-9143-57aee678fe8c.png",
+      "inspection": "Viewed: friendly brass mining robot on right, dimensional teal crystal cavern and railway, calm dark left/lower area; clean composition, no text/logos/interface/border. Accepted original fan illustration."
+    },
+    {
+      "key": "steamworld-heist",
+      "title": "SteamWorld Heist",
+      "programIDs": [
+        "000400000012D900"
+      ],
+      "idEvidence": {
+        "source": "Resources/CinematicArt/Title-IDs.json",
+        "matches": {
+          "000400000012D900": "SteamWorld Heist"
+        }
+      },
+      "prompt": "An original fan illustration inspired by SteamWorld Heist. Captain Piper Faraday, a green brass steampunk robot adventurer with a red cap, stands on the right inside a beautifully crafted starship observatory with copper pipes, brass rivets and amber-lit gauges without markings. Through a large window lies an expansive blue-violet starfield and a distant planet with drifting salvaged spacecraft. Warm interior lighting, inviting cosmic exploration, no combat or weapons in use. Landscape 1536x1024, 3:2 aspect ratio. One original premium cinematic landscape for EmuDen’s game-library background. Environmental composition with the recognizable subjects on the right half and calm moderately dark left third and lower quarter for white UI. Sophisticated lighting, dimensional stylized illustration and atmospheric depth. Fill edge to edge. No text, letters, logos, interface, labels, borders, watermarks, cover layout or simulated gameplay screenshot. Original game-inspired fan art.",
+      "status": "accepted",
+      "master": "ArtworkMasters/3ds/steamworld-heist/scene.png",
+      "sha256": "b7fef687ca893b69185e055ba76b8914220ab96b8e15331356787c1382a13aec",
+      "width": 1536,
+      "height": 1024,
+      "generatedSource": "/Users/brandonaleman/.codex/generated_images/01a1b7ff-189e-7f03-a958-9b24dd4ea411/exec-bfa65e94-968c-450f-9219-75b2f8f0440d.png",
+      "inspection": "Viewed: brass robot captain on right in warm ship observatory, deep cosmic vista, dark calm left/lower area; no text/logos/interface/border. Accepted original fan illustration."
+    },
+    {
+      "key": "bravely-second",
+      "title": "Bravely Second: End Layer",
+      "programIDs": [
+        "00040000000DC800",
+        "000400000017BA00",
+        "000400000017BB00",
+        "000400000017BC00"
+      ],
+      "idEvidence": {
+        "source": "Resources/CinematicArt/Title-IDs.json",
+        "matches": {
+          "00040000000DC800": "Bravely Second: End Layer",
+          "000400000017BA00": "Bravely Second: End Layer",
+          "000400000017BB00": "Bravely Second: End Layer",
+          "000400000017BC00": "Bravely Second: End Layer"
+        }
+      },
+      "prompt": "An original fan illustration inspired by Bravely Second: End Layer. Yew Geneolgia and Magnolia Arch stand on the right side of an ancient white-stone balcony over an immense painterly fantasy city. Yew wears a dark academic adventurer coat and Magnolia a flowing pale moon-themed adventurer outfit, both gazing toward floating crystal architecture and a luminous moon in a mauve and turquoise dusk sky. Dreamlike hand-painted world rendered with refined dimensional materials and soft atmospheric depth, tranquil adventure. Landscape 1536x1024, 3:2 aspect ratio. One original premium cinematic landscape for EmuDen’s game-library background. Environmental composition with the recognizable subjects on the right half and calm moderately dark left third and lower quarter for white UI. Sophisticated lighting, dimensional stylized illustration and atmospheric depth. Fill edge to edge. No text, letters, logos, interface, labels, borders, watermarks, cover layout or simulated gameplay screenshot. Original game-inspired fan art.",
+      "status": "accepted",
+      "master": "ArtworkMasters/3ds/bravely-second/scene.png",
+      "sha256": "6307c8805168de8a88e19c8f3efe6ba869b29a613f8e815d4644c0872fee09d8",
+      "width": 1536,
+      "height": 1024,
+      "generatedSource": "/Users/brandonaleman/.codex/generated_images/01a1b7ff-189e-7f03-a958-9b24dd4ea411/exec-af3dff91-3699-426e-a20a-35bef8b63861.png",
+      "inspection": "Viewed: two fantasy travelers on right balcony, moon and floating crystal city, atmospheric lower-left space; refined materials, no text/logos/interface/border. Accepted original fan illustration."
+    },
+    {
+      "key": "dragon-quest-vii",
+      "title": "DRAGON QUEST VII: Fragments of the Forgotten Past",
+      "programIDs": [
+        "000400000018EF00"
+      ],
+      "idEvidence": {
+        "source": "Resources/CinematicArt/Title-IDs.json",
+        "matches": {
+          "000400000018EF00": "Dragon Quest VII: Fragments of the Forgotten Past"
+        }
+      },
+      "prompt": "An original fan illustration inspired by Dragon Quest VII: Fragments of the Forgotten Past. The young hero in a green tunic and green cap, Prince Kiefer in warm red adventurer clothes and Maribel in a purple dress stand together on the right of an ancient seaside ruin. A small friendly blue slime rests nearby. Emerald island cliffs, pale stone arches, tiny fishing boats and a mysterious glowing stone tablet without writing, distant islands in a golden ocean beneath a rich blue sunset sky. Bright expressive fantasy-adventure charm and premium cinematic depth. Landscape 1536x1024, 3:2 aspect ratio. One original premium cinematic landscape for EmuDen’s game-library background. Environmental composition with the recognizable subjects on the right half and calm moderately dark left third and lower quarter for white UI. Sophisticated lighting, dimensional stylized illustration and atmospheric depth. Fill edge to edge. No text, letters, logos, interface, labels, borders, watermarks, cover layout or simulated gameplay screenshot. Original game-inspired fan art.",
+      "status": "accepted",
+      "master": "ArtworkMasters/3ds/dragon-quest-vii/scene.png",
+      "sha256": "757d2adc2f496f956cf59ef2678aa338dfd556fd58a19e4a355e0257d7df0f72",
+      "width": 1536,
+      "height": 1024,
+      "generatedSource": "/Users/brandonaleman/.codex/generated_images/01a1b7ff-189e-7f03-a958-9b24dd4ea411/exec-84c86084-e0e6-4600-8f34-170b3c33896e.png",
+      "inspection": "Viewed: green-clad hero and companions on right island ruins, friendly slime and glowing tablet without writing, calm dark left/lower area; no text/logos/interface/border. Accepted original fan illustration."
+    }
+  ],
+  "previousCatalogVersion": 5,
+  "siteProjectID": "appgprj_6af37270360881919fa6b473672db145",
+  "appAndBridgeHashesAtStart": {
+    "App/EmulatorSession.swift": "fc0993ed0d2ff05e5a2827e7319ab3612771501014b0e925b4ed7f3aea2f424d",
+    "App/SettingsView.swift": "a92028c36b8336ec1eaf603bf9cfc534950c6821805502a6e403e940297c37fe",
+    "App/CinematicStyle.swift": "1566cdc166e1e82b073542ecf1b799df5c9809ba6d961ed00f0f57de595ae712",
+    "App/MenuAudio.swift": "ccdb281fb0dda04cea4a4ed4cd48423d464c1bb8e2d66f1642faece9e94e7df6",
+    "App/EmulatorApp.swift": "a6111d2d660fff30eb240f4a2483b575b9650b0ae6f809486d22156dc179c60c",
+    "App/DuoLayoutSettings.swift": "9025bf42dac605ccd9f8b6e5f0da8e572962409f56033702bad5eda13e43cbc5",
+    "App/PlayerSettingsView.swift": "66c2273c327c28beeea54bf3bfed6ce00a7a43f2548c8d56b3bdd1b5c9bb6d50",
+    "App/ArtworkEditorView.swift": "78fecaed4b9807776e9d89e3e796bf8fbc2adbee00500feedd07b627916ae7ce",
+    "App/LibraryView.swift": "34f65001e6990073e873e14522504ac477b8dbc467db86271885cdec64ddea77",
+    "App/ArtworkStore.swift": "14069e8d149a70989015860bc452c66e673c5720dbc51349eb83ae62d4f1c808",
+    "App/CinematicArt.swift": "b208eb92874e769dba71881a80cbae0b40f31847b0cd8e28bb44fca9872d2c4d",
+    "App/PlayerView.swift": "729baf1a14afc2553ec269cdff28227278c818d425b751f663cfa058924a2a95",
+    "App/GameLibrary.swift": "9a996c130b326641264ebefab1586d14f77637aa9b558f9c43cb43efee63d076",
+    "App/TouchSurface.swift": "d4ad5e878329cb19b9fb66c26ee3d797e5f447bb9e65112957ea58a9e199d41c",
+    "App/ConsoleSystems.swift": "3da6aad8be19be0696b08c45f87145608d39888cac6d34c5c4ab8bad6c3748ef",
+    "App/ConsoleMenuInput.swift": "143df43ad521dad00e8f0145f7583521eca45b477385fce0b1ff72617494b4a7",
+    "App/ConsoleBackdrop.swift": "359ee7bb4b479b2dfcb98177d9cb744febb92f48234f7b9fcef4a651d933c067",
+    "App/Domain/Library.swift": "91b2ee8db7e90fbae7e0dc5b6bd88c0868e7477bad18f7b57abeb1fdd596788c",
+    "App/Domain/DuoLayout.swift": "f5c0b685b2e87ad5071f10e5fd00bb2c02382034595b056238478cbc8d7dfae2",
+    "App/Domain/Artwork.swift": "f7690166d31d9919611e9581528cb6475e5cce19e64703fe518607f8afff8f3b",
+    "App/Domain/RemoteArtwork.swift": "5b918b69dcafdb46fa26b020070509df73c28ee8d70ac793fe482d0d3d1fdf90",
+    "App/Domain/SaveStates.swift": "b75c73b2654d2857c0ff51171f0c3ecadf4eceb50ecfcec246d497e4e67ef654",
+    "App/Domain/PlayerPreferences.swift": "f23d68777c3458f3aeff0d85893a98540b54d4bcfae81f6856bff926cd2a509c",
+    "Bridge/VulkanVideo.cpp": "ccd19685301140e07c27b965612236bafff894a693d484a0168d9ec4e43b7bb2",
+    "Bridge/InputLatch.h": "e6b037be2b6456fb85d90826df8f6542de9f45651a512c3adb66a60c1bfb3a5d",
+    "Bridge/EmulatorApp-Bridging-Header.h": "5ecf71e3244594838cd97565e6c53ead42581f6ce48522ba3748c1c973224d08",
+    "Bridge/EmulatorBridge.h": "f42acccc397713e53c05a29f43f72cc37f3e5605b22e1fcf8f39d57e975f1570",
+    "Bridge/EmulatorBridge.mm": "cbda8a60a2fec504018918ae28c541f563aa89ac5fe47960cc09915f34c33ded",
+    "Bridge/libretro.h": "5b6d8fe1056a39591ee6c479512eed4a6f6efd8f89f64f10cf8b4757a2aa48a0",
+    "Bridge/VulkanVideo.h": "702f4f4613d5d0a215c6774fac5d5e96d3cb5edfde482dab1f334c3cba4261e8",
+    "Bridge/libretro_vulkan.h": "c6c11e4c4e792c0466e494bcfc8c10fa3d83f9b1d70e0fbf6307720d9f79823e"
+  },
+  "frozenSourceHashes": {
+    "build/TestFlight/EmuDen-0.1.0-14-source.tar.gz": "7e1b8ad531021204138dfcb6254909a97f9b92a9b2146ebd6cd8c84042478f01",
+    "build/TestFlight/EmuDen-0.1.0-15-source.tar.gz": "7d8a0a20f450d941b94aa7b107cfc421cf6ecacfe756f9d1209be0b2e08c8fd0",
+    "build/TestFlight/EmuDen-0.1.0-16-source.tar.gz": "8b07d0f94d048a61b9f47db6b18e30f02a679899cce4085f8e044c98205fda25"
+  },
+  "catalogVersion": 6,
+  "validationReport": "build/Artwork-Heartbeat-20261111-1656/validation.json",
+  "domainTests": {
+    "passed": 11,
+    "failed": 0,
+    "log": "build/Artwork-Heartbeat-20261111-1656/tests.log"
+  },
+  "newAssetsVerified": [
+    {
+      "key": "steamworld-dig",
+      "asset": {
+        "path": "images/steamworld-dig/scene-ddd0e7db4229.jpg",
+        "sha256": "ddd0e7db42296b76746f11877c217267d1ae47f9ba9bf38036e11e7179f1e05c",
+        "bytes": 538233,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "key": "steamworld-heist",
+      "asset": {
+        "path": "images/steamworld-heist/scene-d6fd62f65e82.jpg",
+        "sha256": "d6fd62f65e8257a113675299e0efa145b9b6c560365e8b96e1a652d5f8d119bc",
+        "bytes": 521838,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "key": "bravely-second",
+      "asset": {
+        "path": "images/bravely-second/scene-18da9f8284af.jpg",
+        "sha256": "18da9f8284af3134ff0a4c5af803cdfe5f19750269ab0410db819e51d9cc972c",
+        "bytes": 603033,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "key": "dragon-quest-vii",
+      "asset": {
+        "path": "images/dragon-quest-vii/scene-6508119192ac.jpg",
+        "sha256": "6508119192ac949e9821dc48a7357ffd49e05130399fc62cd4c9d928ee2f6a8f",
+        "bytes": 686717,
+        "width": 1536,
+        "height": 1024
+      }
+    }
+  ],
+  "priorImageURLsRetained": 61,
+  "allPriorImageHashesUnchanged": true,
+  "allPriorCatalogRowsUnchanged": true,
+  "gameScenes": 40,
+  "covers": 24,
+  "site": {
+    "projectID": "appgprj_6af37270360881919fa6b473672db145",
+    "commitSHA": "255741ef397ea5561b24ab475351196330913171",
+    "archive": "build/Artwork-Heartbeat-20261111-1656/deploy.tar.gz",
+    "savedVersionID": "appgprj_6af37270360881919fa6b473672db145~appgver_8b8df86b3ab08191a72ef3c7ecc172eb",
+    "versionNumber": 5,
+    "audience": "public, unchanged",
+    "deploymentID": "appgdep_6af4a041faa481919c3813339218251e",
+    "deploymentStatus": "succeeded",
+    "url": "https://emuden-artwork-catalog.headyopossum2.chatgpt.site"
+  },
+  "completedAtUTC": "2026-11-11T17:05:44.785534+00:00",
+  "liveVerification": {
+    "allImagesAvailableWithNetworkingDisabled": true,
+    "bytesVerified": 2349821,
+    "cacheDirectory": "/Volumes/SamsungT7/EmulatorApp/build/LiveArtworkSmoke-CC2BE74F-40A9-4971-81B1-E154211297DA",
+    "catalogVersion": 6,
+    "entries": 40,
+    "imagesVerified": 4,
+    "liveVersionUpgrade": true,
+    "transport": "Actual RemoteArtworkCatalog Swift client, anonymous HTTPS with a fresh ephemeral session; no supplied login credentials or authorization headers",
+    "url": "https://emuden-artwork-catalog.headyopossum2.chatgpt.site/"
+  },
+  "appAndBridgeSourcesUnchangedDuringArtworkPass": true,
+  "signedSourcePackages14_15_16Unchanged": true,
+  "queueCounts": {
+    "blocked": 5,
+    "accepted": 12,
+    "pending": 27
+  }
+}

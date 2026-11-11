@@ -1,0 +1,30 @@
+{
+  "tool": "built-in image_gen",
+  "purpose": "Original console fallback backgrounds",
+  "jobs": [
+    {
+      "key": "3ds",
+      "prompt": "Production background illustration for the premium EmuDen emulator app. Create a single beautiful 2048 by 2048 square master image, polished cinematic product illustration, physically coherent detailed hardware, soft high-end studio lighting, rich charcoal and subtle colored haze. A single console in the upper-middle at x=57%, y=32%, occupying about 60% width, leaving generous quiet space along the left and the bottom half for native game titles, cover cards and glass navigation. Three-quarter camera angle, believable materials, gentle reflections and shallow atmosphere. No text, lettering, brand marks, logos, screens showing games, app controls, frames, watermarks, people, hands or multiple views. Preserve readable silhouette when cropped to a portrait phone or a wide inner display. Subject: a graphite clamshell Nintendo 3DS-inspired dual-screen handheld, opened around 115 degrees, with a proper hinge, two dark glossy displays, a subtle circle pad and cross-shaped directional pad left and four small face buttons right on the lower shell. A faint emerald/teal glow reflects off the glass and charcoal surface beneath it. Muted emerald-to-sapphire background, calm premium console atmosphere.",
+      "savedAsset": "Resources/CinematicArt/Console-3ds.png",
+      "source": "/Users/brandonaleman/.codex/generated_images/01a1b7ff-189e-7f03-a958-9b24dd4ea411/exec-abf2537a-ab58-4635-a489-23997985b207.png"
+    },
+    {
+      "key": "psp",
+      "prompt": "Production background illustration for the premium EmuDen emulator app. Create a single beautiful 2048 by 2048 square master image, polished cinematic product illustration, physically coherent detailed hardware, soft high-end studio lighting, rich charcoal and subtle colored haze. A single console in the upper-middle at x=57%, y=32%, occupying about 60% width, leaving generous quiet space along the left and the bottom half for native game titles, cover cards and glass navigation. Three-quarter camera angle, believable materials, gentle reflections and shallow atmosphere. No text, lettering, brand marks, logos, screens showing games, app controls, frames, watermarks, people, hands or multiple views. Preserve readable silhouette when cropped to a portrait phone or a wide inner display. Subject: a sleek black original PlayStation Portable-inspired widescreen handheld, horizontal silhouette with a large single dark glass display, directional pad and analog nub on the left and four understated face buttons on the right. Subtle violet and blue rim lighting, a softly illuminated charcoal studio atmosphere. No clamshell, no second screen.",
+      "savedAsset": "Resources/CinematicArt/Console-psp.png",
+      "source": "/Users/brandonaleman/.codex/generated_images/01a1b7ff-189e-7f03-a958-9b24dd4ea411/exec-8865442c-85fb-43f9-a124-364f1c3d77a3.png"
+    },
+    {
+      "key": "ps1",
+      "prompt": "Production background illustration for the premium EmuDen emulator app. Create a single beautiful 2048 by 2048 square master image, polished cinematic product illustration, physically coherent detailed hardware, soft high-end studio lighting, rich charcoal and subtle colored haze. A single console in the upper-middle at x=57%, y=32%, occupying about 60% width, leaving generous quiet space along the left and the bottom half for native game titles, cover cards and glass navigation. Three-quarter camera angle, believable materials, gentle reflections and shallow atmosphere. No text, lettering, brand marks, logos, screens showing games, app controls, frames, watermarks, people, hands or multiple views. Preserve readable silhouette when cropped to a portrait phone or a wide inner display. Subject: a light-gray original PlayStation-inspired home console, compact flat rectangular body, large circular top-loading optical-disc lid in the center, tiny round buttons and restrained vents, with one matching gray twin-grip wired gamepad resting nearby. Console and controller form one upper-center composition. Warm amber and pale silver rim lighting over a charcoal studio atmosphere.",
+      "savedAsset": "Resources/CinematicArt/Console-ps1.png",
+      "source": "/Users/brandonaleman/.codex/generated_images/01a1b7ff-189e-7f03-a958-9b24dd4ea411/exec-1fdb6ba1-b8ed-4172-a7cd-3cdcf830dcc7.png"
+    },
+    {
+      "key": "gamecube",
+      "prompt": "Production background illustration for the premium EmuDen emulator app. Create a single beautiful 2048 by 2048 square master image, polished cinematic product illustration, physically coherent detailed hardware, soft high-end studio lighting, rich charcoal and subtle colored haze. A single console in the upper-middle at x=57%, y=32%, occupying about 60% width, leaving generous quiet space along the left and the bottom half for native game titles, cover cards and glass navigation. Three-quarter camera angle, believable materials, gentle reflections and shallow atmosphere. No text, lettering, brand marks, logos, screens showing games, app controls, frames, watermarks, people, hands or multiple views. Preserve readable silhouette when cropped to a portrait phone or a wide inner display. Subject: a rich indigo GameCube-inspired compact cube-shaped home console, correctly proportioned cube with a circular top disc lid and a subtle rear carry handle, four front circular controller ports. One matching indigo three-grip gamepad rests nearby. Console and controller form one upper-center composition. Soft violet and indigo rim lighting over a charcoal studio atmosphere.",
+      "savedAsset": "Resources/CinematicArt/Console-gamecube.png",
+      "source": "/Users/brandonaleman/.codex/generated_images/01a1b7ff-189e-7f03-a958-9b24dd4ea411/exec-eff0d0ac-7e00-4619-8ad2-a5e5c3ca090d.png"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+--- a/src/core/core.cpp
++++ b/src/core/core.cpp
+@@ -1025,6 +1025,14 @@
+             custom_tex_manager->FindCustomTextures();
+         }
+ 
++        // Match the game's shader profile before reading its cache after renderer recreation.
++        u64 program_id{};
++        if (GetAppLoader().ReadProgramId(program_id) == Loader::ResultStatus::Success) {
++            gpu->ApplyPerProgramSettings(program_id);
++        }
++        // Init() recreates the renderer; rebuild its live shader caches before the next draw.
++        gpu->Renderer().Rasterizer()->LoadDefaultDiskResources(false, nullptr);
++
+         // The title lists and bundles of AM are not saved, they come from the host files.
+         LoadAMTitles();
+ 

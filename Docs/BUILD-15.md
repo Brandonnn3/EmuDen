@@ -1,0 +1,13 @@
+# Build 15 — artwork without the console flash
+
+The shared cinematic background previously drew the console illustration immediately while its asynchronous custom-scene lookup ran. Selecting a game with a cached or downloadable scene could briefly reveal the console before the correct image appeared.
+
+The view now starts against black, performs a lightweight local/manifest availability check and keeps the console illustration absent while known artwork loads. The existing 0.38-second scene animation fades the result in; Reduced Motion removes that animation. A user-forced console background and an empty/unavailable system still show the console immediately. An unknown game gets its console fallback after the lightweight check, without waiting for an unrelated remote image request. Missing, damaged or unavailable images retain a console fallback once loading finishes.
+
+Availability checks use the current validated catalog, including a cached newer manifest, and local custom/captured-image records. They do not download or decode images. Actual reads still enforce existing file, size, image-dimension and digest checks. The current image stays visible during same-game refreshes. Every completion checks cancellation and the selected game key, so scrolling quickly cannot let an old result replace the current game. The shared component covers Home, the folded spotlight, Settings, artwork editing and Duo-layout backgrounds.
+
+The new metadata regression verifies known/unknown/explicit-title matches, offline availability, zero image requests, and changes after a catalog refresh removes a scene. Simulator-only `EMUDEN_TEST_SCENE_DELAY` holds known-scene loading for up to 45 seconds for a screenshot/pixel check; production device builds contain no delay hook. The UI check observes dark pixels during the hold and a rendered colored scene afterward. Further checks retain console preferences, title matching/reset, search selection and the full artwork collection. Actual results and captures are recorded in the preparation report.
+
+This changes artwork presentation only. All Bridge sources, emulator frameworks, player/resolution/FPS behavior, menu audio, native-save paths and state formats remain as build 14. No additional performance gain is claimed. The icon remains the glass handheld/portal design. Catalog v3 remains 30 downloadable scene backgrounds and 24 generated covers; four bundled console fallbacks and the earlier bundled hero artwork are separate. Background generation continues on its existing schedule.
+
+Build 14's signed archive and matching source remain untouched. Build 15 is a separate archive/source snapshot for this visual fix. No TestFlight upload, IPA export or physical-device installation is performed.

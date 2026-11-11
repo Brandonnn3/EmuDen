@@ -1,0 +1,42 @@
+--- a/src/video_core/renderer_vulkan/vk_graphics_pipeline.cpp
++++ b/src/video_core/renderer_vulkan/vk_graphics_pipeline.cpp
+@@ -2,6 +2,7 @@
+ // Licensed under GPLv3 or any later version
+ // Refer to the LICENSE.txt file included.
+ 
++#include <chrono>
+ #include <boost/container/static_vector.hpp>
+ 
+ #include "common/alignment.h"
+@@ -95,8 +96,14 @@
+         return false;
+     }
+ 
+-    // Ask the driver if it can give us the pipeline quickly.
+-    if (!shaders_pending && instance.IsPipelineCreationCacheControlSupported() && Build(true)) {
++    // Metal cache probes may still wait inside the driver; keep async draws off this path.
++#if defined(__APPLE__)
++    const bool probe_driver_cache = wait_built;
++#else
++    const bool probe_driver_cache = true;
++#endif
++    if (probe_driver_cache && !shaders_pending &&
++        instance.IsPipelineCreationCacheControlSupported() && Build(true)) {
+         return true;
+     }
+ 
+@@ -305,7 +312,14 @@
+         pipeline_info.flags |= vk::PipelineCreateFlagBits::eFailOnPipelineCompileRequiredEXT;
+     }
+ 
++    const auto compile_start = std::chrono::steady_clock::now();
+     auto result = instance.GetDevice().createGraphicsPipelineUnique(pipeline_cache, pipeline_info);
++    const double compile_ms = std::chrono::duration<double, std::milli>(
++        std::chrono::steady_clock::now() - compile_start).count();
++    if (compile_ms >= 20.0) {
++        LOG_INFO(Render_Vulkan, "Driver pipeline construction: {:.2f} ms, cache_probe={}",
++                 compile_ms, fail_on_compile_required);
++    }
+     if (result.result == vk::Result::eSuccess) {
+         pipeline = std::move(result.value);
+     } else if (result.result == vk::Result::eErrorPipelineCompileRequiredEXT) {

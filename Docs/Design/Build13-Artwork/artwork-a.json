@@ -1,0 +1,503 @@
+{
+  "mode": "built-in image_gen",
+  "intent": "generate",
+  "owner": "artwork_a",
+  "selectionRanks": [
+    1,
+    9
+  ],
+  "assets": [
+    {
+      "key": "zelda-a-link-between-worlds",
+      "title": "The Legend of Zelda: A Link Between Worlds",
+      "rank": 1,
+      "kind": "scene",
+      "status": "accepted",
+      "toolMode": "built-in image_gen generate",
+      "prompt": "Use case: stylized-concept. Asset type: cinematic landscape game background for EmuDen. Generate a single new original fan-art illustration, 1536x1024 landscape (3:2), high polish and rich lighting, believable game-world forms, atmospheric depth, clear subjects. Important characters and distinctive landmarks should be in the central/right half and remain recognizable in a centered portrait crop. Keep the lower quarter calm and darker, as shaded environmental foreground, to allow native white game title and glass navigation overlays later; DO NOT draw any overlay. No text, letters, title, typography, logos, watermark, border, menu, UI, frame or retail box. Game: The Legend of Zelda: A Link Between Worlds (Nintendo 3DS). A youthful blond Link in his classic green cap and tunic, brown boots, silver sword, blue Hylian shield, stands near the center-right of an ancient sandstone wall in sunlit Hyrule. To his right the wall holds his flat ochre-and-green painted form, clearly a magical painting merged into the stone, with a luminous narrow golden fissure showing a glimpse of dark violet Lorule. Green meadows and distant Hyrule castle fade into hazy golden sunlight behind the wall at left. The real Link and painted Link should be the recognizable focus, not tiny. Soft sunbeams, wind-tossed grass, believable stonework, bright adventurous tone; shaded moss and quiet grass across lower quarter, deep emerald shadows. No title or words.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-4dd34175-61b5-4604-95be-0c5dcc461118.png",
+      "savedPath": "ArtworkMasters/3ds/zelda-a-link-between-worlds/scene.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "researchURLs": [
+        "https://csassets.nintendo.com/noaext/image/private/t_KA_PDF/manual-3DS-the-legend-of-zelda-a-link-between-worlds-en?_a=DATAg1AAZAA0"
+      ],
+      "qaNotes": "Inspected using view_image. Clear green-clad Link and wall-painting mechanic, Hyrule/Lorule split, no text/UI. Center/right focus and dark lower grass suitable for overlay.",
+      "sha256": "78d7d67c7b4349485d7cb71a4789d05418e7ef0a2eb9479ecf2abb3fcaad9eef",
+      "bytes": 2871465
+    },
+    {
+      "key": "zelda-majoras-mask-3d",
+      "title": "The Legend of Zelda: Majora’s Mask 3D",
+      "rank": 2,
+      "kind": "cover",
+      "status": "accepted",
+      "toolMode": "built-in image_gen generate",
+      "prompt": "Use case: stylized-concept. Asset type: premium portrait game cover artwork for EmuDen's cinematic library. Generate one complete original fan-art composition, 1024x1536 portrait (2:3). Rich polished game-world illustration with believable materials, dramatic luminous depth, saturated but tasteful colors, beautiful lighting. It is flat full-bleed artwork, NOT a photograph of a box, not a retail package. All exact title typography must be readable at thumbnail size within a centered 86%-width safe area, generous 7% side padding and 6% top/bottom padding; the full composition must crop safely to a 0.71-aspect card. Do not add publisher marks, rating logos, console header, border, spine, watermark, menu, UI, extra words or subtitles. Game: The Legend of Zelda: Majora's Mask 3D, Nintendo 3DS. Scene: Clock Town under a rich midnight violet sky. Central subject: Skull Kid, the small wooden-faced forest imp in an orange leaf tunic and large pointed orange-red hat, wearing the unmistakable heart-shaped purple Majora's Mask, protruding colored spikes and enormous orange-yellow concentric eyes. He perches on a weathered stone clock tower ledge; glowing tiny fairies drift nearby. The ominous huge moon with carved grimacing face and gritted teeth hangs high in mist, smaller than Skull Kid's mask, behind him. Luminous teal clockwork and magenta dusk rimlight, dreamlike melancholy fantasy, detailed but clean silhouette. Reserve upper 28% and lower 20% quiet for title. Text exact, large cream-gold adventure serif: \"THE LEGEND OF ZELDA\" then \"MAJORA'S MASK 3D\". Do not crop any title letters; readable even small. Original composition, no reproduced box art.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-3bd0237c-e895-45bb-bed5-c327e9180d43.png",
+      "savedPath": "ArtworkMasters/3ds/zelda-majoras-mask-3d/cover.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/The-Legend-of-Zelda-Majora-s-Mask-3D-941070.html"
+      ],
+      "qaNotes": "Inspected using view_image. Exact title, clear iconic Skull Kid/Majora mask, moon and Clock Town. All letters inside image. Top title begins ~40px; prefer full artwork display or crop top less than 40px. Title-padding edit was output-blocked.",
+      "sha256": "872b2c3fc8bb8c24ba21953bff16355de451c22d9e0a5aa18dbef28f587edb82",
+      "bytes": 2809135
+    },
+    {
+      "key": "zelda-majoras-mask-3d",
+      "title": "The Legend of Zelda: Majora’s Mask 3D",
+      "rank": 2,
+      "kind": "scene",
+      "status": "accepted",
+      "toolMode": "built-in image_gen generate",
+      "prompt": "Use case: stylized-concept. Asset type: cinematic landscape game background for EmuDen. Generate a single new original fan-art illustration, 1536x1024 landscape (3:2), high polish and rich lighting, believable game-world forms, atmospheric depth, clear subjects. Important characters and distinctive landmarks should be in the central/right half and remain recognizable in a centered portrait crop. Keep the lower quarter calm and darker, as shaded environmental foreground, to allow native white game title and glass navigation overlays later; DO NOT draw any overlay. No text, letters, title, typography, logos, watermark, border, menu, UI, frame or retail box. Game: The Legend of Zelda: Majora's Mask 3D, Nintendo 3DS. A cinematic view across Clock Town's cobblestone square at eerie blue-violet twilight, its tall wooden clock tower in the middle distance at center-right. Young blond Link in classic green cap and tunic stands on a low stone ledge at center-right, holding his small blue ocarina near his chest; blue shield on his back. A white-gold fairy floats close to his shoulder. The huge ominous Termina moon with the distinctive grimacing carved face, bulbous nose, round eyes and gritted teeth looms behind the clock tower, clearly visible near upper center. Rich magenta cloud edges, warm lanterns in shuttered shops, memorable fantasy architecture faithful to this release. Quiet deep blue shaded cobblestones across bottom quarter, no HUD, text or lettering even on shops.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-5f109390-cb85-4685-94b8-4575fc95534c.png",
+      "savedPath": "ArtworkMasters/3ds/zelda-majoras-mask-3d/scene.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/The-Legend-of-Zelda-Majora-s-Mask-3D-941070.html"
+      ],
+      "qaNotes": "Inspected using view_image. Clear Clock Town tower and moon, young Link with blue ocarina at right. No text/UI, dark calm cobblestone foreground. Center portrait crop preserves tower/moon; right-biased crop preserves Link.",
+      "suggestedFocalPoint": {
+        "x": 0.64,
+        "y": 0.47
+      },
+      "sha256": "bd9ba85faaf25a7ee1c13f55015d537f1f9f60ac641ed86f462e7bbbe193de14",
+      "bytes": 2610857
+    },
+    {
+      "key": "zelda-ocarina-of-time-3d",
+      "title": "The Legend of Zelda: Ocarina of Time 3D",
+      "rank": 3,
+      "kind": "scene",
+      "status": "accepted",
+      "toolMode": "built-in image_gen generate",
+      "prompt": "Use case: stylized-concept. Asset type: cinematic landscape game background for EmuDen. Generate a single new original fan-art illustration, 1536x1024 landscape (3:2), high polish and rich lighting, believable game-world forms, atmospheric depth, clear subjects. Important characters and distinctive landmarks should be in the central/right half and remain recognizable in a centered portrait crop. Keep the lower quarter calm and darker, as shaded environmental foreground, to allow native white game title and glass navigation overlays later; DO NOT draw any overlay. No text, letters, title, typography, logos, watermark, border, menu, UI, frame or retail box. Game: The Legend of Zelda: Ocarina of Time 3D for Nintendo 3DS. Adult blond Link in his classic long green cap and tunic, white tights and undershirt, brown gauntlets and boots, Hylian shield on his back rides Epona, the chestnut mare with a long white mane, over a low hill at center-right. Navi a blue-white glowing fairy floats beside him. Wide Hyrule Field rolls away toward Hyrule Castle on the horizon near center, distant Death Mountain at far left, tranquil old stone ruins. Golden sunset rays, dramatic peach clouds, deep emerald foreground grass, layered cinematic depth and a strong recognizable equestrian silhouette. Link and horse fully in frame and large enough to be clear, calm lower shaded grassy quarter. No lettering.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-5f25b9bc-2d49-451e-ae28-e3b074ef8b73.png",
+      "savedPath": "ArtworkMasters/3ds/zelda-ocarina-of-time-3d/scene.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/The-Legend-of-Zelda-Ocarina-of-Time-3D-275007.html"
+      ],
+      "qaNotes": "Inspected using view_image. Adult Link on chestnut Epona, white mane, Navi, Hyrule castle and Death Mountain; no text/UI. Strong cinematic sunset and dark foreground. Center crop preserves castle/Epona head; right-biased crop preserves rider.",
+      "suggestedFocalPoint": {
+        "x": 0.69,
+        "y": 0.44
+      },
+      "sha256": "0a493ffb3f5f1755fe4ee0b0469710c16e3e085f6ec57442849e07c20b3c95fa",
+      "bytes": 2456524
+    },
+    {
+      "key": "monster-hunter-4-ultimate",
+      "title": "Monster Hunter 4 Ultimate",
+      "rank": 4,
+      "kind": "cover",
+      "status": "accepted",
+      "toolMode": "built-in image_gen generate",
+      "prompt": "Use case: stylized-concept. Asset type: premium portrait game cover artwork for EmuDen's cinematic library. Generate one complete original fan-art composition, 1024x1536 portrait (2:3). Rich polished game-world illustration with believable materials, dramatic luminous depth, saturated but tasteful colors, beautiful lighting. It is flat full-bleed artwork, NOT a photograph of a box, not a retail package. All exact title typography must be readable at thumbnail size within a centered 86%-width safe area, generous 7% side padding and 6% top/bottom padding; the full composition must crop safely to a 0.71-aspect card. Do not add publisher marks, rating logos, console header, border, spine, watermark, menu, UI, extra words or subtitles. CRITICAL TITLE SAFE AREA: The title block must BEGIN no earlier than 150 pixels below the top in a 1024x1536 output, no title letters within 90 pixels of either side. Leave the top 10% pure scenery/sky. Game: Monster Hunter 4 Ultimate, Nintendo 3DS. Centerpiece is Seregios, the golden Thousand Blade Wyvern introduced in this release, with layered metallic golden blade-like scales, powerful eagle-like clawed hindlegs, a horned beaked reptilian face, and broad spiky wing-arms. The huge golden flying wyvern swoops down over sunlit ochre desert canyon ruins; a blue-silver fully armored hunter seen from rear at lower center stands on a rock ledge, holding an oversized insect glaive with both hands, ready for a hunt, no gore. Distinct full silhouettes, immense scale contrast, swirling dust, dramatic amber sunset, premium fantasy game illustration, not photorealistic. Top third calm dark teal-and-gold storm sky for readable large cream metal serif title. Exact title \"MONSTER HUNTER\" and below it \"4 ULTIMATE\". All title letters safe and fully visible, topmost at least y150.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-41de7db5-8ebc-4e8c-bebc-5b66a756839a.png",
+      "savedPath": "ArtworkMasters/3ds/monster-hunter-4-ultimate/cover.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "researchURLs": [
+        "https://game.capcom.com/manual/MH4U/en/info.html",
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/Monster-Hunter-4-Ultimate-906890.html"
+      ],
+      "qaNotes": "Inspected using view_image. Exact title, safe top margins, recognizable golden Seregios and armored Insect Glaive hunter, full-bleed original composition.",
+      "sha256": "41eb5d935a718b052065085bc6878ae28be5ea066880e9680bcadb716129e0c8",
+      "bytes": 3186756
+    },
+    {
+      "key": "monster-hunter-4-ultimate",
+      "title": "Monster Hunter 4 Ultimate",
+      "rank": 4,
+      "kind": "scene",
+      "status": "accepted",
+      "toolMode": "built-in image_gen generate",
+      "prompt": "Use case: stylized-concept. Asset type: cinematic landscape game background for EmuDen. Generate a single new original fan-art illustration, 1536x1024 landscape (3:2), high polish and rich lighting, believable game-world forms, atmospheric depth, clear subjects. Important characters and distinctive landmarks should be in the central/right half and remain recognizable in a centered portrait crop. Keep the lower quarter calm and darker, as shaded environmental foreground, to allow native white game title and glass navigation overlays later; DO NOT draw any overlay. No text, letters, title, typography, logos, watermark, border, menu, UI, frame or retail box. Game: Monster Hunter 4 Ultimate for Nintendo 3DS. A huge Seregios, the golden blade-scaled Flying Wyvern with eagle-like feet and spiny golden wing-arms, lands on an ancient sandstone arch in a desert canyon at center-right. A single blue-silver armored hunter stands just right of center on a foreground ridge facing it, with an oversized insect glaive slanted behind their shoulder. A small armored cat-like Palico companion is nearby. Crumbled stone ruins, dramatic ochre mesas, swirling dust, shafts of late golden sun through teal clouds; golden scales glitter with physical depth, adventurous grand spectacle. Seregios head and hunter grouped in central 45% of width, never at far edge. Dark quiet rocky ground fills lower quarter. No text or HUD, no gore.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-9f2d6117-34e9-4fa7-ac91-906ab53e8b78.png",
+      "savedPath": "ArtworkMasters/3ds/monster-hunter-4-ultimate/scene.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "researchURLs": [
+        "https://game.capcom.com/manual/MH4U/en/info.html",
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/Monster-Hunter-4-Ultimate-906890.html"
+      ],
+      "qaNotes": "Inspected using view_image. Golden blade-scaled Seregios, hunter, Palico, canyon ruins; no title/UI and calm dark lower quarter. Head and hunter readable in right-biased portrait crop.",
+      "suggestedFocalPoint": {
+        "x": 0.63,
+        "y": 0.46
+      },
+      "sha256": "74149beb96bf76626cce7cc2891457e68769559456f8e37d2e6cd3228bd22e51",
+      "bytes": 2845860
+    },
+    {
+      "key": "super-smash-bros-3ds",
+      "title": "Super Smash Bros. for Nintendo 3DS",
+      "rank": 5,
+      "kind": "cover",
+      "status": "accepted",
+      "toolMode": "built-in image_gen generate",
+      "prompt": "Use case: stylized-concept. Asset type: premium portrait game cover artwork for EmuDen's cinematic library. Generate one complete original fan-art composition, 1024x1536 portrait (2:3). Rich polished game-world illustration with believable materials, dramatic luminous depth, saturated but tasteful colors, beautiful lighting. It is flat full-bleed artwork, NOT a photograph of a box, not a retail package. All exact title typography must be readable at thumbnail size within a centered 86%-width safe area, generous 7% side padding and 6% top/bottom padding; the full composition must crop safely to a 0.71-aspect card. Do not add publisher marks, rating logos, console header, border, spine, watermark, menu, UI, extra words or subtitles. CRITICAL TITLE SAFE AREA: The title block must BEGIN no earlier than 150 pixels below the top in a 1024x1536 output, no title letters within 90 pixels of either side. Leave the top 10% pure scenery/sky. Game: Super Smash Bros. for Nintendo 3DS. Generate an original peaceful arena-focused premium cover with NO fighters, characters, people, animals, silhouettes or statues. Show the recognizable Battlefield stage: a broad floating stone-and-metal main arena with a grassy rim and weathered bronze paving, exactly THREE smaller hovering flat platforms arranged above it (left, right and higher center). Ancient broken columns and luminous floating island ruins recede into a spectacular blue-and-gold sky. Low camera looks upward from shaded arena foreground, emphasizing layered height and epic tournament-stage scale. Cinematic beams of sunlight, clean blue-white ambient energy and tiny glimmering motes, polished believable game-world illustration. The environment is the only subject. Top third quiet sky with original bold ivory sports-poster typography, exact title \"SUPER SMASH BROS.\" and exact secondary line \"for Nintendo 3DS\". All words exact, topmost letter starts at y155 or lower, full safe padding. No logo emblem, no retail case, no extra words, no fighters.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-80eaba2b-1c00-4df7-9a39-949ac9377820.png",
+      "savedPath": "ArtworkMasters/3ds/super-smash-bros-3ds/cover.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/Super-Smash-Bros-for-Nintendo-3DS-864329.html"
+      ],
+      "qaNotes": "Inspected using view_image. Exact full title with safe padding. Environment-focused Battlefield arena has three hovering platforms and main platform, original composition, no fighters or UI.",
+      "sha256": "24af7eb08c12991f93b92dd0bb09bcb9272e66252b8e94fa436e8b8b218e0217",
+      "bytes": 2537390
+    },
+    {
+      "key": "super-smash-bros-3ds",
+      "title": "Super Smash Bros. for Nintendo 3DS",
+      "rank": 5,
+      "kind": "scene",
+      "status": "accepted",
+      "toolMode": "built-in image_gen generate then precise-object-edit",
+      "prompt": "Use case: precise-object-edit. Edit target: the supplied original cinematic Battlefield landscape. Change only the two hanging red cloth banners at the upper right: remove their white circular cross insignias completely, leaving those banners as clean plain unmarked red fabric with the same folds, wear and illumination. Do not add any replacement symbol or pattern. Keep every other pixel-level visual feature as close as possible: floating main arena and exactly three hovering platforms, background ruins and islands, clouds, lighting, blue-and-gold materials, composition, 1536x1024 landscape dimensions, and the dark calm lower foreground. No text, typography, words, logo marks, UI, frame or characters anywhere.",
+      "initialGeneration": {
+        "prompt": "Use case: stylized-concept. Asset type: cinematic landscape game background for EmuDen. Generate a single new original fan-art illustration, 1536x1024 landscape (3:2), high polish and rich lighting, believable game-world forms, atmospheric depth, clear subjects. Important characters and distinctive landmarks should be in the central/right half and remain recognizable in a centered portrait crop. Keep the lower quarter calm and darker, as shaded environmental foreground, to allow native white game title and glass navigation overlays later; DO NOT draw any overlay. No text, letters, title, typography, logos, watermark, border, menu, UI, frame or retail box. Game: Super Smash Bros. for Nintendo 3DS. Original peaceful cinematic view of Battlefield stage with NO fighters, characters, people, animals, silhouettes or statues anywhere. The broad main floating stone-and-metal arena occupies center-right, with a grass-rimmed weathered bronze/stone surface and exactly THREE smaller hovering flat platforms above it (left, right and higher center), all clearly separated. Ancient columns, luminous floating island ruins and distant cloud seas create epic depth. Wide majestic cobalt-blue sky with golden sunbeams, light blue energy motes, excellent rich game-world materials. Arena and its three-platform silhouette are centered near x900 of 1536 and remain readable in a centered portrait crop. Shaded calm lower part of the main platform fills bottom quarter, suitable for white title overlays later. No text, logo, typography, game title, interface, menu, health meter or frame.",
+        "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-0b04210c-5125-4c2c-b7c2-fbf4637995d7.png"
+      },
+      "referenceImagePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-0b04210c-5125-4c2c-b7c2-fbf4637995d7.png",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-7922ae4d-d007-401c-b060-633b928fbd30.png",
+      "savedPath": "ArtworkMasters/3ds/super-smash-bros-3ds/scene.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/Super-Smash-Bros-for-Nintendo-3DS-864329.html"
+      ],
+      "qaNotes": "Inspected corrected image using view_image. Plain red banners with no insignia/logo. Original Battlefield environment, main arena and exactly three hovering platforms, no fighters/text/UI. Dark calm lower cloud/stone foreground, usable central portrait crop.",
+      "suggestedFocalPoint": {
+        "x": 0.6,
+        "y": 0.48
+      },
+      "sha256": "0833ca9270b2e6e47d9cb310328dd61ecdf4b584f5b7649ce7c2269b96f102e6",
+      "bytes": 2212482
+    },
+    {
+      "key": "rune-factory-4",
+      "title": "Rune Factory 4",
+      "rank": 6,
+      "kind": "cover",
+      "status": "accepted",
+      "toolMode": "built-in image_gen generate with character reference",
+      "prompt": "Use case: stylized-concept. Asset type: premium portrait game cover artwork for EmuDen's cinematic library. Generate one complete original fan-art composition, 1024x1536 portrait (2:3). Rich polished game-world illustration with believable materials, dramatic luminous depth, saturated but tasteful colors, beautiful lighting. It is flat full-bleed artwork, NOT a photograph of a box, not a retail package. All exact title typography must be readable at thumbnail size within a centered 86%-width safe area, generous 7% side padding and 6% top/bottom padding; the full composition must crop safely to a 0.71-aspect card. Do not add publisher marks, rating logos, console header, border, spine, watermark, menu, UI, extra words or subtitles. CRITICAL TITLE SAFE AREA: The title block must BEGIN no earlier than 150 pixels below the top in a 1024x1536 output, no title letters within 90 pixels of either side. Leave the top 10% pure scenery/sky. Game: Rune Factory 4, the original Nintendo 3DS release, not Special. A serene original premium fantasy cover showing Selphia's lovely white stone castle and cozy European-fantasy village beside tidy rows of turnips, strawberries and flowers. At lower center, a friendly fluffy cream Wooly with small curled brown horns peeks among oversized turnip leaves. The majestic guardian Ventuswill in her recognizable green dragon form curls peacefully on a terrace at mid-right: elegant long green-scaled neck and body, cream underside, curved pale horns, jewel-blue and crimson wing accents, benevolent intelligent eyes, not a human. Magical motes rise from the farm, lush distant forest and turquoise mountain haze. Cozy royal farming adventure; radiant golden morning, exquisite hand-painted game-world textures and soft anime-fantasy design. Upper third open pale blue-and-gold sky carries large elegant readable green/gold storybook serif text: \"RUNE FACTORY\" and a large \"4\" immediately below. Every word exact, no extra subtitle, no word Special. Text top edge y155 or lower. No human characters. Input image: character-design reference ONLY for Ventuswill, not an edit target and not a layout reference. Maintain her distinctive design: two curled gray ram-like horns, pale white furry brow/cheek frills, a short pointed green muzzle, yellow dorsal crest, broad FEATHERED wings layered turquoise-cyan with crimson red tips, NOT bat membrane wings. Selphia castle uses elegant white stone and rounded bright green turret roofs. Invent a completely new composition; do not copy the reference's yellow panel, type, framing or pose.",
+      "referenceImagePath": "/tmp/emuden-artwork-a-ventuswill-reference.jpg",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-bf1dfb01-eeab-4f09-a07b-ad325c724a17.png",
+      "savedPath": "ArtworkMasters/3ds/rune-factory-4/cover.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "researchURLs": [
+        "https://www.xseedgames.com/games/rune-factory-4/",
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-download-software/Rune-Factory-4-942229.html",
+        "https://runefactory.com/rf4/char.html",
+        "https://runefactory.com/rf4/land.html",
+        "https://runefactory.com/rf4/images/char15.jpg"
+      ],
+      "qaNotes": "Inspected using view_image. Exact Rune Factory 4 title, safe top padding, original Selphia farm/castle composition, Ventuswill's feathered turquoise/crimson wings and gray curled horns checked against publisher reference. No Special subtitle.",
+      "sha256": "8ff00f977a8b8ff576a0b0eb65494ace02d6e12c58c9e86ac4b9a8c446224657",
+      "bytes": 3200892
+    },
+    {
+      "key": "rune-factory-4",
+      "title": "Rune Factory 4",
+      "rank": 6,
+      "kind": "scene",
+      "status": "accepted",
+      "toolMode": "built-in image_gen generate with character reference",
+      "prompt": "Use case: stylized-concept. Asset type: cinematic landscape game background for EmuDen. Generate a single new original fan-art illustration, 1536x1024 landscape (3:2), high polish and rich lighting, believable game-world forms, atmospheric depth, clear subjects. Important characters and distinctive landmarks should be in the central/right half and remain recognizable in a centered portrait crop. Keep the lower quarter calm and darker, as shaded environmental foreground, to allow native white game title and glass navigation overlays later; DO NOT draw any overlay. No text, letters, title, typography, logos, watermark, border, menu, UI, frame or retail box. Game: Rune Factory 4 for Nintendo 3DS, original Selphia setting. A lush view from the royal farm's shaded path toward Selphia's white stone castle and warm timber fantasy village, glimmering fountains and flower-filled balconies. At center-right on the castle terrace is Ventuswill, the benevolent Native Dragon in green dragon form: graceful long green scaled neck and curled body, cream belly, pale curved horns, blue and red accented wings, calm wise expression. In foreground at just right of center a fluffy cream Wooly with small curled brown horns rests beside neat turnip rows and strawberry beds. No humans. Gentle golden morning shafts through leaves, magical motes, polished richly layered Japanese fantasy illustration, serene and welcoming. Keep dragon head and castle terrace near x950 in 1536-wide frame, usable centered portrait crop. Dark quiet shaded soil and path across bottom quarter. No text, game logo, title, interface or words. Input image: character-design reference ONLY for Ventuswill, not an edit target and not a layout reference. Maintain her distinctive design: two curled gray ram-like horns, pale white furry brow/cheek frills, a short pointed green muzzle, yellow dorsal crest, broad FEATHERED wings layered turquoise-cyan with crimson red tips, NOT bat membrane wings. Selphia castle uses elegant white stone and rounded bright green turret roofs. Invent a completely new composition; do not copy the reference's yellow panel, type, framing or pose.",
+      "referenceImagePath": "/tmp/emuden-artwork-a-ventuswill-reference.jpg",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-258e87e8-b12a-4582-8abf-c14e2f7b7df3.png",
+      "savedPath": "ArtworkMasters/3ds/rune-factory-4/scene.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "researchURLs": [
+        "https://www.xseedgames.com/games/rune-factory-4/",
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-download-software/Rune-Factory-4-942229.html",
+        "https://runefactory.com/rf4/char.html",
+        "https://runefactory.com/rf4/land.html",
+        "https://runefactory.com/rf4/images/char15.jpg"
+      ],
+      "qaNotes": "Inspected using view_image. Selphia farming, Wooly and correctly referenced Ventuswill in dragon form. No title/UI. Dark calm shaded path across bottom; central/right terrace and dragon remain readable when cropped.",
+      "suggestedFocalPoint": {
+        "x": 0.64,
+        "y": 0.46
+      },
+      "sha256": "c7becba00afe019ae400160facc86f687751879cd8fa34c5e585461c07445029",
+      "bytes": 3158494
+    },
+    {
+      "key": "super-mario-3d-land",
+      "title": "Super Mario 3D Land",
+      "rank": 7,
+      "kind": "scene",
+      "status": "accepted",
+      "toolMode": "built-in image_gen generate",
+      "prompt": "Use case: stylized-concept. Asset type: cinematic landscape game background for EmuDen. Generate a single new original fan-art illustration, 1536x1024 landscape (3:2), high polish and rich lighting, believable game-world forms, atmospheric depth, clear subjects. Important characters and distinctive landmarks should be in the central/right half and remain recognizable in a centered portrait crop. Keep the lower quarter calm and darker, as shaded environmental foreground, to allow native white game title and glass navigation overlays later; DO NOT draw any overlay. No text, letters, title, typography, logos, watermark, border, menu, UI, frame or retail box. Game: Super Mario 3D Land for Nintendo 3DS. A peaceful cinematic environment-focused original Mushroom Kingdom platform course, with NO characters, people, creatures, faces, silhouettes or statues. A winding sequence of grassy square platforms and sandy block cliffs leads through rounded green hills, a glossy green pipe near center-right, red-and-white spotted mushroom-shaped platforms, golden coin arcs, plain brick blocks and a distant goal pole with blank white flag. A small golden-brown autumn leaf with NO face drifts near the main pipe as a subtle Super Leaf motif. Broad brilliant blue sky, warm sunbeams, soft rounded clouds, high-end polished 3D game-world illustration with tactile grass, stone and glossy pipes, clear layered stereoscopic-like depth. Main course geometry and pipe grouped near x900 of 1536, usable centered portrait crop. Lower quarter quiet shaded grass on a broad foreground platform for native white title overlays later. No words, text, logos, UI, menu, question-mark blocks or frame. No cat imagery or Sprixie references.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-b3808998-db56-4034-9b15-99defc209048.png",
+      "savedPath": "ArtworkMasters/3ds/super-mario-3d-land/scene.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/News/2011/In-shops-now-SUPER-MARIO-3D-LAND-253109.html",
+        "https://www.nintendo.com/en-gb/News/2011/Get-ready-to-whip-Bowser-into-shape-the-Tanooki-power-up-is-back--252974.html"
+      ],
+      "qaNotes": "Inspected using view_image. Original Super Mario 3D Land course environment, green pipe, leaf, coin arcs, mushrooms and goal flag. No characters, logos, letters or UI; plain white flag. Clear central/right course geometry and calm dark grass across lower quarter.",
+      "suggestedFocalPoint": {
+        "x": 0.6,
+        "y": 0.48
+      },
+      "sha256": "14068d973dec354b80e39db6316f2bd599897940801ecf38b8d275d91a6071ef",
+      "bytes": 2199741
+    },
+    {
+      "key": "fire-emblem-awakening",
+      "title": "Fire Emblem Awakening",
+      "rank": 8,
+      "kind": "cover",
+      "status": "accepted",
+      "toolMode": "built-in image_gen generate",
+      "prompt": "Use case: stylized-concept. Asset type: premium portrait game cover artwork for EmuDen's cinematic library. Generate one complete original fan-art composition, 1024x1536 portrait (2:3). Rich polished game-world illustration with believable materials, dramatic luminous depth, saturated but tasteful colors, beautiful lighting. It is flat full-bleed artwork, NOT a photograph of a box, not a retail package. All exact title typography must be readable at thumbnail size within a centered 86%-width safe area, generous 7% side padding and 6% top/bottom padding; the full composition must crop safely to a 0.71-aspect card. Do not add publisher marks, rating logos, console header, border, spine, watermark, menu, UI, extra words or subtitles. CRITICAL TITLE SAFE AREA: The title block must BEGIN no earlier than 150 pixels below the top in a 1024x1536 output, no title letters within 90 pixels of either side. Leave the top 10% pure scenery/sky. Game: Fire Emblem Awakening for Nintendo 3DS. Original high-end painterly anime-fantasy key art with polished cinematic materials and depth. Prince Chrom stands in the lower center, short dark blue hair, navy blue sleeveless tunic, white cravat and pale cape, a single silver pauldron over his left shoulder, his right shoulder bare with a small blue Brand of the Exalt, brown belt, white trousers and tall boots. He holds his silver Falchion sword angled down, dignified determined expression. Behind his right shoulder stands Lucina, long dark blue hair, thin gold tiara, navy high-collared tunic and matching cape with gold trim, leather gloves, calm determined eyes; a clearly distinct second character, no fused bodies. Wind carries small blue magical motes across ancient Ylisse arches and sunlit plains; indigo storm clouds part to warm golden light. Top third calm dark indigo sky contains very large readable ivory serif title text: \"FIRE EMBLEM\" and below it \"AWAKENING\". Exact wording, all letters intact, top edge y155 or lower. No other text. Faithful original Awakening clothing, not outfits from other Fire Emblem entries.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-89b88db4-c651-4219-a43f-dba4e8502417.png",
+      "savedPath": "ArtworkMasters/3ds/fire-emblem-awakening/cover.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/Fire-Emblem-Awakening-725039.html",
+        "https://www.nintendo.com/jp/fe/en/characters/smashbros/detail/chrom01.html",
+        "https://www.nintendo.com/jp/fe/en/feature/engage/detail/lucina.html"
+      ],
+      "qaNotes": "Inspected using view_image. Exact title, safe vertical padding, faithful Chrom and Lucina, right bare shoulder/Exalt brand and left silver pauldron on Chrom. Original polished anime-fantasy illustration.",
+      "sha256": "46a098814b600c1e31467ca88b727cb1b8b7f66ccc7970fad9899a43de195aa5",
+      "bytes": 2804331
+    },
+    {
+      "key": "fire-emblem-awakening",
+      "title": "Fire Emblem Awakening",
+      "rank": 8,
+      "kind": "scene",
+      "status": "accepted",
+      "toolMode": "built-in image_gen generate",
+      "prompt": "Use case: stylized-concept. Asset type: cinematic landscape game background for EmuDen. Generate a single new original fan-art illustration, 1536x1024 landscape (3:2), high polish and rich lighting, believable game-world forms, atmospheric depth, clear subjects. Important characters and distinctive landmarks should be in the central/right half and remain recognizable in a centered portrait crop. Keep the lower quarter calm and darker, as shaded environmental foreground, to allow native white game title and glass navigation overlays later; DO NOT draw any overlay. No text, letters, title, typography, logos, watermark, border, menu, UI, frame or retail box. Game: Fire Emblem Awakening, Nintendo 3DS. A majestic cinematic painted anime-fantasy scene on a grassy ridge above the Halidom of Ylisse. Chrom, short dark blue hair, navy sleeveless tunic, white cravat and pale cape, silver LEFT shoulder pauldron and bare RIGHT shoulder with blue Exalt brand, stands just right of center with Falchion held calmly tip-down. Lucina stands beside him at center, long dark blue hair, thin gold tiara, navy tunic and cape with gold trim, matching sword at her side. Distinct complete bodies and faces, looking toward a distant pale stone Ylisse castle across the plains, ancient ruined arch framing the skyline. Tiny Shepherd banners flutter in the distance with no letters, no crowds in foreground. Beautiful cobalt storm clouds splitting to gold sunbeams, wind in their capes, rich silver metal and cloth textures, heroic bonds and hope. Group both faces near x850 of 1536, in central half of image. Shaded quiet ridge grass across lower quarter. No words, UI, logos or title.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-614c93e8-b530-4c6f-92c2-b11460416c02.png",
+      "savedPath": "ArtworkMasters/3ds/fire-emblem-awakening/scene.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/Fire-Emblem-Awakening-725039.html",
+        "https://www.nintendo.com/jp/fe/en/characters/smashbros/detail/chrom01.html",
+        "https://www.nintendo.com/jp/fe/en/feature/engage/detail/lucina.html"
+      ],
+      "qaNotes": "Inspected using view_image. Faithful Chrom and Lucina, wind-swept Ylisse ridge, no title/UI. Both clear faces in central/right group; dark quiet lower quarter.",
+      "suggestedFocalPoint": {
+        "x": 0.65,
+        "y": 0.46
+      },
+      "sha256": "05e09897df87288fc74dcb1c795fc7c95e8ecbb55ed47504a8cfd144848d17f5",
+      "bytes": 2682927
+    },
+    {
+      "key": "fire-emblem-fates",
+      "title": "Fire Emblem Fates",
+      "rank": 9,
+      "kind": "cover",
+      "status": "accepted",
+      "toolMode": "built-in image_gen generate",
+      "prompt": "Use case: stylized-concept. Asset type: premium portrait game cover artwork for EmuDen's cinematic library. Generate one complete original fan-art composition, 1024x1536 portrait (2:3). Rich polished game-world illustration with believable materials, dramatic luminous depth, saturated but tasteful colors, beautiful lighting. It is flat full-bleed artwork, NOT a photograph of a box, not a retail package. All exact title typography must be readable at thumbnail size within a centered 86%-width safe area, generous 7% side padding and 6% top/bottom padding; the full composition must crop safely to a 0.71-aspect card. Do not add publisher marks, rating logos, console header, border, spine, watermark, menu, UI, extra words or subtitles. CRITICAL TITLE SAFE AREA: The title block must BEGIN no earlier than 150 pixels below the top in a 1024x1536 output, no title letters within 90 pixels of either side. Leave the top 10% pure scenery/sky. Game: Fire Emblem Fates for Nintendo 3DS, generic family artwork representing all three story paths equally, with NO particular version label. Original high-end painterly anime-fantasy key art. Default male Corrin stands centrally in the lower two thirds, short tousled silver hair, pointed ears, red eyes, faithful ivory-and-black sculpted armor with gold accents, a pale flowing cape, holding the golden-edged Yato sword calmly downward. Azura stands beside him slightly behind, very long light blue hair, delicate gold headband, faithful flowing white-and-gold songstress dress with a blue sash, holding a slender gold-and-blue lance. Distinct clean faces and complete separate anatomy. The background divides symbolically: distant dark Gothic Nohr castle under indigo twilight on the left, luminous white-and-red Hoshido castle with graceful Japanese roofs under peach sunrise on the right, one misty path connecting the two. Balanced blue and warm white light, drifting petals, waterlike magical motes, rich cloth and metal detail. Top third dark cobalt sky carries large elegant silver/gold serif title exactly: \"FIRE EMBLEM\" and \"FATES\". Topmost letter y155 or lower, fully inside side margins. No Birthright, Conquest, Revelation or Special Edition words; no other text.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-43728d4a-8414-4d05-8787-36766d9107ab.png",
+      "savedPath": "ArtworkMasters/3ds/fire-emblem-fates/cover.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "researchURLs": [
+        "https://www.nintendo.com/jp/fe/en/characters/smashbros/detail/kamui01.html",
+        "https://www.nintendo.com/en-gb/News/2016/May/Fire-Emblem-Fates-Birthright-or-Conquest-1106193.html",
+        "https://fireemblemawakening.com/fates/characters/"
+      ],
+      "qaNotes": "Inspected using view_image. Exact generic Fire Emblem Fates title and safe top padding. Corrin/Azura centered, both royal families appear behind with balanced Hoshido/Nohr architecture. No version claim.",
+      "sha256": "ae396dedaeec16815dd5b320f0273ac91ee683d9230b79b60b2dbfd51f23ea5a",
+      "bytes": 3037676
+    },
+    {
+      "key": "fire-emblem-fates",
+      "title": "Fire Emblem Fates",
+      "rank": 9,
+      "kind": "scene",
+      "status": "accepted",
+      "toolMode": "built-in image_gen generate then precise-object-edit",
+      "prompt": "Use case: precise-object-edit. Edit target: the supplied original cinematic Fire Emblem Fates landscape. Make ONE small canonical costume correction only: Corrin, the silver-haired armored man at center, should have bare human feet with visible natural toes beneath his existing ankle/shin armor, as in his original Fire Emblem Fates design. Remove only the enclosed ivory armored shoe portions covering his feet; retain the ivory shin/ankle greaves and the same stance on the stone bridge. Keep everything else unchanged: both faces, red eyes, hairstyles, armor above the ankles, Corrin's sword and cape, Azura's entire appearance, dress and lance, both kingdoms, bridge, sky, lighting, framing, rich anime-painterly style, the 1536x1024 landscape dimensions, dark calm foreground. No text, logos, UI or border. This is a quiet fully clothed fantasy scene; only correct the footwear.",
+      "initialGeneration": {
+        "prompt": "Use case: stylized-concept. Asset type: cinematic landscape game background for EmuDen. Generate a single new original fan-art illustration, 1536x1024 landscape (3:2), high polish and rich lighting, believable game-world forms, atmospheric depth, clear subjects. Important characters and distinctive landmarks should be in the central/right half and remain recognizable in a centered portrait crop. Keep the lower quarter calm and darker, as shaded environmental foreground, to allow native white game title and glass navigation overlays later; DO NOT draw any overlay. No text, letters, title, typography, logos, watermark, border, menu, UI, frame or retail box. Game: Fire Emblem Fates on Nintendo 3DS, balanced original family artwork representing Birthright, Conquest and Revelation generically. Default male Corrin with short silver hair, pointed ears, red eyes, ivory-and-black armor with gold accents and pale cape, holding Yato sword down, stands beside Azura, who has very long light blue hair, a thin gold headband, flowing white-and-gold dress with blue sash and a slender lance. Both calm and contemplative on a weathered stone bridge at center-right, bodies separate, faces clear, looking toward a divided magical horizon. At left distance dark Gothic Nohr spires rise through blue mist; at right distance white-and-red Hoshido architecture with elegant Japanese roofs glows under peach light. A river and one bright path connect both realms beneath a luminous transitional sky. No faction is dominant, no battle, no version-specific claim. Polished cinematic painted anime fantasy with blue/silver and soft amber light, cloth depth, drifting petals. Both characters grouped near x900 of 1536, safe for centered portrait crop. Lower quarter a quiet darker stone bridge foreground. No text, title, logo or UI.",
+        "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-70b654d1-5097-4b97-9c12-03d016e0e0de.png"
+      },
+      "referenceImagePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-70b654d1-5097-4b97-9c12-03d016e0e0de.png",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-fbce3eee-303e-40bf-bfc4-66218e3d1333.png",
+      "savedPath": "ArtworkMasters/3ds/fire-emblem-fates/scene.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "researchURLs": [
+        "https://www.nintendo.com/jp/fe/en/characters/smashbros/detail/kamui01.html",
+        "https://www.nintendo.com/en-gb/News/2016/May/Fire-Emblem-Fates-Birthright-or-Conquest-1106193.html",
+        "https://fireemblemawakening.com/fates/characters/"
+      ],
+      "qaNotes": "Inspected corrected image using view_image. Corrin's canonical bare feet restored beneath ankle greaves; all other composition preserved. Corrin/Azura and both kingdoms, no version claim or text/UI. Dark bridge foreground, clear central/right character group.",
+      "suggestedFocalPoint": {
+        "x": 0.65,
+        "y": 0.46
+      },
+      "sha256": "0366031022bf5d3eeddabdc5354eebe5e5b5bb61106bb410d395840070e6b18e",
+      "bytes": 2385798
+    }
+  ],
+  "failedAttempts": [
+    {
+      "key": "zelda-a-link-between-worlds",
+      "kind": "cover",
+      "prompt": "Use case: stylized-concept. Asset type: premium portrait game cover artwork for EmuDen's cinematic library. Generate one complete original fan-art composition, 1024x1536 portrait (2:3). Rich polished game-world illustration with believable materials, dramatic luminous depth, saturated but tasteful colors, beautiful lighting. It is flat full-bleed artwork, NOT a photograph of a box, not a retail package. All exact title typography must be readable at thumbnail size within a centered 86%-width safe area, generous 7% side padding and 6% top/bottom padding; the full composition must crop safely to a 0.71-aspect card. Do not add publisher marks, rating logos, console header, border, spine, watermark, menu, UI, extra words or subtitles. Game: The Legend of Zelda: A Link Between Worlds (Nintendo 3DS). Subject and world: the youthful blond Link from this release, large expressive blue eyes, classic green cap and tunic, brown boots, small brown belt, silver sword and blue shield, standing in front of an ancient sandstone Hyrule wall. Beside him on the same wall is his flat ochre-and-green wall-painting form, an important magical mechanic, visibly a painted silhouette of the same Link. A thin golden magical fissure in the wall reveals violet Lorule beyond; sunlit Hyrule castle and green fields occupy the upper distance. Composition: the real Link occupies the lower center, wall-painting at middle right, visually legible even small; keep upper 28% as clean pale golden sky for title, no overlapping faces. Text (verbatim), large elegant adventure serif: \"THE LEGEND OF ZELDA\" and immediately below in a readable two-line subtitle \"A LINK BETWEEN WORLDS\". Spell all words exactly. Original cinematic composition, not a recreation of the official box.",
+      "failure": "Output moderation_blocked (other), request ID 3efdad2e-381f-43ae-921d-fbd934ab29e1; retrying a simpler adventure composition."
+    },
+    {
+      "key": "zelda-a-link-between-worlds",
+      "kind": "cover",
+      "prompt": "Use case: stylized-concept. Asset type: premium portrait game cover artwork for EmuDen's cinematic library. Generate one complete original fan-art composition, 1024x1536 portrait (2:3). Rich polished game-world illustration with believable materials, dramatic luminous depth, saturated but tasteful colors, beautiful lighting. It is flat full-bleed artwork, NOT a photograph of a box, not a retail package. All exact title typography must be readable at thumbnail size within a centered 86%-width safe area, generous 7% side padding and 6% top/bottom padding; the full composition must crop safely to a 0.71-aspect card. Do not add publisher marks, rating logos, console header, border, spine, watermark, menu, UI, extra words or subtitles. Game: The Legend of Zelda: A Link Between Worlds for Nintendo 3DS. An original lavish illustrated adventure cover. Youthful blond elf-eared Link with big blue eyes, classic green cap, green tunic, brown belt and boots, blue Hylian shield on his back, stands in a sunlit sandstone ruin. On the wall at right show the same Link as a flat ochre-and-green painted figure, a faithful nod to his wall-merging ability. Golden sunlight, emerald meadows and Hyrule castle in the distance, violet magical light in a narrow fissure. Friendly adventurous expression, clear memorable pose. Upper 30% clean pale gold sky contains large, perfectly legible title typography. Exact title, all words present: \"THE LEGEND OF ZELDA\" then \"A LINK BETWEEN WORLDS\" on two large lines. Keep all letters fully within 8% margins. No other text or logos.",
+      "failure": "Output moderation_blocked (other), request ID 27004919-fba2-4743-8b9b-e99689ca2cb5; next uses mural and iconic objects."
+    },
+    {
+      "key": "zelda-a-link-between-worlds",
+      "kind": "cover",
+      "prompt": "Use case: stylized-concept. Asset type: premium portrait game cover artwork for EmuDen's cinematic library. Generate one complete original fan-art composition, 1024x1536 portrait (2:3). Rich polished game-world illustration with believable materials, dramatic luminous depth, saturated but tasteful colors, beautiful lighting. It is flat full-bleed artwork, NOT a photograph of a box, not a retail package. All exact title typography must be readable at thumbnail size within a centered 86%-width safe area, generous 7% side padding and 6% top/bottom padding; the full composition must crop safely to a 0.71-aspect card. Do not add publisher marks, rating logos, console header, border, spine, watermark, menu, UI, extra words or subtitles. Game: The Legend of Zelda: A Link Between Worlds, Nintendo 3DS. Original fan-art cover emphasizing the magical wall-merging mechanic. The lower two thirds show an ancient sandstone wall glowing in golden sunlight: a single flat painted Link, a green-capped blond Hylian adventurer with a simple expressive face, is moving across the wall as a two-dimensional ochre-and-green mural. Beside the mural a narrow luminous fissure opens onto violet Lorule castle. In foreground grass at the foot of the wall, a beautifully detailed blue Hylian shield and silver Master Sword rest against the stone. Green Hyrule meadows and a faraway castle behind. Premium cinematic fantasy painting, clear bold shapes. Upper third is open pale golden sky with readable large dark forest-green serif title. Exact text: \"THE LEGEND OF ZELDA\" then \"A LINK BETWEEN WORLDS\" in two lines. Keep the topmost letter at least 150 pixels from the top of this 1024x1536 image and all letters at least 85 pixels from left and right edges. No other text.",
+      "failure": "Output moderation_blocked (other), request ID 93d6a7e1-1786-416b-8dd5-d2f7e5452759."
+    },
+    {
+      "key": "zelda-majoras-mask-3d",
+      "kind": "cover edit",
+      "prompt": "Use case: precise-object-edit. Edit target: the supplied original Majora's Mask 3D portrait cover. Keep the magnificent scene, Skull Kid with Majora's Mask, moon, clock tower, violet lighting, polished style, colors, and exact title words unchanged. Change only title layout and the small amount of surrounding sky required: move the entire complete title block down so the topmost visible title letter begins at y=155 pixels in a 1024x1536 image. Reduce title width slightly so no letter is closer than 90 pixels to either side. Do not crop or omit any word. Exact title remains \"THE LEGEND OF ZELDA\" and \"MAJORA'S MASK 3D\". Reflow into a clean compact block in the top third with ample clear sky above. No other text or border. Render portrait 1024x1536.",
+      "referencedImagePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-1806-7752-ab70-03417aabcf2a/exec-3bd0237c-e895-45bb-bed5-c327e9180d43.png",
+      "failure": "Output moderation_blocked (other), request ID c09188aa-0303-4797-9b51-bb9b556264c0. Original retained."
+    },
+    {
+      "key": "zelda-a-link-between-worlds",
+      "kind": "cover",
+      "prompt": "Use case: stylized-concept. Asset type: premium portrait game cover artwork for EmuDen's cinematic library. Generate one complete original fan-art composition, 1024x1536 portrait (2:3). Rich polished game-world illustration with believable materials, dramatic luminous depth, saturated but tasteful colors, beautiful lighting. It is flat full-bleed artwork, NOT a photograph of a box, not a retail package. All exact title typography must be readable at thumbnail size within a centered 86%-width safe area, generous 7% side padding and 6% top/bottom padding; the full composition must crop safely to a 0.71-aspect card. Do not add publisher marks, rating logos, console header, border, spine, watermark, menu, UI, extra words or subtitles. CRITICAL TITLE SAFE AREA: The title block must BEGIN no earlier than 150 pixels below the top in a 1024x1536 output, no title letters within 90 pixels of either side. Leave the top 10% pure scenery/sky. A peaceful environment-focused original illustrated cover for The Legend of Zelda: A Link Between Worlds for Nintendo 3DS. NO people, human figures, faces, characters, weapons, or humanoid paintings. An ancient sandstone wall sweeps from foreground to midground, containing an abstract emerald-and-ochre painted decorative pattern that lies completely flat on the stone. An elegant narrow golden fissure in the wall separates sunlit Hyrule on the left, with bright green meadows and a graceful white Hyrule castle, from mysterious violet Lorule on the right, with an inverted floating dark castle and blue-purple mountains. A small decorative three-triangle golden relic shines at the central seam. Magical but peaceful, rich amber light against violet, exquisite stones, moss, leaves, sparkling dust and layered depth. The composition itself tells of two connected worlds. Large readable original green-and-gold adventure serif typography occupies the open upper sky. Exact title: \"THE LEGEND OF ZELDA\" then \"A LINK BETWEEN WORLDS\" on two lines. Spell every word correctly, and keep title inside wide safe padding, topmost text at least 150px below top. No other words or logos.",
+      "failure": "Output moderation_blocked (other), request ID 556cbfe9-a395-4d08-a7e6-845a1c5342d6. Peaceful environment-only composition was also rejected; leaving cover pending and continuing."
+    },
+    {
+      "key": "zelda-ocarina-of-time-3d",
+      "kind": "cover",
+      "prompt": "Use case: stylized-concept. Asset type: premium portrait game cover artwork for EmuDen's cinematic library. Generate one complete original fan-art composition, 1024x1536 portrait (2:3). Rich polished game-world illustration with believable materials, dramatic luminous depth, saturated but tasteful colors, beautiful lighting. It is flat full-bleed artwork, NOT a photograph of a box, not a retail package. All exact title typography must be readable at thumbnail size within a centered 86%-width safe area, generous 7% side padding and 6% top/bottom padding; the full composition must crop safely to a 0.71-aspect card. Do not add publisher marks, rating logos, console header, border, spine, watermark, menu, UI, extra words or subtitles. CRITICAL TITLE SAFE AREA: The title block must BEGIN no earlier than 150 pixels below the top in a 1024x1536 output, no title letters within 90 pixels of either side. Leave the top 10% pure scenery/sky. Game: The Legend of Zelda: Ocarina of Time 3D for Nintendo 3DS. Original cinematic fan-art of ADULT Link riding Epona across Hyrule field. Adult Link has blond bangs, long green cap, green tunic, white long sleeves and tights, brown leather gauntlets and boots, Hylian shield strapped on his back, calm heroic expression. Epona is a realistic chestnut mare with long white mane and white blaze. Both face three-quarter toward the viewer, full clear silhouette in lower two-thirds; distant Hyrule Castle and a few ancient stone ruins emerge from luminous sunset mist. Navi is a single small blue-white fairy beside Link's shoulder. Composition uses clean gold sunset sky in upper third for large sophisticated readable serif title. Text exact: \"THE LEGEND OF ZELDA\" then \"OCARINA OF TIME 3D\" on two large lines. Title begins at y=155, all words fully inside wide safe margins. No other words, no Breath of the Wild outfit or characters.",
+      "failure": "Output moderation_blocked (other), request ID 155e6322-3a9d-4b96-9eb5-4cca58c62d07. First attempt; proceeding to other games."
+    },
+    {
+      "key": "super-smash-bros-3ds",
+      "kind": "cover",
+      "prompt": "Use case: stylized-concept. Asset type: premium portrait game cover artwork for EmuDen's cinematic library. Generate one complete original fan-art composition, 1024x1536 portrait (2:3). Rich polished game-world illustration with believable materials, dramatic luminous depth, saturated but tasteful colors, beautiful lighting. It is flat full-bleed artwork, NOT a photograph of a box, not a retail package. All exact title typography must be readable at thumbnail size within a centered 86%-width safe area, generous 7% side padding and 6% top/bottom padding; the full composition must crop safely to a 0.71-aspect card. Do not add publisher marks, rating logos, console header, border, spine, watermark, menu, UI, extra words or subtitles. CRITICAL TITLE SAFE AREA: The title block must BEGIN no earlier than 150 pixels below the top in a 1024x1536 output, no title letters within 90 pixels of either side. Leave the top 10% pure scenery/sky. Game: Super Smash Bros. for Nintendo 3DS, original 2014 roster. A dynamic but clean original fan-art tournament poster with exactly four recognizable fighters: Mario in red cap, red shirt, blue overalls and white gloves at center front; Link in his Twilight Princess-era green cap and tunic, chainmail, brown leather boots with blue Hylian shield to Mario's left; Pikachu, the small bright yellow mouse with long black-tipped ears and red round cheeks, at lower right; Kirby, the pink spherical hero with red feet, at lower left. The four strike lively separate action poses over a floating stone-and-metal Battlefield platform against a luminous blue cosmic sky, sunlight and small energy trails. Clear anatomies, no extra limbs, no fused characters, each face fully visible. High-end polished 3D game illustration, vivid joyful dramatic lighting, layered depth. Top third reserved for large bold white-and-gold title in original angular sports-poster typography: \"SUPER SMASH BROS.\" then a clearly readable smaller line \"for Nintendo 3DS\". Every word exact. Start title at least 150px below top. No reproduced retail cover layout, no other text.",
+      "failure": "Output moderation_blocked (other), request ID 36e4e258-372b-425d-9315-07e2af431ebd. First attempt; no asset produced."
+    },
+    {
+      "key": "super-smash-bros-3ds",
+      "kind": "scene",
+      "prompt": "Use case: stylized-concept. Asset type: cinematic landscape game background for EmuDen. Generate a single new original fan-art illustration, 1536x1024 landscape (3:2), high polish and rich lighting, believable game-world forms, atmospheric depth, clear subjects. Important characters and distinctive landmarks should be in the central/right half and remain recognizable in a centered portrait crop. Keep the lower quarter calm and darker, as shaded environmental foreground, to allow native white game title and glass navigation overlays later; DO NOT draw any overlay. No text, letters, title, typography, logos, watermark, border, menu, UI, frame or retail box. Game: Super Smash Bros. for Nintendo 3DS, original 2014 roster. Four fighters in a clear cinematic moment on the floating Battlefield arena: Mario in red cap, red shirt, blue overalls and white gloves leaps forward with one fist raised near the center; green-clad adult Link with chainmail and blue Hylian shield takes a defensive stance just right of center; small bright yellow Pikachu with black-tipped long ears and red cheeks stands below them at center-right; round pink Kirby with red feet floats behind Mario at middle-left. Exactly these four distinct characters, complete clean anatomy, no overlapping faces. The stage has the central large stone platform and two smaller distant hovering ledges. Rich cobalt sky, distant floating ruins, warm rimlight, blue-white motion energy, premium polished game-world illustration. Keep fighters grouped between x=650 and x=1100 in a 1536-wide image to work in portrait crops. Shaded calm arena foreground across bottom quarter. No text, no interface, no giant logos.",
+      "failure": "Output moderation_blocked (other), request ID 6f39b03a-27f2-4770-a1f4-a356cecd918b. First attempt; no asset produced."
+    },
+    {
+      "key": "super-mario-3d-land",
+      "kind": "cover",
+      "prompt": "Use case: stylized-concept. Asset type: premium portrait game cover artwork for EmuDen's cinematic library. Generate one complete original fan-art composition, 1024x1536 portrait (2:3). Rich polished game-world illustration with believable materials, dramatic luminous depth, saturated but tasteful colors, beautiful lighting. It is flat full-bleed artwork, NOT a photograph of a box, not a retail package. All exact title typography must be readable at thumbnail size within a centered 86%-width safe area, generous 7% side padding and 6% top/bottom padding; the full composition must crop safely to a 0.71-aspect card. Do not add publisher marks, rating logos, console header, border, spine, watermark, menu, UI, extra words or subtitles. CRITICAL TITLE SAFE AREA: The title block must BEGIN no earlier than 150 pixels below the top in a 1024x1536 output, no title letters within 90 pixels of either side. Leave the top 10% pure scenery/sky. Game: Super Mario 3D Land, Nintendo 3DS. Original playful cinematic 3D game-world illustration. Tanooki Mario is the clear single main subject at lower center, his familiar moustached cheerful face in a soft brown raccoon hood with rounded ears, striped raccoon tail curling behind, brown one-piece tanooki suit and white gloves, joyfully leaping over layered floating grassy block platforms. Bright Mushroom Kingdom sky, rounded green hills, coin arcs, a Super Leaf drifting beside him, a green pipe and a distant flagpole with a plain white flag. Not cat Mario, no cat suit, not 3D World, no Sprixies. Plush-looking materials and beautifully lit rich landscape with bold recognizable game geometry, golden rimlight, vibrant joyful greens and sky blues. Top third clean blue sky contains bold large friendly 3D lettering with exact words: \"SUPER MARIO\" above \"3D LAND\". Keep topmost text at y155 and all words fully within 90px side margins. No other text.",
+      "failure": "Output moderation_blocked (other), request ID 92a2e2f6-4843-443d-92f3-3882893fc9bb. First attempt; no asset produced."
+    },
+    {
+      "key": "super-mario-3d-land",
+      "kind": "scene",
+      "prompt": "Use case: stylized-concept. Asset type: cinematic landscape game background for EmuDen. Generate a single new original fan-art illustration, 1536x1024 landscape (3:2), high polish and rich lighting, believable game-world forms, atmospheric depth, clear subjects. Important characters and distinctive landmarks should be in the central/right half and remain recognizable in a centered portrait crop. Keep the lower quarter calm and darker, as shaded environmental foreground, to allow native white game title and glass navigation overlays later; DO NOT draw any overlay. No text, letters, title, typography, logos, watermark, border, menu, UI, frame or retail box. Game: Super Mario 3D Land for Nintendo 3DS. Tanooki Mario with recognizable moustache, brown rounded-ear raccoon hood, brown full suit, white gloves and long striped raccoon tail glides joyfully toward a grassy floating block platform just right of center. A golden Super Leaf floats nearby, coins arc into the distance, a green pipe and red mushroom-shaped platform sit farther back. Rich layered miniature-like Mushroom Kingdom courses with stacked sandy blocks, vivid green grass, rounded hills, blue sky and soft white clouds. Exactly one Mario; no cat costume, no Sprixie kingdom or 3D World references. Polished believable 3D game-world illustration with soft fur texture, sunlit grass and warm cinematic depth. Main Mario face and body near x930 of 1536, not far edge. Lower quarter calm shaded green grass/stone surface for title overlays. No text, logo or UI, plain flag with no emblem.",
+      "failure": "Output moderation_blocked (other), request ID b07e7083-3d4f-45fa-bcc4-7d5a2987f8ad. First attempt; no asset produced."
+    },
+    {
+      "key": "super-mario-3d-land",
+      "kind": "cover",
+      "prompt": "Use case: stylized-concept. Asset type: premium portrait game cover artwork for EmuDen's cinematic library. Generate one complete original fan-art composition, 1024x1536 portrait (2:3). Rich polished game-world illustration with believable materials, dramatic luminous depth, saturated but tasteful colors, beautiful lighting. It is flat full-bleed artwork, NOT a photograph of a box, not a retail package. All exact title typography must be readable at thumbnail size within a centered 86%-width safe area, generous 7% side padding and 6% top/bottom padding; the full composition must crop safely to a 0.71-aspect card. Do not add publisher marks, rating logos, console header, border, spine, watermark, menu, UI, extra words or subtitles. CRITICAL TITLE SAFE AREA: The title block must BEGIN no earlier than 150 pixels below the top in a 1024x1536 output, no title letters within 90 pixels of either side. Leave the top 10% pure scenery/sky. Game: Super Mario 3D Land, Nintendo 3DS. A peaceful environment-focused original premium cover, NO characters, people, animals, creatures, faces, character silhouettes or statues. A richly detailed Mushroom Kingdom platform course floats in a luminous blue sky: large soft grassy square platforms over layered sandy block cliffs, rounded green hills, a glossy green pipe at middle-right, red-and-white spotted mushroom-shaped platforms, golden coin arcs, plain brick blocks, and a distant goal pole with a blank white triangular flag. A single golden-brown autumn leaf with NO face drifts above the path, hinting at the game's Super Leaf power-up. Clear architectural depth and playful physical toy-like materials, warm sunbeams, brilliant greens and blues, original beautiful game-world composition. Do not show a cat suit, Sprixies, 3D World characters or a real retail package. Top third clean sky contains very large friendly three-dimensional original lettering with exact text: \"SUPER MARIO\" and below it \"3D LAND\". All letters fully readable, generous safe padding, topmost letter at least y155. No other words or logos, no question-mark block text.",
+      "failure": "Output moderation_blocked (other), request ID e027d4b6-cfac-4384-9103-86e21d13e960. Materially different course-only composition was rejected; no more cover attempts."
+    }
+  ],
+  "missingAssets": [
+    {
+      "key": "zelda-a-link-between-worlds",
+      "title": "The Legend of Zelda: A Link Between Worlds",
+      "rank": 1,
+      "kind": "cover",
+      "intendedPath": "ArtworkMasters/3ds/zelda-a-link-between-worlds/cover.png",
+      "status": "not-produced-tool-block",
+      "reason": "Four confirmed output-stage moderation_blocked/other responses, including a materially different peaceful environment-only cover. Root instructed no further retries and existing cover fallback."
+    },
+    {
+      "key": "zelda-ocarina-of-time-3d",
+      "title": "The Legend of Zelda: Ocarina of Time 3D",
+      "rank": 3,
+      "kind": "cover",
+      "intendedPath": "ArtworkMasters/3ds/zelda-ocarina-of-time-3d/cover.png",
+      "status": "not-produced-tool-block",
+      "reason": "Confirmed output-stage moderation_blocked/other response. Root instructed no further Zelda cover retries and existing approved Ocarina cover fallback."
+    },
+    {
+      "key": "super-mario-3d-land",
+      "title": "Super Mario 3D Land",
+      "rank": 7,
+      "kind": "cover",
+      "intendedPath": "ArtworkMasters/3ds/super-mario-3d-land/cover.png",
+      "status": "not-produced-tool-block",
+      "reason": "Two confirmed output-stage moderation_blocked/other responses, including a materially different peaceful course-only cover. No further retries; existing cover fallback required."
+    }
+  ],
+  "status": "delivered-with-documented-tool-blocks",
+  "summary": {
+    "acceptedMasters": 15,
+    "requestedMasters": 18,
+    "missingMasters": 3,
+    "coverDimensions": {
+      "width": 1024,
+      "height": 1536
+    },
+    "sceneDimensions": {
+      "width": 1536,
+      "height": 1024
+    },
+    "allAcceptedAssetsVisuallyInspected": true,
+    "dimensionAndUniqueFileAudit": "passed"
+  }
+}

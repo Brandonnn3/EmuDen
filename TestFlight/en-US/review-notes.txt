@@ -1,0 +1,18 @@
+Prepared for a possible later external beta review. This submission is intended for INTERNAL TESTING ONLY.
+
+EmuDen is a native iOS/iPadOS retro console emulator frontend. This build supports Nintendo 3DS only. No login or demo account is required. There are no subscriptions, purchases, advertisements, hosted game catalogs or in-app game downloads.
+
+Reproducible test without commercial content:
+1. Launch EmuDen.
+2. Open Settings from the bottom dock.
+3. Open Help, tests & open-source notices, then tap Launch 3DS test.
+4. The bundled, open-source 3DS Homebrew Menu runs in the emulator. Check both displays, audio and controls. Allow initial startup to finish.
+5. Use Return to library to close the emulated application. Test controls opens a separate, clearly labeled native input/display diagnostic.
+
+The included test executable is devkitPro 3DS Homebrew Menu 2.4.4. Its notices are bundled. Azahar 2127.0-rc1 and MoltenVK 1.4.2 are embedded and signed. The emulator runs guest code through the FastInterp CPU interpreter with Vulkan/Metal GPU rendering. CPU and shader JIT are disabled. The corresponding GPL-3.0-or-later core source and local changes are provided in the matching source package.
+
+Users can import their own compatible, decrypted game files through Apple's Files picker. No Nintendo ROM, BIOS, firmware, encryption key or original Mii resource archive is bundled. The guest-face fallback uses an original replacement texture. User-selected console system-data folders are imported locally when needed for game compatibility.
+
+The app has no automatic telemetry, account service or game-download server. A public static artwork catalog provides generated illustrations and title/ID metadata; Libretro provides optional cover/scene fallbacks. Ordinary HTTPS requests expose the requested asset path and network information to those hosts. Game files, saves, personal Mii data, the chosen profile picture and diagnostic logs are not uploaded. The WidgetKit extension reads a bounded local App Group snapshot of recent game IDs/titles and cached thumbnails, with no networking. Apple handles TestFlight diagnostics and tester feedback separately.
+
+The current build is an early beta: speed varies, and original Mii rendering, complete Castle Club support and continuous physical Duo display transitions still need testing. Other console cores are not implemented or advertised as available.

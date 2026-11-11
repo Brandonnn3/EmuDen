@@ -1,0 +1,83 @@
+{
+  "startedAtUTC": "2026-11-11T12:52:56.510Z",
+  "tool": "built-in image_gen",
+  "state": "published and anonymously verified",
+  "games": [
+    {
+      "key": "kirby-triple-deluxe",
+      "title": "Kirby: Triple Deluxe",
+      "subject": "An original fan illustration inspired by Kirby: Triple Deluxe. Kirby, the small round pink hero with red feet, on a floating grassy terrace at the right, gazing up an immense flowering Dreamstalk winding into a dreamy sky kingdom. Layered floating islands, huge colorful blossoms, golden sky haze, delicate clouds and vibrant but sophisticated candy colors. Gentle sense of joyful adventure, no action violence.",
+      "prompt": "Create one original premium cinematic landscape background for EmuDen's game library. An original fan illustration inspired by Kirby: Triple Deluxe. Kirby, the small round pink hero with red feet, on a floating grassy terrace at the right, gazing up an immense flowering Dreamstalk winding into a dreamy sky kingdom. Layered floating islands, huge colorful blossoms, golden sky haze, delicate clouds and vibrant but sophisticated candy colors. Gentle sense of joyful adventure, no action violence. Landscape 1536x1024, aspect ratio 3:2. High-quality stylized three-dimensional illustration, sophisticated atmospheric depth and lighting. Environmental composition, with recognizable subject/action on the right half, calm moderately dark left third and lower quarter for white app UI. Fill the image edge to edge. No text, no letters, no logos, no labels, no borders, no cover layout, no interface, no watermarks, no simulated gameplay screenshot. These are original game-inspired fan illustrations.",
+      "status": "accepted",
+      "master": "ArtworkMasters/3ds/kirby-triple-deluxe/scene.png",
+      "sha256": "51f027f46ce4e990daa7649d48fdafacc69202d60e73fcbffa0e4e8fe19c2fa8",
+      "width": 1536,
+      "height": 1024,
+      "inspection": "Viewed actual generated image: recognizable game-inspired setting, calm left/lower UI regions, clean composition, no text/logos/border/interface. Original fan illustration, not a screenshot or compatibility claim."
+    },
+    {
+      "key": "ever-oasis",
+      "title": "Ever Oasis",
+      "subject": "An original fan illustration inspired by Ever Oasis for Nintendo 3DS. A flourishing oasis village of whimsical cream-stone and turquoise-roofed shops around clear water in a vast golden desert, an immense glowing tree behind the settlement, luminous seed-like blossoms, colorful fabric awnings and distant dunes beneath a warm sky. A small green-haired seedling traveler with a leaf-like head ornament stands on the right, looking toward the village. Welcoming fantasy exploration.",
+      "prompt": "Create one original premium cinematic landscape background for EmuDen's game library. An original fan illustration inspired by Ever Oasis for Nintendo 3DS. A flourishing oasis village of whimsical cream-stone and turquoise-roofed shops around clear water in a vast golden desert, an immense glowing tree behind the settlement, luminous seed-like blossoms, colorful fabric awnings and distant dunes beneath a warm sky. A small green-haired seedling traveler with a leaf-like head ornament stands on the right, looking toward the village. Welcoming fantasy exploration. Landscape 1536x1024, aspect ratio 3:2. High-quality stylized three-dimensional illustration, sophisticated atmospheric depth and lighting. Environmental composition, with recognizable subject/action on the right half, calm moderately dark left third and lower quarter for white app UI. Fill the image edge to edge. No text, no letters, no logos, no labels, no borders, no cover layout, no interface, no watermarks, no simulated gameplay screenshot. These are original game-inspired fan illustrations.",
+      "status": "accepted",
+      "master": "ArtworkMasters/3ds/ever-oasis/scene.png",
+      "sha256": "d348208de43efdcd4cf1b6000f3a63242919f83a31755d654352e8c195b01fa1",
+      "width": 1536,
+      "height": 1024,
+      "inspection": "Viewed actual generated image: recognizable game-inspired setting, calm left/lower UI regions, clean composition, no text/logos/border/interface. Original fan illustration, not a screenshot or compatibility claim."
+    },
+    {
+      "key": "pokemon-x-y",
+      "title": "Pokémon X / Pokémon Y",
+      "subject": "An original fan illustration inspired by Pokémon X and Pokémon Y. A majestic blue deer-like Xerneas with multicolored crystalline antlers stands on the right of an ancient enchanted woodland clearing, with a distant red-and-black Yveltal soaring high above the tree canopy. Gentle blue bioluminescent flowers, deep forest greens and moonlit turquoise mist, a calm winding path through the left foreground. Respectful, beautiful, richly dimensional fantasy wildlife illustration.",
+      "prompt": "Create one original premium cinematic landscape background for EmuDen's game library. An original fan illustration inspired by Pokémon X and Pokémon Y. A majestic blue deer-like Xerneas with multicolored crystalline antlers stands on the right of an ancient enchanted woodland clearing, with a distant red-and-black Yveltal soaring high above the tree canopy. Gentle blue bioluminescent flowers, deep forest greens and moonlit turquoise mist, a calm winding path through the left foreground. Respectful, beautiful, richly dimensional fantasy wildlife illustration. Landscape 1536x1024, aspect ratio 3:2. High-quality stylized three-dimensional illustration, sophisticated atmospheric depth and lighting. Environmental composition, with recognizable subject/action on the right half, calm moderately dark left third and lower quarter for white app UI. Fill the image edge to edge. No text, no letters, no logos, no labels, no borders, no cover layout, no interface, no watermarks, no simulated gameplay screenshot. These are original game-inspired fan illustrations.",
+      "status": "accepted",
+      "master": "ArtworkMasters/3ds/pokemon-x-y/scene.png",
+      "sha256": "57a24ed3dded08f52c59d7ff095d7e07c0abe497f412ab3fcbecd9508359b551",
+      "width": 1536,
+      "height": 1024,
+      "inspection": "Viewed actual generated image: recognizable game-inspired setting, calm left/lower UI regions, clean composition, no text/logos/border/interface. Original fan illustration, not a screenshot or compatibility claim."
+    },
+    {
+      "key": "pokemon-ultra-sun-ultra-moon",
+      "title": "Pokémon Ultra Sun / Pokémon Ultra Moon",
+      "subject": "An original fan illustration inspired by Pokémon Ultra Sun and Ultra Moon. A spectacular Alola island coastline at the meeting of sunset and a star-filled indigo night, a distant volcanic ridge, tropical palms on the right, luminous turquoise surf, a thin glowing otherworldly portal high in the sky, small Rowlet, Litten and Popplio resting together on a rocky shore at the right edge. An inviting sense of tropical exploration with gentle cosmic mystery.",
+      "prompt": "Create one original premium cinematic landscape background for EmuDen's game library. An original fan illustration inspired by Pokémon Ultra Sun and Ultra Moon. A spectacular Alola island coastline at the meeting of sunset and a star-filled indigo night, a distant volcanic ridge, tropical palms on the right, luminous turquoise surf, a thin glowing otherworldly portal high in the sky, small Rowlet, Litten and Popplio resting together on a rocky shore at the right edge. An inviting sense of tropical exploration with gentle cosmic mystery. Landscape 1536x1024, aspect ratio 3:2. High-quality stylized three-dimensional illustration, sophisticated atmospheric depth and lighting. Environmental composition, with recognizable subject/action on the right half, calm moderately dark left third and lower quarter for white app UI. Fill the image edge to edge. No text, no letters, no logos, no labels, no borders, no cover layout, no interface, no watermarks, no simulated gameplay screenshot. These are original game-inspired fan illustrations.",
+      "status": "accepted",
+      "master": "ArtworkMasters/3ds/pokemon-ultra-sun-ultra-moon/scene.png",
+      "sha256": "6367c8f6b81599d89cbaaea1050b3c5bfa9e433e6205d639e09eb68ed5ffd960",
+      "width": 1536,
+      "height": 1024,
+      "inspection": "Viewed actual generated image: recognizable game-inspired setting, calm left/lower UI regions, clean composition, no text/logos/border/interface. Original fan illustration, not a screenshot or compatibility claim."
+    }
+  ],
+  "validationReport": "build/Artwork-Heartbeat-20261111-1252/validation.json",
+  "domainTests": {
+    "passed": 11,
+    "failed": 0,
+    "log": "build/Artwork-Heartbeat-20261111-1252/tests.log"
+  },
+  "sourceCommit": "f0e43324cf4308669c27dcc07ead508fa7215999",
+  "catalogVersion": 4,
+  "siteVersionNumber": 3,
+  "siteVersionID": "appgprj_6af37270360881919fa6b473672db145~appgver_765546352eb081918144958514812dbe",
+  "deploymentID": "appgdep_6af466dbf7648191b145c6f864de8e8c",
+  "deploymentStatus": "succeeded",
+  "publishedURL": "https://emuden-artwork-catalog.headyopossum2.chatgpt.site",
+  "catalogScenes": 34,
+  "catalogCovers": 24,
+  "updatedAtUTC": "2026-11-11T13:01:21.032222+00:00",
+  "liveVerification": {
+    "allImagesAvailableWithNetworkingDisabled": true,
+    "bytesVerified": 2269961,
+    "cacheDirectory": "/Volumes/SamsungT7/EmulatorApp/build/LiveArtworkSmoke-76DA6277-7B86-4480-8815-4594A0DFBDE6",
+    "catalogVersion": 4,
+    "entries": 34,
+    "imagesVerified": 4,
+    "liveVersionUpgrade": true,
+    "transport": "Actual RemoteArtworkCatalog Swift client, anonymous HTTPS with a fresh ephemeral session; no supplied login credentials or authorization headers",
+    "url": "https://emuden-artwork-catalog.headyopossum2.chatgpt.site/"
+  },
+  "completedAtUTC": "2026-11-11T13:02:30.131289+00:00"
+}

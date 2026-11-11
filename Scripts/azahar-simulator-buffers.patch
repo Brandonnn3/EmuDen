@@ -1,0 +1,197 @@
+--- a/src/video_core/renderer_vulkan/vk_stream_buffer.h
++++ b/src/video_core/renderer_vulkan/vk_stream_buffer.h
+@@ -41,7 +41,7 @@
+     void Commit(u32 size);
+ 
+     vk::Buffer Handle() const noexcept {
+-        return buffer;
++        return private_buffer ? private_buffer : buffer;
+     }
+ 
+ private:
+@@ -65,6 +65,9 @@
+     vk::Device device;
+     vk::Buffer buffer;        ///< Mapped buffer.
+     vk::DeviceMemory memory;  ///< Memory allocation.
++    vk::Buffer private_buffer{}; ///< Simulator texel buffers require Metal private storage.
++    vk::DeviceMemory private_memory{};
++    bool needs_private_copy{};
+     u8* mapped{};             ///< Pointer to the mapped memory
+     u64 stream_buffer_size{}; ///< Stream buffer size.
+     vk::BufferUsageFlags usage{};
+--- a/src/video_core/renderer_vulkan/vk_stream_buffer.cpp
++++ b/src/video_core/renderer_vulkan/vk_stream_buffer.cpp
+@@ -8,6 +8,9 @@
+ 
+ #include <algorithm>
+ #include <limits>
++#ifdef __APPLE__
++#include <TargetConditionals.h>
++#endif
+ #include "common/alignment.h"
+ #include "common/assert.h"
+ #include "common/literals.h"
+@@ -100,6 +103,9 @@
+                            vk::BufferUsageFlags usage_, u64 size, BufferType type_)
+     : instance{instance_}, scheduler{scheduler_}, device{instance.GetDevice()},
+       stream_buffer_size{size}, usage{usage_}, type{type_} {
++#if defined(__APPLE__) && TARGET_OS_SIMULATOR
++    needs_private_copy = static_cast<bool>(usage & vk::BufferUsageFlagBits::eUniformTexelBuffer);
++#endif
+     CreateBuffers(size);
+     ReserveWatches(current_watches, WATCHES_INITIAL_RESERVE);
+     ReserveWatches(previous_watches, WATCHES_INITIAL_RESERVE);
+@@ -109,6 +115,8 @@
+     device.unmapMemory(memory);
+     device.destroyBuffer(buffer);
+     device.freeMemory(memory);
++    device.destroyBuffer(private_buffer);
++    device.freeMemory(private_memory);
+ }
+ 
+ std::tuple<u8*, u32, bool> StreamBuffer::Map(u32 size, u64 alignment) {
+@@ -161,6 +169,30 @@
+         device.invalidateMappedMemoryRanges(range);
+     } else if (!is_coherent) {
+         device.flushMappedMemoryRanges(range);
++    }
++
++    if (needs_private_copy && size) {
++        // End any active render pass before recording the transfer. The ring-buffer
++        // watches below protect both the CPU upload and the GPU destination range.
++        scheduler.Flush();
++        scheduler.Record([src = buffer, dst = private_buffer, start = offset, size](vk::CommandBuffer cmd) {
++            vk::BufferMemoryBarrier barrier{
++                .srcAccessMask = vk::AccessFlagBits::eShaderRead,
++                .dstAccessMask = vk::AccessFlagBits::eTransferWrite,
++                .srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED,
++                .dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED,
++                .buffer = dst,
++                .offset = start,
++                .size = size,
++            };
++            const auto shaders = vk::PipelineStageFlagBits::eVertexShader |
++                                 vk::PipelineStageFlagBits::eFragmentShader;
++            cmd.pipelineBarrier(shaders, vk::PipelineStageFlagBits::eTransfer, {}, {}, barrier, {});
++            cmd.copyBuffer(src, dst, vk::BufferCopy{start, start, size});
++            barrier.srcAccessMask = vk::AccessFlagBits::eTransferWrite;
++            barrier.dstAccessMask = vk::AccessFlagBits::eShaderRead;
++            cmd.pipelineBarrier(vk::PipelineStageFlagBits::eTransfer, shaders, {}, {}, barrier, {});
++        });
+     }
+ 
+     offset += size;
+@@ -198,7 +230,7 @@
+             // Create buffer with current attempt size
+             buffer = device.createBuffer({
+                 .size = attempt_size,
+-                .usage = usage,
++                .usage = needs_private_copy ? vk::BufferUsageFlagBits::eTransferSrc : usage,
+             });
+ 
+             const auto requirements_chain = device.getBufferMemoryRequirements2<
+@@ -233,6 +265,32 @@
+             mapped = reinterpret_cast<u8*>(
+                 device.mapMemory(memory, 0, requirements.memoryRequirements.size));
+ 
++            if (needs_private_copy) {
++                private_buffer = device.createBuffer({
++                    .size = attempt_size,
++                    .usage = usage | vk::BufferUsageFlagBits::eTransferDst,
++                });
++                const auto req = device.getBufferMemoryRequirements(private_buffer);
++                std::optional<u32> private_type;
++                for (u32 i = 0; i < memory_properties.memoryTypeCount; ++i) {
++                    const auto flags = memory_properties.memoryTypes[i].propertyFlags;
++                    if ((req.memoryTypeBits & (1u << i)) &&
++                        (flags & vk::MemoryPropertyFlagBits::eDeviceLocal) &&
++                        !(flags & vk::MemoryPropertyFlagBits::eHostVisible)) {
++                        private_type = i;
++                        break;
++                    }
++                }
++                if (!private_type) throw std::runtime_error("No private memory for simulator texel buffers");
++                const vk::MemoryDedicatedAllocateInfo dedicated{.buffer = private_buffer};
++                private_memory = device.allocateMemory({
++                    .pNext = &dedicated,
++                    .allocationSize = req.size,
++                    .memoryTypeIndex = *private_type,
++                });
++                device.bindBufferMemory(private_buffer, private_memory, 0);
++            }
++
+             stream_buffer_size = static_cast<u64>(attempt_size);
+ 
+             LOG_INFO(Render_Vulkan, "Created {} buffer with size {} KiB (flags {})",
+@@ -250,10 +308,20 @@
+             return;
+         } catch (const vk::SystemError& err) {
+             // Allocation failed, clean up and retry smaller
++            if (mapped) {
++                device.unmapMemory(memory);
++                mapped = nullptr;
++            }
++            device.destroyBuffer(private_buffer);
++            device.freeMemory(private_memory);
++            private_buffer = VK_NULL_HANDLE;
++            private_memory = VK_NULL_HANDLE;
+             if (buffer) {
+                 device.destroyBuffer(buffer);
+                 buffer = VK_NULL_HANDLE;
+             }
++            device.freeMemory(memory);
++            memory = VK_NULL_HANDLE;
+ 
+             attempt_size /= 2;
+         }
+--- a/src/video_core/renderer_vulkan/vk_rasterizer.cpp
++++ b/src/video_core/renderer_vulkan/vk_rasterizer.cpp
+@@ -17,6 +17,9 @@
+ #include "video_core/renderer_vulkan/vk_rasterizer.h"
+ #include "video_core/renderer_vulkan/vk_scheduler.h"
+ #include "video_core/texture/texture_decode.h"
++#ifdef __APPLE__
++#include <TargetConditionals.h>
++#endif
+ 
+ namespace Vulkan {
+ 
+@@ -474,7 +477,11 @@
+ 
+     const DrawParams params = {
+         .vertex_count = regs.pipeline.num_vertices,
++#if defined(__APPLE__) && TARGET_OS_SIMULATOR
++        .vertex_offset = 0, // Indices are rebased in SetupIndexArray for the simulator.
++#else
+         .vertex_offset = -static_cast<s32>(vertex_info.vs_input_index_min),
++#endif
+         .binding_count = pipeline_info.state.vertex_layout.binding_count,
+         .bindings = binding_offsets,
+         .is_indexed = is_indexed,
+@@ -507,6 +514,18 @@
+ 
+     auto [index_ptr, index_offset, _] = stream_buffer.Map(index_buffer_size, 2);
+ 
++#if defined(__APPLE__) && TARGET_OS_SIMULATOR
++    // Metal's simulator cannot draw with a nonzero base vertex. Apply the
++    // equivalent subtraction to each index; uploaded vertex ranges are unchanged.
++    for (u32 i = 0; i < regs.pipeline.num_vertices; ++i) {
++        u16 original{};
++        if (index_u8) original = index_data[i];
++        else std::memcpy(&original, index_data + i * sizeof(u16), sizeof(u16));
++        const u16 rebased = static_cast<u16>(original - vertex_info.vs_input_index_min);
++        if (native_u8) index_ptr[i] = static_cast<u8>(rebased);
++        else std::memcpy(index_ptr + i * sizeof(u16), &rebased, sizeof(u16));
++    }
++#else
+     if (index_u8 && !native_u8) {
+         u16* index_ptr_u16 = reinterpret_cast<u16*>(index_ptr);
+         for (u32 i = 0; i < regs.pipeline.num_vertices; i++) {
+@@ -515,6 +534,7 @@
+     } else {
+         std::memcpy(index_ptr, index_data, index_buffer_size);
+     }
++#endif
+ 
+     stream_buffer.Commit(index_buffer_size);
+ 

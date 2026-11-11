@@ -1,0 +1,470 @@
+{
+  "owner": "artwork-c",
+  "mode": "built-in image_gen",
+  "assetRoot": "ArtworkMasters/3ds",
+  "styleReferences": [
+    "Resources/CinematicArt/Golf-Scene-Wide.png",
+    "Resources/CinematicArt/Forest-Scene-Wide.png"
+  ],
+  "assets": [
+    {
+      "gameKey": "devil-survivor-overclocked",
+      "title": "Shin Megami Tensei: Devil Survivor Overclocked",
+      "rank": 19,
+      "kind": "cover",
+      "mode": "built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: premium portrait game cover artwork for an EmuDen library, 1024x1536 portrait, about 2:3.\nPrimary request: Create original cinematic fan art for the actual Nintendo 3DS game Shin Megami Tensei: Devil Survivor Overclocked. Tokyo in lockdown under a fiery violet dusk, layered Shibuya buildings, crossing stripes and damaged street lamps. The black-haired teenage male protagonist with recognizable blue over-ear headphones with two pointed upward protrusions, blue shirt and black sleeveless vest stands confidently in the lower-middle holding an open COMP handheld demon-summoning device. A small Jack Frost demon in blue jester cap and white round body floats by his side, looming spectral demons and an occult light circle beyond.\nStyle/medium: premium polished Japanese game-world illustration, believable anatomy, rich material detail, dimensional cinematic lighting, dramatic depth, crisp at thumbnail size.\nComposition/framing: full-bleed portrait illustration, main character fully intact, title above him, all faces and title safely inside central 82% width; generous 9% side padding so crop to 0.71 aspect never clips title.\nText (verbatim): \"SHIN MEGAMI TENSEI\" as a readable small line, then \"DEVIL SURVIVOR\" in large bold cream condensed lettering and \"OVERCLOCKED\" in a large red-orange subtitle. Exact complete title, no invented words.\nConstraints: Original composition, not a copy of retail cover. Only the specified game title text. No Nintendo branding, retail case, spine, border, ratings, publisher marks, watermarks, app UI, screenshots, or collages.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-e278ea69-3779-4535-a165-c5420250adf7.png",
+      "finalPath": "ArtworkMasters/3ds/devil-survivor-overclocked/cover.png",
+      "researchURLs": [
+        "https://www.atlus.co.jp/title-archive/dsoc/",
+        "https://devilsurvivoroverclocked.ghostlight.uk.com/manuals/DSO-EN-Manual.pdf"
+      ],
+      "qaNotes": "Exact title rendered legibly; recognizable protagonist and Jack Frost; original portrait illustration with padded title.",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "3beb9e291b09d9286565eea5a57f838ff9e2d9801e013af54e69c031d571a4c4",
+      "status": "accepted"
+    },
+    {
+      "gameKey": "devil-survivor-overclocked",
+      "title": "Shin Megami Tensei: Devil Survivor Overclocked",
+      "rank": 19,
+      "kind": "scene",
+      "mode": "built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: cinematic landscape background, 1536x1024 wide, no text.\nPrimary request: Original atmospheric fan art rooted in Nintendo 3DS Shin Megami Tensei: Devil Survivor Overclocked. A deserted Shibuya scramble crossing in Tokyo under lockdown at violet dusk. Tall city buildings and tangled overhead wires recede into smoky crimson haze. Near center-right the black-haired teenage protagonist with pointed blue headphones, blue shirt and black sleeveless vest holds a glowing open COMP handheld, with small white Jack Frost in a blue jester hat beside him. A restrained spectral demon silhouette glimmers far in the sky.\nStyle/medium: premium polished cinematic game-world illustration, detailed materials, painterly dimensional realism faithful to recognizable stylized characters.\nComposition/framing: wide 3:2 landscape, substantial city depth. Main characters fit together in central third slightly right so both survive a center portrait crop. Characters occupy middle-height; avoid giant faces. Bottom 25% is calm dark blue asphalt and shadow, with low visual detail for white native title and glass controls. Left side provides atmospheric breathing room.\nLighting/mood: ominous magenta haze, blue COMP light, warm window light, rich filmic contrast.\nConstraints: No text of any kind, no logos, no interface, no borders, no retail packaging, no watermark. Original artwork, not a screenshot or scan. Render landscape with minimum long side 1536 and short side 1024.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-7f6b0616-f35f-4077-a9a6-8291217205bb.png",
+      "finalPath": "ArtworkMasters/3ds/devil-survivor-overclocked/scene.png",
+      "researchURLs": [
+        "https://www.atlus.co.jp/title-archive/dsoc/",
+        "https://devilsurvivoroverclocked.ghostlight.uk.com/manuals/DSO-EN-Manual.pdf"
+      ],
+      "qaNotes": "Landscape scene, characters center-right and dark calm foreground; no title or UI.",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "634e371dbfe518283910d6c31cabfcc9eb144d59a51f09de206e7c3aefa6a825",
+      "status": "accepted"
+    },
+    {
+      "gameKey": "metroid-samus-returns",
+      "title": "Metroid: Samus Returns",
+      "rank": 20,
+      "kind": "cover",
+      "mode": "built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: premium portrait game cover, 1024x1536 about 2:3.\nPrimary request: Original cinematic fan art for Nintendo 3DS Metroid: Samus Returns (2017). Samus Aran, unmistakable red helmet with glowing green visor, orange-gold Varia suit with round shoulder armor and green right-arm cannon, stands alert on a stone ledge in the deep subterranean Chozo ruins of planet SR388. Ancient engraved stone architecture, teal luminous crystals, drifting spores, a translucent jellyfish-like Metroid with green membrane and red nuclei hovering in the upper distance.\nStyle/medium: premium polished cinematic game-world illustration with believable intricate armor materials, dramatic painterly depth, richly illuminated mist, clean iconic silhouette.\nComposition/framing: full-bleed portrait with Samus intact and centered lower two-thirds, title occupying upper quarter with 10% side padding, safe title placement for a 0.71-aspect library card crop.\nText (verbatim): \"METROID\" large bold metallic cream lettering, below it \"SAMUS RETURNS\" in clear large amber lettering. The exact game title is Metroid: Samus Returns.\nConstraints: Original fan art, not copied retail art. Only specified title text, no Nintendo/publisher marks, retail case, spine, borders, ratings, watermark, app UI, weapons firing toward viewer, or screenshot.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-fd68683f-2014-474a-ba18-20518f5ccd1d.png",
+      "finalPath": "ArtworkMasters/3ds/metroid-samus-returns/cover.png",
+      "researchURLs": [
+        "https://metroid.nintendo.com/dread/news/metroid-dread-report-vol-4/"
+      ],
+      "qaNotes": "Viewed corrected PNG: exact title, 120px top safety margin, clean portrait composition and recognizable Varia suit. Accepted.",
+      "generationHistory": [
+        {
+          "prompt": "Use case: stylized-concept\nAsset type: premium portrait game cover, 1024x1536 about 2:3.\nPrimary request: Original cinematic fan art for Nintendo 3DS Metroid: Samus Returns (2017). Samus Aran, unmistakable red helmet with glowing green visor, orange-gold Varia suit with round shoulder armor and green right-arm cannon, stands alert on a stone ledge in the deep subterranean Chozo ruins of planet SR388. Ancient engraved stone architecture, teal luminous crystals, drifting spores, a translucent jellyfish-like Metroid with green membrane and red nuclei hovering in the upper distance.\nStyle/medium: premium polished cinematic game-world illustration with believable intricate armor materials, dramatic painterly depth, richly illuminated mist, clean iconic silhouette.\nComposition/framing: full-bleed portrait with Samus intact and centered lower two-thirds, title occupying upper quarter with 10% side padding, safe title placement for a 0.71-aspect library card crop.\nText (verbatim): \"METROID\" large bold metallic cream lettering, below it \"SAMUS RETURNS\" in clear large amber lettering. The exact game title is Metroid: Samus Returns.\nConstraints: Original fan art, not copied retail art. Only specified title text, no Nintendo/publisher marks, retail case, spine, borders, ratings, watermark, app UI, weapons firing toward viewer, or screenshot.",
+          "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-f3960e43-1e8e-44c6-ba65-d6950944cb3c.png",
+          "qaNotes": "Title too close to top; superseded by spacing edit."
+        }
+      ],
+      "editPrompt": "Use case: precise-object-edit\nAsset type: premium portrait cover refinement.\nPrimary request: Keep the existing Metroid: Samus Returns cover illustration and its composition, characters, cavern, colors, detail and artwork unchanged. Change only title layout: reduce the entire two-line METROID / SAMUS RETURNS title block about 15% and move it down so the topmost letter starts at 120 pixels from the 1536-pixel-tall canvas top, with at least 95 pixels of clear cave imagery above it and at least 90 pixels side padding. Render both lines fully, exactly \"METROID\" and \"SAMUS RETURNS\". Preserve the metallic cream and amber typography. Retain full 1024x1536 portrait image with no added border, packaging, logos, app interface or extra wording. The result must survive a 0.71-aspect centered card crop without any clipped letters.",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "76e21a00af8e90aa3e24e68f00964f55c41f63cd8389e3c4e7c213fb096c8928",
+      "status": "accepted"
+    },
+    {
+      "gameKey": "metroid-samus-returns",
+      "title": "Metroid: Samus Returns",
+      "rank": 20,
+      "kind": "scene",
+      "mode": "built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: premium cinematic landscape game background, 1536x1024, wide 3:2.\nPrimary request: Original atmospheric fan art for Nintendo 3DS Metroid: Samus Returns, inside the cavernous ancient Chozo ruins below planet SR388. Samus Aran in orange-gold round-shouldered Varia armor, red helmet, glowing green visor and green arm cannon explores an immense subterranean chamber. Teal bioluminescent crystals, alien ferns, carved Chozo pillars and layered stone bridges recede into mist. One translucent Metroid hovers in the middle distance.\nComposition/framing: wide landscape, Samus placed at about 58% horizontal and 49% vertical, full body within the middle third, small enough to reveal vast cavern depth; Metroid also within central 40% width. Both are recognizable and survive a center portrait crop. Lower quarter is calm dark blue-black stone in shadow with minimal texture for white native game title and glass controls.\nStyle/medium: premium cinematic game-world illustration, dimensional polished armored character, believable stone and metal, nuanced glowing atmospherics and intricate distant environment.\nLighting/mood: moody teal and deep indigo with restrained amber rim light on Samus, dramatic but readable.\nConstraints: No lettering, numbers, symbols resembling logos, interface, retail packaging, border or watermark. No copies of existing key art. Landscape minimum 1536x1024.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-20220204-e94f-474c-a54a-1545bf7d2445.png",
+      "finalPath": "ArtworkMasters/3ds/metroid-samus-returns/scene.png",
+      "researchURLs": [
+        "https://metroid.nintendo.com/dread/news/metroid-dread-report-vol-4/"
+      ],
+      "qaNotes": "SR388 Chozo cavern scene accepted, Samus and Metroid centered for portrait crop, lower shadow region suitable for native white title.",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "61e6c95d26763b7a57bb5aee55a7102b997ac69e8407ed2bf60f0039ac910d4f",
+      "status": "accepted"
+    },
+    {
+      "gameKey": "fantasy-life",
+      "title": "Fantasy Life",
+      "rank": 21,
+      "kind": "cover",
+      "mode": "built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: premium portrait game library cover, 1024x1536 about 2:3.\nPrimary request: Original cinematic fan art for the original Nintendo 3DS Fantasy Life, set in Reveria. A cheerful young customizable adventurer in a blue tunic, blue cap, brown leather belts and short cape stands on a lush grassy path with sword and round shield. A small glowing yellow butterfly companion, Flutter, hovers beside the hero. Behind are Castele's welcoming red-roofed fantasy houses and distant castle, rounded trees, flowering meadows and mountains. A friendly fisher carrying a rod and a sturdy blacksmith companion evoke the game's many Life professions.\nStyle/medium: premium polished dimensional game-world illustration, charming rounded chibi proportions faithful to the 3DS game, intact expressive faces, believable fabric and foliage, rich cinematic depth and luminous sunbeams.\nComposition/framing: original full-bleed portrait scene; hero and companions occupy middle/lower half. Reserve upper third for a clean readable title, with all letters inside central 80% of width and all title text at least 120 pixels below top edge. Leave generous safe padding for 0.71-aspect cards.\nText (verbatim): \"FANTASY LIFE\" in large elegant cream-and-gold fantasy lettering on two clearly readable lines.\nLighting/mood: warm uplifting late afternoon, emerald landscape, blue sky, gentle soft shadows.\nConstraints: Actual original 3DS release, no \"i\", sequel subtitles or later-game imagery. Not copied retail cover art. Only specified title text. No retail case, spine, border, Nintendo/publisher marks, ratings, watermark, app UI or screenshot.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-83dccde0-d9d9-436f-8849-33c06a80d9a9.png",
+      "finalPath": "ArtworkMasters/3ds/fantasy-life/cover.png",
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/News/2014/September/In-shops-and-on-Nintendo-eShop-now-Fantasy-Life-921784.html",
+        "https://www.nintendo.com/eu/media/downloads/games_8/emanuals/nintendo_3ds_2/fantasy_life/ElectronicManual_Nintendo3DS_FantasyLife_EN.pdf"
+      ],
+      "qaNotes": "Exact title with generous safe margins; blue-clad avatar, Flutter and Life professions in colorful Reveria. Accepted.",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "a710ada17081fb530da4886134685ca21c172932ea9716ee98cc935634f93f5b",
+      "status": "accepted"
+    },
+    {
+      "gameKey": "fantasy-life",
+      "title": "Fantasy Life",
+      "rank": 21,
+      "kind": "scene",
+      "mode": "built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: cinematic landscape background for original Nintendo 3DS Fantasy Life, 1536x1024 wide 3:2, no text.\nPrimary request: An original expansive view of Reveria from a flowered forest path overlooking the red-roofed town and castle of Castele, winding river, layered emerald hills and distant blue mountains. A cheerful young chibi adventurer in a blue cap and blue tunic, brown belts and short red cape stands center-right with sword sheathed and round shield, with the small glowing yellow butterfly Flutter at shoulder height. A friendly angler with fishing rod rests nearby. Rounded game-faithful proportions, intact expressive heads, dimensional polished materials.\nComposition/framing: Landscape panorama with lovely world depth and delicate environmental detail. Keep hero and Flutter together inside central third at middle height, slightly right of center, so they survive portrait center crop. Bottom quarter is quieter grass and earthy path beneath soft tree shadow, darker than the sunlit distance, uncluttered for native white game title and glass navigation. Do not make lower area black; preserve a welcoming lush world.\nLighting/mood: golden afternoon rays through foliage, gentle cool blue distance and warm emerald greens, bright optimistic adventure.\nStyle/medium: premium cinematic game-world illustration, polished rounded 3DS character design, richly textured foliage, painterly realism for environment, original composition.\nConstraints: For the actual original Fantasy Life (3DS), not Fantasy Life i. No lettering, numbers, game logos, UI, watermarks, border or packaging. Minimum 1536x1024 landscape.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-bc0a184d-6b00-4c96-85d2-ee19bb95403f.png",
+      "finalPath": "ArtworkMasters/3ds/fantasy-life/scene.png",
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/News/2014/September/In-shops-and-on-Nintendo-eShop-now-Fantasy-Life-921784.html"
+      ],
+      "qaNotes": "Viewed PNG: welcoming Castele vista, recognizable rounded avatar and Flutter center-right, shaded foreground, no text or UI. Accepted.",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "58109d69bad6581557b52f801e78e9af447c385c9c60586a85376887bad10c99",
+      "status": "accepted"
+    },
+    {
+      "gameKey": "theatrhythm-curtain-call",
+      "title": "Theatrhythm Final Fantasy: Curtain Call",
+      "rank": 22,
+      "kind": "cover",
+      "mode": "built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: premium portrait game cover illustration, 1024x1536, about 2:3.\nPrimary request: Original cinematic fan art for the Nintendo 3DS game Theatrhythm Final Fantasy: Curtain Call. A playful grand fantasy concert adventure: iconic adorable Theatrhythm doll-like chibi Cloud Strife with blond spiky hair, dark outfit and giant Buster Sword, pink-haired Lightning, and a small blue-robed black mage with broad hat and yellow glowing eyes stand with a bright yellow Chocobo and small white red-pom Moogle on a crystalline path. Huge blue crystals, a fantastical castle silhouette, velvet stage curtains near the upper corners, and flowing luminous ribbons suggest the music of Final Fantasy. Keep all characters charming, heads intact, toy-like stubby bodies and simple bead-like eyes faithful to Theatrhythm, rendered with premium 3D illustration depth.\nComposition/framing: full-bleed portrait, coherent original scene with characters in lower half and title clearly separated in upper third. Reserve at least 120px empty artwork above title and 100px side padding. No title letters touch edges. Title must read at thumbnail size.\nText (verbatim): \"THEATRHYTHM\" on first line, \"FINAL FANTASY\" on second, \"CURTAIN CALL\" on third. Spell THEATRHYTHM exactly T-H-E-A-T-R-H-Y-T-H-M. Elegant large cream title with fine gold dimensional edge.\nLighting/mood: sapphire crystal glow, warm golden stage light, deep violet velvet and rich atmospheric depth.\nConstraints: Original fan art, not a copy of retail cover. Only the exact game title text, no Nintendo or publisher branding, ratings, retail case, spine, border, app UI, music-game lane interface, screenshots or watermark.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-960c5811-2bad-4e6f-9f7f-09e902d86c84.png",
+      "finalPath": "ArtworkMasters/3ds/theatrhythm-curtain-call/cover.png",
+      "researchURLs": [
+        "https://www.jp.square-enix.com/game/detail/t_ffcc/",
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/THEATRHYTHM-FINAL-FANTASY-CURTAIN-CALL--914385.html"
+      ],
+      "qaNotes": "Viewed PNG: exact THEATRHYTHM / FINAL FANTASY / CURTAIN CALL title with crop-safe padding; recognizable doll-like Cloud, Lightning, black mage, Chocobo and Moogle. Accepted.",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "8d146237f82873e5d9cde6345e117026d262aa14c19e9d8d88ac44d17d3f1015",
+      "status": "accepted"
+    },
+    {
+      "gameKey": "theatrhythm-curtain-call",
+      "title": "Theatrhythm Final Fantasy: Curtain Call",
+      "rank": 22,
+      "kind": "scene",
+      "mode": "built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: premium cinematic landscape background for Nintendo 3DS Theatrhythm Final Fantasy: Curtain Call, 1536x1024 wide 3:2.\nPrimary request: Original fantastical musical journey scene. Adorable Theatrhythm doll-like chibi Cloud Strife with blond spiky hair and Buster Sword, a blue-robed black mage with wide tan hat and glowing yellow eyes, a yellow Chocobo and a small white Moogle with red pom stand together on a winding crystal path. Great blue crystals and an elegant fantasy castle rise through a soft lavender cloudscape. Flowing luminous ribbons curl in the air to suggest an orchestral concert without actual lettering or music notation.\nStyle/medium: premium polished cinematic game-world illustration, distinctive toy-like stubby proportions and bead-like eyes, intact heads, intricate cloth and crystal surfaces, vivid depth.\nComposition/framing: panoramic landscape, compact main group inside central 35% width at middle height, Cloud just right of center; readable at portrait center crop. Bottom quarter is calm dark sapphire crystal path in soft shadow with restrained detail for white native game title and glass controls. Scene is immersive world art, not gameplay.\nLighting/mood: sapphire blue crystal glow and warm golden character rim light, rich twilight violet, inviting celebratory wonder.\nConstraints: No words, letters, numbers, logos, UI, rhythm-game lanes, watermarks, borders, retail packaging, musical notation or copied key art. At least 1536x1024 landscape.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-8c41b24b-1595-4c4e-8fe8-a9b732eb5a8c.png",
+      "finalPath": "ArtworkMasters/3ds/theatrhythm-curtain-call/scene.png",
+      "researchURLs": [
+        "https://www.jp.square-enix.com/game/detail/t_ffcc/",
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/THEATRHYTHM-FINAL-FANTASY-CURTAIN-CALL--914385.html"
+      ],
+      "qaNotes": "Viewed PNG: Cloud, black mage, Chocobo and Moogle on a crystal path; Cloud central in portrait crop and clear calm sapphire foreground. No text or UI. Accepted.",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "6cbb08ac61b1fbc870d7dab3b2c77247806071abb89fafd3b3ec89184f154522",
+      "status": "accepted"
+    },
+    {
+      "gameKey": "zero-escape-virtues-last-reward",
+      "title": "Zero Escape: Virtue’s Last Reward",
+      "rank": 23,
+      "kind": "cover",
+      "mode": "built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: premium portrait cover for Nintendo 3DS Zero Escape: Virtue's Last Reward, 1024x1536 about 2:3.\nPrimary request: Original suspenseful cinematic fan art of the actual 2012 game. Sigma, a muscular young adult man with short tousled dark hair in a cobalt-blue short-sleeved collared shirt with pale graphic patches, holds a flashlight while Phi, an alert young adult woman with short asymmetrical white hair, a black flower hair ornament, a pale sage sleeveless long vest over a white-and-black top and dark shorts, studies the mysterious chunky black digital bracelet on her wrist. They explore a sealed industrial underground warehouse escape-room facility. Distinctively colored metal doors and mechanical locks recede into teal mist. A subtle ominous hooded gas-mask silhouette appears as a distant shadow, not dominating the characters.\nStyle/medium: premium Japanese game-world cinematic illustration, faithful recognizable character designs, believable adult anatomy and polished materials, layered sci-fi mystery lighting, original scene rather than copied box art.\nComposition/framing: portrait, both characters with intact heads in middle/lower two thirds; title clear in top third. At least 120px safe artwork above all title letters and at least 100px side margins. Faces are lit and not obscured by title.\nText (verbatim): \"ZERO ESCAPE\" as a clear smaller header, then \"VIRTUE'S LAST REWARD\" in large cream lettering arranged over three readable lines, with \"LAST\" in red. Exact apostrophe, no additional words.\nLighting/mood: teal and midnight blue, stark flashlight beam and restrained red emergency light, tense clever mystery.\nConstraints: No gore, no retail case, spine, border, Nintendo or publisher marks, ratings, app interface, screenshots, watermark, or other text. Use only actual title and setting; original fan art.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-c3c8221e-97b1-4bea-bc83-7a8b190e1d3a.png",
+      "finalPath": "ArtworkMasters/3ds/zero-escape-virtues-last-reward/cover.png",
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/Virtue-s-Last-Reward-665120.html",
+        "https://store.aksysgames.com/blogs/news-1/past-news",
+        "https://images.nintendolife.com/fa9753f86c4b5/large.jpg"
+      ],
+      "qaNotes": "Viewed PNG: exact complete title; recognizable Sigma/Phi designs researched from promotional reference; colored facility doors, bracelet, original action composition and crop-safe title. Accepted.",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "8cf917a7c887269e12b02dd9c2ed889c4a9ba1f8bd5e66e121ea869a8b8edfd2",
+      "status": "accepted"
+    },
+    {
+      "gameKey": "zero-escape-virtues-last-reward",
+      "title": "Zero Escape: Virtue’s Last Reward",
+      "rank": 23,
+      "kind": "scene",
+      "mode": "built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: premium landscape cinematic background for Nintendo 3DS Zero Escape: Virtue's Last Reward, 1536x1024 wide 3:2.\nPrimary request: Original cinematic fan art inside the sealed Nonary Game warehouse facility, a vast industrial sci-fi escape-room chamber with overhead gantries, ducts, inset mechanical elevator pods and cyan, magenta and yellow heavy doors without lettering. Sigma, a muscular young adult man with short tousled dark hair in a cobalt-blue short-sleeved collared shirt with pale abstract patches, stands beside Phi, a young adult woman with short asymmetrical white hair, black flower hair ornament, pale sage sleeveless long vest, white-and-black top and dark shorts. Phi studies her chunky black wrist bracelet while Sigma holds a flashlight low, both cautious and intelligent. Researched recognizable 2012 character designs.\nComposition/framing: Wide landscape with deep receding architecture and atmosphere. Place the two intact full figures together around 55% horizontal at middle height, within the central third so both survive portrait center crop. The lower 25% is quiet dark teal concrete floor in soft shadow, uncluttered to support native white title and glass navigation.\nStyle/medium: premium polished Japanese cinematic game-world illustration, believable adult proportions, dimensional materials, suspenseful environmental depth.\nLighting/mood: cool teal fluorescent pools, subtle red emergency highlights, fog through a high skylight, restrained flashlight beam.\nConstraints: No text, numbers, symbols/logos, UI, watermarks, borders, packaging, gore or screenshots. An original scene, not a copy of promotional art. Landscape at least 1536x1024.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-8134978e-105f-4de1-855a-d1401513b62d.png",
+      "finalPath": "ArtworkMasters/3ds/zero-escape-virtues-last-reward/scene.png",
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/Virtue-s-Last-Reward-665120.html",
+        "https://images.nintendolife.com/fa9753f86c4b5/large.jpg"
+      ],
+      "qaNotes": "Viewed PNG: Sigma and Phi intact in industrial facility with colored doors; quiet teal floor and no visible text/UI. Both main faces in center portrait crop. Accepted.",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "3dd7a76b364a6edafc9cf4e3c08f720e3493d836208bc79f97d702273410c310",
+      "status": "accepted"
+    },
+    {
+      "gameKey": "strange-journey-redux",
+      "title": "Shin Megami Tensei: Strange Journey Redux",
+      "rank": 24,
+      "kind": "cover",
+      "mode": "built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: premium portrait game cover for Nintendo 3DS Shin Megami Tensei: Strange Journey Redux, 1024x1536, about 2:3.\nPrimary request: Original cinematic fan art of the Schwarzwelt expedition. The protagonist wears the ACTUAL iconic Demonica suit: close-fitting segmented dark forest-green armored body suit, gold rigid collar and upper chest, gold wrist gauntlets and utility attachments, gold sealed helmet with two small rectangular red grille-like eyes, central metal faceplate, lower respirator and short side antennas. He stands on Antarctic ice at the edge of the immense black spatial distortion called the Schwarzwelt. The Red Sprite expedition vessel, angular white and crimson high-tech hull, sits small in the background. Ghostly mythic demon silhouettes and impossible architectural forms flicker within the distortion, hints of pale aurora and red cloud inside. The game is sci-fi demon exploration, not generic space warfare.\nStyle/medium: premium polished cinematic Japanese game-world illustration, researched Demonica design, believable metal and segmented suit, deep atmospheric perspective, highly finished original composition.\nComposition/framing: portrait, helmeted figure clearly dominant in lower two-thirds, title above him in central 80% of width with at least 120px top safe margin and 100px side padding. Intact helmet and anatomy.\nText (verbatim): \"SHIN MEGAMI TENSEI\" as readable smaller header, \"STRANGE JOURNEY\" large cream angular lettering across two lines, \"REDUX\" in large red lettering. Exact complete title; no extra wording.\nLighting/mood: cold midnight blue Antarctic ice, gold armor catching dramatic crimson/teal rim light, ominous black-violet anomaly.\nConstraints: No retail case, spine, border, ratings, Nintendo or publisher marks, watermark, app UI, screenshot or copied cover composition. Only the exact title text. Actual 3DS Redux release, no invented sequel.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-e6093cd3-e056-48ac-bd69-e2c64e9d1791.png",
+      "finalPath": "ArtworkMasters/3ds/strange-journey-redux/cover.png",
+      "researchURLs": [
+        "https://atlus.com/strangejourney/characters.html",
+        "https://atlus.com/strangejourney/img/character/protagonist_character.png",
+        "https://atlus.com/strangejourney/system.html",
+        "https://atlus.com/atlus-titles/strange-journey-redux/?ItemID=63"
+      ],
+      "qaNotes": "Viewed PNG: exact full title; researched dark green/gold Demonica and red grille helmet; Antarctica, vessel and Schwarzwelt demon anomaly. Safe title padding. Accepted.",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "b87f6ef9bc578663fe82deafd81a5280d343e4a9e4dbf5fcf6a83500967bd981",
+      "status": "accepted"
+    },
+    {
+      "gameKey": "strange-journey-redux",
+      "title": "Shin Megami Tensei: Strange Journey Redux",
+      "rank": 24,
+      "kind": "scene",
+      "mode": "built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: premium cinematic landscape background for Nintendo 3DS Shin Megami Tensei: Strange Journey Redux, 1536x1024 wide 3:2.\nPrimary request: Original atmospheric sci-fi demon-exploration scene at the Antarctic Schwarzwelt. A single expedition protagonist in the iconic Demonica suit stands just right of center facing a vast black-violet spatial distortion. The suit is segmented dark forest-green armor with gold rigid collar/chest plating, gold gauntlets and utility buckles; the sealed gold helmet has two small rectangular red grille eyes, center metal face plate, lower respirator and short side antennas, matching actual ATLUS character design. The angular white-and-crimson Red Sprite expedition vessel rests partly obscured by icy haze on the far left. Inside the anomaly are impossible ruined corridors and distant mythic demon silhouettes, not a generic starfield.\nComposition/framing: sweeping landscape Antarctic ice field and impossible depth beyond the distortion; protagonist full figure at 56% horizontal, middle height, within central third for a portrait center crop. Bottom 25% is calm shadowed blue ice and faint ground mist, low-detail and dark enough for native white title and glass controls.\nStyle/medium: premium polished Japanese cinematic game-world illustration, believable cold metal, textured suit, layered atmospheric perspective, original composition.\nLighting/mood: cold midnight blue with faint aurora, restrained red-violet anomaly glow and gold armor rim light, serious mysterious expedition mood.\nConstraints: No text, numbers, logos, interfaces, watermark, border, packaging or screenshots. No generic astronaut helmet. Actual 3DS Redux setting. At least 1536x1024 landscape.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-06f8bb1b-4674-4041-804b-dd62ed8dd9de.png",
+      "finalPath": "ArtworkMasters/3ds/strange-journey-redux/scene.png",
+      "researchURLs": [
+        "https://atlus.com/strangejourney/characters.html",
+        "https://atlus.com/strangejourney/img/character/protagonist_character.png",
+        "https://atlus.com/strangejourney/system.html"
+      ],
+      "qaNotes": "Viewed PNG: Demonica protagonist central, Red Sprite at left, Antarctic ice and demon-filled Schwarzwelt. Calm dark foreground; no title/UI. Accepted.",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "60ff7eb98718c25ff180f81ad4724f9ebef9db2723d4b9ea1a089d310174c601",
+      "status": "accepted"
+    },
+    {
+      "gameKey": "dragon-quest-viii",
+      "title": "Dragon Quest VIII: Journey of the Cursed King",
+      "rank": 25,
+      "kind": "cover",
+      "mode": "built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: premium portrait cover for Nintendo 3DS Dragon Quest VIII: Journey of the Cursed King, 1024x1536 about 2:3.\nPrimary request: Original richly cinematic fan art of the actual Dragon Quest VIII adventure. The recognizable young male Hero with black hair, yellow-orange bandana, long orange sleeveless coat over a blue shirt, green trousers and leather boots strides along a green hill path with a sword and a small friendly brown mouse Munchie peeking out of his coat pocket. Yangus, a stocky broad-shouldered bandit with rugged round face, a metal helmet with short conical spikes, shaggy brown vest and olive clothing, follows with a large axe resting over his shoulder. A friendly glossy blue teardrop Slime smiles near the path. Behind them, the ornate stone spires of thorn-cursed Trodain Castle rise across sweeping emerald fields.\nStyle/medium: premium polished Japanese game-world illustration, recognizable iconic Toriyama character design and proportions, believable cloth and leather, lush painterly landscape depth, dimensional cinematic light.\nComposition/framing: original full-bleed portrait, complete heads and strong hero silhouettes in lower two thirds. Put all title letters in upper third with at least 120px of safe artwork above and at least 95px side margins, readable in 0.71-aspect library cards.\nText (verbatim): \"DRAGON QUEST VIII\" as the large primary title on two lines and \"JOURNEY OF THE CURSED KING\" as a clear smaller subtitle over two lines. Exact Roman numeral VIII and exact subtitle.\nLighting/mood: warm late afternoon sunshine, brilliant blue sky, emerald green hills, adventurous optimism with distant mysterious castle shadow.\nConstraints: Only exact title text. No retail case, spine, border, ratings, Nintendo or publisher marks, watermark, interface or screenshot. Actual 3DS release, no invented sequel. Not copied cover art.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-b0ee36d4-977d-44bd-a9a5-d94fa74c7f1f.png",
+      "finalPath": "ArtworkMasters/3ds/dragon-quest-viii/cover.png",
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/DRAGON-QUEST-VIII-Journey-of-the-Cursed-King-1136167.html"
+      ],
+      "qaNotes": "Viewed PNG: exact title and Roman VIII, Hero/Munchie, Yangus and Slime identifiable, thorn-cursed castle vista. Title letters safely padded for centered card crop. Accepted.",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "84ccb479ebae0089d2307156cec4a517a7e849a802441b5cd498220883b50567",
+      "status": "accepted"
+    },
+    {
+      "gameKey": "dragon-quest-viii",
+      "title": "Dragon Quest VIII: Journey of the Cursed King",
+      "rank": 25,
+      "kind": "scene",
+      "mode": "built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: premium landscape cinematic background for Nintendo 3DS Dragon Quest VIII: Journey of the Cursed King, 1536x1024 wide 3:2.\nPrimary request: Original cinematic fan art on the great green roads of Dragon Quest VIII. The young black-haired Hero in an orange bandana, long orange sleeveless coat over blue shirt, green trousers and brown boots stands on a hillside path, Munchie mouse peeking from his pocket. Beside him is Yangus, a stout rugged bandit in a short-spiked metal helmet, shaggy brown vest and olive clothes with an axe. Just behind them a small green cursed King Trode with white beard and tiny crown rides a simple wooden wagon pulled by the white horse Medea. Trodain Castle's ornate spires wrapped by giant thorns rise in the distant valley. A friendly glossy blue teardrop Slime rests near the path.\nComposition/framing: sweeping landscape, full Hero and Yangus compact together near 55% horizontal at middle height, main faces and iconic outfits within central third to support a portrait center crop; wagon just behind. Layered rolling hills and winding road. Bottom quarter is a calm shaded grassy path, darker and lower-detail, with no faces or bright objects where native white title and glass controls go.\nStyle/medium: premium dimensional Japanese game-world illustration faithful to iconic Toriyama proportions, vibrant painterly landscape, intricate cloth, leather and foliage, original composition.\nLighting/mood: soft golden afternoon sun, emerald greens and luminous blue sky, adventurous and warm with gentle atmospheric depth.\nConstraints: No words, letters, numbers, logos, UI, watermarks, borders, retail packaging, screenshots or copied key art. Actual Dragon Quest VIII setting and cast. Minimum 1536x1024 landscape.\nAdditional constraint: friendly all-ages fantasy adventure illustration; all people wear their complete signature outfits.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-751ef1b9-9f93-437c-8589-35997f87d6ed.png",
+      "finalPath": "ArtworkMasters/3ds/dragon-quest-viii/scene.png",
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/DRAGON-QUEST-VIII-Journey-of-the-Cursed-King-1136167.html"
+      ],
+      "qaNotes": "Viewed PNG: Hero, Munchie and Yangus center, King Trode/Medea wagon, cursed Trodain castle in rolling hills; calm shadow path for native title. No text/UI. Accepted.",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "e14bec8e460861b61c25294cfba4b206f462ad8d82eeb18a7908ffe34f3b6a48",
+      "status": "accepted"
+    },
+    {
+      "gameKey": "tomodachi-life",
+      "title": "Tomodachi Life",
+      "rank": null,
+      "bonus": true,
+      "kind": "cover",
+      "mode": "built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: premium portrait cover for the original Nintendo 3DS Tomodachi Life, 1024x1536 about 2:3.\nPrimary request: Original cinematic island-life fan art. A lively group of six varied friendly stylized Mii-like adult island residents greet the viewer in a sunny seaside plaza: different skin tones, distinct oval heads and simplified eyes/noses/mouths, varied short and long hairstyles, one resident wearing glasses, colorful casual shirts, dresses and trousers. Every character has a fully intact head, complete recognizable body and a happy friendly expression. They evoke the charming customizable Miis of original 3DS Tomodachi Life with large heads and small rounded bodies. Behind them is a bright compact island with a tall pale-peach Mii apartment block, cozy little houses, a town hall, a harbor, flowering gardens, turquoise sea and soft green hill.\nStyle/medium: premium polished dimensional game-world illustration, clean charming Nintendo Mii-like shapes, delicate believable fabric/material detail and rich cinematic environment depth, bright approachable atmosphere.\nComposition/framing: coherent original full-bleed portrait, all faces safely inside central 80% width, lively island residents in lower two thirds, no heads cut off. Title in upper third with at least 120px clear artwork above and 100px side safety padding for a 0.71-aspect crop.\nText (verbatim): \"TOMODACHI LIFE\" on two large clear lines, friendly bold cream letters with a warm orange dimensional edge.\nLighting/mood: sunny island afternoon, turquoise ocean, blue sky and fresh greens, warm natural light, uplifting playful life simulation.\nConstraints: Use the actual original 3DS Tomodachi Life, no later \"Living the Dream\" subtitle or sequel. No retail case, spine, border, rating, Nintendo/publisher marks, watermark, app UI or screenshot. Only specified game title text. Not a copy of retail cover.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-541ffcd4-6796-440f-8960-00496b138982.png",
+      "finalPath": "ArtworkMasters/3ds/tomodachi-life/cover.png",
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/Tomodachi-Life-871968.html"
+      ],
+      "qaNotes": "Viewed PNG: exact title; six varied friendly Mii-like islanders, complete attached heads; bright original 3DS island apartment/harbor setting and safe title. Accepted.",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "1e018a9c274fdb50a785a4aaedbd4b50ed04db6f7c1745c9fb498cb96cad6215",
+      "status": "accepted"
+    },
+    {
+      "gameKey": "tomodachi-life",
+      "title": "Tomodachi Life",
+      "rank": null,
+      "bonus": true,
+      "kind": "scene",
+      "mode": "built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: premium cinematic landscape background for original Nintendo 3DS Tomodachi Life, 1536x1024 wide 3:2.\nPrimary request: Original welcoming island-life illustration of a beautiful compact Tomodachi island. A tall pale-peach Mii apartment building, cozy homes and town hall sit amid lush green gardens beside a harbor and turquoise sea, sunlit soft hills in the distance. At a seaside plaza near center-right, five friendly stylized Mii-like adult residents gather in casual conversation: varied skin tones, distinct simple oval heads, big and small hairstyles, one with glasses, colorful modest casual outfits. Charming recognizable customizable Mii-style proportions, large intact heads and small rounded full bodies. Each head must be completely attached, clearly visible and unobscured.\nStyle/medium: premium polished dimensional cinematic game-world illustration, clean friendly shapes, subtle realistic material texture, rich sunlit island depth, actual original 3DS game feeling.\nComposition/framing: wide landscape panorama; compact main group between 46% and 68% width at middle height, surviving a portrait center crop. Broad view of the colorful island behind them. Lower quarter is a quiet shaded stone promenade and grass, slightly darker with low visual detail to hold native white game title and glass navigation.\nLighting/mood: joyful clear afternoon, bright aqua ocean, warm golden skin tones, fresh green foliage, gentle palm shade.\nConstraints: No text, numbers, signage, logos, interface, app UI, watermark, border, packaging, screenshots or later sequel imagery. Original fan art. Landscape at least 1536x1024.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-a66a5bf3-9b2f-4bdd-be0e-e924f4caf43a.png",
+      "finalPath": "ArtworkMasters/3ds/tomodachi-life/scene.png",
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/Tomodachi-Life-871968.html"
+      ],
+      "qaNotes": "Viewed PNG: bright island life and five varied friendly Mii-like residents with intact heads; central residents anchor portrait crop and quiet shaded promenade supports native title. No text/UI. Accepted.",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "13615dd201d34a6e4045822d226e4d31f7396f54132f9237c5be15d237d2e5fe",
+      "status": "accepted"
+    },
+    {
+      "gameKey": "luigis-mansion-dark-moon",
+      "title": "Luigi’s Mansion: Dark Moon",
+      "rank": null,
+      "bonus": true,
+      "kind": "scene",
+      "mode": "built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: premium cinematic landscape background for Nintendo 3DS Luigi's Mansion: Dark Moon, 1536x1024 wide 3:2.\nPrimary request: Original atmospheric haunted-mansion adventure inside the grand foyer of Gloomy Manor in Evershade Valley. Luigi, in green cap and shirt, blue overalls with yellow buttons, white gloves and brown shoes, stands near center-right with his recognizable brown mustache, big blue eyes and nervous expressive face. The red Poltergust 5000 vacuum backpack and black corrugated hose connect to the nozzle he cautiously carries, flashlight casting a soft beam. A translucent mischievous green ghost floats just left of him and a little glowing white ghost dog Polterpup rests nearby. Sweeping creaky stairs, richly carved Victorian woodwork, dusty portraits, cobwebs and tall moonlit windows recede into a layered spooky interior.\nComposition/framing: wide landscape, full Luigi figure and important ghosts together within central 35% width at middle height, intact heads; Luigi at roughly 56% horizontal so he survives portrait center crop. Lower quarter is a quiet dark polished wooden floor with soft shadows, clear of faces and bright objects for native white title and glass navigation.\nStyle/medium: premium polished dimensional cinematic game-world illustration, iconic charming Luigi proportions, detailed cloth and haunted-house materials, deep moody environment.\nLighting/mood: soft indigo moonlight, emerald ghost glow and warm little candles, mysterious and playful, richly atmospheric.\nConstraints: No text, letters on cap or equipment, logos, numbers, game HUD/UI, watermark, border, packaging, gore, screenshots or copied key art. Actual 2013 3DS Dark Moon setting. Landscape at least 1536x1024.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-a4ce39d2-6570-4fd4-af0b-6e6a650b1579.png",
+      "finalPath": "ArtworkMasters/3ds/luigis-mansion-dark-moon/scene.png",
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/Explore-Games/Characters-hub/The-Year-of-Luigi-Hub/The-Year-of-Luigi-Hub-764763.html",
+        "https://csassets.nintendo.com/noaext/image/private/t_KA_PDF/manual-3DS-luigis-mansion-dark-moon-en?_a=DATAg1AAZAA0"
+      ],
+      "qaNotes": "Viewed PNG: recognizable Luigi/Poltergust, green ghost and Polterpup inside layered atmospheric mansion foyer; complete head and calm dark wooden foreground. No text/UI. Accepted.",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "333895dc3f5dad99e5b850764eb1daf98c53d352ea6cd8ad4a5e9071569ed1fb",
+      "status": "accepted"
+    },
+    {
+      "gameKey": "donkey-kong-country-returns-3d",
+      "title": "Donkey Kong Country Returns 3D",
+      "rank": null,
+      "bonus": true,
+      "kind": "scene",
+      "mode": "built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: premium cinematic landscape game environment, 1536x1024 wide 3:2.\nPrimary request: Original environment-only illustration evoking the jungle and ancient temple stages of Nintendo 3DS Donkey Kong Country Returns 3D. A beautiful mossy carved stone temple doorway and raised terrace sit just right of center amid a lush emerald tropical rainforest. A trail of ripe golden bananas leads toward the ruin. Simple wooden barrels, huge leaves, curling vines, distant bridges and cascading waterfalls create an adventurous island world with enormous layered depth.\nStyle/medium: premium polished cinematic game-world environment illustration, believable mossy stone and wooden barrel materials, lush foliage, rich atmospheric perspective.\nComposition/framing: wide landscape panorama. Keep the main carved doorway and banana trail within central third slightly right so they remain visible in a portrait center crop. Lower quarter is quiet darker mossy stone and shadowed jungle ground with minimal bright objects for native white title and glass navigation.\nLighting/mood: dramatic warm sunbeams through cool green canopy, soft turquoise waterfall mist, inviting exploration.\nConstraints: Environment only: no people, animals or characters anywhere. No text, numbers, letters on barrels, logos, interface, HUD, watermarks, borders, retail packaging or screenshots. Original environment illustration. At least 1536x1024 landscape.",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-4e1121aa-e47d-4b11-8cb2-6d37161934d9.png",
+      "finalPath": "ArtworkMasters/3ds/donkey-kong-country-returns-3d/scene.png",
+      "researchURLs": [
+        "https://www.retrostudios.com/games/",
+        "https://www.youtube.com/watch?v=LnxGlw3Sq_s",
+        "https://csassets.nintendo.com/noaext/image/private/t_KA_PDF/manual-3DS-donkey-kong-country-returns-3D-en?_a=DATAg1AAZAA0"
+      ],
+      "qaNotes": "Viewed PNG: parent-approved materially different environment-only composition after character prompts were rejected. Mossy temple, banana trail, barrels, canopy and waterfalls; rich depth, dark foreground and no text/UI. Accepted master; retain app fallback as directed because cover unavailable.",
+      "scopeAdjustment": "Root approved environment-only cover/scene in place of DK/Diddy character composition after repeated built-in output-stage rejections.",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "3e16cd28e711b431ec54b4c38ea0c204b7e494b2d9f72aa04a6a2f41e57e1f8b",
+      "status": "accepted"
+    },
+    {
+      "gameKey": "luigis-mansion-dark-moon",
+      "title": "Luigi’s Mansion: Dark Moon",
+      "rank": null,
+      "bonus": true,
+      "kind": "cover",
+      "mode": "built-in image_gen",
+      "intent": "generate distinct portrait composition from visual reference",
+      "prompt": "Use case: style-transfer\nAsset type: a newly composed premium portrait game cover, 1024x1536.\nInput images: Image 1 is a visual reference for the original cinematic character and mansion rendering, not a retail cover.\nPrimary request: Using the supplied original Gloomy Manor scene as a visual design reference, create a distinct tall portrait cover composition for Luigi's Mansion: Dark Moon. Preserve the appealing complete depiction of Luigi, the red Poltergust 5000 vacuum backpack and nozzle, the small green ghost, and friendly glowing white Polterpup. Arrange Luigi as the central full figure in the lower two thirds, with the ghosts near him inside the narrower frame. Recompose the grand carved wooden staircase, moonlit windows and atmospheric foyer behind them to fit a beautiful tall cover. Keep the same polished dimensional game-world illustration quality, indigo moonlight, warm candles and emerald spectral glow.\nText (verbatim): \"LUIGI'S MANSION\" as large readable cream lettering across two lines in the upper third, followed by \"DARK MOON\" in pale lavender. Spell the exact actual 3DS game title, without any additional words or numerals.\nComposition/framing: Portrait 2:3, 1024x1536. All title letters must be inside central 80% of width and no closer than 120px to the top edge. Keep all character heads complete and attached. This must read clearly at thumbnail size and tolerate centered crop to a 0.71-aspect card.\nConstraints: Original illustrated cover only. No retail case, spine, border, ratings, publisher or console logos, app/game interface, watermark or extra text. Do not add any lettering to clothing or equipment.",
+      "referenceImages": [
+        "ArtworkMasters/3ds/luigis-mansion-dark-moon/scene.png"
+      ],
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-835f-7c93-acec-ffc561c45743/exec-648b4d61-373e-4a6f-be3a-2522f7cb47b7.png",
+      "finalPath": "ArtworkMasters/3ds/luigis-mansion-dark-moon/cover.png",
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/Explore-Games/Characters-hub/The-Year-of-Luigi-Hub/The-Year-of-Luigi-Hub-764763.html",
+        "https://csassets.nintendo.com/noaext/image/private/t_KA_PDF/manual-3DS-luigis-mansion-dark-moon-en?_a=DATAg1AAZAA0"
+      ],
+      "qaNotes": "Viewed PNG: exact Luigi's Mansion / Dark Moon title with generous crop-safe margins; recognizable intact Luigi, Poltergust 5000, green ghost and Polterpup in atmospheric manor. Distinct portrait composition from accepted original scene. Accepted.",
+      "priorRejectedRequest": {
+        "requestID": "4171e078-b835-4b29-8ebe-c13958b56238",
+        "prompt": "Use case: stylized-concept\nAsset type: premium portrait game library cover for Nintendo 3DS Luigi's Mansion: Dark Moon (2013), 1024x1536 about 2:3.\nPrimary request: Original cinematic fan art of Luigi exploring the atmospheric haunted Gloomy Manor in Evershade Valley. Luigi has his recognizable green cap and shirt, blue overalls with yellow buttons, white gloves, brown shoes, large blue eyes, brown mustache and expressive worried face. He holds a bright flashlight in one gloved hand and the nozzle connected by a corrugated black hose to the red Poltergust 5000 vacuum backpack with the other. A mischievous translucent green ghost peeks near the sweeping wooden staircase, while a small friendly glowing white ghost dog, Polterpup, watches from the floor. Rich crooked Victorian woodwork, cobwebs, moonlit windows and warm candle sconces create spooky charm. Keep Luigi's face and head fully intact and recognizable.\nStyle/medium: premium polished dimensional cinematic game-world illustration, classic charming proportions, convincing soft fabric, lacquered wood and spectral glow, rich lighting depth.\nComposition/framing: coherent original full-bleed portrait, Luigi dominant in lower two thirds, clean readable title in upper third with all letters at least 120px below top edge and 100px from sides, safe for 0.71-aspect card cropping.\nText (verbatim): \"LUIGI'S MANSION\" as the large cream title over two lines, with \"DARK MOON\" clearly readable beneath in pale lavender lettering. Exact real 3DS release title, no numeral 2 or HD.\nLighting/mood: atmospheric indigo moonlight, emerald spectral light, warm amber candles, playful spooky adventure.\nConstraints: Only exact specified title wording; no lettering on clothing or equipment. No retail case, spine, border, ratings, Nintendo/publisher marks, watermark, UI, screenshots or copied box art. No gore.",
+        "reason": "Built-in output-stage moderation category other; no rejected image returned or used."
+      },
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "5d2486e6d39d2987c0f1e9edeac8abf1af9b35fe091f3fb1e9e4ef234c2c6fd1",
+      "status": "accepted"
+    }
+  ],
+  "executionNotes": [
+    "A paired image call for DQ VIII scene and DK Returns 3D cover ended with an output-stage safety error before returning either result. Reattempt retained the DQ VIII scene; DK cover returned a second output-stage error (category other). No rejected image was delivered or used.",
+    "Root instructed no further DK/Diddy character attempts and authorized one environment-only pair. Environment scene succeeded; environment portrait rejected, so no further cover attempt was made. Existing app fallback retained by root."
+  ],
+  "unavailableAssets": [
+    {
+      "gameKey": "donkey-kong-country-returns-3d",
+      "title": "Donkey Kong Country Returns 3D",
+      "kind": "cover",
+      "mode": "built-in image_gen",
+      "status": "unavailable",
+      "prompt": "Use case: stylized-concept\nAsset type: premium portrait game cover artwork, 1024x1536, about 2:3.\nPrimary request: A beautifully composed original environment-only tropical jungle-temple adventure illustration for the Nintendo 3DS game Donkey Kong Country Returns 3D. An ancient mossy carved stone temple doorway stands at the end of a banana-lined trail, surrounded by enormous emerald leaves, curling vines, wooden barrels and layered waterfalls. A small trail of golden bananas curves toward the carved stone ruins, with distant jungle canopy and sunlight breaking through cloud mist. The architecture and barrel/canopy motifs evoke the game's island stages.\nStyle/medium: premium cinematic game-world environment illustration, rich dimensional stone, moss and wood materials, lush detailed foliage, dramatic polished lighting and deep atmospheric perspective.\nComposition/framing: environment-only full-bleed portrait, temple doorway in lower-middle, clear open title space in upper third; every title letter at least 120px below top edge and 100px from side edges for a safe 0.71-aspect card crop.\nText (verbatim): \"DONKEY KONG\" in large warm golden lettering on two lines, \"COUNTRY RETURNS\" beneath it, and prominent \"3D\". Exact title Donkey Kong Country Returns 3D.\nLighting/mood: warm golden shafts through cool emerald canopy and luminous waterfall mist, premium adventurous wonder.\nConstraints: Environment only: no people, animals or characters anywhere. No retail case, spine, border, ratings, Nintendo/publisher labels, watermark, app interface or screenshot. Only the specified exact game title text. Original fan environment art, not a scan or copied cover.",
+      "reason": "The single authorized environment-only portrait attempt was rejected by imagegen at the output stage, category other. Prior DK character cover attempts were also rejected; no image exists to inspect.",
+      "requestID": "82bc4f53-aa97-4fc8-aa76-817f84e0c2ea",
+      "fallback": "Root retains current app fallback; no CLI/API or scan used.",
+      "priorRejectedRequests": [
+        {
+          "requestID": "87859dcc-96ce-42df-ab56-bf2d5a766292",
+          "kind": "cover"
+        },
+        {
+          "requestID": "3c1af8ad-b898-4c8c-b7de-004fa26450d3",
+          "kind": "cover"
+        },
+        {
+          "requestID": "40074dab-7eac-4ee8-b3e9-5c87bf09a383",
+          "kind": "scene"
+        }
+      ]
+    }
+  ],
+  "status": "completed-with-one-tool-limitation",
+  "summary": {
+    "requestedAssets": 20,
+    "acceptedAssets": 19,
+    "unavailableAssets": 1,
+    "acceptedGames": 9,
+    "partialGames": 1
+  }
+}

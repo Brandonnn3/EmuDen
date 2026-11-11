@@ -1,0 +1,5 @@
+EmuDen menu sound palette, 2026.
+Original procedural synthesis created for EmuDen by Scripts/generate-menu-audio.py.
+No recordings, third-party samples, game sound effects or quoted game melodies.
+Focus, confirm, back, launch and coming-soon cues use short struck-glass voices.
+These assets are provided under the same license as EmuDen's app source.

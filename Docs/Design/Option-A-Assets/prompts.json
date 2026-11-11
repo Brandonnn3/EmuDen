@@ -1,0 +1,38 @@
+{
+  "tool": "built-in image_gen",
+  "purpose": "Production artwork matching the user-approved Option A concepts; illustrative library art, not captured gameplay",
+  "jobs": [
+    {
+      "id": "Hero-Wide",
+      "reference": "/Volumes/SamsungT7/EmulatorApp/Docs/Mockups/Duo-Inner-v1/A-Cinematic-Inner-Home.png",
+      "prompt": "Use case: precise-object-edit / background-extraction for a production app asset. Input image 1 is the EXACT approved EmuDen Option A UI mockup. Extract and restore ONLY its beautiful landscape golf-course background as a clean high-resolution image, 2048 by 1280 landscape. Preserve the SAME scene, style, lighting, colors and composition: large leafy tree and wooden fence at the left, deep green fairways, pale sandy bunkers, blue lake and waterfall at the right, pink castle near the distant center, blue sky and fluffy clouds. Do not invent a new art direction. Remove EVERY piece of UI: all EmuDen/title text, system badge, Play button, game-cover shelf, icons, bottom navigation, device border, dark UI gradient and glass. Inpaint the scenery continuously wherever UI was. The lower quarter should continue the natural green course scenery to support a translucent glass dock. No lettering, no logos, no characters, no controls, no text. Output only clean scenic artwork, no presentation board, no borders. It should match the approved mockup's game-preview artwork rather than a low-resolution emulator screenshot.",
+      "result": "selected",
+      "saved_asset": "Resources/CinematicArt/Golf-Scene-Wide.png"
+    },
+    {
+      "id": "Hero-Portrait",
+      "reference": "/Volumes/SamsungT7/EmulatorApp/Docs/Mockups/Liquid-Glass-v1/A-Cinematic.png",
+      "prompt": "Use case: precise-object-edit / background-extraction for a production app asset. Input image 1 is the exact approved EmuDen Option A portrait mockup. Extract and restore ONLY its scenic illustration as a clean high-resolution PORTRAIT 1024 by 1536 background. Preserve the SAME scene and Mario golfer: Mario wearing a red cap and blue overalls, leaning slightly forward toward a golf ball near the left-center; the large leafy tree and wooden fence at left; lush rolling fairway, distant pink castle, blue sky, pond at right and tiny mushroom-shaped balloon above. Keep subject placement, lighting and detailed stylized 3D-art appearance faithful. Remove ALL app UI, lettering, EmuDen wordmark, controller/search icons, game title, platform label, Play button, game-cover shelf, bottom dock and dark UI gradients. Fill the lower third with a natural softly detailed continuation of the green golf course so real app controls can overlay it later. No new characters, no extra items, no text, no watermarks. Output only the clean illustration, no device frame, no design board.",
+      "result": "not used; approved illustration regions are sampled directly in SwiftUI"
+    },
+    {
+      "id": "Covers-Wide",
+      "reference": "/Volumes/SamsungT7/EmulatorApp/Docs/Mockups/Duo-Inner-v1/A-Cinematic-Inner-Home.png",
+      "prompt": "Use case: compositing / production texture atlas extracted from an approved UI concept. Input image 1 contains a row of four illustrated cover cards. Reproduce those SAME four cards as a seamless TWO BY TWO texture atlas, output 2048 by 1536. Each quadrant is one 1024 by 768 landscape cover illustration, filling its quadrant entirely edge to edge. No gutters, margins, rounded corners, frames, extra captions or UI. Preserve the reference's exact bright polished stylized 3D art and clear game-title treatment. Top-left: Mario Golf World Tour, smiling Mario in a red cap with a club and large golf ball, tropical golf-course sky; title at top. Top-right: The Legend of Zelda Ocarina of Time 3D, Link in green with sword and shield and Hyrule landscape, title at top. Bottom-left: Animal Crossing New Leaf, the smiling human villager and Isabelle in the village with fruit trees, wooden title logo at top. Bottom-right: Luigi's Mansion Dark Moon, frightened Luigi holding his flashlight with round white ghosts and a purple moon, title at top. Keep the scenes and title placement faithful to the four cards in the supplied image. These are clean digital-library cover illustrations, NO Nintendo 3DS case spines, no ratings labels, no retail-box packaging, no generic placeholders. The grid must be exactly two equal columns and two equal rows with no dividing border, so the app can sample one quadrant per card.",
+      "result": "not used; approved illustration regions are sampled directly in SwiftUI"
+    },
+    {
+      "id": "Covers-Portrait",
+      "reference": "/Volumes/SamsungT7/EmulatorApp/Docs/Mockups/Liquid-Glass-v1/A-Cinematic.png",
+      "prompt": "Use case: compositing / production texture atlas from an approved UI mockup. Reproduce the SAME four portrait illustrated game covers from input image 1, arranged as a clean seamless FOUR-COLUMN single-row strip. Output 3072 by 1024, each column exactly 768 by 1024. No gutters, rounded corners, margins, frames or app UI: each illustrated cover fills its column edge to edge. Left to right exactly: Mario Golf World Tour (Mario in red cap with club and golf ball against bright tropical scenery); The Legend of Zelda Ocarina of Time 3D (Link with sword/shield against Hyrule); Animal Crossing New Leaf (smiling villager and Isabelle in a village, wooden title logo); Luigi's Mansion Dark Moon (worried Luigi and white ghosts, purple moon and mansion). Match the supplied approved covers' composition, colors, detailed stylized 3D art and game title logos. Titles belong near each cover's top and must be readable. Preserve the established artwork instead of redesigning. No Nintendo 3DS retail-box side strips, no ratings, no generic placeholder art, no promotion badges. The final atlas is exactly four equal-width cover columns without dividers.",
+      "result": "not used; approved illustration regions are sampled directly in SwiftUI"
+    },
+    {
+      "id": "Forest-Wide",
+      "result": "selected",
+      "saved_asset": "Resources/CinematicArt/Forest-Scene-Wide.png",
+      "prompt_brief": "A lush stylized forest village with tree houses, a stream, warm sunlight and open space for native controls; no characters, text or UI.",
+      "note": "Descriptive brief; the verbatim generation prompt was not persisted."
+    }
+  ]
+}

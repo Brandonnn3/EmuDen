@@ -1,0 +1,65 @@
+--- a/src/citra_libretro/libretro_vk.cpp
++++ b/src/citra_libretro/libretro_vk.cpp
+@@ -101,12 +101,17 @@
+     const bool has_custom_border_color = AddExtensionIfAvailable(
+         enabled_exts, available_exts, VK_EXT_CUSTOM_BORDER_COLOR_EXTENSION_NAME);
+ 
+-    // These are beneficial but blacklisted on some platforms due to driver bugs
+-    // For now, let the Instance class handle these decisions
+-    // AddExtensionIfAvailable(enabled_exts, available_exts,
+-    // VK_KHR_TIMELINE_SEMAPHORE_EXTENSION_NAME);
+-    // AddExtensionIfAvailable(enabled_exts, available_exts,
+-    // VK_EXT_EXTENDED_DYNAMIC_STATE_EXTENSION_NAME);
++#ifdef __APPLE__
++    // Match the features the renderer detects to those enabled on our MoltenVK device.
++    const bool has_dynamic_state = AddExtensionIfAvailable(
++        enabled_exts, available_exts, VK_EXT_EXTENDED_DYNAMIC_STATE_EXTENSION_NAME);
++    const bool has_interlock = AddExtensionIfAvailable(
++        enabled_exts, available_exts, VK_EXT_FRAGMENT_SHADER_INTERLOCK_EXTENSION_NAME);
++    const bool has_cache_control = AddExtensionIfAvailable(
++        enabled_exts, available_exts, VK_EXT_PIPELINE_CREATION_CACHE_CONTROL_EXTENSION_NAME);
++    const bool has_robustness2 = AddExtensionIfAvailable(
++        enabled_exts, available_exts, VK_EXT_ROBUSTNESS_2_EXTENSION_NAME);
++#endif
+ 
+     // Merge frontend's required features with our baseline
+     VkPhysicalDeviceFeatures merged_features{};
+@@ -170,6 +175,38 @@
+ 
+     VkPhysicalDeviceFeatures2 enabled_features{VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2};
+     enabled_features.features = merged_features;
++
++#ifdef __APPLE__
++    VkPhysicalDeviceExtendedDynamicStateFeaturesEXT dynamic_features{
++        VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_FEATURES_EXT};
++    VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT interlock_features{
++        VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_SHADER_INTERLOCK_FEATURES_EXT};
++    VkPhysicalDevicePipelineCreationCacheControlFeaturesEXT cache_features{
++        VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES_EXT};
++    VkPhysicalDeviceRobustness2FeaturesEXT robustness_features{
++        VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ROBUSTNESS_2_FEATURES_EXT};
++    const auto chain_feature = [&enabled_features](auto& feature) {
++        feature.pNext = enabled_features.pNext;
++        enabled_features.pNext = &feature;
++    };
++    if (has_dynamic_state) chain_feature(dynamic_features);
++    if (has_interlock) chain_feature(interlock_features);
++    if (has_cache_control) chain_feature(cache_features);
++    if (has_robustness2) chain_feature(robustness_features);
++    VkPhysicalDeviceFeatures2 queried_features{VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2};
++    queried_features.pNext = enabled_features.pNext;
++    auto get_features2 = reinterpret_cast<PFN_vkGetPhysicalDeviceFeatures2>(
++        get_instance_proc_addr(instance, "vkGetPhysicalDeviceFeatures2"));
++    if (!get_features2) return false;
++    get_features2(gpu, &queried_features);
++    // The renderer uses null surfaces; additional robust-access modes aren't required.
++    robustness_features.robustBufferAccess2 = VK_FALSE;
++    robustness_features.robustImageAccess2 = VK_FALSE;
++    LOG_INFO(Render_Vulkan, "MoltenVK features enabled: dynamic_state={}, pixel_interlock={}, "
++                           "pipeline_cache_control={}, null_descriptor={}",
++             dynamic_features.extendedDynamicState, interlock_features.fragmentShaderPixelInterlock,
++             cache_features.pipelineCreationCacheControl, robustness_features.nullDescriptor);
++#endif
+ 
+     VkPhysicalDeviceCustomBorderColorFeaturesEXT custom_border_color_features{
+         VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_FEATURES_EXT};

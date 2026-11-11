@@ -1,0 +1,530 @@
+{
+  "agent": "artwork-b",
+  "scope": "Ranks 10–18; two independent original assets per ranked entry",
+  "mode": "built-in image_gen",
+  "style": "Option A premium cinematic console artwork",
+  "artworks": [
+    {
+      "key": "animal-crossing-new-leaf",
+      "kind": "cover",
+      "title": "Animal Crossing: New Leaf",
+      "prompt": "Use case: stylized-concept. Asset type: production portrait game-library cover illustration, original fan art for EmuDen. Generate a 1024x1536 portrait image, about 2:3. Premium cinematic console artwork, rich lighting and deep dimensional polished illustration with recognizable canonical game subjects, crisp authored typography. Full bleed art: no retail box, no plastic case, no spine, no outer border, no rating, no publisher badges, no app UI, no watermark. All title lettering must sit fully inside the central 80% width and safe padded top/bottom, readable when displayed in a 0.71-aspect rounded card. Animal Crossing: New Leaf, the Nintendo 3DS town mayor game. On a peaceful storybook town lane at sunset, Isabelle the recognizable yellow dog assistant with round topknot and green checked vest warmly greets the small human mayor with brown hair, striped shirt and a butterfly net; Tom Nook in a green shop apron by a cozy house. Fruit trees, river bridge, flowers and a village town hall in depth; soft tactile stylized 3D materials, warm amber windows and emerald leaves. Cheerful, lush and inviting, realistic cinematic light while retaining Animal Crossing character proportions. Place a beautiful warm wooden-sign-inspired title at the upper quarter, floating naturally over sky, with exact readable text: \"Animal Crossing\" and immediately underneath \"New Leaf\". No extra words. Keep faces and text separated and all text safely padded.",
+      "mode": "built-in image_gen",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-d87d206f-b2e1-4453-b5bb-36af06e36462.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/animal-crossing-new-leaf/cover.png",
+      "researchURLs": [
+        "https://www.youtube.com/watch?v=z09iRo44Mcs",
+        "https://csassets.nintendo.com/noaext/image/private/t_KA_PDF/3DS_Animal_Crossing_New_Leaf_en?_a=DATAg1AAZAA0"
+      ],
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected with view_image: exact Animal Crossing / New Leaf title fully padded; Isabelle and mayor recognizable; original full-bleed portrait, no retail packaging."
+      },
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "bytes": 2733527,
+      "sha256": "d51ffeb2e067e0c67048078938b89dd2628a78ed9a549d193643ebb213f11586"
+    },
+    {
+      "key": "animal-crossing-new-leaf",
+      "kind": "scene",
+      "title": "Animal Crossing: New Leaf",
+      "prompt": "Use case: stylized-concept. Asset type: production cinematic game-library background scene, original fan art for EmuDen. Generate a landscape image 1536x1024 or 1792x1024, minimum width 1280 and short side 720. Premium cinematic console aesthetic: rich light, depth, polished detailed game-world illustration. Put the recognizable main subjects around the central 45–70% of the width and above the lower third, so a centered portrait crop retains the focal story. Bottom 25% should be darker and visually calm for a native white game title and glass dock, but do not draw any UI. Absolutely no text, lettering, title, logos, watermark, border or packaging. Animal Crossing: New Leaf for Nintendo 3DS: an established village town, not a deserted island. Isabelle, the yellow dog with round topknot and green checked vest, stands beside a brown-haired human mayor holding a butterfly net by a small stone river bridge, centered at 58% width. Tom Nook appears further back beside a cozy shop. A town hall, apple trees, curving stream, flower beds, cottage windows and distant railway evoke New Leaf. Golden late-afternoon beams and warm lit windows against a blue-green evening sky; cinematic polished stylized 3D illustration and soft tactile fur. The lower quarter is a dark shaded grassy riverbank with subtle reflections, uncluttered, with no figures or high-contrast flowers there.",
+      "mode": "built-in image_gen",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-8eb69db0-7210-4ab5-bd9c-fb10ab9713e7.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/animal-crossing-new-leaf/scene.png",
+      "researchURLs": [
+        "https://www.youtube.com/watch?v=z09iRo44Mcs",
+        "https://csassets.nintendo.com/noaext/image/private/t_KA_PDF/3DS_Animal_Crossing_New_Leaf_en?_a=DATAg1AAZAA0"
+      ],
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected with view_image: landscape; Isabelle and mayor retained in centered portrait crop; town hall and railway evoke New Leaf; darker calm grassy foreground; no text or UI."
+      },
+      "dimensions": {
+        "width": 1659,
+        "height": 948
+      },
+      "bytes": 2682173,
+      "sha256": "f98d31c4c212a75ad17c6ace815cc8d08e0b47a080c1ff6e4a7b8a901f83e4be"
+    },
+    {
+      "key": "pokemon-omega-ruby-alpha-sapphire",
+      "kind": "cover",
+      "title": "Pokémon Omega Ruby & Alpha Sapphire",
+      "prompt": "Use case: precise-object-edit. Edit target: the supplied Pokémon Omega Ruby & Alpha Sapphire portrait cover. Preserve the excellent cinematic Primal Groudon and Primal Kyogre illustration, ruby lava/sapphire sea, color, framing and portrait size. Change only the title group placement and scale: reduce the whole Pokémon / Omega Ruby / & Alpha Sapphire group to 85% of its current size, center it horizontally, and move it DOWN so the highest accent/blue outline is at least 85 pixels below the top edge. Every letter and accent must be completely visible and safely padded. Keep exact readable lettering 'Pokémon', 'Omega Ruby', '& Alpha Sapphire'. Do not change either creature, environment, lighting, or add any marks, borders, UI or packaging. Original fan-art cover.",
+      "mode": "built-in image_gen edit",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-790459a5-7094-49f4-b585-64ee66ee09e0.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/pokemon-omega-ruby-alpha-sapphire/cover.png",
+      "researchURLs": [
+        "https://www.pokemon.co.jp/ex/oras/pokemon/",
+        "https://www.youtube.com/watch?v=2Ma2CBnBlXs"
+      ],
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected revision with view_image: exact Pokémon / Omega Ruby / & Alpha Sapphire lettering, accent fully visible with generous top/side padding; separate canonical Primal Groudon and Kyogre in balanced ruby/sapphire composition."
+      },
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "revisions": [
+        {
+          "prompt": "Use case: stylized-concept. Asset type: production portrait game-library cover illustration, original fan art for EmuDen. Generate a 1024x1536 portrait image, about 2:3. Premium cinematic console artwork, rich lighting and deep dimensional polished illustration with recognizable canonical game subjects, crisp authored typography. Full bleed art: no retail box, no plastic case, no spine, no outer border, no rating, no publisher badges, no app UI, no watermark. All title lettering must sit fully inside the central 80% width and safe padded top/bottom, readable when displayed in a 0.71-aspect rounded card. Pokémon Omega Ruby & Alpha Sapphire, paired Nintendo 3DS Hoenn versions. A balanced original ruby-and-sapphire composition featuring two correct canonical Legendary Pokémon: Primal Groudon, the enormous red armored dinosaur with black body plates, white spikes and luminous yellow-orange lava seams, on the left; Primal Kyogre, a huge deep-blue orca-like creature with white underside, wide pectoral fins, red circuit-like line markings and glowing cyan/yellow primal patterns, on the right. Clearly distinct and equally important, not fused; both faces readable. Volcano rocks and warm sparks flow into deep ocean and cool spray, dramatic storm light, polished dimensional fantasy illustration. Upper quarter exact large yellow and blue outlined title \"Pokémon\". Immediately below in a clear compact stack exact paired subtitle \"Omega Ruby\" then \"& Alpha Sapphire\"; ruby then sapphire color accents, clean readable type, safe side padding. Original artwork, no copied retail layout. No additional words or invented sequel.",
+          "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-46947eac-96af-48fe-be0a-63b79ff82db3.png",
+          "qa": {
+            "status": "revision required",
+            "notes": "First cover has correct paired subtitle and subjects; Pokémon acute accent/outline touches the upper edge. Targeted imagegen edit required to add safe title padding."
+          }
+        }
+      ],
+      "referenceImagePaths": [
+        "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/pokemon-omega-ruby-alpha-sapphire/cover.png"
+      ],
+      "bytes": 2586486,
+      "sha256": "54fd36ded49644e55a96fcc11aa810ec63089c0b5f510c6952cada40ee4a7355"
+    },
+    {
+      "key": "pokemon-omega-ruby-alpha-sapphire",
+      "kind": "scene",
+      "title": "Pokémon Omega Ruby & Alpha Sapphire",
+      "prompt": "Use case: stylized-concept. Asset type: production cinematic game-library background scene, original fan art for EmuDen. Generate a landscape image 1536x1024 or 1792x1024, minimum width 1280 and short side 720. Premium cinematic console aesthetic: rich light, depth, polished detailed game-world illustration. Put the recognizable main subjects around the central 45–70% of the width and above the lower third, so a centered portrait crop retains the focal story. Bottom 25% should be darker and visually calm for a native white game title and glass dock, but do not draw any UI. Absolutely no text, lettering, title, logos, watermark, border or packaging. Pokémon Omega Ruby & Alpha Sapphire: primal clash of land and sea in Hoenn. Show the two separate recognizable canonical creatures equally: Primal Groudon on a volcanic outcrop at center-left, a massive red plated dinosaur with white spikes, black sections and orange-yellow glowing seams; Primal Kyogre at center-right breaching from ocean spray, a deep blue orca-like Pokémon with enormous broad pectoral fins, white chin and red/cyan luminous primal markings. Both heads fit within the central 45% of the canvas; their bodies expand outward. Ruby lava cliffs meet sapphire sea under towering clouds, cinematic volumetric orange and blue light, immense scale and polished game-world rendering. Lower quarter becomes dark navy water and obsidian rocks, subtle and calm. No third Pokémon. Absolutely no words, logos or UI.",
+      "mode": "built-in image_gen",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-98fcebe9-90c6-415b-a57d-55c779e5e429.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/pokemon-omega-ruby-alpha-sapphire/scene.png",
+      "researchURLs": [
+        "https://www.pokemon.co.jp/ex/oras/pokemon/",
+        "https://www.youtube.com/watch?v=2Ma2CBnBlXs"
+      ],
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected with view_image: separate balanced Primal Groudon and Primal Kyogre, ruby lava and sapphire sea, both faces present in centered portrait crop, dark calm lower foreground and no text/UI.",
+        "phoneCenterCropReview": "A later full-screen 390:844 phone crop review found Kyogre head/eye clipping in the original scene. The separate scene-v2.png candidate was generated and verified to resolve this; original scene.png is preserved for root selection."
+      },
+      "dimensions": {
+        "width": 1659,
+        "height": 948
+      },
+      "bytes": 2663103,
+      "sha256": "2c2ba75817332957f2a10fad31bc3baa22011b868d0b63b6c2971364bd259edb"
+    },
+    {
+      "key": "resident-evil-revelations",
+      "kind": "cover",
+      "title": "Resident Evil: Revelations",
+      "prompt": "Use case: stylized-concept. Asset type: production portrait game-library cover illustration, original fan art for EmuDen. Generate a 1024x1536 portrait image, about 2:3. Premium cinematic console artwork, rich lighting and deep dimensional polished illustration with recognizable canonical game subjects, crisp authored typography. Full bleed art: no retail box, no plastic case, no spine, no outer border, no rating, no publisher badges, no app UI, no watermark. All title lettering must sit fully inside the central 80% width and safe padded top/bottom, readable when displayed in a 0.71-aspect rounded card. Resident Evil: Revelations, the original Nintendo 3DS survival-horror adventure aboard the Queen Zenobia. Jill Valentine is the clear main subject, recognizable short dark-brown bob, alert resolute face, fitted blue-gray BSAA tactical wetsuit with shoulder holster, tactical gloves and belt, holding a handgun in safe downward-ready position and a small flashlight. She stands aboard an abandoned luxury ocean liner in Mediterranean night fog; tarnished art-deco railings, rain-slick decks, lit portholes and the looming Queen Zenobia silhouette behind her, a vague pale humanoid Ooze creature only in distant shadow. Cinematic realistic game illustration, cold teal-blue moonlight and sharp pale flashlight beam, subtle red emergency glow, tense and atmospheric, no graphic gore. Large exact title at upper quarter in refined strong condensed capitals: \"RESIDENT EVIL\" and directly below \"REVELATIONS\". Extremely legible, safely padded, no further wording.",
+      "mode": "built-in image_gen",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-bab9fc78-e2a3-4d49-86b9-ad2d52b555b5.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/resident-evil-revelations/cover.png",
+      "researchURLs": [
+        "https://game.capcom.com/residentevil/uk/re-history.html",
+        "https://news.capcomusa.com/lets/browse/queen-zenobia-winners-revealed-monster-free-cruise-awarded"
+      ],
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected with view_image: exact legible Resident Evil / Revelations title padded; recognizable Jill in blue-gray wetsuit with Queen Zenobia and distant Ooze; full-bleed original portrait."
+      },
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "bytes": 2616792,
+      "sha256": "6e24630d4e8823ee76fa5e8b6c4da989091ec92a07a3c0149dcb9cc756367474"
+    },
+    {
+      "key": "resident-evil-revelations",
+      "kind": "scene",
+      "title": "Resident Evil: Revelations",
+      "prompt": "Use case: stylized-concept. Asset type: production cinematic game-library background scene, original fan art for EmuDen. Generate a landscape image 1536x1024 or 1792x1024, minimum width 1280 and short side 720. Premium cinematic console aesthetic: rich light, depth, polished detailed game-world illustration. Put the recognizable main subjects around the central 45–70% of the width and above the lower third, so a centered portrait crop retains the focal story. Bottom 25% should be darker and visually calm for a native white game title and glass dock, but do not draw any UI. Absolutely no text, lettering, title, logos, watermark, border or packaging. Resident Evil: Revelations, original Nintendo 3DS setting: Jill Valentine exploring the abandoned luxury cruise ship Queen Zenobia. Jill is centered slightly right at 59% width in the upper middle, recognizable short brown bob and fitted blue-gray BSAA tactical wetsuit, gloves and utility belt. Three-quarter view, handgun low and flashlight scanning left into a damp art-deco corridor opening onto a moonlit deck. Brass railings, dark wood panels, broken luxury fixtures, rolling sea beyond the windows, distant indistinct pale Ooze creature swallowed by far shadow. Polished cinematic realistic survival-horror game illustration, atmospheric cold teal and steel blue with very restrained red emergency glow, richly detailed depth and volumetric mist, no gore. Lower 25% is dark rain-slick floor with low-contrast reflections, quiet and uncluttered. No letters on clothing, no ship-name lettering, no text of any kind.",
+      "mode": "built-in image_gen",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-06a02e10-9d05-489c-8d3e-71e3853e3523.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/resident-evil-revelations/scene.png",
+      "researchURLs": [
+        "https://game.capcom.com/residentevil/uk/re-history.html",
+        "https://news.capcomusa.com/lets/browse/queen-zenobia-winners-revealed-monster-free-cruise-awarded"
+      ],
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected with view_image: recognizable Jill in blue-gray wetsuit aboard Queen Zenobia, central/right focal subject and shadowed floor; cinematic moody landscape without title/UI."
+      },
+      "dimensions": {
+        "width": 1659,
+        "height": 948
+      },
+      "bytes": 2225631,
+      "sha256": "d3199cc6660fcd308a722cde8611ce60fa59a2c99dee5dae3cbf408aff964a73"
+    },
+    {
+      "key": "bravely-default",
+      "kind": "cover",
+      "title": "Bravely Default",
+      "prompt": "Use case: stylized-concept. Asset type: production portrait game-library cover illustration, original fan art for EmuDen. Generate a 1024x1536 portrait image, about 2:3. Premium cinematic console artwork, rich lighting and deep dimensional polished illustration with recognizable canonical game subjects, crisp authored typography. Full bleed art: no retail box, no plastic case, no spine, no outer border, no rating, no publisher badges, no app UI, no watermark. All title lettering must sit fully inside the central 80% width and safe padded top/bottom, readable when displayed in a 0.71-aspect rounded card. Bravely Default, the original Nintendo 3DS adventure in Luxendarc. Recognizable Agnès Oblige with long dark-brown hair and flowing modest white vestal dress in the foreground, hands near a radiant faceted elemental crystal; beside her Tiz Arrior, short brown-haired youthful adventurer in a gray-blue tunic and boots, carrying a sword. A small white-winged fairy Airy hovers nearby. Sweeping fairy-tale town of Caldisla and high stone castle on a cliff behind, distant chasm and layered mountains; ornate painted fantasy setting with polished dimensional character rendering and bright crystal illumination. Warm parchment gold, pearl white and cool aquamarine; an ethereal sense of a grand adventure. Clearly authored original fan art, no remaster-specific characters. Large elegant high-contrast exact title in upper quarter, \"BRAVELY\" on first line and \"DEFAULT\" on second, crisp spacious serif capitals, safe padding and very readable. No other words.",
+      "mode": "built-in image_gen",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-09095c54-5bf4-4361-9876-6df914ac1e93.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/bravely-default/cover.png",
+      "researchURLs": [
+        "https://www.square-enix.com/announce/bd/",
+        "https://www.nintendo.com/en-gb/News/2014/March/An-introduction-to-the-foes-of-Bravely-Default-861399.html"
+      ],
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected with view_image: exact large Bravely Default title, safely padded; recognizable Agnès, Tiz, Airy, radiant crystal and Caldisla fantasy architecture; original full-bleed portrait."
+      },
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "bytes": 3040069,
+      "sha256": "ef17504630db44c385fbe4bd25847dc066d1454ccec83cc7583b353fdb2fc3cb"
+    },
+    {
+      "key": "bravely-default",
+      "kind": "scene",
+      "title": "Bravely Default",
+      "prompt": "Use case: stylized-concept. Asset type: production cinematic game-library background scene, original fan art for EmuDen. Generate a landscape image 1536x1024 or 1792x1024, minimum width 1280 and short side 720. Premium cinematic console aesthetic: rich light, depth, polished detailed game-world illustration. Put the recognizable main subjects around the central 45–70% of the width and above the lower third, so a centered portrait crop retains the focal story. Bottom 25% should be darker and visually calm for a native white game title and glass dock, but do not draw any UI. Absolutely no text, lettering, title, logos, watermark, border or packaging. Bravely Default, original Nintendo 3DS adventure in Luxendarc. Agnès Oblige, recognizable long dark-brown hair and flowing modest white vestal gown, and Tiz Arrior, short brown hair and gray-blue adventurer tunic with sword, stand together center-right at 58% width on a stone overlook. A tiny white-winged fairy Airy floats by Agnès. They look toward a luminous faceted blue-white elemental crystal suspended among ancient stone sanctuary arches, with the picturesque tiered town and castle of Caldisla visible through misty distance. Richly painted fantasy architecture, deep atmospheric layers and cinematic crystal rays, polished stylized dimensional characters, warm gold sunset blending into aquamarine shadow, beautiful wonder. Lower quarter a dark stone terrace and soft shadow with very little detail or bright highlights. No text, logos, packaging, symbols resembling letters, UI or watermark.",
+      "mode": "built-in image_gen",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-1cc857ce-0e51-4eee-8d28-d15d2ee00acf.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/bravely-default/scene.png",
+      "researchURLs": [
+        "https://www.square-enix.com/announce/bd/",
+        "https://www.nintendo.com/en-gb/News/2014/March/An-introduction-to-the-foes-of-Bravely-Default-861399.html"
+      ],
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected with view_image: Agnès, Tiz and Airy by elemental crystal with Caldisla depth; central Agnès supports portrait crop; dark clear lower terrace; landscape no text/UI."
+      },
+      "dimensions": {
+        "width": 1659,
+        "height": 948
+      },
+      "bytes": 2508660,
+      "sha256": "366333c8d4484b2287555e92246b6e78c0970ffedb65324e79207bc589ec3694"
+    },
+    {
+      "key": "tales-of-the-abyss",
+      "kind": "cover",
+      "title": "Tales of the Abyss",
+      "prompt": "Use case: stylized-concept. Asset type: production portrait game-library cover illustration, original fan art for EmuDen. Generate a 1024x1536 portrait image, about 2:3. Premium cinematic console artwork, rich lighting and deep dimensional polished illustration with recognizable canonical game subjects, crisp authored typography. Full bleed art: no retail box, no plastic case, no spine, no outer border, no rating, no publisher badges, no app UI, no watermark. All title lettering must sit fully inside the central 80% width and safe padded top/bottom, readable when displayed in a 0.71-aspect rounded card. Tales of the Abyss, the Nintendo 3DS RPG set in Auldrant. Recognizable Luke fon Fabre as the lead: long vivid red hair with lighter tips, green eyes, short white open jacket with black and red detailing and gold fasteners, dark trousers, midriff visible, holding his sword with resolve. Tear Grants beside him has long light brown hair swept partly over one eye, a dark sleeveless fitted dress with warm beige and violet details, purple gloves and an elegant staff. They stand amid ancient cathedral arches and radiant blue-white fonon crystals, an intricate fantasy city fading into the distance. Polished painterly anime RPG illustration with cinematic dimensional lighting, crimson accents, pearl and azure magic, majestic rather than busy. Exact readable title at upper quarter in elegant ornate but clear serif type: \"Tales of the Abyss\". Keep all title characters in safe padded central width, no other words.",
+      "mode": "built-in image_gen",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-8a669a64-84b8-4609-b9ea-05c436923f2c.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/tales-of-the-abyss/cover.png",
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/Tales-of-the-Abyss-274952.html"
+      ],
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected with view_image: exact Tales of the Abyss title with safe padding, recognizable long-red-haired Luke and Tear in canonical-inspired outfits; original cinematic portrait."
+      },
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "bytes": 2789461,
+      "sha256": "815c965bb4375dd935bb2ab5cb2f9e348537c770091688d826109ffbded1e772"
+    },
+    {
+      "key": "tales-of-the-abyss",
+      "kind": "scene",
+      "title": "Tales of the Abyss",
+      "prompt": "Use case: stylized-concept. Asset type: production cinematic game-library background scene, original fan art for EmuDen. Generate a landscape image 1536x1024 or 1792x1024, minimum width 1280 and short side 720. Premium cinematic console aesthetic: rich light, depth, polished detailed game-world illustration. Put the recognizable main subjects around the central 45–70% of the width and above the lower third, so a centered portrait crop retains the focal story. Bottom 25% should be darker and visually calm for a native white game title and glass dock, but do not draw any UI. Absolutely no text, lettering, title, logos, watermark, border or packaging. Tales of the Abyss on Nintendo 3DS, a journey across Auldrant. Luke fon Fabre, long red hair with lighter ends, green eyes, white open cropped jacket with black/red trim and dark trousers, stands beside Tear Grants, long light-brown hair, dark sleeveless beige-and-purple trimmed dress and purple gloves, staff in hand. Both stand at 57% width in the upper-middle of the picture, looking into an immense ruined cathedral garden with ancient fonon crystal formations, floating blue-white motes, carved arches, distant fantasy city towers and deep layered valley. Luke holds a sword; both recognizable, expressive and heroic. Premium polished dimensional anime fantasy illustration, red hair catching warm sunset and blue crystal light, atmospheric depth. Lower quarter is shadowy stone terrace and low grass, subdued, uncluttered. No text, no glyphs, logos or UI.",
+      "mode": "built-in image_gen",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-8931e1e4-9099-4d42-94b4-23632d505e98.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/tales-of-the-abyss/scene.png",
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/Tales-of-the-Abyss-274952.html"
+      ],
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected with view_image: Luke and Tear recognizable in canonical-inspired outfits; both faces survive a narrow centered portrait crop; richly layered fonon ruins and dark quiet lower terrace; no text/UI."
+      },
+      "dimensions": {
+        "width": 1659,
+        "height": 948
+      },
+      "bytes": 2696312,
+      "sha256": "45983c8b9f2a8b565a6fc6459e63258386d7be26e7dba0b56acc3ee84634ecd5"
+    },
+    {
+      "key": "xenoblade-chronicles-3d",
+      "kind": "cover",
+      "title": "Xenoblade Chronicles 3D",
+      "prompt": "Use case: precise-object-edit. Edit the supplied original Xenoblade Chronicles 3D portrait fan-art cover. Preserve Shulk's appearance, red Monado with circular hollow, the huge Mechonis, landscape, light, color and portrait dimensions exactly. Change ONLY the existing title group and its cyan decorative arc: scale the whole title group to 86% of current width, center it, and place it so the highest decorative X tip or arc has at least 90 pixels of clear sky above it and every title pixel remains at least 85 pixels from either side. Keep exact crisp text 'XENOBLADE' and 'CHRONICLES 3D', with the red 3D legible, preserving title treatment. Keep the title above Shulk's face. No other changes, no new words, borders, packaging, badges or UI.",
+      "mode": "built-in image_gen edit",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-949d2b52-0301-4163-8da2-ee58d4c1e734.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/xenoblade-chronicles-3d/cover.png",
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/New-Nintendo-3DS/Xenoblade-Chronicles-3D-961136.html"
+      ],
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected revision with view_image: exact Xenoblade Chronicles 3D title now generously inset; recognizable Shulk, red ringed Monado and Mechonis; full-bleed cinematic portrait."
+      },
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "revisions": [
+        {
+          "prompt": "Use case: stylized-concept. Asset type: production portrait game-library cover illustration, original fan art for EmuDen. Generate a 1024x1536 portrait image, about 2:3. Premium cinematic console artwork, rich lighting and deep dimensional polished illustration with recognizable canonical game subjects, crisp authored typography. Full bleed art: no retail box, no plastic case, no spine, no outer border, no rating, no publisher badges, no app UI, no watermark. All title lettering must sit fully inside the central 80% width and safe padded top/bottom, readable when displayed in a 0.71-aspect rounded card. Xenoblade Chronicles 3D, the New Nintendo 3DS adventure of Shulk on the Bionis. Shulk is recognizable, youthful adult with short blond hair, red sleeveless hooded jacket over a black fitted top, dark shorts and boots, holding the red Monado sword. Make the Monado instantly identifiable: thick futuristic red broad blade with a circular hollow ring near the hilt, black grip and cyan energy edge. Shulk stands on windswept emerald plains with vast rock arches; the colossal mechanical titan Mechonis rises at impossible scale in distant blue haze beyond cliffs. Original cinematic polished fantasy game illustration, golden sunlight, cyan energy, immense environmental depth. Exact title in large high-contrast upper-quarter lettering: \"XENOBLADE\" then \"CHRONICLES 3D\". The 3D is a fully readable part of the title, all safely inset. No other words or badges.",
+          "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-77e69e04-9ef6-418b-a826-fb63d4193868.png",
+          "qa": {
+            "status": "revision required",
+            "notes": "Shulk, Monado, Mechonis and exact Chronicles 3D title passed; oversized decorative X tip needs more top padding for cropped cards."
+          }
+        }
+      ],
+      "referenceImagePaths": [
+        "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/xenoblade-chronicles-3d/cover.png"
+      ],
+      "bytes": 2831404,
+      "sha256": "08d463296e4622a688196ca555d564a549a8b71c874f1febb313ab4af0eddb6c"
+    },
+    {
+      "key": "xenoblade-chronicles-3d",
+      "kind": "scene",
+      "title": "Xenoblade Chronicles 3D",
+      "prompt": "Use case: stylized-concept. Asset type: production cinematic game-library background scene, original fan art for EmuDen. Generate a landscape image 1536x1024 or 1792x1024, minimum width 1280 and short side 720. Premium cinematic console aesthetic: rich light, depth, polished detailed game-world illustration. Put the recognizable main subjects around the central 45–70% of the width and above the lower third, so a centered portrait crop retains the focal story. Bottom 25% should be darker and visually calm for a native white game title and glass dock, but do not draw any UI. Absolutely no text, lettering, title, logos, watermark, border or packaging. Xenoblade Chronicles 3D. Shulk, recognizable short blond-haired young adult in a red sleeveless hooded jacket over black top and dark shorts, stands center-right at 58% width on an emerald clifftop of Gaur Plain on the Bionis. Beside him or in his hands the iconic Monado sword is red, broad and futuristic with a circular hollow near its hilt and cyan energy. Sweeping grassy plateaus, enormous natural stone arches, waterfalls and distant lakes extend across the immense living titan world; the colossal mechanical silhouette of Mechonis towers above distant cloud layers. Polished cinematic dimensional fantasy game illustration, warm sunset rim light and cool cyan haze, vast sense of scale and wonder. Shulk and the Monado occupy the upper-middle, fully visible in a centered portrait crop. Lower 25% a deep shaded grassy foreground, low contrast and calm. No text, logos or UI.",
+      "mode": "built-in image_gen",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-f0ede303-510e-46db-bf3b-5d634197bb71.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/xenoblade-chronicles-3d/scene.png",
+      "researchURLs": [
+        "https://www.nintendo.com/en-gb/Games/New-Nintendo-3DS/Xenoblade-Chronicles-3D-961136.html"
+      ],
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected with view_image: Shulk and Monado prominent center/right and retained in centered portrait crop; Gaur Plain/titan landscape, dark calm foreground; no text/UI."
+      },
+      "dimensions": {
+        "width": 1659,
+        "height": 948
+      },
+      "bytes": 2626242,
+      "sha256": "df06e0990137747362d933a0a5527412eef6592e4eb8faea4017b58931b0e955"
+    },
+    {
+      "key": "kid-icarus-uprising",
+      "kind": "cover",
+      "title": "Kid Icarus: Uprising",
+      "prompt": "Use case: precise-object-edit. Edit target: supplied original Kid Icarus Uprising portrait cover. Preserve the excellent Pit, Palutena, bow, wing detail, Skyworld, colors, light and portrait dimensions. Change ONLY the title group, including its decorative feathers: reduce the whole group to 84% of its current width, center it horizontally, and place its highest pixel at least 95 pixels from the top edge, with at least 90 pixels side padding. Keep all exact lettering 'KID ICARUS' and 'UPRISING', crisp gold and white, fully readable. Preserve title hierarchy and fit above Palutena. No other changes or new text, no border, badges, UI or packaging.",
+      "mode": "built-in image_gen edit",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-57e3e793-1d3c-469a-9bf7-ee747820c563.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/kid-icarus-uprising/cover.png",
+      "researchURLs": [
+        "https://www.nintendo.com/eu/media/downloads/games_8/emanuals/nintendo_3ds_2/kid_icarus_uprising/ElectronicManual_Nintendo3DS_KidIcarusUprising_EN.pdf",
+        "https://www.nintendo.com/us/amiibo/detail/pit-amiibo-super-smash-bros-series/"
+      ],
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected revised cover with view_image: exact Kid Icarus / Uprising title and decorative wings now safely inset; recognizable Pit, Palutena and bow; full-bleed original portrait."
+      },
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "revisions": [
+        {
+          "prompt": "Use case: stylized-concept. Asset type: production portrait game-library cover illustration, original fan art for EmuDen. Generate a 1024x1536 portrait image, about 2:3. Premium cinematic console artwork, rich lighting and deep dimensional polished illustration with recognizable canonical game subjects, crisp authored typography. Full bleed art: no retail box, no plastic case, no spine, no outer border, no rating, no publisher badges, no app UI, no watermark. All title lettering must sit fully inside the central 80% width and safe padded top/bottom, readable when displayed in a 0.71-aspect rounded card. Kid Icarus: Uprising, Nintendo 3DS. Pit is the prominent recognizable angel hero: tousled brown hair, gold laurel crown, small white feathered wings, white tunic with black and gold trim, brown strappy sandals, a red-and-gold forearm guard. Dynamic midair three-quarter pose wielding the canonical gold-and-blue Palutena Bow. Behind him the goddess Palutena, long bright green hair, white gown and gold ornamentation, appears serenely in the high distant clouds of Skyworld; ancient Greek marble temples and floating islands with waterfalls below. Heroic and joyful, premium polished dimensional anime game illustration, radiant sky-blue and golden divine light, strong depth and immaculate feather detail. Exact title in large legible gold and white letters at upper quarter: \"KID ICARUS\" and below \"UPRISING\". Keep all lettering safely padded, no other words.",
+          "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-7ecc75f5-33c7-4259-bfe7-d9457134a6ca.png",
+          "qa": {
+            "status": "revision required",
+            "notes": "Recognizable Pit and Palutena, exact Kid Icarus / Uprising title; refine the title top padding for 0.71-aspect card crop."
+          }
+        }
+      ],
+      "referenceImagePaths": [
+        "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/kid-icarus-uprising/cover.png"
+      ],
+      "bytes": 2620996,
+      "sha256": "d31da8930d18a4d181dd1191b7823a411419edbb481449e9946ac094d830de85"
+    },
+    {
+      "key": "kid-icarus-uprising",
+      "kind": "scene",
+      "title": "Kid Icarus: Uprising",
+      "prompt": "Use case: stylized-concept. Asset type: production cinematic game-library background scene, original fan art for EmuDen. Generate a landscape image 1536x1024 or 1792x1024, minimum width 1280 and short side 720. Premium cinematic console aesthetic: rich light, depth, polished detailed game-world illustration. Put the recognizable main subjects around the central 45–70% of the width and above the lower third, so a centered portrait crop retains the focal story. Bottom 25% should be darker and visually calm for a native white game title and glass dock, but do not draw any UI. Absolutely no text, lettering, title, logos, watermark, border or packaging. Kid Icarus: Uprising. Pit, the instantly recognizable youthful angel hero with tousled brown hair, golden laurel, white tunic with black/gold trim, red forearm guard and brown sandals, soars with small white feathered wings spread and wields the ornate gold-and-blue Palutena Bow. Place Pit prominently at 57% width in the upper middle, dynamic diagonal pose, facing into the light. Skyworld, a magnificent high-altitude world of ancient Greek white marble temples, floating rocky islands, waterfalls and layered clouds, stretches behind him. Premium cinematic polished dimensional anime game illustration, shafts of divine golden sunlight and luminous azure, rich atmospheric depth, beautiful detailed feathers and fabrics. Lower quarter is shaded cool-blue cloud and distant dark island with little contrast, suitable for native title overlay. No text, symbols resembling letters, logos or UI.",
+      "mode": "built-in image_gen",
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-dd5a5d41-d635-46e8-89b7-6f4febc347d5.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/kid-icarus-uprising/scene.png",
+      "researchURLs": [
+        "https://www.nintendo.com/eu/media/downloads/games_8/emanuals/nintendo_3ds_2/kid_icarus_uprising/ElectronicManual_Nintendo3DS_KidIcarusUprising_EN.pdf",
+        "https://www.nintendo.com/us/amiibo/detail/pit-amiibo-super-smash-bros-series/"
+      ],
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected with view_image: recognizable flying Pit and Palutena Bow centered in Skyworld; calm dark-blue lower clouds; no text/UI."
+      },
+      "dimensions": {
+        "width": 1659,
+        "height": 948
+      },
+      "bytes": 2389140,
+      "sha256": "9bf075e204ae481b3dfc9ca1d101957d5146d1a72374fc15f8e34593534a1325"
+    },
+    {
+      "key": "etrian-odyssey-2-untold",
+      "kind": "cover",
+      "title": "Etrian Odyssey 2 Untold: The Fafnir Knight",
+      "prompt": "Use case: stylized-concept. Asset type: production portrait game-library cover illustration, original fan art for EmuDen. Generate a 1024x1536 portrait image, about 2:3. Premium cinematic console artwork, rich lighting and deep dimensional polished illustration with recognizable canonical game subjects, crisp authored typography. Full bleed art: no retail box, no plastic case, no spine, no outer border, no rating, no publisher badges, no app UI, no watermark. All title lettering must sit fully inside the central 80% width and safe padded top/bottom, readable when displayed in a 0.71-aspect rounded card. Etrian Odyssey 2 Untold: The Fafnir Knight, Nintendo 3DS. Faithful to the official Atlus story characters: the Fafnir Knight hero in human form has short pale blond-white hair with an asymmetrical fringe, yellow-gold tunic and scarf/cape, dark red trousers, red gauntlet and a large silver armored left arm, holding the broad dark-blue silver-edged sword. Alongside him Arianna Caledonia has long violet hair with red ribbon, modest pink-and-white formal adventurer dress with gray bodice, small red plaid skirt trim and tall dark boots; she holds her ornate gold staff with blue teardrop gems. Behind the hero a subtle ghosted hint of his dark armored Fafnir transformation and turquoise flame, no extra person. An ancient stone gateway inside the lush Yggdrasil forest labyrinth gives depth, cinematic emerald light and turquoise magic, rich polished dimensional anime fantasy. Exact title in upper quarter with clear hierarchy: \"Etrian Odyssey\" then \"2 Untold\" and readable smaller subtitle \"The Fafnir Knight\". All title lines padded and crisp. Correct English title; no other words. Input images are subject-design references only: image 1 is the official Atlus Fafnir Knight hero and transformation, image 2 is official Arianna. Preserve their recognizable hair, garments, equipment and palettes in a NEW original composition; do not copy the source poses or layout, and do not reproduce lettering. Use the human-form hero as the main character.",
+      "mode": "built-in image_gen",
+      "referenceImagePaths": [
+        "/tmp/emuden-art-b-research/eo2-hero.png",
+        "/tmp/emuden-art-b-research/eo2-arianna.png"
+      ],
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-195244c9-62af-4b31-9628-4d0c504c8623.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/etrian-odyssey-2-untold/cover.png",
+      "researchURLs": [
+        "https://www.atlus.com/untold2/information.html",
+        "https://www.atlus.com/untold2/characters.html",
+        "https://atlus.com/untold2/c1.html",
+        "https://atlus.com/untold2/c2.html",
+        "https://atlus.com/untold2/images/char/c1side.png",
+        "https://atlus.com/untold2/images/char/c2side.png"
+      ],
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected with view_image against official Atlus character references: human Fafnir hero, Arianna, ghosted turquoise-flame transformation; exact Etrian Odyssey / 2 Untold / The Fafnir Knight title, readable and padded."
+      },
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "bytes": 3036480,
+      "sha256": "89c00da843a920f020ee76d31c68381bb6353003e41e4a6eb788fb6446747d18"
+    },
+    {
+      "key": "etrian-odyssey-2-untold",
+      "kind": "scene",
+      "title": "Etrian Odyssey 2 Untold: The Fafnir Knight",
+      "prompt": "Use case: stylized-concept. Asset type: production cinematic game-library background scene, original fan art for EmuDen. Generate a landscape image 1536x1024 or 1792x1024, minimum width 1280 and short side 720. Premium cinematic console aesthetic: rich light, depth, polished detailed game-world illustration. Put the recognizable main subjects around the central 45–70% of the width and above the lower third, so a centered portrait crop retains the focal story. Bottom 25% should be darker and visually calm for a native white game title and glass dock, but do not draw any UI. Absolutely no text, lettering, title, logos, watermark, border or packaging. Etrian Odyssey 2 Untold: The Fafnir Knight, Nintendo 3DS. In a vast lush Yggdrasil forest labyrinth and ancient ivy-covered Ginnungagap stone gateway, show the official story heroes together at 58% width, upper-middle. Fafnir Knight in human form: short pale blond-white hair, yellow-gold tunic with scarf, dark-red trousers, red glove, silver armored left arm and broad dark blue silver-edged sword. Arianna Caledonia: long violet hair and red ribbon, modest pink-and-white formal adventurer dress, gray bodice, dark boots, ornate gold staff with small blue teardrop gemstones. They gaze toward a mysterious turquoise light within the ruins, determined and companionable. Polished dimensional anime RPG illustration, cinematic forest beams, emerald foliage, ancient stone texture and deep atmospheric scale. Lower quarter a dark low-contrast mossy path, clear of bright details. Absolutely no lettering, map graphics, UI, logo or watermark. Input images are subject-design references only: image 1 is the official Atlus Fafnir Knight hero and transformation, image 2 is official Arianna. Preserve their recognizable hair, garments, equipment and palettes in a NEW original composition; do not copy the source poses or layout, and do not reproduce lettering. Use the human-form hero as the main character.",
+      "mode": "built-in image_gen",
+      "referenceImagePaths": [
+        "/tmp/emuden-art-b-research/eo2-hero.png",
+        "/tmp/emuden-art-b-research/eo2-arianna.png"
+      ],
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-68a217b9-2138-41ca-9677-6a9bc9f77643.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/etrian-odyssey-2-untold/scene.png",
+      "researchURLs": [
+        "https://www.atlus.com/untold2/information.html",
+        "https://www.atlus.com/untold2/characters.html",
+        "https://atlus.com/untold2/c1.html",
+        "https://atlus.com/untold2/c2.html",
+        "https://atlus.com/untold2/images/char/c1side.png",
+        "https://atlus.com/untold2/images/char/c2side.png"
+      ],
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected with view_image against official Atlus references: correct human Fafnir hero and Arianna, distinct from Fafnir transformation; labyrinth/Ginnungagap atmosphere, both faces in centered portrait crop, dark calm lower path; no text/UI."
+      },
+      "dimensions": {
+        "width": 1659,
+        "height": 948
+      },
+      "bytes": 3146192,
+      "sha256": "b51dc49942d062b6b5119baaab4b143a7947f7d3a3449241555a5bf6d9ac0515"
+    },
+    {
+      "key": "etrian-odyssey-v",
+      "kind": "cover",
+      "title": "Etrian Odyssey V: Beyond the Myth",
+      "prompt": "Use case: stylized-concept. Asset type: production portrait game-library cover illustration, original fan art for EmuDen. Generate a 1024x1536 portrait image, about 2:3. Premium cinematic console artwork, rich lighting and deep dimensional polished illustration with recognizable canonical game subjects, crisp authored typography. Full bleed art: no retail box, no plastic case, no spine, no outer border, no rating, no publisher badges, no app UI, no watermark. All title lettering must sit fully inside the central 80% width and safe padded top/bottom, readable when displayed in a 0.71-aspect rounded card. Etrian Odyssey V: Beyond the Myth, Nintendo 3DS. An original adventure illustration of the towering Yggdrasil world tree in Arcania, featuring recognizable Etrian Odyssey V class designs, with polished dimensional anime RPG rendering. Lead foreground adventurer: blonde Earthlain Fencer woman with curled twin braids, pink headband, blue-and-white gold-trimmed tunic armor, raised elegant rapier and small round blue-white buckler. Beside her an orange-red-haired male Dragoon in ornate bulky black-and-silver armor with gold details and large shield, inspired by the official Atlus class art. A tall Celestrian mage and a small Brouni herbalist appear further back as supporting party silhouettes. Massive emerald tree, interwoven roots, overgrown labyrinth columns and shafts of warm celestial light; magical, grand and exploratory. Exact readable title upper-quarter in refined high-contrast fantasy type: \"Etrian Odyssey V\" with prominent Roman V, below \"Beyond the Myth\". Correct English subtitle, all safely padded. No other words. Input images are official Atlus subject-design references only: image 1 is Etrian Odyssey V's blonde female Fencer, image 2 the orange-haired male Dragoon. Preserve the recognizable faces, hair, outfits, armor motifs and class equipment in an original NEW game-world composition; do not copy their source layout and do not reproduce reference lettering. All title pixels and decorative ornaments must remain at least 105 pixels below the top edge and 95 pixels from left and right edges, so the entire exact title survives a card crop.",
+      "mode": "built-in image_gen",
+      "referenceImagePaths": [
+        "/tmp/emuden-art-b-research/eo5-fencer.png",
+        "/tmp/emuden-art-b-research/eo5-dragoon.png"
+      ],
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-c0459f79-2c1a-4eb7-bbd9-ebf6694f12d0.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/etrian-odyssey-v/cover.png",
+      "researchURLs": [
+        "https://atlus.com/etrian5/index.html",
+        "https://atlus.com/etrian5/characters.html",
+        "https://atlus.com/etrian5/system.html",
+        "https://atlus.com/etrian5/img/characters/chara01.png",
+        "https://atlus.com/etrian5/img/characters/chara02.png"
+      ],
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected with view_image: exact Etrian Odyssey V / Beyond the Myth English title, prominent Roman V and safe title lettering; official-class-inspired Fencer and Dragoon recognizable; Yggdrasil forest and original portrait composition."
+      },
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "bytes": 3463375,
+      "sha256": "a2eba31562fe69cb21ba4a3a37f370f5787551be0c44832cd7f8b66edad298ae"
+    },
+    {
+      "key": "etrian-odyssey-v",
+      "kind": "scene",
+      "title": "Etrian Odyssey V: Beyond the Myth",
+      "prompt": "Use case: stylized-concept. Asset type: production cinematic game-library background scene, original fan art for EmuDen. Generate a landscape image 1536x1024 or 1792x1024, minimum width 1280 and short side 720. Premium cinematic console aesthetic: rich light, depth, polished detailed game-world illustration. Put the recognizable main subjects around the central 45–70% of the width and above the lower third, so a centered portrait crop retains the focal story. Bottom 25% should be darker and visually calm for a native white game title and glass dock, but do not draw any UI. Absolutely no text, lettering, title, logos, watermark, border or packaging. Etrian Odyssey V: Beyond the Myth, Nintendo 3DS, Arcania. At the foot of Yggdrasil, a colossal luminous emerald world tree whose roots form a mysterious forest labyrinth, a small five-member adventuring party steps along a mossy stone path centered at 57% width, upper-middle. Lead clearly visible official-class-inspired blonde Earthlain Fencer woman with curled twin braids, pink headband, blue-and-white gold-trimmed tunic armor, rapier and round blue-white buckler; orange-red-haired male Dragoon in bulky black-and-silver armor with ornate shield beside her. A tall Celestrian robed mage, a beast-eared Therian archer and a small Brouni herbalist follow, all appropriate to this game. Huge interlaced roots and ancient arches in depth, mysterious blue-green pools, cinematic golden forest shafts, polished dimensional anime RPG illustration. Main adventurers fit within centered portrait crop. Bottom quarter a deep shaded forest path and mossy roots, subdued for a native game title. Absolutely no text, maps, UI, logos or watermark. Input images are official Atlus subject-design references only: image 1 is Etrian Odyssey V's blonde female Fencer, image 2 the orange-haired male Dragoon. Preserve the recognizable faces, hair, outfits, armor motifs and class equipment in an original NEW game-world composition; do not copy their source layout and do not reproduce reference lettering.",
+      "mode": "built-in image_gen",
+      "referenceImagePaths": [
+        "/tmp/emuden-art-b-research/eo5-fencer.png",
+        "/tmp/emuden-art-b-research/eo5-dragoon.png"
+      ],
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-5d5b50c2-c68f-4320-a351-0f83314d5096.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/etrian-odyssey-v/scene.png",
+      "researchURLs": [
+        "https://atlus.com/etrian5/index.html",
+        "https://atlus.com/etrian5/characters.html",
+        "https://atlus.com/etrian5/system.html",
+        "https://atlus.com/etrian5/img/characters/chara01.png",
+        "https://atlus.com/etrian5/img/characters/chara02.png"
+      ],
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected with view_image against official Atlus class references: recognizable Fencer and Dragoon with Celestrian, Therian and Brouni party; Yggdrasil labyrinth; lead Fencer retained in centered portrait crop; shadowed calm lower steps, no text/UI."
+      },
+      "dimensions": {
+        "width": 1659,
+        "height": 948
+      },
+      "bytes": 3331135,
+      "sha256": "5028364ecd800a637fca3c22720a5ee007676e46459fcbaf77c025b257119544"
+    }
+  ],
+  "completed": true,
+  "acceptedAssets": 18,
+  "generationCalls": 22,
+  "visualInspections": 22,
+  "qaSummary": "All 18 accepted PNG assets inspected with view_image. Three bounded title-padding edits replaced initial covers for Pokémon, Xenoblade and Kid Icarus; original source paths/prompts retained in revisions. Nine portrait covers and nine text-free landscape scenes. All scene dimensions satisfy >=1280 long side and >=720 short side. One additional Pokémon scene-v2 candidate passed a full landscape inspection and a 438×948 centered phone crop inspection; it leaves the original scene unchanged.",
+  "variants": [
+    {
+      "key": "pokemon-omega-ruby-alpha-sapphire",
+      "kind": "scene",
+      "variant": "v2",
+      "title": "Pokémon Omega Ruby & Alpha Sapphire",
+      "purpose": "Phone-center crop composition revision, retained as a separate candidate for root selection",
+      "prompt": "Use case: precise-object-edit. Asset type: production cinematic landscape game-library scene, original fan art. Edit the supplied Pokémon Omega Ruby & Alpha Sapphire scene ONLY to improve its full-screen PHONE CENTER CROP. Preserve the established premium cinematic rendering, canonical Primal Groudon and Primal Kyogre designs, ruby orange volcanic light at left, sapphire blue ocean light at right, cloudy Hoenn atmosphere and dark calm lower quarter. Keep landscape dimensions near 1659x948; minimum width 1280, height 720. COMPOSITION CHANGE: bring BOTH creatures much closer together at smaller scale in a slightly overlapping vertically stacked composition, with no empty central gap. Groudon stands higher/back on a central volcanic ledge, facing slightly right; Kyogre breaches lower/front beside it, facing slightly left, bodies visually separate and anatomically correct. Both COMPLETE recognizable faces including both visible eyes, mouths, head outlines and substantial main body masses must fit inside the central 30% of total image width, roughly x=35%–65%; specifically place Groudon's face around x=47% and Kyogre's face around x=53%, with neither head extending outside x=38%–62%. The resulting narrow centered phone crop must clearly show BOTH Pokémon at once. Their main bodies should form one centered story cluster, while fins and tail may extend naturally a little outward. Do not fuse, distort, miniaturize heads relative to bodies, or invent anatomy. Primal Groudon remains a red/black plated dinosaur with white spikes and luminous orange seams; Primal Kyogre remains a blue orca-like Pokémon with white underside, broad fins and correct luminous primal patterns. Leave generous scenic volcano/obsidian negative space on the LEFT and ocean/cloud negative space on the RIGHT. Lower quarter dark navy ocean and shadowed rocks, quiet enough for native white titles. No third Pokémon, no text, no letters, no title, no logos, no UI, no border, no watermark. Create exactly one finished landscape revision.",
+      "mode": "built-in image_gen edit",
+      "referenceImagePaths": [
+        "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/pokemon-omega-ruby-alpha-sapphire/scene.png"
+      ],
+      "generatedSourcePath": "/Users/brandonaleman/.codex/generated_images/01a1c6f6-4ad2-7ee1-b268-b2765779f98f/exec-a3c6ff50-676b-4d96-9054-654c04505eb9.png",
+      "finalPath": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters/3ds/pokemon-omega-ruby-alpha-sapphire/scene-v2.png",
+      "qa": {
+        "status": "passed",
+        "notes": "Inspected full landscape with view_image and a temporary 438×948 centered crop matching a 390:844 phone aspect. Both complete recognizable faces and substantial torso masses remain visible together: Primal Groudon stacked higher/back, Primal Kyogre lower/front, without the previous central gap or clipped Kyogre eye. Canonical red/black armored Groudon and blue/white Kyogre anatomy remain distinct; ruby/sapphire lighting and calm dark lower ocean preserved. Outer fins/tail crop naturally. No text, UI, logos or watermark. Original scene.png unchanged.",
+        "phoneCenterCrop": {
+          "width": 438,
+          "height": 948,
+          "phoneAspect": "390:844",
+          "inspectionPath": "/tmp/emuden-art-b-research/pokemon-scene-v2-phone-center.png"
+        }
+      },
+      "dimensions": {
+        "width": 1659,
+        "height": 948
+      },
+      "bytes": 2668522,
+      "sha256": "ea7874fd0995f59aa0256dcccd0d8ab6615f6a809322454164ab87e02358d739",
+      "researchURLs": [
+        "https://www.pokemon.co.jp/ex/oras/pokemon/",
+        "https://www.youtube.com/watch?v=2Ma2CBnBlXs"
+      ]
+    }
+  ],
+  "variantCount": 1
+}

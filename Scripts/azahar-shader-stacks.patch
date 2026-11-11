@@ -1,0 +1,24 @@
+--- a/src/video_core/shader/shader_interpreter.cpp
++++ b/src/video_core/shader/shader_interpreter.cpp
+@@ -5,7 +5,7 @@
+ #include <algorithm>
+ #include <cmath>
+ #include <numeric>
+-#include <boost/circular_buffer.hpp>
++#include "video_core/shader/fixed_shader_stack.h"
+ #include <boost/container/static_vector.hpp>
+ #include <nihstro/shader_bytecode.h>
+ #include "common/assert.h"
+@@ -47,9 +47,9 @@
+ template <bool Debug>
+ static void RunInterpreter(const ShaderSetup& setup, ShaderUnit& state,
+                            DebugData<Debug>& debug_data, unsigned entry_point) {
+-    boost::circular_buffer<IfStackElement> if_stack(8);
+-    boost::circular_buffer<CallStackElement> call_stack(4);
+-    boost::circular_buffer<LoopStackElement> loop_stack(4);
++    FixedShaderStack<IfStackElement, 8> if_stack;
++    FixedShaderStack<CallStackElement, 4> call_stack;
++    FixedShaderStack<LoopStackElement, 4> loop_stack;
+     u32 program_counter = entry_point;
+ 
+     const auto do_if = [&](Instruction instr, bool condition) {

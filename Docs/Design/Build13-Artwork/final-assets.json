@@ -1,0 +1,906 @@
+{
+  "mode": "built-in image_gen",
+  "selectionSource": "https://gamefaqs.gamespot.com/boards/997614-nintendo-3ds/76853179",
+  "rankedEntries": 25,
+  "libraryExtras": 3,
+  "selectedImages": 52,
+  "catalogVersion": 2,
+  "generationLedgers": [
+    "artwork-a.json",
+    "artwork-b.json",
+    "artwork-c.json"
+  ],
+  "selectedPokemonScene": "scene-v2.png, copied to the canonical scene.png; original retained as scene-v1.png",
+  "assets": [
+    {
+      "game": "zelda-a-link-between-worlds",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/zelda-a-link-between-worlds/scene.png",
+      "masterSHA256": "78d7d67c7b4349485d7cb71a4789d05418e7ef0a2eb9479ecf2abb3fcaad9eef",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/zelda-a-link-between-worlds/scene-3dabc59f015e.jpg",
+        "sha256": "3dabc59f015eb17d880cfdd89f9ded2f5273187c6f2e7d68b9f825bffea5e4a8",
+        "bytes": 706510,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "game": "zelda-majoras-mask-3d",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/zelda-majoras-mask-3d/cover.png",
+      "masterSHA256": "872b2c3fc8bb8c24ba21953bff16355de451c22d9e0a5aa18dbef28f587edb82",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/zelda-majoras-mask-3d/cover-9e66e6e28d6a.jpg",
+        "sha256": "9e66e6e28d6a05275cbb1b131cc29742b1a8d19e1967be5b7d86a5475f244437",
+        "bytes": 705168,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "zelda-majoras-mask-3d",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/zelda-majoras-mask-3d/scene.png",
+      "masterSHA256": "bd9ba85faaf25a7ee1c13f55015d537f1f9f60ac641ed86f462e7bbbe193de14",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/zelda-majoras-mask-3d/scene-b6f943b21ad4.jpg",
+        "sha256": "b6f943b21ad4888f2f36df6a11a327cbedad7b6b5ca9968d98901bdaff5685b3",
+        "bytes": 602241,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "game": "zelda-ocarina-of-time-3d",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/zelda-ocarina-of-time-3d/scene.png",
+      "masterSHA256": "0a493ffb3f5f1755fe4ee0b0469710c16e3e085f6ec57442849e07c20b3c95fa",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/zelda-ocarina-of-time-3d/scene-a918e1849e4a.jpg",
+        "sha256": "a918e1849e4adc00fb976c25fbea9a0d31fee19647ade6f53ac99bcf85ecc552",
+        "bytes": 558082,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "game": "monster-hunter-4-ultimate",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/monster-hunter-4-ultimate/cover.png",
+      "masterSHA256": "41eb5d935a718b052065085bc6878ae28be5ea066880e9680bcadb716129e0c8",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/monster-hunter-4-ultimate/cover-f0e4f0160b25.jpg",
+        "sha256": "f0e4f0160b25e95bdafceb6721517210f6647679c032c62a5f13c966b3be65f7",
+        "bytes": 845335,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "monster-hunter-4-ultimate",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/monster-hunter-4-ultimate/scene.png",
+      "masterSHA256": "74149beb96bf76626cce7cc2891457e68769559456f8e37d2e6cd3228bd22e51",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/monster-hunter-4-ultimate/scene-1ac2c033035d.jpg",
+        "sha256": "1ac2c033035de450109ba48d11caeee1502fb91d8af62d343dce4907c455e04b",
+        "bytes": 689113,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "game": "super-smash-bros-3ds",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/super-smash-bros-3ds/cover.png",
+      "masterSHA256": "24af7eb08c12991f93b92dd0bb09bcb9272e66252b8e94fa436e8b8b218e0217",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/super-smash-bros-3ds/cover-69967e7dd63e.jpg",
+        "sha256": "69967e7dd63e54f1dd9bea92ee2fb70a39e9ef663ee0af2c0e41643c0683a420",
+        "bytes": 655750,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "super-smash-bros-3ds",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/super-smash-bros-3ds/scene.png",
+      "masterSHA256": "0833ca9270b2e6e47d9cb310328dd61ecdf4b584f5b7649ce7c2269b96f102e6",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/super-smash-bros-3ds/scene-e2dd95d7e2be.jpg",
+        "sha256": "e2dd95d7e2bebc75f258b3fbbda676c9ef9a5e738a8e3cd33bb82db1415f46b4",
+        "bytes": 543803,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "game": "rune-factory-4",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/rune-factory-4/cover.png",
+      "masterSHA256": "8ff00f977a8b8ff576a0b0eb65494ace02d6e12c58c9e86ac4b9a8c446224657",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/rune-factory-4/cover-45ee0898a762.jpg",
+        "sha256": "45ee0898a76232ade57b05695d103a85f3a59c5fbff722182c6cbc8c04a850e1",
+        "bytes": 882049,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "rune-factory-4",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/rune-factory-4/scene.png",
+      "masterSHA256": "c7becba00afe019ae400160facc86f687751879cd8fa34c5e585461c07445029",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/rune-factory-4/scene-376e544181ae.jpg",
+        "sha256": "376e544181aeb35d438e3095d4e550d38f1be4bb61d42ac67bb807840a3c5c38",
+        "bytes": 845715,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "game": "super-mario-3d-land",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/super-mario-3d-land/scene.png",
+      "masterSHA256": "14068d973dec354b80e39db6316f2bd599897940801ecf38b8d275d91a6071ef",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/super-mario-3d-land/scene-34ff54204298.jpg",
+        "sha256": "34ff54204298078c944470456ce526c61614b9d768541e5f21c20fb27d88eaea",
+        "bytes": 451364,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "game": "fire-emblem-awakening",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/fire-emblem-awakening/cover.png",
+      "masterSHA256": "46a098814b600c1e31467ca88b727cb1b8b7f66ccc7970fad9899a43de195aa5",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/fire-emblem-awakening/cover-f46952b887c7.jpg",
+        "sha256": "f46952b887c78bf12c44540087dc051c7187b48bab894c826722f45d725999a3",
+        "bytes": 689581,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "fire-emblem-awakening",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/fire-emblem-awakening/scene.png",
+      "masterSHA256": "05e09897df87288fc74dcb1c795fc7c95e8ecbb55ed47504a8cfd144848d17f5",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/fire-emblem-awakening/scene-fcfb936d8fcd.jpg",
+        "sha256": "fcfb936d8fcd8f79573a92ed39709114f8f79216c49d0eb118b8067a1944f840",
+        "bytes": 631591,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "game": "fire-emblem-fates",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/fire-emblem-fates/cover.png",
+      "masterSHA256": "ae396dedaeec16815dd5b320f0273ac91ee683d9230b79b60b2dbfd51f23ea5a",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/fire-emblem-fates/cover-3c26d476cbe5.jpg",
+        "sha256": "3c26d476cbe5d295d9ae5bf88326245a2a0bb0df1cfe4d40a3d8d1ed5709d943",
+        "bytes": 780288,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "fire-emblem-fates",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/fire-emblem-fates/scene.png",
+      "masterSHA256": "0366031022bf5d3eeddabdc5354eebe5e5b5bb61106bb410d395840070e6b18e",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/fire-emblem-fates/scene-e21fb6ec3dbf.jpg",
+        "sha256": "e21fb6ec3dbfc988c3f2bfdba47379809697b371b1b1c7e7e50c4ed2e2eaa576",
+        "bytes": 551523,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "game": "animal-crossing-new-leaf",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/animal-crossing-new-leaf/cover.png",
+      "masterSHA256": "d51ffeb2e067e0c67048078938b89dd2628a78ed9a549d193643ebb213f11586",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/animal-crossing-new-leaf/cover-4adf33ad231d.jpg",
+        "sha256": "4adf33ad231deb675e77daeeebcc3f3d5bf0690e5f911f4f823d1a606fd54537",
+        "bytes": 704642,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "animal-crossing-new-leaf",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/animal-crossing-new-leaf/scene.png",
+      "masterSHA256": "f98d31c4c212a75ad17c6ace815cc8d08e0b47a080c1ff6e4a7b8a901f83e4be",
+      "dimensions": [
+        1659,
+        948
+      ],
+      "delivery": {
+        "path": "images/animal-crossing-new-leaf/scene-273d6e0771ce.jpg",
+        "sha256": "273d6e0771cecd78c1a6f5e1775356cea146da5d579e958fff070ebf83283dc5",
+        "bytes": 666783,
+        "width": 1659,
+        "height": 948
+      }
+    },
+    {
+      "game": "pokemon-omega-ruby-alpha-sapphire",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/pokemon-omega-ruby-alpha-sapphire/cover.png",
+      "masterSHA256": "54fd36ded49644e55a96fcc11aa810ec63089c0b5f510c6952cada40ee4a7355",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/pokemon-omega-ruby-alpha-sapphire/cover-aaa8aa4d04d8.jpg",
+        "sha256": "aaa8aa4d04d8cef0ceace3548fa7b8c8a1e41f43a65af11b5975041dded00af0",
+        "bytes": 736960,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "pokemon-omega-ruby-alpha-sapphire",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/pokemon-omega-ruby-alpha-sapphire/scene.png",
+      "masterSHA256": "ea7874fd0995f59aa0256dcccd0d8ab6615f6a809322454164ab87e02358d739",
+      "dimensions": [
+        1659,
+        948
+      ],
+      "delivery": {
+        "path": "images/pokemon-omega-ruby-alpha-sapphire/scene-e36016e76117.jpg",
+        "sha256": "e36016e76117b20d21815748b0bd9d4303c35781749bdf0936b2d195396ab7ab",
+        "bytes": 713539,
+        "width": 1659,
+        "height": 948
+      }
+    },
+    {
+      "game": "resident-evil-revelations",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/resident-evil-revelations/cover.png",
+      "masterSHA256": "6e24630d4e8823ee76fa5e8b6c4da989091ec92a07a3c0149dcb9cc756367474",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/resident-evil-revelations/cover-5c9ff6fbfb99.jpg",
+        "sha256": "5c9ff6fbfb99fe1f3f9bd8717467bd20bd407b861c6c78bc51d13e966d62fa3f",
+        "bytes": 575807,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "resident-evil-revelations",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/resident-evil-revelations/scene.png",
+      "masterSHA256": "d3199cc6660fcd308a722cde8611ce60fa59a2c99dee5dae3cbf408aff964a73",
+      "dimensions": [
+        1659,
+        948
+      ],
+      "delivery": {
+        "path": "images/resident-evil-revelations/scene-98830eda86d2.jpg",
+        "sha256": "98830eda86d28b9f407d9bce64db7ccb2ba3d31b9c3b39dc2e3978dad9b9eecf",
+        "bytes": 460247,
+        "width": 1659,
+        "height": 948
+      }
+    },
+    {
+      "game": "bravely-default",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/bravely-default/cover.png",
+      "masterSHA256": "ef17504630db44c385fbe4bd25847dc066d1454ccec83cc7583b353fdb2fc3cb",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/bravely-default/cover-4f63edc68f8c.jpg",
+        "sha256": "4f63edc68f8c29bd6a852d8ac8f1ff2f229b10fc179442027f870de8356fc43d",
+        "bytes": 794001,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "bravely-default",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/bravely-default/scene.png",
+      "masterSHA256": "366333c8d4484b2287555e92246b6e78c0970ffedb65324e79207bc589ec3694",
+      "dimensions": [
+        1659,
+        948
+      ],
+      "delivery": {
+        "path": "images/bravely-default/scene-b2824766573c.jpg",
+        "sha256": "b2824766573c7f0a561840948ffa79c4fd5eb3fd92e2e63fe39f42fde57b69e0",
+        "bytes": 581259,
+        "width": 1659,
+        "height": 948
+      }
+    },
+    {
+      "game": "tales-of-the-abyss",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/tales-of-the-abyss/cover.png",
+      "masterSHA256": "815c965bb4375dd935bb2ab5cb2f9e348537c770091688d826109ffbded1e772",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/tales-of-the-abyss/cover-a936557bbb1e.jpg",
+        "sha256": "a936557bbb1e48412a0a6f81bbdee2b2736e284507207f3b1eded642ebe507c8",
+        "bytes": 728168,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "tales-of-the-abyss",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/tales-of-the-abyss/scene.png",
+      "masterSHA256": "45983c8b9f2a8b565a6fc6459e63258386d7be26e7dba0b56acc3ee84634ecd5",
+      "dimensions": [
+        1659,
+        948
+      ],
+      "delivery": {
+        "path": "images/tales-of-the-abyss/scene-5c5315bb8f71.jpg",
+        "sha256": "5c5315bb8f715aaaae896c603f2974f19feca3f65c0369dca3a2ea7804d9e42e",
+        "bytes": 666347,
+        "width": 1659,
+        "height": 948
+      }
+    },
+    {
+      "game": "xenoblade-chronicles-3d",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/xenoblade-chronicles-3d/cover.png",
+      "masterSHA256": "08d463296e4622a688196ca555d564a549a8b71c874f1febb313ab4af0eddb6c",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/xenoblade-chronicles-3d/cover-b38d9f395322.jpg",
+        "sha256": "b38d9f395322b873963f4b0b823e7d019d15752d5765ac9ebe9f8b47725ed663",
+        "bytes": 738556,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "xenoblade-chronicles-3d",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/xenoblade-chronicles-3d/scene.png",
+      "masterSHA256": "df06e0990137747362d933a0a5527412eef6592e4eb8faea4017b58931b0e955",
+      "dimensions": [
+        1659,
+        948
+      ],
+      "delivery": {
+        "path": "images/xenoblade-chronicles-3d/scene-bef9e5fb808c.jpg",
+        "sha256": "bef9e5fb808c2f7688bd2cc166332d46b92acd7e8cfd28ac0393ea506b256bc5",
+        "bytes": 613111,
+        "width": 1659,
+        "height": 948
+      }
+    },
+    {
+      "game": "kid-icarus-uprising",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/kid-icarus-uprising/cover.png",
+      "masterSHA256": "d31da8930d18a4d181dd1191b7823a411419edbb481449e9946ac094d830de85",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/kid-icarus-uprising/cover-c96c6b65f5ba.jpg",
+        "sha256": "c96c6b65f5bafc08c4c3464e03f0b6ec647663d74574dcc0d05dce32163e6895",
+        "bytes": 690191,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "kid-icarus-uprising",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/kid-icarus-uprising/scene.png",
+      "masterSHA256": "9bf075e204ae481b3dfc9ca1d101957d5146d1a72374fc15f8e34593534a1325",
+      "dimensions": [
+        1659,
+        948
+      ],
+      "delivery": {
+        "path": "images/kid-icarus-uprising/scene-23b68d9230ec.jpg",
+        "sha256": "23b68d9230ec0305f41e926b7b0b026ea7d5f55800ee29c7f5997259a83bb4d7",
+        "bytes": 565239,
+        "width": 1659,
+        "height": 948
+      }
+    },
+    {
+      "game": "etrian-odyssey-2-untold",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/etrian-odyssey-2-untold/cover.png",
+      "masterSHA256": "89c00da843a920f020ee76d31c68381bb6353003e41e4a6eb788fb6446747d18",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/etrian-odyssey-2-untold/cover-89955a5acd2a.jpg",
+        "sha256": "89955a5acd2aa7ff656b69dff769c20e3fddd788c06f74d70b6989195480c6c0",
+        "bytes": 860050,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "etrian-odyssey-2-untold",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/etrian-odyssey-2-untold/scene.png",
+      "masterSHA256": "b51dc49942d062b6b5119baaab4b143a7947f7d3a3449241555a5bf6d9ac0515",
+      "dimensions": [
+        1659,
+        948
+      ],
+      "delivery": {
+        "path": "images/etrian-odyssey-2-untold/scene-a0a04d2e1648.jpg",
+        "sha256": "a0a04d2e1648999112eb5b8d31e32c91cd1667ed51d99a0b16707bc3eca2a883",
+        "bytes": 830813,
+        "width": 1659,
+        "height": 948
+      }
+    },
+    {
+      "game": "etrian-odyssey-v",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/etrian-odyssey-v/cover.png",
+      "masterSHA256": "a2eba31562fe69cb21ba4a3a37f370f5787551be0c44832cd7f8b66edad298ae",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/etrian-odyssey-v/cover-d312cb23ec7e.jpg",
+        "sha256": "d312cb23ec7e4ea40c49c33aa5da305828eea801ac2c681c6c7521e9fa92ed69",
+        "bytes": 1054314,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "etrian-odyssey-v",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/etrian-odyssey-v/scene.png",
+      "masterSHA256": "5028364ecd800a637fca3c22720a5ee007676e46459fcbaf77c025b257119544",
+      "dimensions": [
+        1659,
+        948
+      ],
+      "delivery": {
+        "path": "images/etrian-odyssey-v/scene-f2103ec53046.jpg",
+        "sha256": "f2103ec53046d382c2313824d7d1d647c8a0ef757bbd34c4c987875c3d009493",
+        "bytes": 900564,
+        "width": 1659,
+        "height": 948
+      }
+    },
+    {
+      "game": "devil-survivor-overclocked",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/devil-survivor-overclocked/cover.png",
+      "masterSHA256": "3beb9e291b09d9286565eea5a57f838ff9e2d9801e013af54e69c031d571a4c4",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/devil-survivor-overclocked/cover-c4e5568419ba.jpg",
+        "sha256": "c4e5568419ba9c3238fe66a6454aa4f1cd768c8ae902d90c5ba7c8930cc4fe83",
+        "bytes": 785088,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "devil-survivor-overclocked",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/devil-survivor-overclocked/scene.png",
+      "masterSHA256": "634e371dbfe518283910d6c31cabfcc9eb144d59a51f09de206e7c3aefa6a825",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/devil-survivor-overclocked/scene-4c146ce79c60.jpg",
+        "sha256": "4c146ce79c603619bdae3b9d7945439fb7108d49c982acd2a9178a66a48e0607",
+        "bytes": 547960,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "game": "metroid-samus-returns",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/metroid-samus-returns/cover.png",
+      "masterSHA256": "76e21a00af8e90aa3e24e68f00964f55c41f63cd8389e3c4e7c213fb096c8928",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/metroid-samus-returns/cover-13cf3ec07d7f.jpg",
+        "sha256": "13cf3ec07d7f578b190cab71702e3438c1a3c976618bb485b04dabaaf52efab7",
+        "bytes": 565289,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "metroid-samus-returns",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/metroid-samus-returns/scene.png",
+      "masterSHA256": "61e6c95d26763b7a57bb5aee55a7102b997ac69e8407ed2bf60f0039ac910d4f",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/metroid-samus-returns/scene-4f547d04cf86.jpg",
+        "sha256": "4f547d04cf86c6d054e788352f29acc28e89dc91259ec0108135298a903eb026",
+        "bytes": 503440,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "game": "fantasy-life",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/fantasy-life/cover.png",
+      "masterSHA256": "a710ada17081fb530da4886134685ca21c172932ea9716ee98cc935634f93f5b",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/fantasy-life/cover-1ee5e7baa92b.jpg",
+        "sha256": "1ee5e7baa92b50eee1bf81133d825774a3d74d6c5fe623b578ca4ca76010af30",
+        "bytes": 760901,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "fantasy-life",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/fantasy-life/scene.png",
+      "masterSHA256": "58109d69bad6581557b52f801e78e9af447c385c9c60586a85376887bad10c99",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/fantasy-life/scene-2478651a456e.jpg",
+        "sha256": "2478651a456e4adc120a0cd7171437fd5d8776e09f1334e57a9458b2adb4df71",
+        "bytes": 788141,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "game": "theatrhythm-curtain-call",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/theatrhythm-curtain-call/cover.png",
+      "masterSHA256": "8d146237f82873e5d9cde6345e117026d262aa14c19e9d8d88ac44d17d3f1015",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/theatrhythm-curtain-call/cover-ecc11f6ca48c.jpg",
+        "sha256": "ecc11f6ca48c4600c4ba521c90a46a9e0cf9c17e15117a35100ace2b8a604812",
+        "bytes": 818762,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "theatrhythm-curtain-call",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/theatrhythm-curtain-call/scene.png",
+      "masterSHA256": "6cbb08ac61b1fbc870d7dab3b2c77247806071abb89fafd3b3ec89184f154522",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/theatrhythm-curtain-call/scene-1b789ecb5161.jpg",
+        "sha256": "1b789ecb51613b1d2e972e8521fa9ecffd05abd8f7edb1b44fe83fef65f414e1",
+        "bytes": 555615,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "game": "zero-escape-virtues-last-reward",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/zero-escape-virtues-last-reward/cover.png",
+      "masterSHA256": "8cf917a7c887269e12b02dd9c2ed889c4a9ba1f8bd5e66e121ea869a8b8edfd2",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/zero-escape-virtues-last-reward/cover-77e269195d6f.jpg",
+        "sha256": "77e269195d6fd8d472424b96d08be756a7dd81ec99bb929f85297550c14da12c",
+        "bytes": 470287,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "zero-escape-virtues-last-reward",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/zero-escape-virtues-last-reward/scene.png",
+      "masterSHA256": "3dd7a76b364a6edafc9cf4e3c08f720e3493d836208bc79f97d702273410c310",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/zero-escape-virtues-last-reward/scene-50d3e6f18146.jpg",
+        "sha256": "50d3e6f18146b9f2252b820ef3fca79d2a1eb0571036b37c8cf9e308ccd4f96f",
+        "bytes": 459661,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "game": "strange-journey-redux",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/strange-journey-redux/cover.png",
+      "masterSHA256": "b87f6ef9bc578663fe82deafd81a5280d343e4a9e4dbf5fcf6a83500967bd981",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/strange-journey-redux/cover-85330fb0d8a3.jpg",
+        "sha256": "85330fb0d8a314d05a1081ddc2cc13434300b54199da82dfec811e416165c7c9",
+        "bytes": 578281,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "strange-journey-redux",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/strange-journey-redux/scene.png",
+      "masterSHA256": "60ff7eb98718c25ff180f81ad4724f9ebef9db2723d4b9ea1a089d310174c601",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/strange-journey-redux/scene-bcd4b5a48284.jpg",
+        "sha256": "bcd4b5a482845f325ad805859ccc5c814cc9948b7144aef14b18225dfc434bae",
+        "bytes": 468447,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "game": "dragon-quest-viii",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/dragon-quest-viii/cover.png",
+      "masterSHA256": "84ccb479ebae0089d2307156cec4a517a7e849a802441b5cd498220883b50567",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/dragon-quest-viii/cover-d8b85e0fb7c5.jpg",
+        "sha256": "d8b85e0fb7c5c6799ea414a0542963043967cfcec966afee8326375432cd2c36",
+        "bytes": 999922,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "dragon-quest-viii",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/dragon-quest-viii/scene.png",
+      "masterSHA256": "e14bec8e460861b61c25294cfba4b206f462ad8d82eeb18a7908ffe34f3b6a48",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/dragon-quest-viii/scene-b2fe78f33082.jpg",
+        "sha256": "b2fe78f33082a648a0a4cefdf0a3f3e277bdfcb4d3e4173883d1ffb721efe0df",
+        "bytes": 948682,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "game": "donkey-kong-country-returns-3d",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/donkey-kong-country-returns-3d/scene.png",
+      "masterSHA256": "3e16cd28e711b431ec54b4c38ea0c204b7e494b2d9f72aa04a6a2f41e57e1f8b",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/donkey-kong-country-returns-3d/scene-e07b3a6f7e9a.jpg",
+        "sha256": "e07b3a6f7e9a509bf4430f5fb0a786d654da3d68b73850ba211386e98253d1c7",
+        "bytes": 802920,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "game": "tomodachi-life",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/tomodachi-life/cover.png",
+      "masterSHA256": "1e018a9c274fdb50a785a4aaedbd4b50ed04db6f7c1745c9fb498cb96cad6215",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/tomodachi-life/cover-24b367013954.jpg",
+        "sha256": "24b36701395499389b86ad320ba7933329a4775114adb946fbfde770374e84c6",
+        "bytes": 672125,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "tomodachi-life",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/tomodachi-life/scene.png",
+      "masterSHA256": "13615dd201d34a6e4045822d226e4d31f7396f54132f9237c5be15d237d2e5fe",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/tomodachi-life/scene-e82f82a091dc.jpg",
+        "sha256": "e82f82a091dc6772453b2ed3b32534602513ca7bdaa3f0473e5d77585bf7c33f",
+        "bytes": 694329,
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "game": "luigis-mansion-dark-moon",
+      "kind": "cover",
+      "master": "ArtworkMasters/3ds/luigis-mansion-dark-moon/cover.png",
+      "masterSHA256": "5d2486e6d39d2987c0f1e9edeac8abf1af9b35fe091f3fb1e9e4ef234c2c6fd1",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "delivery": {
+        "path": "images/luigis-mansion-dark-moon/cover-83dc64ea4e7e.jpg",
+        "sha256": "83dc64ea4e7e0527be7fae6e0b41857c575174d84c680a9212a5786aedb9b009",
+        "bytes": 571524,
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "game": "luigis-mansion-dark-moon",
+      "kind": "scene",
+      "master": "ArtworkMasters/3ds/luigis-mansion-dark-moon/scene.png",
+      "masterSHA256": "333895dc3f5dad99e5b850764eb1daf98c53d352ea6cd8ad4a5e9071569ed1fb",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "delivery": {
+        "path": "images/luigis-mansion-dark-moon/scene-5daa322fd5b8.jpg",
+        "sha256": "5daa322fd5b825321f578be40d1e1090d82f2ed767661381acd5f93b30d18d28",
+        "bytes": 466539,
+        "width": 1536,
+        "height": 1024
+      }
+    }
+  ],
+  "coverFallbacks": [
+    "zelda-a-link-between-worlds",
+    "zelda-ocarina-of-time-3d",
+    "super-mario-3d-land",
+    "donkey-kong-country-returns-3d"
+  ]
+}

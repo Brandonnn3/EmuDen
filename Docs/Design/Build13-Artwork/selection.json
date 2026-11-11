@@ -1,0 +1,395 @@
+{
+  "source": "https://gamefaqs.gamespot.com/boards/997614-nintendo-3ds/76853179",
+  "selection": "First 25 ranked entries from archived GameFAQs community poll; normalized English release names. Paired Pokémon versions and Fire Emblem Fates variants share their ranked family entry. Three current-library extras.",
+  "games": [
+    {
+      "key": "zelda-a-link-between-worlds",
+      "title": "The Legend of Zelda: A Link Between Worlds",
+      "aliases": [
+        "Legend of Zelda, The - A Link Between Worlds"
+      ],
+      "rank": 1,
+      "bonus": false,
+      "programIDs": [
+        "00040000000EC300"
+      ]
+    },
+    {
+      "key": "zelda-majoras-mask-3d",
+      "title": "The Legend of Zelda: Majora’s Mask 3D",
+      "aliases": [
+        "Legend of Zelda, The - Majora's Mask 3D"
+      ],
+      "rank": 2,
+      "bonus": false,
+      "programIDs": [
+        "00040000000D6E00",
+        "0004000000125500",
+        "0004000000125600"
+      ]
+    },
+    {
+      "key": "zelda-ocarina-of-time-3d",
+      "title": "The Legend of Zelda: Ocarina of Time 3D",
+      "aliases": [
+        "Legend of Zelda, The - Ocarina of Time 3D"
+      ],
+      "rank": 3,
+      "bonus": false,
+      "programIDs": [
+        "0004000000033400",
+        "0004000000033500",
+        "0004000000033600",
+        "000400000008F800",
+        "000400000008F900"
+      ]
+    },
+    {
+      "key": "monster-hunter-4-ultimate",
+      "title": "Monster Hunter 4 Ultimate",
+      "aliases": [
+        "Monster Hunter 4 Ultimate"
+      ],
+      "rank": 4,
+      "bonus": false,
+      "programIDs": [
+        "000400000011D700",
+        "0004000000126100",
+        "0004000000126300",
+        "0004000000141A00",
+        "0004000000153200"
+      ]
+    },
+    {
+      "key": "super-smash-bros-3ds",
+      "title": "Super Smash Bros. for Nintendo 3DS",
+      "aliases": [
+        "Super Smash Bros. for Nintendo 3DS"
+      ],
+      "rank": 5,
+      "bonus": false,
+      "programIDs": [
+        "00040000000EDF00"
+      ]
+    },
+    {
+      "key": "rune-factory-4",
+      "title": "Rune Factory 4",
+      "aliases": [
+        "Rune Factory 4"
+      ],
+      "rank": 6,
+      "bonus": false,
+      "programIDs": [
+        "00040000000D2800"
+      ]
+    },
+    {
+      "key": "super-mario-3d-land",
+      "title": "Super Mario 3D Land",
+      "aliases": [
+        "Super Mario 3D Land"
+      ],
+      "rank": 7,
+      "bonus": false,
+      "programIDs": [
+        "0004000000053F00",
+        "0004000000054000",
+        "0004000000054100",
+        "0004000000089D00",
+        "0004000000089E00"
+      ]
+    },
+    {
+      "key": "fire-emblem-awakening",
+      "title": "Fire Emblem Awakening",
+      "aliases": [
+        "Fire Emblem - Awakening",
+        "Fire Emblem Awakening"
+      ],
+      "rank": 8,
+      "bonus": false,
+      "programIDs": [
+        "00040000000A0500"
+      ]
+    },
+    {
+      "key": "fire-emblem-fates",
+      "title": "Fire Emblem Fates",
+      "aliases": [
+        "Fire Emblem Fates",
+        "Fire Emblem Fates - Birthright",
+        "Fire Emblem Fates - Conquest",
+        "Fire Emblem Fates - Revelation",
+        "Fire Emblem Fates - Special Edition"
+      ],
+      "rank": 9,
+      "bonus": false,
+      "programIDs": [
+        "000400000012DC00",
+        "000400000012DD00",
+        "000400000012DE00",
+        "0004000000179400",
+        "0004000000179500",
+        "0004000000179600",
+        "0004000000179700",
+        "0004000000179800",
+        "000400000017A800"
+      ]
+    },
+    {
+      "key": "animal-crossing-new-leaf",
+      "title": "Animal Crossing: New Leaf",
+      "aliases": [
+        "Animal Crossing - New Leaf",
+        "Animal Crossing - New Leaf - Welcome Amiibo",
+        "Animal Crossing - New Leaf - Welcome amiibo"
+      ],
+      "rank": 10,
+      "bonus": false,
+      "programIDs": [
+        "0004000000086300",
+        "0004000000086400",
+        "0004000000198E00"
+      ]
+    },
+    {
+      "key": "pokemon-omega-ruby-alpha-sapphire",
+      "title": "Pokémon Omega Ruby & Alpha Sapphire",
+      "aliases": [
+        "Pokemon Omega Ruby",
+        "Pokemon Alpha Sapphire",
+        "Pokémon Omega Ruby",
+        "Pokémon Alpha Sapphire"
+      ],
+      "rank": 11,
+      "bonus": false,
+      "programIDs": [
+        "000400000011C400",
+        "000400000011C500"
+      ]
+    },
+    {
+      "key": "resident-evil-revelations",
+      "title": "Resident Evil: Revelations",
+      "aliases": [
+        "Resident Evil - Revelations",
+        "Resident Evil Revelations"
+      ],
+      "rank": 12,
+      "bonus": false,
+      "programIDs": [
+        "0004000000060200"
+      ]
+    },
+    {
+      "key": "bravely-default",
+      "title": "Bravely Default",
+      "aliases": [
+        "Bravely Default"
+      ],
+      "rank": 13,
+      "bonus": false,
+      "programIDs": [
+        "000400000005E900",
+        "00040000000FC500",
+        "00040000000FC600",
+        "0004000000122200"
+      ]
+    },
+    {
+      "key": "tales-of-the-abyss",
+      "title": "Tales of the Abyss",
+      "aliases": [
+        "Tales of the Abyss",
+        "Tales of the Abyss 3D"
+      ],
+      "rank": 14,
+      "bonus": false,
+      "programIDs": [
+        "0004000000061300"
+      ]
+    },
+    {
+      "key": "xenoblade-chronicles-3d",
+      "title": "Xenoblade Chronicles 3D",
+      "aliases": [
+        "Xenoblade Chronicles 3D"
+      ],
+      "rank": 15,
+      "bonus": false,
+      "programIDs": [
+        "000400000F700100"
+      ]
+    },
+    {
+      "key": "kid-icarus-uprising",
+      "title": "Kid Icarus: Uprising",
+      "aliases": [
+        "Kid Icarus - Uprising"
+      ],
+      "rank": 16,
+      "bonus": false,
+      "programIDs": [
+        "0004000000030100"
+      ]
+    },
+    {
+      "key": "etrian-odyssey-2-untold",
+      "title": "Etrian Odyssey 2 Untold: The Fafnir Knight",
+      "aliases": [
+        "Etrian Odyssey 2 Untold - The Fafnir Knight"
+      ],
+      "rank": 17,
+      "bonus": false,
+      "programIDs": [
+        "000400000015F200"
+      ]
+    },
+    {
+      "key": "etrian-odyssey-v",
+      "title": "Etrian Odyssey V: Beyond the Myth",
+      "aliases": [
+        "Etrian Odyssey V - Beyond the Myth"
+      ],
+      "rank": 18,
+      "bonus": false,
+      "programIDs": [
+        "00040000001C5100"
+      ]
+    },
+    {
+      "key": "devil-survivor-overclocked",
+      "title": "Shin Megami Tensei: Devil Survivor Overclocked",
+      "aliases": [
+        "Shin Megami Tensei - Devil Survivor Overclocked"
+      ],
+      "rank": 19,
+      "bonus": false,
+      "programIDs": [
+        "0004000000038800"
+      ]
+    },
+    {
+      "key": "metroid-samus-returns",
+      "title": "Metroid: Samus Returns",
+      "aliases": [
+        "Metroid - Samus Returns"
+      ],
+      "rank": 20,
+      "bonus": false,
+      "programIDs": [
+        "00040000001BB200",
+        "00040000001BFB00",
+        "00040000001BFC00"
+      ]
+    },
+    {
+      "key": "fantasy-life",
+      "title": "Fantasy Life",
+      "aliases": [
+        "Fantasy Life"
+      ],
+      "rank": 21,
+      "bonus": false,
+      "programIDs": [
+        "0004000000113200"
+      ]
+    },
+    {
+      "key": "theatrhythm-curtain-call",
+      "title": "Theatrhythm Final Fantasy: Curtain Call",
+      "aliases": [
+        "Theatrhythm Final Fantasy - Curtain Call",
+        "Theatrhythm Final Fantasy Curtain Call"
+      ],
+      "rank": 22,
+      "bonus": false,
+      "programIDs": [
+        "00040000000FD500"
+      ]
+    },
+    {
+      "key": "zero-escape-virtues-last-reward",
+      "title": "Zero Escape: Virtue’s Last Reward",
+      "aliases": [
+        "Zero Escape - Virtue's Last Reward",
+        "Virtue's Last Reward"
+      ],
+      "rank": 23,
+      "bonus": false,
+      "programIDs": [
+        "0004000000096700"
+      ]
+    },
+    {
+      "key": "strange-journey-redux",
+      "title": "Shin Megami Tensei: Strange Journey Redux",
+      "aliases": [
+        "Shin Megami Tensei - Strange Journey Redux"
+      ],
+      "rank": 24,
+      "bonus": false,
+      "programIDs": [
+        "00040000001CD200"
+      ]
+    },
+    {
+      "key": "dragon-quest-viii",
+      "title": "Dragon Quest VIII: Journey of the Cursed King",
+      "aliases": [
+        "Dragon Quest VIII - Journey of the Cursed King"
+      ],
+      "rank": 25,
+      "bonus": false,
+      "programIDs": [
+        "000400000018F100"
+      ]
+    },
+    {
+      "key": "donkey-kong-country-returns-3d",
+      "title": "Donkey Kong Country Returns 3D",
+      "aliases": [
+        "Donkey Kong Country Returns 3D"
+      ],
+      "rank": null,
+      "bonus": true,
+      "programIDs": [
+        "00040000000CCE00"
+      ]
+    },
+    {
+      "key": "tomodachi-life",
+      "title": "Tomodachi Life",
+      "aliases": [
+        "Tomodachi Life"
+      ],
+      "rank": null,
+      "bonus": true,
+      "programIDs": [
+        "000400000008C300",
+        "000400000008C400",
+        "000400000008C500",
+        "0004000000120C00"
+      ]
+    },
+    {
+      "key": "luigis-mansion-dark-moon",
+      "title": "Luigi’s Mansion: Dark Moon",
+      "aliases": [
+        "Luigi's Mansion - Dark Moon",
+        "Luigi's Mansion 2"
+      ],
+      "rank": null,
+      "bonus": true,
+      "programIDs": [
+        "0004000000055F00",
+        "0004000000076400",
+        "0004000000076500",
+        "00040000000CFF00",
+        "00040000000D0000"
+      ]
+    }
+  ],
+  "note": "Artwork matching only; original game titles, files and save identities remain unchanged. No title IDs for demos/trailers/updates are intentionally included."
+}

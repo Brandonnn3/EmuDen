@@ -1,0 +1,18 @@
+Your collection. Your console.
+
+EmuDen brings a colorful console-style library to iPhone and iPad. Keep your handheld favorites together, choose a game and get back to playing.
+
+The current version supports Nintendo 3DS emulation:
+• Native library with search and recent play
+• File import for compatible, decrypted games and homebrew
+• Dual-screen layouts with lower-screen touch
+• On-screen controls and compatible extended gamepads
+• Adaptive layouts for iPhone Duo
+• On-device Metal GPU rendering, audio and persistent in-game saves
+• Local console system-data import for games that need it
+
+No commercial games or Nintendo console resources are included. Bring your own compatible files that you are authorized to use. An included open-source Homebrew Menu provides a way to try the core without a commercial game.
+
+This early version supports 3DS only. Game compatibility and speed vary. Original Mii faces require console-provided system data; the included guest-face fallback is not a replacement for original Mii models. Save states, cheats, network play and other console cores are not available.
+
+EmuDen is an independent project and is not affiliated with or endorsed by Nintendo or other console manufacturers. Their names are used only to identify compatibility.

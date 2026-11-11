@@ -1,0 +1,13 @@
+Welcome to EmuDen, your pocket console collection.
+
+This internal beta introduces a native iPhone and iPad game library with Nintendo 3DS emulation, dual-screen layouts, touchscreen controls, compatible game controllers, audio, persistent in-game saves, quick save/load and resume states. iPhone Duo is the primary design and performance target.
+
+Per-game graphics profiles offer 1×–3× resolution, texture sampling, optional automatic quality, known-shader preparation and frame timing. A cinematic library downloads original background illustrations and caches them offline. Continue Playing and Recent Games widgets use local thumbnails, and a profile-picture chooser keeps your portrait separate from Mii resource status.
+
+Add your own compatible, decrypted game files using the Files picker, or launch the included open-source 3DS Homebrew Menu to test the emulator without importing a commercial game. Games and Nintendo console system resources are not included.
+
+This version supports 3DS only. Other console cores are planned for later development and are not available in this build.
+
+Performance and compatibility vary by game. CPU interpretation is used; JIT is disabled. An original generic 3D guest head replaces missing Mii resources, but original Mii faces require console-provided system data. Castle Club and complete Mii compatibility remain under test.
+
+No app account, subscription or purchase is required. Use TestFlight feedback to report the game, device, scene, FPS and steps to reproduce a problem. Please do not attach game files, firmware, console keys or personal Mii databases.

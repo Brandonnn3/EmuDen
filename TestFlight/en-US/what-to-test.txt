@@ -1,0 +1,23 @@
+EmuDen 0.1.0 (17) — internal beta
+
+Per-game graphics:
+• Long-press a cover → Game settings → Customize this game. Try 1×, 2× and 3× and Game default/Crisp/Smooth textures. Open another game to confirm its choices stay independent. Turning customization off uses Settings → Graphics & performance defaults.
+• During play, changes apply when you resume from Player Settings. Picture sizing and Top screen balance adjust flat layouts; the inner display keeps its fold boundaries. Check lower-screen touch at the picture edges.
+• Automatic quality is optional and off by default. It uses the chosen resolution as a ceiling, steps down after sustained slowdown/heat and recovers slowly. It cannot go below 1× or remove a first-time shader stall. Show frame-time graph adds mean/worst core time, speed, resolution and heat severity; Show FPS remains available separately.
+• Prepare known shaders before play is optional. Reopen a game to use it. Startup may take longer and shows progress; unseen effects can still pause. Reset this game's shader cache is available from its cover settings while closed. It should preserve saves, Mii resources and other games' caches.
+
+Dark Moon and Mario Golf:
+• For Dark Moon, use 1× with Reduce shader pauses on. Repeat the first outdoor route and early ghost window, then revisit them in the same session. Compare the lowest FPS and pause length using the same settings. Try shader preparation on a later launch with its learned cache. New physical-phone gains remain unmeasured; the Simulator graphics service cannot complete this game's problem route.
+• Repeat Mario Golf's course/perfect-max shot, including 3× if desired. Check pacing, audio, Mii faces, Quick Save/Load, native saves and resume. Actual Simulator live 3×→1×→2×→3× changes and state restore pass; these are correctness checks, not phone FPS measurements.
+• Controller → Duo layout → Fill display should remove the old outer-display inset. Check both orientations, inner folding, toolbar fading, controller input and physical haptics. Live landscape/folding and sustained thermals still need device checks.
+
+Widgets and portrait:
+• Add EmuDen's Continue Playing (small/medium) or Recent Games (medium/large) from the Home Screen widget gallery. Settings → Home Screen widgets previews the designs. Check full-color and clear/tinted appearances, cached artwork, recent ordering and opening a game. Native Home Screen placement has not been verified on a phone.
+• A widget game switch should save the current session before opening the next. A missing game should show a useful message. Check reopening/resuming after a switch.
+• Tap the portrait under Mii faces to choose a JPEG/PNG/HEIF image from Files; long-press to reset it. The picture persists locally. This is a picture chooser: the resource archive contains shared head models, not a personal Mii avatar. Original faces ready is a separate resource-status badge.
+• For Mii models use Import Mii file with errfix.3dsx or your decrypted Mii resource .app, then reopen the game. CFL_DB.dat contains personal records rather than head models.
+
+Artwork:
+• Catalog version 6 provides 40 original game backgrounds and 24 covers. Latest scenes: SteamWorld Dig, SteamWorld Heist, Bravely Second and Dragon Quest VII. Known scenes fade from dark; missing images keep console/cover fallbacks. Check fast selection changes, search dock hiding, offline cached artwork and Reduced Motion. These illustrations are fan art, not gameplay captures.
+
+Only 3DS is playable. No ROMs, personal saves or Nintendo system archives are bundled. Report device/build, title, settings, scene and repeatable steps with feedback.

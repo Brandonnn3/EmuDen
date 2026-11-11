@@ -1,0 +1,57 @@
+--- a/src/citra_libretro/citra_libretro.cpp
++++ b/src/citra_libretro/citra_libretro.cpp
+@@ -2,6 +2,7 @@
+ // Licensed under GPLv3 or any later version
+ // Refer to the LICENSE.txt file included.
+ 
++#include <chrono>
+ #include <list>
+ #include <numeric>
+ #include <vector>
+@@ -227,6 +228,9 @@
+     // Check to see if we actually have any config updates to process.
+     if (LibRetro::HasUpdatedConfig()) {
+         LibRetro::ParseCoreOptions();
++        u64 program_id{};
++        Core::System::GetInstance().GetAppLoader().ReadProgramId(program_id);
++        Core::System::GetInstance().GPU().ApplyPerProgramSettings(program_id);
+         Core::System::GetInstance().ApplySettings();
+         emu_instance->emu_window->UpdateLayout();
+     }
+@@ -421,8 +425,19 @@
+     Core::System::GetInstance().GPU().ApplyPerProgramSettings(program_id);
+ 
+     if (Settings::values.use_disk_shader_cache) {
+-        Core::System::GetInstance().GPU().Renderer().Rasterizer()->LoadDefaultDiskResources(
+-            false, nullptr);
++        const bool prepare = LibRetro::FetchVariable("emuden_prepare_cached_shaders", "disabled") == "enabled";
++        VideoCore::DiskResourceLoadCallback progress = nullptr;
++        if (prepare) {
++            progress = [last = std::chrono::steady_clock::time_point{}](VideoCore::LoadCallbackStage,
++                std::size_t current, std::size_t total, const std::string& name) mutable {
++                const auto now = std::chrono::steady_clock::now();
++                if (now - last < std::chrono::milliseconds(100) && current != total) return;
++                last = now;
++                LibRetro::DisplayMessage(fmt::format("EMUDEN_SHADER_PROGRESS:{}:{}:{}", current, total, name).c_str());
++            };
++        }
++        Core::System::GetInstance().GPU().Renderer().Rasterizer()->LoadDefaultDiskResources(false, progress);
++        if (prepare) LibRetro::DisplayMessage("EMUDEN_SHADER_READY");
+     }
+ 
+     setup_memory_maps();
+--- a/src/video_core/renderer_vulkan/vk_pipeline_cache.cpp
++++ b/src/video_core/renderer_vulkan/vk_pipeline_cache.cpp
+@@ -158,6 +158,12 @@
+     const bool flag_set = SetCacheLoadFlag(GetProgramID());
+     LoadDriverPipelineDiskCache(stop_loading, callback);
+     LoadDiskCache(stop_loading, callback);
++#ifdef HAVE_LIBRETRO
++    if (callback) {
++        callback(VideoCore::LoadCallbackStage::Build, 0, 0, "Finalizing pipelines");
++        pipeline_workers.WaitForRequests();
++    }
++#endif
+     if (flag_set) {
+         QueueClearCacheLoadFlag(GetProgramID());
+     }
