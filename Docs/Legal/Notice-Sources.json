@@ -505,5 +505,6 @@
       "noticeText": "complete file"
     }
   ],
-  "noticeSHA256": "fa6db9f242fcc06cb031120ef8a556a90428c67096546a390914d467deecb413"
+  "noticeSHA256": "fa6db9f242fcc06cb031120ef8a556a90428c67096546a390914d467deecb413",
+  "structuredNoticeSHA256": "d26f2ffd3a74fcd67b59f8c8b378d6521b694c27fd430aee39f184ea3453da2d"
 }

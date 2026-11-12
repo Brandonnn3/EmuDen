@@ -8,20 +8,15 @@ struct ArtworkEditorView: View {
     let game: Game
     @State private var importing = false
     @State private var importKind: ArtworkKind = .cover
-    @State private var matching = false
-    @State private var query = ""
     @State private var updating = false
     @State private var resetting = false
     @State private var importNotice: String?
-    @FocusState private var queryFocused: Bool
     private var current: Game { library.games.first { $0.id == game.id } ?? game }
-    private var results: [String] { ArtworkResources.covers.search(query) }
     var body: some View {
         GeometryReader { area in
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    CinematicPageHeading(title: matching ? "Match game" : "Game artwork", subtitle: "", onClose: { menuAudio.play(.back); if matching { matching = false } else { dismiss() } }, closeID: "artworkDone")
-                    if !matching {
+                    CinematicPageHeading(title: "Game artwork", subtitle: "", onClose: { menuAudio.play(.back); dismiss() }, closeID: "artworkDone")
                     let layout = area.size.width > 650 ? AnyLayout(HStackLayout(alignment: .top, spacing: 28)) : AnyLayout(VStackLayout(spacing: 20))
                     layout {
                         VStack(spacing: 12) {
@@ -33,11 +28,7 @@ struct ArtworkEditorView: View {
                             VStack(alignment: .leading, spacing: 12) {
                                 Label("Cover image", systemImage: "photo.stack").font(.headline)
                                 Button { pick(.cover) } label: { CinematicActionLabel(title: "Choose cover image", symbol: "photo", primary: true) }.accessibilityIdentifier("importCoverImage")
-                                Button {
-                                    menuAudio.play(.open); matching.toggle()
-                                    query = current.artworkName.components(separatedBy: " (").first ?? current.artworkName
-                                } label: { CinematicSettingRow(title: "Match another game", detail: "Correct an artwork match", symbol: "magnifyingglass") }.accessibilityIdentifier("chooseArtworkMatch")
-                                Text("Matched to: \(displayName(current.artworkName))").font(.caption).foregroundStyle(ConsoleTheme.quiet).accessibilityIdentifier("artworkMatchedTitle")
+                                Text("Choose your own artwork from Files. Your image stays on this device.").font(.caption).foregroundStyle(ConsoleTheme.quiet)
                             }.cinematicCard()
                             VStack(alignment: .leading, spacing: 12) {
                                 Label("Background", systemImage: "photo.on.rectangle").font(.headline)
@@ -47,47 +38,15 @@ struct ArtworkEditorView: View {
                                 Text("A console scene is used automatically when a game has no suitable background. Your chosen images stay on this device.")
                                     .font(.caption).foregroundStyle(ConsoleTheme.quiet)
                             }.cinematicCard()
-                            Button { resetting = true; menuAudio.play(.open) } label: { Label("Restore automatic artwork", systemImage: "arrow.counterclockwise").font(.subheadline).frame(minHeight: 44) }.accessibilityIdentifier("resetArtwork")
+                            Button { resetting = true; menuAudio.play(.open) } label: { Label("Reset artwork", systemImage: "arrow.counterclockwise").font(.subheadline).frame(minHeight: 44) }.accessibilityIdentifier("resetArtwork")
                             if let importNotice { Label(importNotice, systemImage: "checkmark.circle.fill").font(.caption).foregroundStyle(ConsoleTheme.blue).accessibilityIdentifier("artworkImportComplete") }
                         }.frame(maxWidth: .infinity)
-                    }
-                    }
-                    if matching {
-                        VStack(alignment: .leading, spacing: 14) {
-                            HStack(spacing: 12) {
-                                Image(systemName: "magnifyingglass")
-                                TextField("Find a game", text: $query).focused($queryFocused).textInputAutocapitalization(.never).autocorrectionDisabled().accessibilityLabel("Find artwork")
-                                if !query.isEmpty {
-                                    Button { query = ""; queryFocused = true; menuAudio.play(.focus) } label: { Image(systemName: "xmark.circle.fill").frame(width: 28, height: 36) }.accessibilityLabel("Clear artwork search")
-                                }
-                            }.padding(16).cinematicGlass(radius: 24, interactive: true)
-                            if results.isEmpty { Text("No matching title. You can choose a cover image from Files.").font(.subheadline).foregroundStyle(ConsoleTheme.quiet) }
-                            LazyVStack(spacing: 0) {
-                                ForEach(results, id: \.self) { title in
-                                    Button {
-                                        menuAudio.play(.confirm)
-                                        run { await library.chooseArtwork(displayName(title), for: current); matching = false }
-                                    } label: {
-                                        HStack {
-                                            Text(displayName(title)).font(.subheadline).multilineTextAlignment(.leading)
-                                            Spacer()
-                                            Image(systemName: "chevron.right").font(.caption)
-                                        }.frame(minHeight: 48).contentShape(Rectangle())
-                                    }.accessibilityLabel("Use artwork for \(displayName(title))")
-                                    Divider()
-                                }
-                            }
-                        }.cinematicCard().accessibilityIdentifier("artworkMatches")
                     }
                 }.padding(24).frame(maxWidth: 1000).frame(maxWidth: .infinity).cinematicEntrance()
             }.scrollIndicators(.hidden)
         }.foregroundStyle(.white).tint(.white).statusBarHidden(true).buttonStyle(ConsolePressStyle())
             .background { CinematicScene(game: current, subdued: true).ignoresSafeArea() }
             .onAppear { menuAudio.setActive(true) }
-            .task(id: matching) {
-                if matching { try? await Task.sleep(for: .milliseconds(180)) }
-                if !Task.isCancelled { queryFocused = matching }
-            }
             .disabled(updating)
             .overlay { if updating { ProgressView().padding(24).cinematicGlass() } }
             .fileImporter(isPresented: $importing, allowedContentTypes: [.image]) { result in
@@ -101,8 +60,8 @@ struct ArtworkEditorView: View {
                 case .failure(let error): library.error = error.localizedDescription
                 }
             }
-            .confirmationDialog("Restore automatic artwork?", isPresented: $resetting, titleVisibility: .visible) {
-                Button("Restore automatic artwork") { run { await library.resetArtwork(current) } }
+            .confirmationDialog("Reset artwork?", isPresented: $resetting, titleVisibility: .visible) {
+                Button("Reset artwork") { run { await library.resetArtwork(current) } }
                 Button("Cancel", role: .cancel) { }
             } message: { Text("This resets this game’s artwork choices. Your games and saves are kept.") }
             .alert("Artwork needs attention", isPresented: Binding(get: { library.error != nil }, set: { if !$0 { library.error = nil } })) {

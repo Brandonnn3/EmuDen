@@ -22,7 +22,7 @@ def check_manifest(path, reasons):
     data = load_plist(path)
     assert data["NSPrivacyTracking"] is False, path
     expected_collection = []
-    if path.name == "PrivacyInfo.xcprivacy" and (path.parent == ROOT / "Resources" or path.parent.name == "EmuDen.app") and int(json.loads((ROOT / "TestFlight/AppInformation.json").read_text())["build"]) >= 19:
+    if path.name == "PrivacyInfo.xcprivacy" and (path.parent == ROOT / "Resources" or path.parent.name == "EmuDen.app") and int(json.loads((ROOT / "TestFlight/AppInformation.json").read_text())["build"]) in (19, 20):
         expected_collection = [{"NSPrivacyCollectedDataType": name, "NSPrivacyCollectedDataTypeLinked": True,
             "NSPrivacyCollectedDataTypeTracking": False, "NSPrivacyCollectedDataTypePurposes": ["NSPrivacyCollectedDataTypePurposeAppFunctionality"]}
             for name in ["NSPrivacyCollectedDataTypeProductInteraction", "NSPrivacyCollectedDataTypeOtherDataTypes"]]
@@ -129,7 +129,7 @@ def main():
         assert info.get(key) == value, (key, info.get(key), value)
     assert set(info["UIDeviceFamily"]) == {1, 2}
     if int(metadata["build"]) >= 19:
-        export_assessment = json.loads((ROOT / "Docs/Legal/EXPORT-ASSESSMENT-19.json").read_text())
+        export_assessment = json.loads((ROOT / ("Docs/Legal/EXPORT-ASSESSMENT-" + metadata["build"] + ".json")).read_text())
         assert export_assessment["build"] == metadata["build"] and export_assessment["territories"] == ["USA"]
         assert export_assessment["usesEncryption"] is True and export_assessment["usesNonExemptEncryption"] is False
         assert info.get("ITSAppUsesNonExemptEncryption") is False
@@ -175,10 +175,20 @@ def main():
     for path in app.rglob("*"):
         assert path.name != "Contact.json", "Private review contact must not ship in the app"
         assert path.suffix.lower() not in {".3ds", ".cci", ".cxi", ".cia", ".elf", ".axf", ".p8", ".p12", ".storekit"}, path
+    if int(metadata["build"]) >= 21:
+        policy = json.loads((ROOT / "Docs/Legal/CORE-RESOURCE-POLICY-21.json").read_text())
+        import hashlib
+        device = next(record for record in policy["records"] if record["platform"] == "device")
+        expected_core = ROOT / device["binary"]
+        for candidate in [expected_core, app / "Frameworks/Azahar.framework/Azahar"]:
+            subprocess.run([sys.executable, str(ROOT / "Scripts/check-debug-symbols.py"), str(candidate), str(archive / "dSYMs/Azahar.framework.dSYM")], check=True)
+        subprocess.run([sys.executable, str(ROOT / "Scripts/verify-release-artwork.py"), "--app", str(app)], check=True)
     assert (app / "boot.3dsx").is_file()
     assert (app / "Azahar-LICENSE.txt").is_file() and (app / "MoltenVK-LICENSE.txt").is_file()
     if int(metadata["build"]) >= 18:
         assert (app / "ThirdPartyNotices.txt").read_bytes() == (ROOT / "Resources/ThirdPartyNotices.txt").read_bytes()
+        if int(metadata["build"]) >= 21:
+            assert (app / "ThirdPartyNotices.json").read_bytes() == (ROOT / "Resources/ThirdPartyNotices.json").read_bytes()
         print("Complete dependency notices match the bundled offline copy")
     subprocess.run(["codesign", "--verify", "--deep", "--strict", str(app)], check=True)
     subprocess.run([sys.executable, str(ROOT / "Scripts/check-debug-symbols.py"),

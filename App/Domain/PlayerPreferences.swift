@@ -1,4 +1,36 @@
 import Foundation
+
+enum AgeEligibilityError: Error { case timedOut }
+
+@MainActor final class AgeEligibilityRequest {
+    private var continuation: CheckedContinuation<Bool, Error>?
+    private var request: Task<Void, Never>?
+    private var deadline: Task<Void, Never>?
+    func value(timeout: Duration = .seconds(15), operation: @escaping @MainActor () async throws -> Bool) async throws -> Bool {
+        try await withTaskCancellationHandler {
+            try await withCheckedThrowingContinuation { continuation in
+                guard !Task.isCancelled else { continuation.resume(throwing: CancellationError()); return }
+                self.continuation = continuation
+                request = Task {
+                    do { finish(.success(try await operation())) }
+                    catch { finish(.failure(error)) }
+                }
+                deadline = Task {
+                    do { try await Task.sleep(for: timeout) } catch { return }
+                    finish(.failure(AgeEligibilityError.timedOut))
+                }
+            }
+        } onCancel: {
+            Task { @MainActor in self.finish(.failure(CancellationError())) }
+        }
+    }
+    private func finish(_ result: Result<Bool, Error>) {
+        guard let continuation else { return }
+        self.continuation = nil
+        request?.cancel(); deadline?.cancel(); request = nil; deadline = nil
+        continuation.resume(with: result)
+    }
+}
 import CryptoKit
 
 struct PlayerPreferences: Codable, Equatable, Sendable {

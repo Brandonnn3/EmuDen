@@ -14,7 +14,6 @@ final class GameLibrary: ObservableObject {
     @Published var sceneRevision = 0
     @Published var featuredGameID: UUID?
     @Published private(set) var coreReady = false
-    @Published private(set) var artworkFetchingEnabled = ArtworkNetwork.isEnabled()
     private var catalogReadable = true
     private var widgetTask: Task<Void, Never>?
     let storage: LibraryStorage
@@ -66,34 +65,30 @@ final class GameLibrary: ObservableObject {
         widgetTask = Task { @MainActor in
             try? await Task.sleep(for: .seconds(2))
             guard !Task.isCancelled, let group = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: WidgetLibrary.groupID) else { return }
-            let directory = group.appendingPathComponent("WidgetLibrary", isDirectory: true)
+            let directory = group.appendingPathComponent(WidgetLibrary.directoryName, isDirectory: true)
             let recent = Array(sortedGames.prefix(4))
             let snapshot = WidgetLibrary(games: recent.map { WidgetGame(id: $0.id, title: String($0.artworkName.prefix(240))) }, updated: Date())
             let previous = WidgetLibrary.read(from: directory)
             var changed = previous?.games != snapshot.games
             do {
                 try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-                if artworkFetchingEnabled {
-                    for game in recent {
-                        for scene in [false, true] {
-                            guard artworkFetchingEnabled else { break }
-                            var image = scene ? await scenes.cachedImage(for: game) : await artwork.cachedImage(for: game)
-                            guard !Task.isCancelled else { return }
-                            guard artworkFetchingEnabled else { break }
-                            if scene, game.useConsoleBackground == true { image = ArtworkResources.consoleImage(.threeDS) }
-                            if image == nil, let art = CinematicArt.match(game.artworkName) {
-                                if scene { image = art == .golf ? CinematicArt.golfScene : (art == .zelda ? CinematicArt.forestScene : nil) }
-                                else { image = ImageRenderer(content: ApprovedCoverArt(art: art).frame(width: 192, height: 270)).uiImage }
-                            }
-                            guard artworkFetchingEnabled, let image else { continue }
-                            let limit: CGFloat = scene ? 768 : 384
-                            let scale = min(1, limit / max(image.size.width, image.size.height))
-                            let format = UIGraphicsImageRendererFormat(); format.scale = 1; format.opaque = true
-                            let reduced = UIGraphicsImageRenderer(size: CGSize(width: image.size.width * scale, height: image.size.height * scale), format: format).image { _ in image.draw(in: CGRect(origin: .zero, size: CGSize(width: image.size.width * scale, height: image.size.height * scale))) }
-                            guard let jpeg = reduced.jpegData(compressionQuality: 0.86), jpeg.count <= 768 * 1024 else { continue }
-                            let item = WidgetGame(id: game.id, title: game.title), file = item.imageURL(in: directory, scene: scene)
-                            if (try? Data(contentsOf: file)) != jpeg { try jpeg.write(to: file, options: .atomic); changed = true }
+                for game in recent {
+                    for scene in [false, true] {
+                        var image = scene ? await scenes.cachedImage(for: game) : await artwork.cachedImage(for: game)
+                        guard !Task.isCancelled else { return }
+                        if scene, game.useConsoleBackground == true || image == nil { image = ArtworkResources.consoleImage(.threeDS) }
+                        let item = WidgetGame(id: game.id, title: game.title), file = item.imageURL(in: directory, scene: scene)
+                        guard let image else {
+                            if FileManager.default.fileExists(atPath: file.path) { try FileManager.default.removeItem(at: file); changed = true }
+                            continue
                         }
+                        let limit: CGFloat = scene ? 768 : 384
+                        let scale = min(1, limit / max(image.size.width, image.size.height))
+                        let format = UIGraphicsImageRendererFormat(); format.scale = 1; format.opaque = true
+                        let size = CGSize(width: image.size.width * scale, height: image.size.height * scale)
+                        let reduced = UIGraphicsImageRenderer(size: size, format: format).image { _ in image.draw(in: CGRect(origin: .zero, size: size)) }
+                        guard let jpeg = reduced.jpegData(compressionQuality: 0.86), jpeg.count <= 768 * 1024 else { continue }
+                        if (try? Data(contentsOf: file)) != jpeg { try jpeg.write(to: file, options: .atomic); changed = true }
                     }
                 }
                 guard !Task.isCancelled, changed else { return }
@@ -123,28 +118,6 @@ final class GameLibrary: ObservableObject {
     func importCover(_ url: URL, for game: Game) async {
         do { try await artwork.importImage(url, for: game); artworkRevision += 1 }
         catch { self.error = error.localizedDescription }
-    }
-    func setArtworkFetchingEnabled(_ enabled: Bool) {
-        guard artworkFetchingEnabled != enabled else { return }
-        artworkFetchingEnabled = enabled
-        Task {
-            await ArtworkResources.catalog?.setFetchingEnabled(enabled)
-            await artwork.setFetchingEnabled(enabled); await scenes.setFetchingEnabled(enabled)
-            if enabled { await refreshArtworkCatalog() }
-            if enabled, artworkFetchingEnabled { artworkRevision += 1; sceneRevision += 1 }
-        }
-    }
-    func refreshArtworkCatalog() async {
-        guard artworkFetchingEnabled else { return }
-        if await ArtworkResources.catalog?.refresh() == true, artworkFetchingEnabled { artworkRevision += 1; sceneRevision += 1 }
-    }
-    func chooseArtwork(_ title: String, for game: Game) async {
-        do {
-            try updateArtwork(game) { $0.artworkTitle = title }
-            try await artwork.reset(game, clearCustom: true)
-            try await scenes.reset(game, clearCustom: false)
-        } catch { self.error = error.localizedDescription }
-        artworkRevision += 1; sceneRevision += 1
     }
     func setConsoleBackground(_ enabled: Bool, for game: Game) {
         do { try updateArtwork(game) { $0.useConsoleBackground = enabled }; sceneRevision += 1 }
@@ -218,11 +191,7 @@ final class GameLibrary: ObservableObject {
         games[i].lastPlayed = Date()
         do { try storage.write(games) } catch { self.error = error.localizedDescription }
     }
-    func refreshArtwork(_ game: Game) async {
-        let image = await artwork.image(for: game, refresh: true)
-        artworkRevision += 1
-        if image == nil { error = "No cover was found. Check your connection and use the game's full name when importing it. Covers are provided by the Libretro thumbnail collection." }
-    }
+
 }
 
 struct Launch: Identifiable {

@@ -6,8 +6,9 @@ import json
 import tarfile
 
 ROOT = Path(__file__).resolve().parent.parent
-upstream = ROOT / "build/Downloads/azahar-unified-source-2127.0-rc1.tar.xz"
-assert hashlib.sha256(upstream.read_bytes()).hexdigest() == "4c966d8344da9a95c2c9ccfc6671991ba3bf36d82157c7d0a64ca25f1d30ed24"
+resource_policy = json.loads((ROOT / "Docs/Legal/SANITIZED-UPSTREAM-21.json").read_text())
+upstream = ROOT / resource_policy["derivedArchive"]
+assert hashlib.sha256(upstream.read_bytes()).hexdigest() == resource_policy["derivedArchiveSHA256"]
 metadata = json.loads((ROOT / "TestFlight/AppInformation.json").read_text())
 output = ROOT / f"build/TestFlight/EmuDen-{metadata['version']}-{metadata['build']}-source.tar.gz"
 if output.exists():
@@ -30,13 +31,10 @@ for name in ("README.md", "Package.swift", "LICENSE.txt", "COPYRIGHT.md", "Emula
              "Docs/Design/Build13-Artwork/selection.json", "Docs/Design/Build13-Artwork/artwork-a.json", "Docs/Design/Build13-Artwork/artwork-b.json", "Docs/Design/Build13-Artwork/artwork-c.json", "Docs/Design/Build13-Artwork/PROVENANCE.md", "Docs/Design/Build13-Artwork/final-assets.json",
              "Docs/Branding/README.md", "Docs/Branding/EmuDen-Icon-Master.png",
              "Docs/Design/ArtworkCatalog/selection.json", "Docs/Design/ArtworkCatalog/queue.json", "Docs/Design/ArtworkCatalog/README.md", "Docs/Design/ArtworkCatalog/batch-2026-11-11-1252.json", "Docs/Design/ArtworkCatalog/batch-2026-11-11-1347.json", "Docs/Design/ArtworkCatalog/batch-2026-11-11-1656.json", "Docs/Design/ArtworkCatalog/batch-2026-11-11-1813.json",
-             "ArtworkCatalog/.openai/hosting.json", "ArtworkCatalog/catalog-config.json", "ArtworkCatalog/README.md",
              "Docs/PERFORMANCE.md", "Docs/DEBUG-SYMBOLS.md", "Docs/VALIDATION.md", "Docs/Legal/REVIEW-2026-11-11.md"):
     files.append(ROOT / name)
-for path in (ROOT / "ArtworkCatalog/dist").rglob("*"):
-    assert not path.is_symlink(), path
-    if path.is_file() and path.suffix.lower() in {".html", ".css", ".js", ".json", ".jpg"}:
-        files.append(path)
+for name in ("Docs/BUILD-21.md", "Docs/RELEASE-21-PROGRESS.md", "Docs/Legal/ASSET-REGISTER-21.json", "Docs/Legal/SANITIZED-UPSTREAM-21.json", "Docs/Legal/CORE-RESOURCE-POLICY-21.json", "Docs/Legal/TECHNICAL-VALIDATION-21.json", "Docs/Legal/RELEASE-21-REVIEW.md", "Docs/Legal/EXPORT-ASSESSMENT-21.json"):
+    files.append(ROOT / name)
 with tarfile.open(output, "w:gz", compresslevel=6) as archive:
     for path in sorted(files):
         assert path.suffix.lower() not in {".3ds", ".cci", ".cxi", ".cia", ".p8", ".p12", ".mobileprovision"}, path

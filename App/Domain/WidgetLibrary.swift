@@ -34,6 +34,7 @@ struct WidgetGame: Codable, Equatable, Identifiable, Sendable {
     }
 }
 struct WidgetLibrary: Codable, Equatable, Sendable {
+    static let directoryName = "LocalArtworkWidgetLibrary"
     static let groupID = "group.com.brandonaleman.Emulator"
     static let continueKind = "EmuDenContinue", recentKind = "EmuDenRecent"
     var games: [WidgetGame]

@@ -1,6 +1,6 @@
-# Public submission handoff — build 19
+# Public submission handoff — build 21
 
-Reuse the existing EmuDen app record. Do not create a duplicate or use the internal-only IPA as a public submission. Build 18 remains the owner's phone test build. The next candidate's release controls need device validation too.
+Reuse the existing EmuDen app record. Do not create a duplicate or use the internal-only IPA as a public submission. Build 18 remains the owner's phone test build. Build21 keeps the tested core but its local-artwork/release controls still need final device validation.
 
 Prepared decisions: free, United States only, manual release after review; only 3DS playable. StoreListing.json, PrivacyAnswers.json, AgeRatingAnswers.json and TipProducts.json contain reviewable field values. Public policy/support/source pages already exist. Current Review notes are in en-US/review-notes.txt. Contact details for Apple's private review form remain in Private/Contact.json and must not be copied to the public site/source.
 
@@ -8,4 +8,4 @@ Live App Store Connect work remains: enter/check store metadata and categories, 
 
 Tips are optional for launch. If the owner has an active Paid Apps Agreement, banking/tax setup and wants tips immediately, create the three consumables, use their actual returned prices, supply review screenshots/notes, test Apple's sandbox and attach the first IAP submission as Apple requires. Otherwise leave products unavailable: the app remains entirely free with no tip card. Local StoreKit configuration tests do not prove live sandbox availability. Never use a real purchase to test.
 
-Release holds: particular generated-character artwork/cover uses need an applicable rights basis; GPL/store distribution terms and brand clearance remain documented questions. Do not affirm an unsupported content-rights declaration. No qualified legal opinion or Apple acceptance is supplied by engineering preparation. Retain the generated images and older assets as the owner requested while these questions are settled. No public submission or automatic release is authorized by a passing technical validator.
+Build21 removes generated-character art/cover downloads and their old cache display. Masters and earlier assets remain outside the candidate. Release holds: GPL/store distribution terms and name screening remain documented questions, plus the live privacy/age forms, final distribution export and phone validation. Do not affirm an unsupported content-rights declaration. No qualified legal opinion or Apple acceptance is supplied by engineering preparation. Retain the generated images and older assets as the owner requested while these questions are settled. No public submission or automatic release is authorized by a passing technical validator.

@@ -1,11 +1,14 @@
-# Export-compliance assessment — build 19
+# Export-compliance assessment — build 21
 
 Builds 17–18 retain their original metadata and unresolved declaration. Build 19 has a documented engineering self-classification for the consumer gaming runtime, with initial App Store availability limited to the United States. This is not a BIS classification ruling, an Apple approval or a legal opinion.
 
-The core contains Crypto++ and LibreSSL code. Console AES/content handling, guest HTTPS, signature checks, authentication, hashes and related key management support the entertainment runtime. The frontend also uses Apple OS HTTPS for optional artwork and CryptoKit SHA-256 for local integrity checks. It would be inaccurate to say the app contains no encryption or only OS-provided cryptographic code. The source inventory is a conservative superset of core call sites, not a claim that each optional source module is linked.
+The core contains Crypto++ and LibreSSL code. Console AES/content handling, guest HTTPS, signature checks, authentication, hashes and related key management support the entertainment runtime. Build21 removes optional artwork networking; the unchanged core retains its entertainment-runtime cryptography. OS HTTPS is used only for explicit web links/Apple services. Earlier build19 used Apple OS HTTPS for optional artwork and CryptoKit SHA-256 for image integrity. It would be inaccurate to say the app contains no encryption or only OS-provided cryptographic code. The source inventory is a conservative superset of core call sites, not a claim that each optional source module is linked.
 
 Current BIS guidance places DRM and entertainment/game-runtime cryptography in the exclusions in 5A002.a Technical Note 1(e), (f), with related key management in (g). The technical assessment found no other CCL-controlled function in this consumer app and records an EAR99 conclusion for the described scope. No general encryption utility, VPN, secure messenger, cryptanalysis or military function is offered. See [the dated inventory and scope](../Docs/Legal/EXPORT-ASSESSMENT-19.json).
 
 Build 19 therefore sets `ITSAppUsesNonExemptEncryption=false` to record encryption exempt from Apple's documentation requirement. It does not assert absence of encryption. No `ITSEncryptionExportComplianceCode`, CCATS, filing or government approval is fabricated. If Apple requests more information, describe the actual third-party algorithms and entertainment use rather than selecting an OS-only answer. Territory or functionality changes require reassessment; this memo does not clear sanctions, prohibited recipients or every future distribution.
 
 Sources checked November 11, 2026: [BIS current technical-note guidance](https://www.bis.gov/learn-support/encryption-controls/cryptography-for-data-confidentiality), [CCL category 5](https://www.bis.gov/regulations/ear/interactive-commerce-control-list?category=5), [Apple encryption documentation](https://developer.apple.com/help/app-store-connect/manage-app-information/determine-and-upload-app-encryption-documentation/). The older standalone Note 4 handout is not the current placement of the rule.
+
+
+Build21 retains the same Azahar/MoltenVK binary inputs and the initial US-only distribution scope; see Docs/Legal/EXPORT-ASSESSMENT-21.json. No new cryptography or classification code is introduced.

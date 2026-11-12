@@ -4,13 +4,7 @@ enum ConsoleSystem: String, CaseIterable, Identifiable {
     case threeDS = "3ds", psp, ps1, gamecube
     var id: String { rawValue }
     var available: Bool { self == .threeDS }
-    static var visibleSystems: [ConsoleSystem] {
-#if DEBUG
-        allCases
-#else
-        allCases.filter(\.available)
-#endif
-    }
+    static var visibleSystems: [ConsoleSystem] { [.threeDS] }
     var shortName: String {
         switch self { case .threeDS: "3DS"; case .psp: "PSP"; case .ps1: "PS1"; case .gamecube: "GC" }
     }

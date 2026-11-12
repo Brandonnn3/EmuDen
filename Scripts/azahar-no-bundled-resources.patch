@@ -1,0 +1,58 @@
+--- a/src/core/hw/aes/key.cpp
++++ b/src/core/hw/aes/key.cpp
+@@ -20,9 +20,6 @@
+ #include "core/hle/service/fs/archive.h"
+ #include "core/hw/aes/arithmetic128.h"
+ #include "core/hw/aes/key.h"
+-#ifdef ENABLE_BUILTIN_KEYBLOB
+-#include "core/hw/default_keys.h"
+-#endif // ENABLE_BUILTIN_KEYBLOB
+ #include "core/hw/rsa/rsa.h"
+ #include "core/loader/loader.h"
+ 
+@@ -290,17 +287,8 @@
+ }
+ 
+ std::string GetBuiltInKeys() {
+-#ifdef ENABLE_BUILTIN_KEYBLOB
+-    // The key data is encrypted in the source to prevent easy access to it for unintended
+-    // purposes.
+-    std::vector<u8> kiv(16);
+-    std::string s(default_keys_enc_size, ' ');
+-    CryptoPP::CBC_Mode<CryptoPP::AES>::Decryption(kiv.data(), kiv.size(), kiv.data())
+-        .ProcessData(reinterpret_cast<u8*>(s.data()), default_keys_enc, s.size());
+-    return s;
+-#else
++    // EmuDen accepts user-provided resources instead of embedding console key data.
+     return "";
+-#endif // ENABLE_BUILTIN_KEYBLOB
+ }
+ 
+ #ifndef ENABLE_DEVELOPER_OPTIONS
+--- a/src/core/hle/service/http/http_c.cpp
++++ b/src/core/hle/service/http/http_c.cpp
+@@ -34,8 +34,6 @@
+ 
+ namespace Service::HTTP {
+ 
+-#include "ctr-common-1-cert.h"
+-#include "ctr-common-1-key.h"
+ 
+ namespace ErrCodes {
+ enum {
+@@ -2309,13 +2307,8 @@
+     open_mode.read_flag.Assign(1);
+     auto file_result = archive.OpenFile(file_path, open_mode, 0);
+     if (file_result.Failed()) {
+-        LOG_ERROR(Service_HTTP, "ClCertA file missing, using default");
+-
+-        cert_file_data.resize(ctr_common_1_cert_bin_size);
+-        memcpy(cert_file_data.data(), ctr_common_1_cert_bin, cert_file_data.size());
+-
+-        key_file_data.resize(ctr_common_1_key_bin_size);
+-        memcpy(key_file_data.data(), ctr_common_1_key_bin, key_file_data.size());
++        LOG_ERROR(Service_HTTP, "User-provided ClCertA resource is unavailable");
++        return;
+     } else {
+         auto romfs = std::move(file_result).Unwrap();
+         std::vector<u8> romfs_buffer(romfs->GetSize());

@@ -1,4 +1,4 @@
-Build 19 release controls. Build 18 remains the owner's current phone test build; no new core/graphics speed gain is claimed in build 19.
+Build 21 release controls. Build 18 remains the owner's current phone test build; no new core/graphics speed gain is claimed in build 19.
 
 Privacy, access and optional support:
 • First library use asks whether to download online artwork. Decline, relaunch and verify the choice persists; bundled/cached/chosen pictures remain. Settings → Online artwork changes the choice.
@@ -19,7 +19,7 @@ Graphics and gameplay:
 • Controller → Duo layout → Fill display should remove the outer-screen inset. Check orientations, inner folding, touch edges, button hiding/haptics and upper-toolbar fading. FPS and frame-time graph are separate optional displays.
 
 Library and widgets:
-• Test search/dock hiding, fast cover selection, offline artwork and Reduced Motion. Existing catalog v7 has 42 backgrounds and 24 covers; images are preserved and generation remains paused for release review.
+• Test search/dock hiding, fast cover selection, offline artwork and Reduced Motion. Build21 uses original console art and personal image imports only; the earlier generated collection is preserved outside this release.
 • Add Continue Playing/Recent Games widgets. Check cached images, appearance, recent ordering, game links and save-before-switch. Actual Home Screen/regional age-service behavior still needs phone checks.
 
 Only 3DS is playable. No commercial ROMs or Nintendo system archives are included. Report device/build, title, settings, scene and reproducible steps.

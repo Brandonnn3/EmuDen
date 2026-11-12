@@ -8,3 +8,15 @@ Vendor/MoltenVK/Source/
 *.p12
 *.p8
 *.mobileprovision
+
+# Local verified binaries; corresponding source and reproducible recipes are tracked.
+Vendor/Azahar/*.dylib
+Vendor/Azahar/Simulator/
+Vendor/Azahar/*.dSYM/
+Vendor/MoltenVK/Device/
+Vendor/MoltenVK/MoltenVK/
+
+Vendor/Azahar/Source
+Vendor/MoltenVK/Source
+
+TestGames

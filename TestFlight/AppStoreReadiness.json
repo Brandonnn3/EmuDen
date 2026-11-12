@@ -1,14 +1,18 @@
 {
-  "reviewDate": "2026-11-11",
-  "auditedBuild": "19",
+  "reviewDate": "2026-11-12",
+  "auditedBuild": "21",
   "publicReleaseCleared": false,
-  "reviewDocument": "Docs/Legal/REVIEW-2026-11-11.md",
+  "reviewDocument": "Docs/Legal/RELEASE-21-REVIEW.md",
   "criteria": [
     {
       "id": "artwork-rights",
-      "status": "pending",
-      "evidence": [],
-      "resolution": "Document an applicable basis for the particular artwork use: license/service terms or an evaluated exception. Assess cover thumbnails separately from the public generated-character collection; replace material where no basis is established."
+      "status": "resolved",
+      "evidence": [
+        "Docs/Legal/ASSET-REGISTER-21.json",
+        "Scripts/verify-release-artwork.py",
+        "Docs/BUILD-21.md"
+      ],
+      "resolution": "For this candidate only: removed character gallery/bundled concepts/online covers and old automatic-cache display. Original unbranded assets, licensed demo and personal local imports remain. Preserved gallery rights are not declared cleared."
     },
     {
       "id": "corresponding-source",
@@ -16,16 +20,18 @@
       "evidence": [
         "LICENSE.txt",
         "COPYRIGHT.md",
-        "TestFlight/SOURCE.md",
-        "Docs/Legal/PUBLICATION-VERIFICATION.json"
+        "TestFlight/SOURCE.md"
       ],
-      "resolution": "Build17/18 source remains public and checksum-verified. Publish and verify the exact final build19 package before distributing19."
+      "resolution": "Finalize, publish and anonymously verify the exact build21 source package; prior17\u201319 packages remain intact."
     },
     {
       "id": "store-license-compatibility",
       "status": "pending",
-      "evidence": [],
-      "resolution": "Document compliance with the applicable GPLv3, store terms, EULA and distribution conditions; seek qualified advice for unresolved issues. GPL-family licensing is not an automatic App Store ban."
+      "evidence": [
+        "TestFlight/OPEN-SOURCE-DISTRIBUTION.md",
+        "Docs/Legal/RELEASE-21-REVIEW.md"
+      ],
+      "resolution": "Specific GPLv3 sections6/10 versus actual Apple Standard/custom EULA, Usage Rules and delivery restrictions need a qualified distribution assessment; no exception or custom agreement fabricated."
     },
     {
       "id": "dependency-notices",
@@ -33,53 +39,67 @@
       "evidence": [
         "Resources/ThirdPartyNotices.txt",
         "Docs/Legal/Notice-Sources.json",
-        "Docs/Legal/PUBLICATION-VERIFICATION.json"
+        "Docs/BUILD-21.md",
+        "Resources/ThirdPartyNotices.json"
       ],
-      "resolution": "84 preserved component/header notice texts, hashed inventory and full upstream source/build material are supplied; the final signed app copy matches and is accessible offline. Other distribution obligations remain separately assessed."
+      "resolution": "84 pinned component/header notice texts checked unchanged; final signed21 archive copy matches and Settings exposes it offline."
     },
     {
       "id": "public-support-privacy",
       "status": "resolved",
       "evidence": [
-        "Docs/Legal/PUBLICATION-VERIFICATION.json",
+        "TestFlight/AppInformation.json",
         "App/SettingsView.swift",
-        "TestFlight/AppInformation.json"
+        "Docs/Legal/RELEASE-21-REVIEW.md"
       ],
-      "resolution": "Public support/privacy/source pages with the authorized email and in-app/metadata links are live. Nine anonymous HTTP/content/asset checks pass. App Privacy/host retention is a separate unresolved record."
+      "resolution": "Existing public support/privacy/source URLs retained. The policy update distinguishes local-artwork21 from19/earlier networking; actual publication recorded separately when completed."
     },
     {
       "id": "privacy-disclosure",
       "status": "pending",
-      "evidence": [],
-      "resolution": "Build19 now asks before artwork requests and conservatively discloses linked request metadata. Public policy updated; live App Privacy Other Data use details/publication remain incomplete after desktop lock."
+      "evidence": [
+        "TestFlight/Submission/PrivacyAnswers.json",
+        "TestFlight/Privacy-policy-draft.md",
+        "Resources/PrivacyInfo.xcprivacy"
+      ],
+      "resolution": "Local-artwork/no developer telemetry candidate prepared; revise live App Store Connect privacy draft and publish truthful answers, plus update version-specific public policy."
     },
     {
       "id": "export-compliance",
       "status": "resolved",
       "evidence": [
-        "Docs/Legal/EXPORT-ASSESSMENT-19.json",
+        "Docs/Legal/EXPORT-ASSESSMENT-21.json",
         "TestFlight/EXPORT-COMPLIANCE.md",
         "Resources/Info.plist"
       ],
-      "resolution": "US entertainment-runtime/DRM/OS-HTTPS engineering self-assessment complete; nonexempt flag false, no invented approval code. Reassess territories/features; no BIS/Apple ruling claimed."
+      "resolution": "Same pinned runtime/cryptographic scope, with built-in console key data and client-certificate fallback removed. US-only entertainment self-assessment updated; no new crypto function or BIS/Apple ruling."
     },
     {
       "id": "emulator-content-age",
       "status": "pending",
-      "evidence": [],
-      "resolution": "Local unrated/adult controls, Apple regional age eligibility/service and strict HTTPS links implemented; public AASA/software index verified including Apple CDN. Regional sandbox/device checks and live age questionnaire remain pending."
+      "evidence": [
+        "App/LibraryView.swift",
+        "TestFlight/Submission/AgeRatingAnswers.json"
+      ],
+      "resolution": "Adult declaration/regional Apple check and index/links retained; final regional device validation and live questionnaire remain."
     },
     {
       "id": "branding-clearance",
       "status": "pending",
-      "evidence": [],
-      "resolution": "Complete appropriate name/icon/presentation clearance for intended markets."
+      "evidence": [
+        "Docs/Legal/RELEASE-21-REVIEW.md",
+        "Docs/Branding/README.md"
+      ],
+      "resolution": "Original unbranded icon/sounds and bounded name search recorded. Similar-mark/software/common-law screening remains incomplete; no search result is called formal clearance."
     },
     {
       "id": "release-quality",
       "status": "pending",
-      "evidence": [],
-      "resolution": "Final build19 archive/profile/dSYM checks pass;67domain,2tooling and six distinct release-control/save/purchase UI cases pass. Owner gameplay report is build18. Store captures, distribution export and final physical19 validation remain pending."
+      "evidence": [
+        "Docs/Legal/TECHNICAL-VALIDATION-21.json",
+        "Docs/RELEASE-21-PROGRESS.md"
+      ],
+      "resolution": "Final signed development archive,4 real matching dSYMs/profile/capability/asset/payload checks,70domain (1private skip),3tooling and8distinct native scenarios pass. Signed-device/regional checks and distribution IPA remain pending; no binary upload/phone-performance claim."
     }
   ]
 }

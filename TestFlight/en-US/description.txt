@@ -7,7 +7,7 @@ EmuDen brings your compatible game collection into a native iPhone and iPad libr
 • Use persistent in-game saves, Quick Save, Quick Load, multiple save-history points and automatic resume points.
 • Open recent games with Continue Playing and Recent Games widgets.
 • Choose your own cover, background and profile images locally.
-• Keep artwork offline, or choose online covers and cinematic backgrounds.
+• Use original console backgrounds or your own chosen images, with no artwork downloads.
 
 The app is free. Optional tips, where available through Apple, do not unlock features. Imported software is unrated and requires adult access confirmation.
 

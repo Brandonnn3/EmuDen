@@ -3,19 +3,23 @@
 from pathlib import Path
 import hashlib
 import subprocess
-import urllib.request
+import json
+import shutil
 
 root = Path(__file__).resolve().parent.parent
-url = "https://github.com/azahar-emu/azahar/releases/download/2127.0-rc1/azahar-unified-source-2127.0-rc1.tar.xz"
-expected = "4c966d8344da9a95c2c9ccfc6671991ba3bf36d82157c7d0a64ca25f1d30ed24"
+policy = json.loads((root / "Docs/Legal/SANITIZED-UPSTREAM-21.json").read_text())
+packaged = root / policy["derivedArchive"]
+expected = policy["derivedArchiveSHA256"]
 tools = root / ".tools"
 if not (tools / "bin/python3").exists():
     subprocess.run(["python3", "-m", "venv", str(tools)], check=True)
 subprocess.run([str(tools / "bin/pip"), "install", "--no-cache-dir", "cmake==3.31.6", "ninja==1.11.1.4"], check=True)
-archive = root / "build/Downloads/azahar-unified-source-2127.0-rc1.tar.xz"
+archive = root / "build/Downloads" / packaged.name
 archive.parent.mkdir(parents=True, exist_ok=True)
 if not archive.exists():
-    urllib.request.urlretrieve(url, archive)
+    if not packaged.is_file():
+        raise SystemExit("Obtain the matching EmuDen source package; its derived upstream source is required.")
+    shutil.copy2(packaged, archive)
 if hashlib.sha256(archive.read_bytes()).hexdigest() != expected:
     raise SystemExit("Azahar source checksum mismatch; remove the archive and retry.")
 source = root / "Vendor/Azahar/Source"

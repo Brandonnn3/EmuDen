@@ -28,6 +28,7 @@ parts = ["EmuDen — open-source notices\n\n"
          "Upstream notices below are preserved under their respective terms. Some upstream components are not enabled in this build.\n"
          "This notice bundle does not grant rights to third-party games, characters or artwork.\n"]
 records = []
+entries = []
 for source in sources:
     assert source.is_file() and not source.is_symlink(), source
     raw = source.read_bytes()
@@ -42,11 +43,13 @@ for source in sources:
     assert 0 < len(value.encode("utf-8")) <= 128 * 1024, source
     relative = source.relative_to(ROOT).as_posix()
     parts.append("\n" + "=" * 72 + "\n" + relative + "\n" + "=" * 72 + "\n\n" + value + "\n")
+    entries.append({"source": relative, "text": value})
     records.append({"source": relative, "sha256": hashlib.sha256(raw).hexdigest(), "bytes": len(raw),
                     "noticeText": "leading license comment" if source.parent.name == "Bridge" else "complete file"})
 output = "".join(parts).encode("utf-8")
-manifest = (json.dumps({"sources": records, "noticeSHA256": hashlib.sha256(output).hexdigest()}, indent=2) + "\n").encode()
-for path, data in [(ROOT / "Resources/ThirdPartyNotices.txt", output), (ROOT / "Docs/Legal/Notice-Sources.json", manifest)]:
+structured = (json.dumps({"introduction": parts[0], "notices": entries}, ensure_ascii=False, indent=2) + "\n").encode()
+manifest = (json.dumps({"sources": records, "noticeSHA256": hashlib.sha256(output).hexdigest(), "structuredNoticeSHA256": hashlib.sha256(structured).hexdigest()}, indent=2) + "\n").encode()
+for path, data in [(ROOT / "Resources/ThirdPartyNotices.txt", output), (ROOT / "Resources/ThirdPartyNotices.json", structured), (ROOT / "Docs/Legal/Notice-Sources.json", manifest)]:
     if args.check:
         assert path.read_bytes() == data, "Regenerate changed notices: " + str(path)
     else:

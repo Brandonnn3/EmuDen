@@ -1,11 +1,11 @@
 {
-  "status": "App Store Connect draft entered in part; see build19 preparation report for exact saved/pending fields",
+  "status": "Prepared build21 local-artwork candidate; live draft still refers to build19 until reconciled",
   "name": "EmuDen",
   "subtitle": "Your console collection",
   "bundleId": "com.brandonaleman.Emulator",
   "sku": "EMUDEN-IOS-001",
   "version": "0.1.0",
-  "build": "19",
+  "build": "21",
   "primaryLocale": "en-US",
   "price": 0,
   "currency": "USD",
@@ -24,6 +24,6 @@
   "supportURL": "https://emuden-support.headyopossum2.chatgpt.site/support.html",
   "privacyPolicyURL": "https://emuden-support.headyopossum2.chatgpt.site/privacy.html",
   "sourceURL": "https://emuden-support.headyopossum2.chatgpt.site/source.html",
-  "contentRightsDeclaration": "Pending specific art/distribution assessment; do not assert blanket rights",
+  "contentRightsDeclaration": "Only original unbranded presentation, licensed open-source homebrew and user-provided local files. No publisher-character gallery or cover-service downloads in build21. Broader licensing/brand review remains separate.",
   "publicSubmissionReady": false
 }

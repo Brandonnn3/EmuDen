@@ -1,6 +1,5 @@
 import SwiftUI
 import UniformTypeIdentifiers
-import QuickLook
 import StoreKit
 
 struct SystemSetupView: View {
@@ -15,12 +14,10 @@ struct SystemSetupView: View {
     @State private var importingAvatar = false
     @State private var showingWidgets = false
     @State private var soundOptions = false
-    @State private var noticeURL: URL?
+    @State private var showingNotices = false
     @AppStorage("buttonHaptics") private var haptics = true
     @AppStorage("asyncShaderCompilation") private var asyncShaders = true
     @AppStorage("showFPS") private var showFPS = false
-    @AppStorage("onlineArtworkEnabled") private var onlineArtwork = false
-    @AppStorage("hasArtworkChoice") private var hasArtworkChoice = false
     @AppStorage("importedGameAccess") private var importedGameAccess = "undecided"
     @State private var showingAgeChoice = false
     @StateObject private var tips = TipJarStore()
@@ -42,7 +39,7 @@ struct SystemSetupView: View {
             .sheet(isPresented: $showingWidgets) { WidgetShowcaseView() }
             .sheet(isPresented: $miiSetup) { MiiSetupView() }
             .sheet(isPresented: $showingAgeChoice) { ImportedGameAgeView { adult in importedGameAccess = adult ? "adult" : "under18"; showingAgeChoice = false } }
-            .quickLookPreview($noticeURL)
+            .sheet(isPresented: $showingNotices) { OpenSourceNoticesView() }
             .task { await tips.load() }
             .fullScreenCover(isPresented: $duoLayout) { DuoLayoutSettingsView() }
             .fileImporter(isPresented: $importingMii, allowedContentTypes: [.item]) { importFile($0, archive: true) }
@@ -70,10 +67,8 @@ struct SystemSetupView: View {
                     }.cinematicEntrance(delay: 0.04)
                     VStack(alignment: .leading, spacing: 14) {
                         Label("Artwork & privacy", systemImage: "photo.on.rectangle.angled").font(.headline)
-                        Toggle("Online artwork", isOn: $onlineArtwork).accessibilityIdentifier("onlineArtwork")
-                            .onChange(of: onlineArtwork) { _, _ in hasArtworkChoice = true; menuAudio.play(.focus) }
-                        Text("Find covers and cinematic backgrounds for your games. Artwork hosts receive image requests and connection information. Your game files and saves stay on this device. Turn this off to use bundled, cached or chosen pictures.")
-                            .font(.caption).foregroundStyle(ConsoleTheme.quiet)
+                        Text("Choose a game’s cover or background from Files using Change artwork in its menu. Images and captured gameplay previews stay on your device; this release does not download game artwork.")
+                            .font(.caption).foregroundStyle(ConsoleTheme.quiet).accessibilityIdentifier("localArtworkPolicy")
                         Divider()
                         Button { showingAgeChoice = true } label: { CinematicSettingRow(title: "Imported game access", detail: importedGameAccess == "adult" ? "Adult access confirmed" : "Unrated imports require adult confirmation", symbol: "person.crop.circle.badge.checkmark") }
                             .accessibilityIdentifier("importedGameAccess")
@@ -103,7 +98,7 @@ struct SystemSetupView: View {
                         Link("Source code & rebuilding", destination: URL(string: "https://emuden-support.headyopossum2.chatgpt.site/source.html")!).frame(minHeight: 44).accessibilityIdentifier("correspondingSourceLink")
                         Link("Bundled software", destination: URL(string: "https://emuden-support.headyopossum2.chatgpt.site/software.html")!).frame(minHeight: 44)
                         Button("Open-source notices", systemImage: "doc.text") {
-                            noticeURL = Bundle.main.url(forResource: "ThirdPartyNotices", withExtension: "txt")
+                            showingNotices = true
                         }.frame(minHeight: 44).accessibilityIdentifier("openSourceNotices")
                     }.frame(maxWidth: .infinity, alignment: .leading).cinematicCard()
                     DisclosureGroup("Help, tests & open-source notices") {
@@ -200,21 +195,59 @@ struct SystemSetupView: View {
     }
 }
 
-struct OnlineArtworkChoiceView: View {
-    let choose: (Bool) -> Void
+private struct OpenSourceNoticesView: View {
+    @Environment(\.dismiss) private var dismiss
+    @State private var introduction = ""
+    private struct Notice: Decodable { let source: String; let text: String }
+    private struct Document: Decodable { let introduction: String; let notices: [Notice] }
+    @State private var sections = [Notice]()
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
-            Image(systemName: "photo.stack.fill").font(.system(size: 42)).foregroundStyle(ConsoleTheme.blue)
-            Text("Bring your library to life.").font(.system(size: 32, weight: .bold))
-            Text("Online artwork finds covers and cinematic backgrounds for your games. Artwork hosts receive image requests and connection information. Your game files and saves stay on this device.")
-                .font(.body).foregroundStyle(ConsoleTheme.quiet)
-            Link("Read the privacy policy", destination: URL(string: "https://emuden-support.headyopossum2.chatgpt.site/privacy.html")!)
-            Spacer(minLength: 10)
-            Button { choose(true) } label: { CinematicActionLabel(title: "Use online artwork", symbol: "sparkles", primary: true) }.accessibilityIdentifier("allowOnlineArtwork")
-            Button { choose(false) } label: { CinematicActionLabel(title: "Use offline artwork", symbol: "photo", disclosure: false) }.accessibilityIdentifier("declineOnlineArtwork")
-        }.padding(30).frame(maxWidth: 660).frame(maxWidth: .infinity)
-            .background(ConsoleTheme.ink.ignoresSafeArea()).foregroundStyle(.white).tint(ConsoleTheme.blue)
-            .buttonStyle(ConsolePressStyle()).presentationDetents([.large]).interactiveDismissDisabled()
+        NavigationStack {
+            List {
+                if !introduction.isEmpty { Text(introduction).font(.footnote).textSelection(.enabled) }
+                Text("\(sections.count) license and notice files").font(.caption).foregroundStyle(.secondary)
+                    .accessibilityIdentifier("noticeFileCount")
+                ForEach(sections, id: \.source) { section in
+                    NavigationLink {
+                        NoticeTextView(text: section.text)
+                            .navigationTitle((section.source as NSString).lastPathComponent).navigationBarTitleDisplayMode(.inline)
+                    } label: {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text((section.source as NSString).lastPathComponent).font(.headline)
+                            Text(section.source).font(.caption).foregroundStyle(.secondary)
+                        }.padding(.vertical, 4)
+                    }.accessibilityIdentifier("notice-" + section.source)
+                }
+            }.navigationTitle("Open-source notices").navigationBarTitleDisplayMode(.inline)
+                .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
+                .overlay { if introduction.isEmpty { ProgressView("Loading notices…") } }
+        }.task {
+            guard introduction.isEmpty else { return }
+            let url = Bundle.main.url(forResource: "ThirdPartyNotices", withExtension: "json")
+            let document = try? await Task.detached {
+                guard let url else { throw CocoaError(.fileNoSuchFile) }
+                return try JSONDecoder().decode(Document.self, from: Data(contentsOf: url))
+            }.value
+            guard let document else { introduction = "The bundled notices could not be opened. Use Source code & rebuilding in Settings for another copy."; return }
+            introduction = document.introduction
+            sections = document.notices
+        }
+    }
+}
+
+private struct NoticeTextView: UIViewRepresentable {
+    let text: String
+    func makeUIView(context: Context) -> UITextView {
+        let view = UITextView()
+        view.isEditable = false; view.isSelectable = true; view.alwaysBounceVertical = true
+        view.font = .preferredFont(forTextStyle: .footnote); view.adjustsFontForContentSizeCategory = true
+        view.backgroundColor = .clear; view.textColor = .label
+        view.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 24, right: 20)
+        view.accessibilityIdentifier = "openSourceNoticeText"
+        return view
+    }
+    func updateUIView(_ view: UITextView, context: Context) {
+        if view.text != text { view.text = text }
     }
 }
 
@@ -342,7 +375,7 @@ struct WidgetShowcaseView: View {
             .task {
                 library.refreshWidgets()
                 snapshot = WidgetLibrary(games: Array(library.sortedGames.prefix(4)).map { WidgetGame(id: $0.id, title: $0.artworkName) }, updated: Date())
-                directory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: WidgetLibrary.groupID)?.appendingPathComponent("WidgetLibrary", isDirectory: true)
+                directory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: WidgetLibrary.groupID)?.appendingPathComponent(WidgetLibrary.directoryName, isDirectory: true)
                 try? await Task.sleep(for: .seconds(3))
                 if let directory, let saved = WidgetLibrary.read(from: directory) { snapshot = saved }
             }

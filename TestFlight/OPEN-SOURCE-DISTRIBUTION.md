@@ -1,4 +1,4 @@
-# Open-source distribution record — build 19
+# Open-source distribution record — build 21
 
 This records implementation evidence, not a legal opinion about every distribution arrangement.
 
@@ -11,4 +11,4 @@ This records implementation evidence, not a legal opinion about every distributi
 
 Primary texts: [Azahar's pinned GPLv3](https://raw.githubusercontent.com/azahar-emu/azahar/2127.0-rc1/LICENSE.txt), [Apple Standard EULA](https://www.apple.com/legal/internet-services/itunes/dev/stdeula/), [Apple Developer Program License Agreement](https://developer.apple.com/support/terms/apple-developer-program-license-agreement/).
 
-The specific remaining store/EULA/installation questions and the actual art/name scope are in `Docs/Legal/RELEASE-19-REVIEW-PACKET.md`. No public legal clearance or new agreement is recorded.
+The current specific store/EULA/installation questions and candidate asset/name scope are in `Docs/Legal/RELEASE-21-REVIEW.md`. Earlier releases retain their original records. No public legal clearance or new agreement is recorded.

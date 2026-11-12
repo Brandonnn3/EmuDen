@@ -13,7 +13,7 @@ struct EmuDenWidgetProvider: TimelineProvider {
         completion(Timeline(entries: [current()], policy: .after(Date().addingTimeInterval(1800))))
     }
     private func current() -> EmuDenWidgetEntry {
-        let directory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: WidgetLibrary.groupID)?.appendingPathComponent("WidgetLibrary", isDirectory: true)
+        let directory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: WidgetLibrary.groupID)?.appendingPathComponent(WidgetLibrary.directoryName, isDirectory: true)
         return EmuDenWidgetEntry(date: Date(), library: directory.flatMap { WidgetLibrary.read(from: $0) } ?? .empty, directory: directory)
     }
 }

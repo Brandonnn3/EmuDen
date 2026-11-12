@@ -88,20 +88,13 @@ import CryptoKit
         let damaged = await catalog.cachedImage(for: game, kind: .cover)
         XCTAssertNil(damaged); XCTAssertEqual(ArtworkProtocol.count, 1)
     }
-    func testActualCollectionSeedDecodesAndIdentifiesEveryEntry() throws {
+    func testReleaseDoesNotBundleOrCompileTheRemoteArtworkService() throws {
         let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
-        let data = try Data(contentsOf: root.appendingPathComponent("Resources/CinematicArt/Artwork-Pack.json"))
-        let actual = try JSONDecoder().decode(ArtworkPack.self, from: data)
-        XCTAssertGreaterThanOrEqual(actual.games.count, 28)
-        XCTAssertEqual(actual.games.filter { $0.scene != nil }.count, actual.games.count)
-        XCTAssertGreaterThanOrEqual(actual.games.filter { $0.cover != nil }.count, 24)
-        for entry in actual.games {
-            XCTAssertEqual(actual.match(Game(title: entry.title, fileName: "test.cci"))?.key, entry.key)
-            for id in entry.programIDs {
-                XCTAssertEqual(actual.match(Game(title: "Renamed", fileName: "test.cci", programID: id))?.key, entry.key)
-            }
-        }
+        XCTAssertFalse(FileManager.default.fileExists(atPath: root.appendingPathComponent("Resources/CinematicArt/Artwork-Pack.json").path))
+        let project = try String(contentsOf: root.appendingPathComponent("EmulatorApp.xcodeproj/project.pbxproj"), encoding: .utf8)
+        XCTAssertFalse(project.contains("App/Domain/RemoteArtwork.swift in Sources"))
     }
+
     func testSceneAvailabilityUsesMetadataWithoutDownloadingAndFollowsUpdates() async throws {
         let transport = session(), folder = try directory(), json = manifest()
         let catalog = RemoteArtworkCatalog(seed: try pack(json), directory: folder, session: transport)

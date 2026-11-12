@@ -1,0 +1,28 @@
+{
+  "build": "21",
+  "originalArchiveSHA256": "4c966d8344da9a95c2c9ccfc6671991ba3bf36d82157c7d0a64ca25f1d30ed24",
+  "derivedArchive": "Upstream/azahar-unified-source-2127.0-rc1-emuden-resources.tar.xz",
+  "derivedArchiveSHA256": "c0fca9353cdb378e6a4f7f884a7f09b42d5e2ba8a19861df40f61e8329e4ccc0",
+  "modifiedHeaders": [
+    {
+      "source": "src/core/hle/service/http/ctr-common-1-cert.h",
+      "originalBytes": 8096,
+      "originalSHA256": "c6c2b9bad2549312ac04aff978e0f73f9d37e72580608223b3a3130d47499bac",
+      "replacementSHA256": "075587d65d152369b69498cd69d734c606847263346e3a45d7994f2cb18ad170"
+    },
+    {
+      "source": "src/core/hle/service/http/ctr-common-1-key.h",
+      "originalBytes": 7893,
+      "originalSHA256": "ffb7498ce2a2ef8e4633686b6374ef227e77c334849fbb1ce359f8b661a14f1b",
+      "replacementSHA256": "075587d65d152369b69498cd69d734c606847263346e3a45d7994f2cb18ad170"
+    },
+    {
+      "source": "src/core/hw/default_keys.h",
+      "originalBytes": 60717,
+      "originalSHA256": "244914daea91976891373cdf5e0123db86ca1250bd6d6be2144f637e302032c9",
+      "replacementSHA256": "075587d65d152369b69498cd69d734c606847263346e3a45d7994f2cb18ad170"
+    }
+  ],
+  "policy": "Only the three data headers are replaced; complete required source/licenses plus local patches retained.",
+  "originalPreservedOutsideRelease": true
+}

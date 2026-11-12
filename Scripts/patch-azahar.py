@@ -2,8 +2,10 @@
 """Small, repeatable fixes for the pinned Azahar 2127.0-rc1 libretro host."""
 from pathlib import Path
 import subprocess
+import os
 
 root = Path(__file__).resolve().parent.parent / "Vendor/Azahar/Source"
+patch_environment = {**os.environ, "GIT_CEILING_DIRECTORIES": str(root.parent)}
 patches = [
     ("src/citra_libretro/citra_libretro.cpp",
      "CitraLibRetro() : log_filter(Common::Log::Level::Debug) {}",
@@ -50,14 +52,14 @@ for name, old, new in patches:
     path.write_text(source.replace(old, new))
     print(f"Patched {name}")
 
-for name in ["azahar-simulator-buffers.patch", "azahar-moltenvk-features.patch", "azahar-save-state-cache.patch", "azahar-shader-stacks.patch", "azahar-shader-stutter.patch", "azahar-async-pipeline-probe.patch", "azahar-player-settings.patch"]:
+for name in ["azahar-simulator-buffers.patch", "azahar-moltenvk-features.patch", "azahar-save-state-cache.patch", "azahar-shader-stacks.patch", "azahar-shader-stutter.patch", "azahar-async-pipeline-probe.patch", "azahar-player-settings.patch", "azahar-no-bundled-resources.patch"]:
     patch = Path(__file__).with_name(name)
-    check = subprocess.run(["git", "apply", "--check", str(patch)], cwd=root, capture_output=True)
+    check = subprocess.run(["git", "apply", "--check", str(patch)], cwd=root, env=patch_environment, capture_output=True)
     if check.returncode == 0:
-        subprocess.run(["git", "apply", str(patch)], cwd=root, check=True)
+        subprocess.run(["git", "apply", str(patch)], cwd=root, env=patch_environment, check=True)
         print(f"Applied {name}")
     else:
-        applied = subprocess.run(["git", "apply", "--reverse", "--check", str(patch)], cwd=root, capture_output=True)
+        applied = subprocess.run(["git", "apply", "--reverse", "--check", str(patch)], cwd=root, env=patch_environment, capture_output=True)
         if applied.returncode:
             raise SystemExit(f"Unexpected source for {name}; refusing an ambiguous patch")
 

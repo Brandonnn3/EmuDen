@@ -1,0 +1,69 @@
+{
+  "build": "21",
+  "records": [
+    {
+      "platform": "device",
+      "binary": "Vendor/Azahar/azahar_libretro.dylib",
+      "sha256": "d5d058b1bec66e11668ffdf560d508fc772c520e0b2ec4308a1bc52b781400ec",
+      "excludedPayloads": [
+        {
+          "source": "src/core/hw/default_keys.h",
+          "bytes": 9648,
+          "sha256": "017bcf81ddd9323a37cb5611e4b6f5d529db49a08073e8d2f1759c3f5568668f",
+          "foundInBinary": false,
+          "presentInPrePolicyDeviceBinary": true
+        },
+        {
+          "source": "src/core/hle/service/http/ctr-common-1-cert.h",
+          "bytes": 1264,
+          "sha256": "112d33785c00a56ed37be2bd51fce5e0f74606450f589ee613ca58382f3a9278",
+          "foundInBinary": false,
+          "presentInPrePolicyDeviceBinary": true
+        },
+        {
+          "source": "src/core/hle/service/http/ctr-common-1-key.h",
+          "bytes": 1232,
+          "sha256": "6201f628c060332bd3989e302769353bbb0c6e7938f11975916d63bee28f87fd",
+          "foundInBinary": false,
+          "presentInPrePolicyDeviceBinary": true
+        }
+      ],
+      "incrementalCacheBuiltinOption": "ON, but the mandatory source patch unconditionally removes includes/fallback data; public fresh build sets OFF",
+      "coreVersion": "2127.0-rc1",
+      "patch": "Scripts/azahar-no-bundled-resources.patch"
+    },
+    {
+      "platform": "simulator",
+      "binary": "Vendor/Azahar/Simulator/azahar_libretro.dylib",
+      "sha256": "b46e7c3990beb37d0a9857d39c3c7d1523ec094b9145cc7a809cc02e87a84378",
+      "excludedPayloads": [
+        {
+          "source": "src/core/hw/default_keys.h",
+          "bytes": 9648,
+          "sha256": "017bcf81ddd9323a37cb5611e4b6f5d529db49a08073e8d2f1759c3f5568668f",
+          "foundInBinary": false,
+          "presentInPrePolicyDeviceBinary": true
+        },
+        {
+          "source": "src/core/hle/service/http/ctr-common-1-cert.h",
+          "bytes": 1264,
+          "sha256": "112d33785c00a56ed37be2bd51fce5e0f74606450f589ee613ca58382f3a9278",
+          "foundInBinary": false,
+          "presentInPrePolicyDeviceBinary": true
+        },
+        {
+          "source": "src/core/hle/service/http/ctr-common-1-key.h",
+          "bytes": 1232,
+          "sha256": "6201f628c060332bd3989e302769353bbb0c6e7938f11975916d63bee28f87fd",
+          "foundInBinary": false,
+          "presentInPrePolicyDeviceBinary": true
+        }
+      ],
+      "incrementalCacheBuiltinOption": "ON, but the mandatory source patch unconditionally removes includes/fallback data; public fresh build sets OFF",
+      "coreVersion": "2127.0-rc1",
+      "patch": "Scripts/azahar-no-bundled-resources.patch"
+    }
+  ],
+  "noPayloadBytesRecorded": true,
+  "limits": "Only the three identified console data payloads were checked; no legal clearance or phone compatibility claim."
+}

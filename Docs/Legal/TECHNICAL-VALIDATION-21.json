@@ -1,0 +1,40 @@
+{
+  "build": "21",
+  "date": "2026-11-12",
+  "archive": "build/TestFlight/EmuDen-0.1.0-21.xcarchive",
+  "archiveSignedDevelopment": true,
+  "distributionIPAExported": false,
+  "binaryUploaded": false,
+  "deviceTesting": false,
+  "domainTests": {
+    "reported": 70,
+    "skipped": 1,
+    "failures": 0
+  },
+  "toolingTests": {
+    "reported": 3,
+    "failures": 0
+  },
+  "nativePassedScenarios": [
+    "Local artwork remains local with legacy online preference enabled",
+    "Console background preference/reset persistence",
+    "Controller fills portrait/landscape display with hidden controls and correct touch mapping",
+    "84 offline component notices/full GPL text",
+    "Bundled homebrew and imported adult-access gate",
+    "Mario Golf local startup with rebuilt no-default-data core",
+    "Ocarina of Time local startup with rebuilt no-default-data core",
+    "Save history earlier-point load, relaunch and resume"
+  ],
+  "nativePlatformLimitation": "Imported widget route check verifies closed access/error on regional-service deadline, then skips actual play because Apple regional service does not return in unsigned Simulator. Signed device/regional validation remains required.",
+  "corePolicy": "Docs/Legal/CORE-RESOURCE-POLICY-21.json",
+  "sourceInput": "Docs/Legal/SANITIZED-UPSTREAM-21.json",
+  "artwork": "Docs/Legal/ASSET-REGISTER-21.json",
+  "symbols": "Four genuine DWARF bundles match archived app/widget/Azahar/MoltenVK UUIDs",
+  "remaining": [
+    "GPL/Apple distribution arrangement and actual imports/crypto scope review",
+    "Relevant software/name/presentation screening",
+    "Mac/Xcode distribution signing/profile refresh and live store forms",
+    "Final signed-device/regional/phone QA"
+  ],
+  "appleAcceptanceOrLegalClearanceClaimed": false
+}

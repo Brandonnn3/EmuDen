@@ -46,8 +46,6 @@ struct DuoLayoutSettingsView: View {
                 guard topPreview == nil, let game = library.featuredGame else { return }
                 if game.useConsoleBackground == true { scene = ArtworkResources.consoleImage(.threeDS); return }
                 if let chosen = await library.scenes.preferredImage(for: game) { scene = chosen; return }
-                if CinematicArt.match(game.artworkName) == .golf { scene = CinematicArt.golfScene; return }
-                if CinematicArt.match(game.artworkName) == .zelda { scene = CinematicArt.forestScene; return }
                 let captured = await library.scenes.image(for: game)
                 if let captured { scene = captured }
                 else { scene = ArtworkResources.consoleImage(.threeDS) }

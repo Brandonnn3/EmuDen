@@ -27,9 +27,6 @@ struct LibraryView: View {
     @State private var shelfPosition: UUID?
     @State private var handledLaunchArguments = false
     @State private var hoverTask: Task<Void, Never>?
-    @AppStorage("onlineArtworkEnabled") private var onlineArtwork = false
-    @AppStorage("hasArtworkChoice") private var hasArtworkChoice = false
-    @State private var showingArtworkConsent = false
     @AppStorage("importedGameAccess") private var importedGameAccess = "undecided"
     @State private var ageCheckedLaunch: Launch?
     @FocusState private var searchFocused: Bool
@@ -41,7 +38,6 @@ struct LibraryView: View {
     private var menuActive: Bool { launch == nil && !launchPending && !showingSystem && !showingLayout && !showingMii && !importing && artworkGame == nil && settingsGame == nil && !library.busy && scenePhase == .active }
     private var menuAudioActive: Bool { launch == nil && scenePhase == .active }
 
-    private var artworkNetworkActive: Bool { onlineArtwork && hasArtworkChoice && launch == nil && !launchPending && scenePhase == .active }
 
     var body: some View {
         GeometryReader { geometry in
@@ -82,11 +78,6 @@ struct LibraryView: View {
         .sheet(item: $settingsGame) { PlayerSettingsView(game: $0) }
         .fullScreenCover(isPresented: $showingLayout) { DuoLayoutSettingsView() }
         .sheet(isPresented: $showingMii) { MiiSetupView() }
-        .sheet(isPresented: $showingArtworkConsent) {
-            OnlineArtworkChoiceView { enabled in
-                onlineArtwork = enabled; hasArtworkChoice = true; showingArtworkConsent = false
-            }
-        }
         .sheet(item: $ageCheckedLaunch) { item in
             ImportedGameAgeView { adult in
                 importedGameAccess = adult ? "adult" : "under18"; ageCheckedLaunch = nil
@@ -113,16 +104,14 @@ struct LibraryView: View {
         }
         .animation(ConsoleMotion.scene(reduceMotion), value: launchPending)
         .disabled(library.busy || launchPending)
-        .onAppear { repairSelection(); configureInput(); menuAudio.setActive(menuAudioActive); library.setArtworkFetchingEnabled(artworkNetworkActive) }
-        .onChange(of: artworkNetworkActive) { _, active in library.setArtworkFetchingEnabled(active) }
+        .onAppear { repairSelection(); configureInput(); menuAudio.setActive(menuAudioActive) }
         .task {
             await library.prepareEmulationData()
-            await library.refreshArtworkCatalog()
             library.refreshWidgets()
         }
-        .onChange(of: library.coreReady, initial: true) { _, ready in if ready { handleStartup(); openPendingWidgetGame(); offerArtworkChoice() } }
+        .onChange(of: library.coreReady, initial: true) { _, ready in if ready { handleStartup(); openPendingWidgetGame() } }
         .onChange(of: scenePhase) { _, phase in if phase == .active, library.coreReady { handleStartup(); openPendingWidgetGame(); library.refreshWidgets() } }
-        .onChange(of: library.games) { _, _ in library.refreshWidgets(); offerArtworkChoice() }
+        .onChange(of: library.games) { _, _ in library.refreshWidgets() }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("EmuDenArtworkUpdated"))) { _ in library.refreshWidgets() }
         .onOpenURL(perform: openLink)
         .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in if let url = activity.webpageURL { openLink(url) } }
@@ -138,7 +127,7 @@ struct LibraryView: View {
             if old != nil, new != nil, menuActive, !searching, system.available { menuAudio.play(.focus) }
         }
         .onChange(of: menuAudioActive) { _, active in menuAudio.setActive(active) }
-        .onChange(of: menuActive) { _, active in if !active { hoverTask?.cancel() }; configureInput(); offerArtworkChoice() }
+        .onChange(of: menuActive) { _, active in if !active { hoverTask?.cancel() }; configureInput() }
         .onChange(of: searching) { _, _ in configureInput() }
         .onReceive(NotificationCenter.default.publisher(for: .GCControllerDidConnect)) { _ in configureInput() }
         .onReceive(NotificationCenter.default.publisher(for: .GCControllerDidDisconnect)) { _ in configureInput() }
@@ -376,9 +365,7 @@ struct LibraryView: View {
         Button("Change artwork", systemImage: "photo.stack") { menuAudio.play(.open); artworkGame = game }.accessibilityIdentifier("changeArtwork")
         Button("Game settings", systemImage: "slider.horizontal.3") { settingsGame = game }
         ShareLink(item: EmuDenLink.game(game.id)) { Label("Share game link", systemImage: "link") }
-        if CinematicArt.match(game.artworkName) == nil {
-            Button("Find game artwork", systemImage: "photo") { Task { await library.refreshArtwork(game) } }
-        }
+
     }
 
     private func footer(width: CGFloat = 0, compact: Bool = false, wide: Bool = false) -> some View {
@@ -511,7 +498,10 @@ struct LibraryView: View {
         // from the storefront, a location permission or the user's local choice.
         guard #available(iOS 26.2, *) else { return true }
         do {
-            guard try await AgeRangeService.shared.isEligibleForAgeFeatures else { return true }
+            let eligible = try await AgeEligibilityRequest().value {
+                try await AgeRangeService.shared.isEligibleForAgeFeatures
+            }
+            guard eligible else { return true }
             guard let window = UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene })
                 .first(where: { $0.activationState == .foregroundActive })?.windows.first(where: \.isKeyWindow),
                   var presenter = window.rootViewController else {
@@ -593,12 +583,6 @@ struct LibraryView: View {
             .replacingOccurrences(of: #"^(.+), The( - |$)"#, with: "The $1$2", options: .regularExpression)
     }
     private func launchControls() { showingSystem = false; DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { beginLaunch(Launch(title: "Input & display test", url: nil)) } }
-    private func offerArtworkChoice() {
-        let arguments = ProcessInfo.processInfo.arguments
-        guard menuActive, library.coreReady, !library.games.isEmpty, !hasArtworkChoice,
-              !arguments.contains("--boot-homebrew"), !arguments.contains("--boot-test-game") else { return }
-        showingArtworkConsent = true
-    }
     private func launchHomebrew() {
         guard library.coreReady else { return }; showingSystem = false
         guard let url = Bundle.main.url(forResource: "boot", withExtension: "3dsx") else { library.error = "The bundled homebrew test is missing from this build."; return }
@@ -611,35 +595,22 @@ struct GameArtwork: View {
     let game: Game
     var wide = false
     @State private var image: UIImage?
-    @State private var custom = false
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                if let image, custom {
+                if let image {
                     Image(uiImage: image).resizable().scaledToFill().frame(width: geometry.size.width, height: geometry.size.height, alignment: .top)
-                } else if let art = CinematicArt.match(game.artworkName) { ApprovedCoverArt(art: art, wide: wide) }
-                else if let image {
-                    let width = image.cgImage?.width ?? Int(image.size.width)
-                    let height = image.cgImage?.height ?? Int(image.size.height)
-                    ArtworkRegion(image: image, sourceSize: CGSize(width: CGFloat(width), height: CGFloat(height)),
-                                  region: CGRect(x: 0, y: 0, width: CGFloat(ArtworkCoverPolicy.frontWidth(width: width, height: height)), height: CGFloat(height)), alignment: .top)
                 } else { ConsoleArtwork(title: game.title) }
             }.clipped()
-        }
-        .contentShape(Rectangle())
-        .accessibilityHidden(true)
-        .task(id: "\(game.id)-\(game.artworkName)-\(library.artworkRevision)-\(library.artworkFetchingEnabled)") {
-            let chosen = await library.artwork.preferredImage(for: game)
-            guard !Task.isCancelled else { return }
-            custom = chosen != nil; image = chosen
-            if custom || CinematicArt.match(game.artworkName) != nil { return }
-            let found = await library.artwork.image(for: game)
-            if !Task.isCancelled { image = found }
+        }.contentShape(Rectangle()).accessibilityHidden(true)
+        .task(id: "\(game.id)-\(library.artworkRevision)") {
+            let chosen = await library.artwork.image(for: game)
+            if !Task.isCancelled { image = chosen }
         }
     }
 }
 
-// Original illustrations remain available while a cover downloads or when no match exists.
+// Original illustrations are used until the user chooses a local cover image.
 private struct ConsoleArtwork: View {
     let title: String
     private var theme: Int {

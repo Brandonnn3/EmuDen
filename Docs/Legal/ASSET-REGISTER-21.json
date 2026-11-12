@@ -1,0 +1,80 @@
+{
+  "build": "21",
+  "date": "2026-11-12",
+  "scope": "Active release assets only; no publisher-character gallery or third-party cover downloads",
+  "assets": [
+    {
+      "path": "Resources/CinematicArt/Console-3ds.png",
+      "sha256": "efb57eb23b3933452a8f4f8e0f2eab7639c07113c499fd14c4754058c15275ed",
+      "provenance": "Docs/Design/Build12-Console-Art/prompts.json",
+      "use": "Original unbranded console illustration; no game character or manufacturer logo",
+      "inspection": "Visually inspected 2026-11-12; hardware-inspired shape, not a trademark/trade-dress clearance"
+    },
+    {
+      "path": "Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png",
+      "sha256": "bc40880179c7c8d0612f22c86575ad8012110b3f1279b2c973a39e801d236db9",
+      "provenance": "Docs/Branding/README.md",
+      "use": "Original generic glass handheld/portal; no letter, character or manufacturer logo",
+      "inspection": "Visually inspected 2026-11-12"
+    },
+    {
+      "path": "Resources/MenuAudio/back.wav",
+      "sha256": "2cb03aa1ea6a9b655bf553ce1d9e10e0c084607f8b8fadffd2f5ede1da96d017",
+      "provenance": "Scripts/generate-menu-audio.py; Resources/MenuAudio/NOTICE.txt",
+      "use": "Original synthesized menu sound, no third-party recording"
+    },
+    {
+      "path": "Resources/MenuAudio/confirm.wav",
+      "sha256": "5951a604e3b04048685196acc02b5d016bd49d388387be7a26f77602479453f6",
+      "provenance": "Scripts/generate-menu-audio.py; Resources/MenuAudio/NOTICE.txt",
+      "use": "Original synthesized menu sound, no third-party recording"
+    },
+    {
+      "path": "Resources/MenuAudio/focus.wav",
+      "sha256": "5013b6851104a90e1bd876d691e1a4897efa4b8e3f0823cac4a554ffd756e28d",
+      "provenance": "Scripts/generate-menu-audio.py; Resources/MenuAudio/NOTICE.txt",
+      "use": "Original synthesized menu sound, no third-party recording"
+    },
+    {
+      "path": "Resources/MenuAudio/launch.wav",
+      "sha256": "53103c84f1a1cb3baad422c25fc40d93caaf8d2e812a50068f4eb7f8eea21ef1",
+      "provenance": "Scripts/generate-menu-audio.py; Resources/MenuAudio/NOTICE.txt",
+      "use": "Original synthesized menu sound, no third-party recording"
+    },
+    {
+      "path": "Resources/MenuAudio/open.wav",
+      "sha256": "ff5a509f251c33973352b708e9a237728b07eb198f57c5d522fdd719f575fe8d",
+      "provenance": "Scripts/generate-menu-audio.py; Resources/MenuAudio/NOTICE.txt",
+      "use": "Original synthesized menu sound, no third-party recording"
+    },
+    {
+      "path": "Resources/MenuAudio/planned.wav",
+      "sha256": "539bca471cf973f52edcfa88b1094c23c4f3bb94e463a2e452f2277af2764ada",
+      "provenance": "Scripts/generate-menu-audio.py; Resources/MenuAudio/NOTICE.txt",
+      "use": "Original synthesized menu sound, no third-party recording"
+    },
+    {
+      "path": "Resources/MenuAudio/save.wav",
+      "sha256": "a6d203106c26161ba91eb17221ec63c2fbe3deb70157ce60f856b38e2657e057",
+      "provenance": "Scripts/generate-menu-audio.py; Resources/MenuAudio/NOTICE.txt",
+      "use": "Original synthesized menu sound, no third-party recording"
+    },
+    {
+      "path": "Resources/MenuAudio/search.wav",
+      "sha256": "002cef60dbd036572215ef47aa8090127f2e5c3e5a1ad8788d34a983f28f0234",
+      "provenance": "Scripts/generate-menu-audio.py; Resources/MenuAudio/NOTICE.txt",
+      "use": "Original synthesized menu sound, no third-party recording"
+    },
+    {
+      "path": "Resources/MenuAudio/unfold.wav",
+      "sha256": "e7a7de502fcac43851f98aa77c5ef5a44df5afed035126172b8e0e8bd261cf1e",
+      "provenance": "Scripts/generate-menu-audio.py; Resources/MenuAudio/NOTICE.txt",
+      "use": "Original synthesized menu sound, no third-party recording"
+    }
+  ],
+  "preservedOutsideCandidate": "/Volumes/SamsungT7/EmulatorApp/ArtworkMasters and ArtworkCatalog; earlier signed/source releases and public artwork URLs unchanged",
+  "personalImages": "Chosen explicitly by the user; never uploaded. Older explicit custom markers retained; automatically downloaded caches ignored.",
+  "licensedDemo": "Resources/boot.3dsx, 3DS Homebrew Menu 2.4.4; Resources/Homebrew-NOTICE.txt and Docs/HOMEBREW.md",
+  "noCommercialGamesOrSystemDataBundled": true,
+  "legalConclusion": "Provenance and release-scope mitigation, not comprehensive copyright/trademark clearance or an Apple decision"
+}

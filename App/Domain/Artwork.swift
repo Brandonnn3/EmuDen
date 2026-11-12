@@ -1,5 +1,17 @@
 import Foundation
 
+enum LocalArtworkFiles {
+    static func customImage(for id: UUID, in directory: URL) -> URL? {
+        let marker = directory.appendingPathComponent(id.uuidString + ".custom")
+        guard let values = try? marker.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey]),
+              values.isRegularFile == true, values.isSymbolicLink != true else { return nil }
+        let current = directory.appendingPathComponent(id.uuidString + ".user.png")
+        if FileManager.default.fileExists(atPath: current.path) { return current }
+        // Build 11 stored explicitly imported images in the shared PNG path.
+        return directory.appendingPathComponent(id.uuidString + ".png")
+    }
+}
+
 public enum ArtworkKind: String, Sendable {
     case cover = "Named_Boxarts"
     case scene = "Named_Snaps"
@@ -99,14 +111,6 @@ public struct ArtworkCatalog: Decodable, Sendable {
             let left = Self.score($0, for: name), right = Self.score($1, for: name)
             return left == right ? $0 < $1 : left > right
         }.first
-    }
-
-    public func url(for title: String, kind: ArtworkKind = .cover) -> URL? {
-        guard let file = match(title), !file.contains("/"), !file.contains("\\"), file.hasSuffix(".png") else { return nil }
-        // The thumbnail server resolves shared covers; raw GitHub URLs return symlink text.
-        return URL(string: "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%203DS/")!
-            .appendingPathComponent(kind.rawValue, isDirectory: true)
-            .appendingPathComponent(file)
     }
 
     private static func safeName(_ title: String) -> String {

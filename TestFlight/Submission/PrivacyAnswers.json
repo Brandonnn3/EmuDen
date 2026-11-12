@@ -1,38 +1,17 @@
 {
   "schema": 1,
-  "build": "19",
-  "status": "App Store Connect draft entered in part; see build19 preparation report for exact saved/pending fields",
-  "dataCollected": true,
+  "build": "21",
+  "status": "Prepared for local-artwork build21; live App Store Connect form requires revision before publication",
+  "dataCollected": false,
   "tracking": false,
-  "dataTypes": [
-    {
-      "category": "Usage Data",
-      "type": "Product Interaction",
-      "purpose": [
-        "App Functionality"
-      ],
-      "linkedToUser": true,
-      "usedForTracking": false,
-      "basis": "Potentially retained requested artwork/title paths identify assets viewed or downloaded"
-    },
-    {
-      "category": "Other Data",
-      "type": "Other Data Types",
-      "purpose": [
-        "App Functionality"
-      ],
-      "linkedToUser": true,
-      "usedForTracking": false,
-      "basis": "Potentially retained connection/IP/user-agent metadata; no claim of complete host-log deidentification"
-    }
-  ],
+  "dataTypes": [],
   "onDeviceOnly": [
     "ROMs and system resources",
     "native saves and emulator snapshots",
     "library metadata and chosen images",
     "declared adult-access preference",
     "Apple age band used transiently for access",
-    "widget snapshot and cached images"
+    "widget snapshot and user-selected images"
   ],
   "notDeveloperCollected": [
     "Apple-processed payment card details",
@@ -40,7 +19,7 @@
     "Apple TestFlight diagnostics provided by Apple"
   ],
   "optionalSupport": "User-initiated correspondence/log sharing; assess specific voluntary disclosure against Apple criteria; no automatic upload",
-  "hostRetention": "Not specifically audited; conservative linked collection disclosure rather than no-collection assertion",
+  "hostRetention": "No automatic developer artwork host requests in build21; website/support records are separate and described in the policy.",
   "privacyPolicyURL": "https://emuden-support.headyopossum2.chatgpt.site/privacy.html",
   "source": "https://developer.apple.com/app-store/app-privacy-details/"
 }

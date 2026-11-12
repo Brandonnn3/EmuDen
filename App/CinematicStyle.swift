@@ -88,13 +88,12 @@ struct CinematicScene: View {
     var system: ConsoleSystem = .threeDS
     var subdued = false
     @State private var image: UIImage?
-    @State private var customScene = false
     @State private var loadedKey = ""
     @State private var consoleKey = ""
     private var sceneKey: String { "\(game?.id.uuidString ?? "none")-\(game?.artworkName ?? "none")-\(game?.useConsoleBackground == true)" }
     private var hasGameBackground: Bool {
         guard let game, game.useConsoleBackground != true else { return false }
-        return (loadedKey == sceneKey && image != nil) || CinematicArt.match(game.artworkName)?.hasHero == true
+        return (loadedKey == sceneKey && image != nil)
     }
     private var showsConsole: Bool {
         game == nil || game?.useConsoleBackground == true || (loadedKey == sceneKey && consoleKey == sceneKey && !hasGameBackground)
@@ -107,9 +106,7 @@ struct CinematicScene: View {
                     ConsoleSceneBackground(system: system).blur(radius: subdued ? 8 : 0).opacity(subdued ? 0.75 : 1).transition(.opacity)
                 }
                 if game?.useConsoleBackground != true {
-                    if let game, let art = CinematicArt.match(game.artworkName), art.hasHero, !(loadedKey == sceneKey && customScene) {
-                        ApprovedHeroArt(art: art).blur(radius: subdued ? 8 : 0).opacity(subdued ? 0.75 : 1).id(art).transition(.opacity)
-                    } else if loadedKey == sceneKey, let image {
+                    if loadedKey == sceneKey, let image {
                         Image(uiImage: image).resizable().scaledToFill()
                             .frame(width: area.size.width, height: area.size.height).clipped()
                             .blur(radius: subdued ? 8 : 0).opacity(subdued ? 0.65 : 1).id(image).transition(.opacity)
@@ -128,9 +125,9 @@ struct CinematicScene: View {
             }.frame(width: area.size.width, height: area.size.height).clipped()
                 .animation(ConsoleMotion.scene(reduceMotion), value: image)
         }.allowsHitTesting(false).accessibilityHidden(true)
-        .task(id: "\(sceneKey)-\(library.sceneRevision)-\(library.artworkFetchingEnabled)") {
+        .task(id: "\(sceneKey)-\(library.sceneRevision)") {
             let key = sceneKey
-            if loadedKey != key { image = nil; customScene = false; consoleKey = ""; loadedKey = key }
+            if loadedKey != key { image = nil; consoleKey = ""; loadedKey = key }
             guard let game, game.useConsoleBackground != true else { return }
             let known = await library.scenes.hasKnownImage(for: game)
             guard !Task.isCancelled, loadedKey == key else { return }
@@ -140,13 +137,9 @@ struct CinematicScene: View {
                 do { try await Task.sleep(for: .seconds(min(delay, 45))) } catch { return }
             }
             #endif
-            let custom = await library.scenes.preferredImage(for: game)
-            guard !Task.isCancelled, loadedKey == key else { return }
-            if let custom { image = custom; customScene = true; consoleKey = ""; return }
-            if CinematicArt.match(game.artworkName)?.hasHero == true { image = nil; customScene = false; return }
             let scene = await library.scenes.image(for: game)
             guard !Task.isCancelled, loadedKey == key else { return }
-            image = scene; customScene = false; consoleKey = scene == nil ? key : ""
+            image = scene; consoleKey = scene == nil ? key : ""
         }
     }
 }

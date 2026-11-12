@@ -31,23 +31,9 @@ final class ArtworkTests: XCTestCase {
         XCTAssertEqual(catalog.match("Mario & Luigi - Dream Team (USA).cci"), catalog.files[7])
         XCTAssertEqual(catalog.match("Pokémon X (USA)"), catalog.files[8])
         XCTAssertEqual(catalog.match("Luigi’s Mansion (USA)"), catalog.files[2])
-        XCTAssertNotNil(catalog.url(for: "Luigi's Mansion - Dark Moon (USA)"))
-        XCTAssertEqual(catalog.url(for: "The Legend of Zelda - Ocarina of Time 3D (USA) (Rev 1)")?.host, "thumbnails.libretro.com")
     }
-    func testUnknownAndUnsafePathsCannotBecomeRequests() {
-        XCTAssertNil(catalog.url(for: "Unknown homebrew"))
-        XCTAssertNil(catalog.url(for: "こんにちは"))
-        XCTAssertNil(ArtworkCatalog(files: ["../Test (USA).png"]).url(for: "Test (USA)"))
-    }
-    func testSceneAndCoverRequestsUseSeparateCollections() {
-        let title = "Mario Golf - World Tour (USA) (En,Fr,Es)"
-        let scene = catalog.url(for: title, kind: .scene)
-        let cover = catalog.url(for: title)
-        XCTAssertEqual(scene?.lastPathComponent, cover?.lastPathComponent)
-        XCTAssertEqual(scene?.deletingLastPathComponent().lastPathComponent, "Named_Snaps")
-        XCTAssertEqual(cover?.deletingLastPathComponent().lastPathComponent, "Named_Boxarts")
-        XCTAssertEqual(scene?.scheme, "https")
-        XCTAssertNil(catalog.url(for: "Unknown homebrew", kind: .scene))
-        XCTAssertNil(ArtworkCatalog(files: ["../Test (USA).png"]).url(for: "Test (USA)", kind: .scene))
+    func testUnknownNamesDoNotMatch() {
+        XCTAssertNil(catalog.match("Unknown homebrew"))
+        XCTAssertNil(catalog.match("こんにちは"))
     }
 }

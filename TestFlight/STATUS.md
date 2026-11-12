@@ -1,3 +1,13 @@
+# Build21 release candidate
+
+Prepared in /Volumes/SamsungT7/EmuDenRelease3DS from preserved19. 3DS-only; local personal art and original console/icon/audio assets. No online character gallery or third-party cover download integration. Prior generated masters and archives/source remain preserved in the original development project. No binary upload/submission.
+
+Actual verification and current processes: Docs/RELEASE-21-PROGRESS.md. Exact release decisions: Docs/Legal/RELEASE-21-REVIEW.md and AppStoreReadiness.json. Build18 remains the owner’s TestFlight build.
+
+---
+
+Historical records follow; they do not describe the current21 candidate.
+
 # Build19 — submission candidate
 
 The owner is testing18 on their phone. Build19 has a signed development archive with the new app-only entitlements and four matching real dSYMs,67passing domain tests,2tooling tests, release-control/save/UI coverage and two verified repeatable local StoreKit tips. A genuine single-screen background capture has a fresh timestamp and valid payload checksum. It changes release controls, not the core or phone performance.
