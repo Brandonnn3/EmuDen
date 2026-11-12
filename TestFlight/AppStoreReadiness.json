@@ -16,13 +16,14 @@
     },
     {
       "id": "corresponding-source",
-      "status": "pending",
+      "status": "resolved",
       "evidence": [
         "LICENSE.txt",
         "COPYRIGHT.md",
-        "TestFlight/SOURCE.md"
+        "TestFlight/SOURCE.md",
+        "Docs/Legal/PUBLICATION-VERIFICATION-21.json"
       ],
-      "resolution": "Finalize, publish and anonymously verify the exact build21 source package; prior17\u201319 packages remain intact."
+      "resolution": "Exact build21 matching source is public and anonymously verified:66,198,534 bytes, SHA256157d88f7301a99a47be659c73aa5c328af6d9e9d6816c56fc10aa4aaca9b4d47; source commit558c41cfa90de567c990753c14ef09eaaad02ced. Prior17\u201319 URLs remain intact. Compiled inputs remain frozen."
     },
     {
       "id": "store-license-compatibility",
@@ -48,11 +49,11 @@
       "id": "public-support-privacy",
       "status": "resolved",
       "evidence": [
+        "Docs/Legal/PUBLICATION-VERIFICATION-21.json",
         "TestFlight/AppInformation.json",
-        "App/SettingsView.swift",
-        "Docs/Legal/RELEASE-21-REVIEW.md"
+        "App/SettingsView.swift"
       ],
-      "resolution": "Existing public support/privacy/source URLs retained. The policy update distinguishes local-artwork21 from19/earlier networking; actual publication recorded separately when completed."
+      "resolution": "Public site v5 published with audience unchanged;14 anonymous route/asset checks pass, including correct21/19/earlier privacy distinctions and matching source hashes."
     },
     {
       "id": "privacy-disclosure",
@@ -62,7 +63,7 @@
         "TestFlight/Privacy-policy-draft.md",
         "Resources/PrivacyInfo.xcprivacy"
       ],
-      "resolution": "Local-artwork/no developer telemetry candidate prepared; revise live App Store Connect privacy draft and publish truthful answers, plus update version-specific public policy."
+      "resolution": "Local-only21 manifest/disclosure and version-aware public policy v5 are verified; live App Store Connect privacy draft still needs revision/publication after Mac access."
     },
     {
       "id": "export-compliance",

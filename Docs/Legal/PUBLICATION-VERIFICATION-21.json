@@ -1,0 +1,129 @@
+{
+  "dateUTC": "2026-11-12T21:55:02.495842+00:00",
+  "build": "21",
+  "source": {
+    "name": "EmuDen-0.1.0-21-source.tar.gz",
+    "bytes": 66198534,
+    "sha256": "157d88f7301a99a47be659c73aa5c328af6d9e9d6816c56fc10aa4aaca9b4d47",
+    "files": 210,
+    "noGalleryOrOwnerData": true,
+    "url": "https://github.com/Brandonnn3/EmuDen/releases/download/v0.1.0-build.21/EmuDen-0.1.0-21-source.tar.gz",
+    "anonymousVerified": true,
+    "sourceCommit": "558c41cfa90de567c990753c14ef09eaaad02ced",
+    "release": "https://github.com/Brandonnn3/EmuDen/releases/tag/v0.1.0-build.21",
+    "binaryUploaded": false
+  },
+  "supportSite": {
+    "projectId": "appgprj_6af4c5f9aa288191a6103bbd3a13bee0",
+    "version": 5,
+    "savedVersionId": "appgprj_6af4c5f9aa288191a6103bbd3a13bee0~appgver_2c9fc9093eac81919dca5c0c10facbad",
+    "deploymentId": "appgdep_6af634eeda4881919a48b1fb121b9760",
+    "commit": "600ee3cab36f54f0aad2eb4437ba8ec359b7bb7b",
+    "url": "https://emuden-support.headyopossum2.chatgpt.site",
+    "audience": "public, unchanged",
+    "deploymentStatus": "succeeded",
+    "anonymousChecks": [
+      {
+        "route": "/icon.png",
+        "status": 200,
+        "contentType": "image/png",
+        "bytes": 1094407,
+        "sha256": "bc40880179c7c8d0612f22c86575ad8012110b3f1279b2c973a39e801d236db9"
+      },
+      {
+        "route": "/software.html",
+        "status": 200,
+        "contentType": "text/html; charset=utf-8",
+        "bytes": 4078,
+        "sha256": "0365079a7680714b69bf50440fc401b8a9a779826b603b2f25d0e020361fe47f"
+      },
+      {
+        "route": "/index.html",
+        "status": 200,
+        "contentType": "text/html; charset=utf-8",
+        "bytes": 4074,
+        "sha256": "633669a236e205729e3b2d96383b8974d22a01ff880372b36bdc396525afd50c"
+      },
+      {
+        "route": "/copyright.txt",
+        "status": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "bytes": 2817,
+        "sha256": "7f85c9ab6cbc712fc0d7578e6931d376f5e8ed650853cdd573d2a758a97388f0"
+      },
+      {
+        "route": "/ThirdPartyNotices.txt",
+        "status": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "bytes": 520344,
+        "sha256": "fa6db9f242fcc06cb031120ef8a556a90428c67096546a390914d467deecb413"
+      },
+      {
+        "route": "/support.html",
+        "status": 200,
+        "contentType": "text/html; charset=utf-8",
+        "bytes": 6124,
+        "sha256": "7a2cc5593cf2b38a1157706750d55bfa60886b85d522faa1d4ab76c7d5f04bb3"
+      },
+      {
+        "route": "/apple-app-site-association",
+        "status": 200,
+        "contentType": "application/json",
+        "bytes": 267,
+        "sha256": "62b8cafd04183f6e5ca26f4240cd188041ee33b2fa6972f12f22f9711ca1fbc7"
+      },
+      {
+        "route": "/gpl-3.0.txt",
+        "status": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "bytes": 36597,
+        "sha256": "52b66866c785f554207a4685d3d6f5f067938050f61c4cdc0a05b4bf20c6e037"
+      },
+      {
+        "route": "/style.css",
+        "status": 200,
+        "contentType": "text/css; charset=utf-8",
+        "bytes": 5440,
+        "sha256": "e9025377549104b671820567c23c1a1953f8c6516c8d8888d1663447a441275b"
+      },
+      {
+        "route": "/software-index.json",
+        "status": 200,
+        "contentType": "application/json",
+        "bytes": 448,
+        "sha256": "e0131223782a5d4f954da72428d98256f0abbf2664c27e500ab0c6c24f9e10be"
+      },
+      {
+        "route": "/source.html",
+        "status": 200,
+        "contentType": "text/html; charset=utf-8",
+        "bytes": 6805,
+        "sha256": "ed2039b992ecb115cab6a258a8ae024ef9e3267dff57fc612e6b463f2eef603b"
+      },
+      {
+        "route": "/privacy.html",
+        "status": 200,
+        "contentType": "text/html; charset=utf-8",
+        "bytes": 9675,
+        "sha256": "db82c226366a3bc2ef48ea3a04f67412ea56dc5566bc9d79fd7f8994fcb874f0"
+      },
+      {
+        "route": "/.well-known/apple-app-site-association",
+        "status": 200,
+        "contentType": "application/json",
+        "bytes": 267,
+        "sha256": "62b8cafd04183f6e5ca26f4240cd188041ee33b2fa6972f12f22f9711ca1fbc7"
+      },
+      {
+        "route": "/play/index.html",
+        "status": 200,
+        "contentType": "text/html; charset=utf-8",
+        "bytes": 3845,
+        "sha256": "a546a8dcc5deda7e9fbd58ceefdb0008989de0df304474bdece15deed9109fda"
+      }
+    ],
+    "verificationClient": "EmuDenReleaseVerification/21, no cookies or authentication; default Python UA received Cloudflare1010"
+  },
+  "binaryUploaded": false,
+  "legalClearanceOrAppleApprovalClaimed": false
+}
