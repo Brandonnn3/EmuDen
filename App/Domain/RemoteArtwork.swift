@@ -1,6 +1,24 @@
 import Foundation
 import CryptoKit
 
+enum ArtworkNetwork {
+    static func isEnabled(in defaults: UserDefaults = .standard) -> Bool {
+        defaults.bool(forKey: "onlineArtworkEnabled") && defaults.bool(forKey: "hasArtworkChoice")
+    }
+    static func configuration() -> URLSessionConfiguration {
+        let config = URLSessionConfiguration.ephemeral
+        config.httpShouldSetCookies = false
+        config.httpCookieAcceptPolicy = .never
+        config.httpCookieStorage = nil
+        config.urlCredentialStorage = nil
+        config.urlCache = nil
+        config.httpMaximumConnectionsPerHost = 2
+        config.timeoutIntervalForRequest = 12
+        config.timeoutIntervalForResource = 20
+        return config
+    }
+}
+
 public struct ArtworkPackAsset: Codable, Equatable, Sendable {
     public let path: String
     public let sha256: String
@@ -98,15 +116,17 @@ public actor RemoteArtworkCatalog {
     private let seed: ArtworkPack
     private let directory: URL
     private let session: URLSession
-    private var enabled = true
+    private var enabled: Bool
     private var refreshed = Date.distantPast
     private var refreshRequest: (id: UUID, task: Task<Data?, Never>)?
     private var requests = [String: (id: UUID, task: Task<Data?, Never>)]()
     private var retryAfter = [String: Date]()
     private static let manifestLimit = 512 * 1024
 
-    public init(seed: ArtworkPack, directory: URL, session: URLSession = .shared) {
-        self.seed = seed; self.directory = directory; self.session = session
+    public init(seed: ArtworkPack, directory: URL, session: URLSession? = nil, initiallyEnabled: Bool = true) {
+        self.seed = seed; self.directory = directory
+        self.session = session ?? URLSession(configuration: ArtworkNetwork.configuration())
+        enabled = initiallyEnabled
         if let data = Self.read(directory.appendingPathComponent("catalog.json"), limit: Self.manifestLimit),
            let cached = try? JSONDecoder().decode(ArtworkPack.self, from: data), cached.baseURL == seed.baseURL, cached.version >= seed.version {
             pack = cached
@@ -202,6 +222,7 @@ public actor RemoteArtworkCatalog {
         do {
             try Task.checkCancellation()
             var request = URLRequest(url: url); request.timeoutInterval = 20; request.cachePolicy = .reloadIgnoringLocalCacheData
+            request.httpShouldHandleCookies = false
             let (bytes, response) = try await session.bytes(for: request)
             guard let response = response as? HTTPURLResponse, response.statusCode == 200,
                   response.url?.scheme == "https", response.url?.host == url.host, response.url?.port == url.port,

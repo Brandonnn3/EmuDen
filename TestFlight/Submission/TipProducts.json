@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "status": "Draft only; live App Store Connect products not created",
+  "type": "CONSUMABLE",
+  "appPrice": "Free",
+  "territories": [
+    "USA"
+  ],
+  "baseCurrency": "USD",
+  "products": [
+    {
+      "productId": "com.brandonaleman.Emulator.tip.small",
+      "referenceName": "EmuDen small tip",
+      "name": "Small thank-you",
+      "description": "Optional tip. All features remain free.",
+      "suggestedUSPrice": "0.99"
+    },
+    {
+      "productId": "com.brandonaleman.Emulator.tip.medium",
+      "referenceName": "EmuDen medium tip",
+      "name": "Extra support",
+      "description": "Optional tip. All features remain free.",
+      "suggestedUSPrice": "2.99"
+    },
+    {
+      "productId": "com.brandonaleman.Emulator.tip.large",
+      "referenceName": "EmuDen large tip",
+      "name": "Big thank-you",
+      "description": "Optional tip. All features remain free.",
+      "suggestedUSPrice": "4.99"
+    }
+  ],
+  "reviewNotes": "Repeatable developer support only. No currency, entitlement, downloadable item or feature is granted. StoreKit verified transactions finish locally. No restore entitlement applies to consumed tips. Products unavailable: entire card hidden.",
+  "requiredBeforeLive": [
+    "Active Paid Apps Agreement",
+    "Appropriate banking/tax setup",
+    "Configured product pricing/localization/availability",
+    "Apple sandbox product/purchase validation and IAP review submission"
+  ],
+  "sources": [
+    "https://developer.apple.com/app-store/review/guidelines/#in-app-purchase",
+    "https://developer.apple.com/help/app-store-connect/configure-in-app-purchase-settings/overview-for-configuring-in-app-purchases/"
+  ]
+}

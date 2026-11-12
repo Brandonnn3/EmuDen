@@ -49,6 +49,7 @@
 		D9AC836A46B56EA11569DFFC = {isa = PBXBuildFile; fileRef = 36C75686BD4A7B6A032C6CC5; };
 		157026682CF02235552F01CE = {isa = PBXBuildFile; fileRef = 68C1A622DCB05C403E57F582; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B8D39005A858B143EF870821 = {isa = PBXBuildFile; fileRef = 43D08737E13E7EB7BB2D64B7; };
+		B19000000000000000000002 = {isa = PBXBuildFile; fileRef = B19000000000000000000001; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		36C75686BD4A7B6A032C6CC5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Widgets/EmuDenWidgets.swift; sourceTree = SOURCE_ROOT; };
 		68C1A622DCB05C403E57F582 /* EmuDenWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; path = EmuDenWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		43D08737E13E7EB7BB2D64B7 = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Widgets/PrivacyInfo.xcprivacy; sourceTree = SOURCE_ROOT; };
+		B19000000000000000000001 = {isa = PBXFileReference; lastKnownFileType = text; path = Tests/Fixtures/TipJar.storekit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -197,6 +199,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0924ACF74BEB0A0098155ADB /* Build configuration list for PBXNativeTarget "EmulatorUITests" */;
 			buildPhases = (
+				B19000000000000000000003,
 				77A03FEE20FE96AD9384861E /* Sources */,
 			);
 			buildRules = (
@@ -282,6 +285,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		7545867401B0E76848F4181D = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (B8D39005A858B143EF870821, ); runOnlyForDeploymentPostprocessing = 0; };
+		B19000000000000000000003 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (B19000000000000000000002, ); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -362,9 +366,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Resources/EmuDen.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Resources/EmuDen-App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_TEAM = NKC9X96J5A;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -392,7 +396,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_OPTIMIZATION_LEVEL = s;
@@ -410,7 +414,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -453,9 +457,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Resources/EmuDen.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Resources/EmuDen-App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_TEAM = NKC9X96J5A;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -477,8 +481,8 @@
 			};
 			name = Debug;
 		};
-        DD2A7B0881CA6833BEB2A2BD = {isa = XCBuildConfiguration; buildSettings = {APPLICATION_EXTENSION_API_ONLY = YES; CODE_SIGN_ENTITLEMENTS = Resources/EmuDen.entitlements; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 18; DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; DEVELOPMENT_TEAM = NKC9X96J5A; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_FILE = Widgets/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 18.0; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", ); MARKETING_VERSION = 0.1.0; PRODUCT_BUNDLE_IDENTIFIER = com.brandonaleman.Emulator.Widgets; PRODUCT_NAME = EmuDenWidgets; SKIP_INSTALL = YES; SUPPORTS_MACCATALYST = NO; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; }; name = Debug; };
-        0DCE9C744CEEB2ABE0F74F20 = {isa = XCBuildConfiguration; buildSettings = {APPLICATION_EXTENSION_API_ONLY = YES; CODE_SIGN_ENTITLEMENTS = Resources/EmuDen.entitlements; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 18; DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; DEVELOPMENT_TEAM = NKC9X96J5A; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_FILE = Widgets/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 18.0; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", ); MARKETING_VERSION = 0.1.0; PRODUCT_BUNDLE_IDENTIFIER = com.brandonaleman.Emulator.Widgets; PRODUCT_NAME = EmuDenWidgets; SKIP_INSTALL = YES; SUPPORTS_MACCATALYST = NO; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; }; name = Release; };
+        DD2A7B0881CA6833BEB2A2BD = {isa = XCBuildConfiguration; buildSettings = {APPLICATION_EXTENSION_API_ONLY = YES; CODE_SIGN_ENTITLEMENTS = Resources/EmuDen.entitlements; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 19; DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; DEVELOPMENT_TEAM = NKC9X96J5A; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_FILE = Widgets/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 18.0; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", ); MARKETING_VERSION = 0.1.0; PRODUCT_BUNDLE_IDENTIFIER = com.brandonaleman.Emulator.Widgets; PRODUCT_NAME = EmuDenWidgets; SKIP_INSTALL = YES; SUPPORTS_MACCATALYST = NO; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; }; name = Debug; };
+        0DCE9C744CEEB2ABE0F74F20 = {isa = XCBuildConfiguration; buildSettings = {APPLICATION_EXTENSION_API_ONLY = YES; CODE_SIGN_ENTITLEMENTS = Resources/EmuDen.entitlements; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 19; DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; DEVELOPMENT_TEAM = NKC9X96J5A; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_FILE = Widgets/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 18.0; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", ); MARKETING_VERSION = 0.1.0; PRODUCT_BUNDLE_IDENTIFIER = com.brandonaleman.Emulator.Widgets; PRODUCT_NAME = EmuDenWidgets; SKIP_INSTALL = YES; SUPPORTS_MACCATALYST = NO; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; }; name = Release; };
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */

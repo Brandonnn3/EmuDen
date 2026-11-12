@@ -4,9 +4,12 @@ EmuDen brings your compatible game collection into a native iPhone and iPad libr
 • Play with touchscreen controls or a compatible game controller.
 • Choose screen layouts, picture sizing and 1×–3× internal resolution.
 • Keep graphics preferences for each game and view optional performance information.
-• Use persistent in-game saves, Quick Save, Quick Load and resume points.
+• Use persistent in-game saves, Quick Save, Quick Load, multiple save-history points and automatic resume points.
 • Open recent games with Continue Playing and Recent Games widgets.
 • Choose your own cover, background and profile images locally.
+• Keep artwork offline, or choose online covers and cinematic backgrounds.
+
+The app is free. Optional tips, where available through Apple, do not unlock features. Imported software is unrated and requires adult access confirmation.
 
 This release supports Nintendo 3DS only. Compatibility and performance vary by title and device. Original Mii models may require authorized console-provided resources. No commercial games, Nintendo system archives, firmware or console keys are included or offered for download. Only import files you have the right to use.
 

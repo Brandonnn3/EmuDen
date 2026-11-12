@@ -1,5 +1,6 @@
 import XCTest
 import UIKit
+import StoreKitTest
 
 final class EmulatorUITests: XCTestCase {
     @MainActor func testWidgetGameRoutesOpenAndResume() {
@@ -7,7 +8,7 @@ final class EmulatorUITests: XCTestCase {
         continueAfterFailure = false
         let app = XCUIApplication()
         app.launchArguments = ["-showFrameGraph", "YES", "-prepareCachedShaders", "NO", "-resolutionFactor", "1"]
-        app.launch(); XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 20))
+        launchPrepared(app); XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 20))
         openWidgetRoute("AA170000-0000-4000-8000-000000000001", in: app)
         assertGamePixels(app); attach(app, "Live frame-time graph and homebrew renderer")
         returnToLibrary(app)
@@ -24,13 +25,108 @@ final class EmulatorUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["This game is no longer in your library."].waitForExistence(timeout: 45))
         attach(app, "Missing widget game handled safely"); app.buttons["OK"].tap()
     }
+    @MainActor func testCaptureStoreScreenshotsWithLicensedDemo() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        let app = XCUIApplication()
+        app.launchArguments = ["-onlineArtworkEnabled", "NO", "-hasArtworkChoice", "YES", "-importedGameAccess", "under18"]
+        launchPrepared(app)
+        XCTAssertTrue(app.staticTexts["selectedGameTitle"].waitForExistence(timeout: 25))
+        XCTAssertEqual(app.staticTexts["selectedGameTitle"].label, "3DS Homebrew Menu")
+        attach(app, "Store - Library with licensed homebrew")
+        app.buttons["System setup"].tap()
+        let layout = app.buttons["openDuoLayout"]; reveal(layout, in: app); layout.tap()
+        let model = app.descendants(matching: .any)["openingConsolePreview"].firstMatch
+        XCTAssertTrue(model.waitForExistence(timeout: 8))
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == 'Open'"), object: model)], timeout: 8), .completed)
+        attach(app, "Store - Console layout and screen options")
+        app.terminate(); app.launchArguments = ["--boot-homebrew", "--fresh-start", "-onlineArtworkEnabled", "NO", "-showFPS", "NO"]
+        launchPrepared(app); assertGamePixels(app)
+        openGameMenu(app)
+        attach(app, "Store - Homebrew play and save controls")
+        returnToLibrary(app)
+    }
+
+    @MainActor private func launchPrepared(_ app: XCUIApplication) {
+        for (key, value) in [("-hasArtworkChoice", "YES"), ("-onlineArtworkEnabled", "YES"), ("-importedGameAccess", "adult")] {
+            if !app.launchArguments.contains(key) { app.launchArguments += [key, value] }
+        }
+        app.launch()
+    }
+
+    @MainActor func testArtworkChoiceAndOfflinePreference() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["-hasArtworkChoice", "NO", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app)
+        XCTAssertTrue(app.buttons["declineOnlineArtwork"].waitForExistence(timeout: 25))
+        attach(app, "Online artwork is a clear optional choice")
+        app.buttons["declineOnlineArtwork"].tap()
+        XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 8)); app.buttons["System setup"].tap()
+        let setting = app.switches["onlineArtwork"]; reveal(setting, in: app)
+        XCTAssertEqual(setting.value as? String, "0")
+        attach(app, "Offline artwork preference and local adult-access controls")
+        app.terminate(); app.launchArguments = []; app.launch()
+        XCTAssertFalse(app.buttons["declineOnlineArtwork"].exists)
+        app.buttons["System setup"].tap(); reveal(setting, in: app)
+        XCTAssertEqual(setting.value as? String, "0")
+    }
+
+    @MainActor func testImportedGameAgeGateAndDemoLink() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["-importedGameAccess", "undecided"]
+        launchPrepared(app)
+        let play = app.buttons["startSelectedGame"]
+        XCTAssertTrue(play.waitForExistence(timeout: 20)); play.tap()
+        XCTAssertTrue(app.buttons["restrictImportedAccess"].waitForExistence(timeout: 6))
+        attach(app, "Unrated imported software requires an adult declaration")
+        app.buttons["restrictImportedAccess"].tap()
+        XCTAssertTrue(play.waitForExistence(timeout: 6)); play.tap()
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "Imported software is unrated and restricted to adults.")).firstMatch.waitForExistence(timeout: 6))
+        app.buttons["OK"].tap()
+        app.open(URL(string: "emuden://demo/homebrew")!)
+        let open = XCUIApplication(bundleIdentifier: "com.apple.springboard").buttons["Open"]
+        if open.waitForExistence(timeout: 3) { open.tap() }
+        assertGamePixels(app)
+        attach(app, "Licensed homebrew demo remains available through its link")
+        returnToLibrary(app)
+    }
+
+    @MainActor func testOptionalTipsUseVerifiedRepeatableStoreKitPurchases() throws {
+        continueAfterFailure = false
+        let configuration = try XCTUnwrap(Bundle(for: Self.self).url(forResource: "TipJar", withExtension: "storekit"))
+        let session = try SKTestSession(contentsOf: configuration)
+        session.disableDialogs = true
+        session.clearTransactions()
+        defer { session.clearTransactions(); session.resetToDefaultState() }
+        let app = XCUIApplication(); launchPrepared(app)
+        XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 20)); app.buttons["System setup"].tap()
+        let small = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Small thank-you")).firstMatch
+        reveal(small, in: app); XCTAssertTrue(small.waitForExistence(timeout: 15))
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Extra support")).firstMatch.exists)
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Big thank-you")).firstMatch.exists)
+        attach(app, "Optional tips use localized Apple prices with every feature free")
+        for _ in 0..<2 {
+            small.tap()
+            let thanked = app.staticTexts["Thank you for supporting EmuDen! Every feature remains free for everyone."].waitForExistence(timeout: 20)
+            if !thanked {
+                print("Local StoreKit transactions: \(session.allTransactions().count)")
+                attach(app, "Tip purchase result requiring investigation")
+            }
+            XCTAssertTrue(thanked)
+            app.buttons["OK"].tap()
+        }
+        XCTAssertEqual(session.allTransactions().filter { $0.productIdentifier == "com.brandonaleman.Emulator.tip.small" }.count, 2)
+    }
+
     @MainActor private func openWidgetRoute(_ id: String, in app: XCUIApplication) {
         app.open(URL(string: "emuden://play/" + id)!)
         let open = XCUIApplication(bundleIdentifier: "com.apple.springboard").buttons["Open"]
         if open.waitForExistence(timeout: 3) { open.tap() }
     }
     @MainActor func testGameProfilePersistsIndependentlyAndWidgetsPreview() {
-        let app = XCUIApplication(); app.launch()
+        let app = XCUIApplication(); launchPrepared(app)
         let tile = app.buttons["selectedGameTile"]
         XCTAssertTrue(tile.waitForExistence(timeout: 20))
         tile.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).press(forDuration: 1.1)
@@ -54,17 +150,17 @@ final class EmulatorUITests: XCTestCase {
     @MainActor func testChosenAvatarPersistsAndDoesNotReplaceSystemData() {
         let app = XCUIApplication(); app.launchArguments = ["--avatar-import-test"]
         app.launchEnvironment["EMUDEN_TEST_AVATAR_PATH"] = "/Volumes/SamsungT7/EmulatorApp/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png"
-        app.launch(); XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 20)); app.buttons["System setup"].tap()
+        launchPrepared(app); XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 20)); app.buttons["System setup"].tap()
         let avatar = app.buttons["miiAvatar"]; reveal(avatar, in: app)
         XCTAssertTrue(avatar.waitForExistence(timeout: 5)); XCTAssertEqual(avatar.value as? String, "Custom portrait"); attach(app, "Chosen profile portrait and separate Mii resource status")
-        app.terminate(); app.launchArguments = []; app.launchEnvironment = [:]; app.launch(); app.buttons["System setup"].tap()
+        app.terminate(); app.launchArguments = []; app.launchEnvironment = [:]; launchPrepared(app); app.buttons["System setup"].tap()
         reveal(avatar, in: app); XCTAssertTrue(avatar.waitForExistence(timeout: 5)); XCTAssertEqual(avatar.value as? String, "Custom portrait")
         app.buttons["miiAvatar"].press(forDuration: 1.1); app.buttons["Reset profile picture"].tap(); XCTAssertEqual(avatar.value as? String, "Default portrait")
     }
     @MainActor func testControllerFillsOuterDisplayAndKeepsTouchCoordinates() {
         XCUIDevice.shared.orientation = .portrait
         defer { XCUIDevice.shared.orientation = .portrait }
-        let app = XCUIApplication(); app.launchArguments = ["--input-test", "--controller-preview"]; app.launch()
+        let app = XCUIApplication(); app.launchArguments = ["--input-test", "--controller-preview"]; launchPrepared(app)
         XCTAssertTrue(app.buttons["Controller connected"].waitForExistence(timeout: 15))
         openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Player Settings"].tap(); openPlayerLayout(app)
         app.buttons["Fill display"].tap(); app.buttons["duoLayoutDone"].tap(); app.buttons["playerSettingsDone"].tap()
@@ -93,7 +189,7 @@ final class EmulatorUITests: XCTestCase {
     }
     @MainActor func testKnownBackgroundWaitsInDarkThenFadesIn() throws {
         XCUIDevice.shared.orientation = .portrait
-        let app = XCUIApplication(); app.launchEnvironment["EMUDEN_TEST_SCENE_DELAY"] = "45"; app.launch()
+        let app = XCUIApplication(); app.launchEnvironment["EMUDEN_TEST_SCENE_DELAY"] = "45"; launchPrepared(app)
         guard app.staticTexts["selectedGameTitle"].waitForExistence(timeout: 20), app.staticTexts["selectedGameTitle"].label.contains("Donkey Kong") else { throw XCTSkip("Run with isolated cached artwork fixtures") }
         let patch = CGRect(x: app.frame.width * 0.30, y: app.frame.height * 0.12,
                            width: app.frame.width * 0.42, height: app.frame.height * 0.14)
@@ -104,12 +200,12 @@ final class EmulatorUITests: XCTestCase {
         attach(app, "Known background after its fade")
     }
     @MainActor func testPlayerHeaderAutoHideAndFPSPreference() {
-        let app = XCUIApplication(); app.launch()
+        let app = XCUIApplication(); launchPrepared(app)
         XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 20)); app.buttons["System setup"].tap()
         let initialFPS = app.switches["showFPS"]
         XCTAssertTrue(initialFPS.waitForExistence(timeout: 5))
         setSwitch(initialFPS, on: false, in: app)
-        app.terminate(); app.launchArguments = ["--boot-homebrew", "--fresh-start"]; app.launch()
+        app.terminate(); app.launchArguments = ["--boot-homebrew", "--fresh-start"]; launchPrepared(app)
         assertGamePixels(app)
         let menu = app.buttons["Game menu"]
         let wake = app.buttons["showPlayerControls"]
@@ -132,7 +228,7 @@ final class EmulatorUITests: XCTestCase {
         Thread.sleep(forTimeInterval: 0.4) // Capture the completed fade, not its first animation frame.
         XCTAssertTrue(app.buttons["frameRate"].exists)
         attach(app, "Faded game header with optional corner FPS")
-        app.terminate(); app.launch(); assertGamePixels(app)
+        app.terminate(); launchPrepared(app); assertGamePixels(app)
         XCTAssertTrue(app.buttons["frameRate"].exists, "FPS preference persists after relaunch")
         openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Player Settings"].tap()
         XCTAssertTrue(fps.waitForExistence(timeout: 5)); XCTAssertEqual(fps.value as? String, "1")
@@ -148,7 +244,7 @@ final class EmulatorUITests: XCTestCase {
 
     @MainActor func testResolutionChoicesPersistAcrossSettings() {
         XCUIDevice.shared.orientation = .portrait
-        let app = XCUIApplication(); app.launch()
+        let app = XCUIApplication(); launchPrepared(app)
         XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 25)); app.buttons["System setup"].tap()
         let picker = app.buttons["internalResolution"]
         XCTAssertTrue(picker.waitForExistence(timeout: 5))
@@ -156,11 +252,11 @@ final class EmulatorUITests: XCTestCase {
             picker.tap(); app.buttons[label].tap()
             XCTAssertEqual(picker.value as? String, label)
         }
-        app.terminate(); app.launch()
+        app.terminate(); launchPrepared(app)
         XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 25)); app.buttons["System setup"].tap()
         XCTAssertTrue(picker.waitForExistence(timeout: 5)); XCTAssertEqual(picker.value as? String, "3× · Sharpest")
         attach(app, "3DS resolution options")
-        app.terminate(); app.launchArguments = ["--input-test"]; app.launch()
+        app.terminate(); app.launchArguments = ["--input-test"]; launchPrepared(app)
         XCTAssertTrue(app.buttons["Game menu"].waitForExistence(timeout: 20)); openGameMenu(app)
         app.buttons["moreGameOptions"].tap(); app.buttons["Player Settings"].tap()
         XCTAssertTrue(picker.waitForExistence(timeout: 5)); XCTAssertEqual(picker.value as? String, "3× · Sharpest")
@@ -171,7 +267,7 @@ final class EmulatorUITests: XCTestCase {
 
     @MainActor func testArtworkCollectionShowcase() throws {
         XCUIDevice.shared.orientation = .portrait
-        let app = XCUIApplication(); app.launch()
+        let app = XCUIApplication(); launchPrepared(app)
         guard app.staticTexts["selectedGameTitle"].waitForExistence(timeout: 20), app.staticTexts["selectedGameTitle"].label.contains("Donkey Kong") else { throw XCTSkip("Run with the isolated artwork collection fixtures") }
         attach(app, "Collection Donkey Kong scene with existing cover")
         for (query, title) in [("Tomodachi", "Tomodachi Life"), ("Dark Moon", "Luigi"), ("A Link Between Worlds", "A Link Between Worlds"), ("Super Smash", "Super Smash"), ("Pokémon", "Pokémon")] {
@@ -191,14 +287,14 @@ final class EmulatorUITests: XCTestCase {
         }
     }
     @MainActor func testArtworkMatchingConsolePreferenceAndReset() throws {
-        let app = XCUIApplication(); app.launch()
+        let app = XCUIApplication(); launchPrepared(app)
         guard app.staticTexts["selectedGameTitle"].waitForExistence(timeout: 20), app.staticTexts["selectedGameTitle"].label.contains("Donkey Kong") else { throw XCTSkip("Run with the isolated artwork QA fixtures") }
         openArtworkEditor(app)
         let setting = app.switches["consoleBackground"]
         XCTAssertTrue(setting.waitForExistence(timeout: 5))
         if !setting.isHittable { app.swipeUp() }
         if setting.value as? String != "1" { setting.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap() }
-        app.terminate(); app.launch(); openArtworkEditor(app)
+        app.terminate(); launchPrepared(app); openArtworkEditor(app)
         XCTAssertEqual(setting.value as? String, "1")
         let match = app.buttons["chooseArtworkMatch"]
         if !match.isHittable { app.swipeDown() }; match.tap()
@@ -213,7 +309,7 @@ final class EmulatorUITests: XCTestCase {
         XCTAssertEqual(XCTWaiter.wait(for: [changed], timeout: 8), .completed)
         app.buttons["artworkDone"].tap()
         XCTAssertTrue(app.staticTexts["selectedGameTitle"].label.contains("Donkey Kong"), "Artwork choices must not rename the game or change its save identity")
-        app.terminate(); app.launch(); openArtworkEditor(app)
+        app.terminate(); launchPrepared(app); openArtworkEditor(app)
         XCTAssertTrue(matched.label.contains("Tomodachi"))
         let reset = app.buttons["resetArtwork"]
         if !reset.isHittable { app.swipeUp() }; reset.tap()
@@ -227,7 +323,7 @@ final class EmulatorUITests: XCTestCase {
         attach(app, "Console background and full card artwork")
     }
     @MainActor func testArtworkFilePickerAndCustomCover() throws {
-        let app = XCUIApplication(); app.launch()
+        let app = XCUIApplication(); launchPrepared(app)
         guard app.staticTexts["selectedGameTitle"].waitForExistence(timeout: 20), app.staticTexts["selectedGameTitle"].label.contains("Donkey Kong") else { throw XCTSkip("Run with the isolated artwork QA fixtures") }
         openArtworkEditor(app)
         app.buttons["importCoverImage"].tap()
@@ -235,7 +331,7 @@ final class EmulatorUITests: XCTestCase {
         XCTAssertTrue(app.descendants(matching: .any)["artworkImportComplete"].firstMatch.waitForExistence(timeout: 10))
         attach(app, "Imported cover overrides automatic artwork")
         app.buttons["artworkDone"].tap()
-        app.terminate(); app.launch(); openArtworkEditor(app)
+        app.terminate(); launchPrepared(app); openArtworkEditor(app)
         XCTAssertTrue(app.buttons["importCoverImage"].exists)
         attach(app, "Custom cover after relaunch")
         let background = app.buttons["importBackgroundImage"]
@@ -275,31 +371,22 @@ final class EmulatorUITests: XCTestCase {
         XCTAssertTrue(change.waitForExistence(timeout: 10)); change.tap()
         XCTAssertTrue(app.buttons["artworkDone"].waitForExistence(timeout: 5))
     }
-    @MainActor func testPlannedConsolesAreClearlyUnavailable() {
-        XCUIDevice.shared.orientation = .portrait
-        let app = XCUIApplication()
-        app.launch()
+    @MainActor func testReleaseMenuOnlyOffersPlayableConsoles() {
+        let app = XCUIApplication(); launchPrepared(app)
         XCTAssertTrue(app.buttons["consoleCollection"].waitForExistence(timeout: 20))
         app.buttons["consoleCollection"].tap()
         XCTAssertTrue(app.buttons["consoleFilter"].waitForExistence(timeout: 5))
-        for system in ["psp", "ps1", "gamecube"] {
-            if !app.buttons["consoleFilter"].exists { app.buttons["consoleCollection"].tap() }
-            app.buttons["consoleFilter"].tap()
-            app.buttons["system-\(system)"].tap()
-            XCTAssertTrue(app.staticTexts["COMING SOON"].waitForExistence(timeout: 5))
-            XCTAssertFalse(app.buttons["startSelectedGame"].exists)
-            XCTAssertTrue(app.buttons["backToPlayableLibrary"].isHittable)
-            XCTAssertLessThan(app.buttons["backToPlayableLibrary"].frame.maxY, app.buttons["addGames"].frame.minY)
-            attach(app, "Planned console \(system)")
+        app.buttons["consoleFilter"].tap()
+        XCTAssertTrue(app.buttons["system-3ds"].waitForExistence(timeout: 3))
+        for system in ["psp", "ps1", "gamecube", "ds", "ps2"] {
+            XCTAssertFalse(app.buttons["system-\(system)"].exists)
         }
-        app.buttons["backToPlayableLibrary"].tap()
-        XCTAssertTrue(app.buttons["startSelectedGame"].waitForExistence(timeout: 5))
-        XCTAssertFalse(app.buttons["backToPlayableLibrary"].exists)
+        attach(app, "Release library offers playable 3DS only")
     }
 
     @MainActor func testMenuSoundPreferencePersists() {
         let app = XCUIApplication()
-        app.launch()
+        launchPrepared(app)
         app.buttons["System setup"].tap()
         app.buttons["Sound options"].tap()
         let setting = app.switches["menuSoundsEnabled"]
@@ -310,7 +397,7 @@ final class EmulatorUITests: XCTestCase {
         let updated = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", changed), object: setting)
         XCTAssertEqual(XCTWaiter.wait(for: [updated], timeout: 3), .completed)
         XCTAssertEqual(app.buttons["previewMenuSound"].isEnabled, changed == "1")
-        app.terminate(); app.launch()
+        app.terminate(); launchPrepared(app)
         app.buttons["System setup"].tap()
         app.buttons["Sound options"].tap()
         XCTAssertTrue(setting.waitForExistence(timeout: 10))
@@ -326,7 +413,7 @@ final class EmulatorUITests: XCTestCase {
     @MainActor func testConsoleHomeBrowsingSearchAndLaunch() throws {
         XCUIDevice.shared.orientation = .portrait
         let app = XCUIApplication()
-        app.launch()
+        launchPrepared(app)
         let title = app.staticTexts["selectedGameTitle"]
         XCTAssertTrue(title.waitForExistence(timeout: 20))
         let firstTitle = title.label
@@ -364,7 +451,7 @@ final class EmulatorUITests: XCTestCase {
     @MainActor func testConsoleHomeAvoidsDuoFold() {
         let app = XCUIApplication()
         XCUIDevice.shared.orientation = .portrait
-        app.launchArguments = ["--library-tabletop-preview"]; app.launch()
+        app.launchArguments = ["--library-tabletop-preview"]; launchPrepared(app)
         let browse = app.descendants(matching: .any)["consoleBrowsePanel"].firstMatch
         XCTAssertTrue(browse.waitForExistence(timeout: 20))
         XCTAssertLessThan(app.staticTexts["selectedGameTitle"].frame.maxY, app.buttons["selectedGameTile"].frame.minY)
@@ -373,7 +460,7 @@ final class EmulatorUITests: XCTestCase {
         attach(app, "Console home Duo tabletop")
         app.terminate()
         XCUIDevice.shared.orientation = .landscapeLeft
-        app.launchArguments = ["--library-book-preview"]; app.launch()
+        app.launchArguments = ["--library-book-preview"]; launchPrepared(app)
         XCTAssertTrue(browse.waitForExistence(timeout: 20))
         XCTAssertLessThan(app.buttons["Search games"].frame.maxX, app.buttons["selectedGameTile"].frame.minX)
         XCTAssertTrue(app.buttons["selectedGameTile"].isHittable)
@@ -385,7 +472,7 @@ final class EmulatorUITests: XCTestCase {
     @MainActor func testShaderPausePreferencePersists() {
         let app = XCUIApplication()
         app.launchArguments = ["--input-test", "--duo-tabletop-preview", "--controller-preview"]
-        app.launch()
+        launchPrepared(app)
         openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Player Settings"].tap()
         let setting = app.switches["Reduce shader pauses"]
         XCTAssertTrue(setting.waitForExistence(timeout: 10))
@@ -395,7 +482,7 @@ final class EmulatorUITests: XCTestCase {
         setting.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
         let updated = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", changed), object: setting)
         XCTAssertEqual(XCTWaiter.wait(for: [updated], timeout: 3), .completed)
-        app.terminate(); app.launch()
+        app.terminate(); launchPrepared(app)
         openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Player Settings"].tap()
         XCTAssertEqual(setting.value as? String, changed)
         setting.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
@@ -416,7 +503,7 @@ final class EmulatorUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["--boot-test-game", "--fresh-start", "--touch-controls-preview"]
         app.launchEnvironment["EMULATOR_TEST_ROM_PATH"] = rom.path
-        app.launch()
+        launchPrepared(app)
         let top = app.images["topScreen"]
         XCTAssertTrue(top.waitForExistence(timeout: 60))
         for stage in 0..<8 {
@@ -446,7 +533,7 @@ final class EmulatorUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["--boot-test-game", "--fresh-start"]
         app.launchEnvironment["EMULATOR_TEST_ROM_PATH"] = rom.path
-        app.launch()
+        launchPrepared(app)
         let top = app.images["topScreen"]
         XCTAssertTrue(top.waitForExistence(timeout: 45))
         let frames = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
@@ -462,7 +549,7 @@ final class EmulatorUITests: XCTestCase {
     @MainActor func testDuoTabletopLayoutAndControllerExpansion() {
         XCUIDevice.shared.orientation = .portrait
         let app = XCUIApplication()
-        app.launchArguments = ["--input-test", "--duo-tabletop-preview", "--touch-controls-preview"]; app.launch()
+        app.launchArguments = ["--input-test", "--duo-tabletop-preview", "--touch-controls-preview"]; launchPrepared(app)
         let top = app.otherElements["topScreenRegion"]
         let bottom = app.otherElements["bottomScreenRegion"]
         XCTAssertTrue(bottom.waitForExistence(timeout: 10))
@@ -475,7 +562,7 @@ final class EmulatorUITests: XCTestCase {
         let touchWidth = bottom.frame.width
         attach(app, "Duo tabletop with touch controls")
         app.terminate()
-        app.launchArguments = ["--input-test", "--duo-tabletop-preview", "--controller-preview"]; app.launch()
+        app.launchArguments = ["--input-test", "--duo-tabletop-preview", "--controller-preview"]; launchPrepared(app)
         XCTAssertTrue(bottom.waitForExistence(timeout: 10))
         XCTAssertGreaterThan(bottom.frame.width, touchWidth)
         XCTAssertFalse(app.buttons["A"].exists)
@@ -488,7 +575,7 @@ final class EmulatorUITests: XCTestCase {
         XCUIDevice.shared.orientation = .landscapeLeft
         defer { XCUIDevice.shared.orientation = .portrait }
         let app = XCUIApplication()
-        app.launchArguments = ["--input-test", "--duo-book-preview", "--controller-preview"]; app.launch()
+        app.launchArguments = ["--input-test", "--duo-book-preview", "--controller-preview"]; launchPrepared(app)
         let top = app.otherElements["topScreenRegion"], bottom = app.otherElements["bottomScreenRegion"]
         XCTAssertTrue(bottom.waitForExistence(timeout: 10))
         XCTAssertLessThan(top.frame.maxX, bottom.frame.minX)
@@ -496,7 +583,7 @@ final class EmulatorUITests: XCTestCase {
     }
     @MainActor func testControllerCanFillDuoPanelsAndKeepSkin() {
         let app = XCUIApplication()
-        app.launchArguments = ["--input-test", "--duo-tabletop-preview", "--controller-preview"]; app.launch()
+        app.launchArguments = ["--input-test", "--duo-tabletop-preview", "--controller-preview"]; launchPrepared(app)
         let bottom = app.otherElements["bottomScreenRegion"]
         XCTAssertTrue(bottom.waitForExistence(timeout: 10))
         XCTAssertTrue(app.buttons["Controller connected"].waitForExistence(timeout: 10))
@@ -522,7 +609,7 @@ final class EmulatorUITests: XCTestCase {
         returnToLibrary(app)
     }
     @MainActor func testLibraryAndMiiSetup() {
-        let app = XCUIApplication(); app.launch()
+        let app = XCUIApplication(); launchPrepared(app)
         XCTAssertTrue(app.staticTexts["EMUDEN"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.buttons["addGames"].exists)
         app.buttons["System setup"].tap()
@@ -537,7 +624,7 @@ final class EmulatorUITests: XCTestCase {
     }
     @MainActor func testCinematicDuoOpeningAndSearch() {
         XCUIDevice.shared.orientation = .portrait
-        let app = XCUIApplication(); app.launch()
+        let app = XCUIApplication(); launchPrepared(app)
         XCTAssertTrue(app.buttons["Search games"].waitForExistence(timeout: 20))
         app.buttons["Search games"].tap()
         let field = app.textFields["Search your library"]
@@ -571,7 +658,7 @@ final class EmulatorUITests: XCTestCase {
         guard UIAccessibility.isReduceMotionEnabled, UIAccessibility.isReduceTransparencyEnabled else {
             throw XCTSkip("Enable Reduce Motion and Reduce Transparency in the simulator's Accessibility settings to run this visual check.")
         }
-        let app = XCUIApplication(); app.launch()
+        let app = XCUIApplication(); launchPrepared(app)
         XCTAssertTrue(app.buttons["Search games"].waitForExistence(timeout: 20))
         app.buttons["Search games"].tap()
         XCTAssertTrue(app.textFields["Search your library"].waitForExistence(timeout: 3))
@@ -587,7 +674,7 @@ final class EmulatorUITests: XCTestCase {
     }
     @MainActor func testCinematicPauseMenuAndReturn() throws {
         let app = XCUIApplication()
-        app.launchArguments = ["--input-test", "--controller-preview"]; app.launch()
+        app.launchArguments = ["--input-test", "--controller-preview"]; launchPrepared(app)
         XCTAssertTrue(app.buttons["Game menu"].waitForExistence(timeout: 10))
         openGameMenu(app)
         XCTAssertTrue(app.buttons["Quick Save"].waitForExistence(timeout: 5))
@@ -602,7 +689,7 @@ final class EmulatorUITests: XCTestCase {
         XCTAssertTrue(app.buttons["startSelectedGame"].waitForExistence(timeout: 15))
     }
     @MainActor func testInputPauseAndReturn() {
-        let app = XCUIApplication(); app.launchArguments = ["--input-test", "--touch-controls-preview"]; app.launch()
+        let app = XCUIApplication(); app.launchArguments = ["--input-test", "--touch-controls-preview"]; launchPrepared(app)
         XCTAssertTrue(app.staticTexts["Ready, player one."].waitForExistence(timeout: 10))
         app.buttons["A"].tap()
         XCTAssertTrue(app.staticTexts["A pressed"].waitForExistence(timeout: 3))
@@ -620,7 +707,7 @@ final class EmulatorUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["EMUDEN"].waitForExistence(timeout: 5))
     }
     @MainActor func test3DSHomebrewBootAndClose() {
-        let app = XCUIApplication(); app.launchArguments = ["--boot-homebrew", "--fresh-start"]; app.launch()
+        let app = XCUIApplication(); app.launchArguments = ["--boot-homebrew", "--fresh-start"]; launchPrepared(app)
         assertGamePixels(app)
         attach(app, "Actual 3DS emulation")
         returnToLibrary(app)
@@ -636,10 +723,10 @@ final class EmulatorUITests: XCTestCase {
     @MainActor func testAutomaticSavePointSurvivesUncleanRelaunch() {
         // The shortened interval is compiled only for Simulator; device builds use five minutes.
         continueAfterFailure = false
-        let app = XCUIApplication(); app.launchArguments = ["--boot-homebrew", "--fresh-start", "--autosave-test", "-automaticResumeSaves", "YES"]; app.launch()
+        let app = XCUIApplication(); app.launchArguments = ["--boot-homebrew", "--fresh-start", "--autosave-test", "-automaticResumeSaves", "YES"]; launchPrepared(app)
         assertGamePixels(app)
         XCTAssertTrue(app.staticTexts["Resume point saved"].waitForExistence(timeout: 45))
-        app.terminate(); app.launchArguments = ["--boot-homebrew"]; app.launch()
+        app.terminate(); app.launchArguments = ["--boot-homebrew"]; launchPrepared(app)
         XCTAssertTrue(app.buttons["Resume session"].waitForExistence(timeout: 45)); app.buttons["Resume session"].tap()
         XCTAssertTrue(app.staticTexts["Session resumed"].waitForExistence(timeout: 45)); assertGamePixels(app)
         openGameMenu(app); app.buttons["openSaveHistory"].tap()
@@ -650,7 +737,7 @@ final class EmulatorUITests: XCTestCase {
     }
     @MainActor func testSaveHistoryLoadsEarlierPointAndSurvivesRelaunch() {
         continueAfterFailure = false
-        let app = XCUIApplication(); app.launchArguments = ["--boot-homebrew", "--fresh-start"]; app.launch()
+        let app = XCUIApplication(); app.launchArguments = ["--boot-homebrew", "--fresh-start"]; launchPrepared(app)
         assertGamePixels(app)
         for _ in 0..<2 {
             openGameMenu(app); app.buttons["Quick Save"].tap()
@@ -660,21 +747,13 @@ final class EmulatorUITests: XCTestCase {
         openGameMenu(app); app.buttons["openSaveHistory"].tap()
         let older = app.buttons["saveHistory-quick-1"]
         XCTAssertTrue(older.waitForExistence(timeout: 10)); reveal(older, in: app)
-        let previousAutomatic = app.buttons["saveHistory-resume-0"].exists ? (app.buttons["saveHistory-resume-0"].value as? String ?? "") : ""
         attach(app, "Dated save history with game thumbnails")
         older.tap(); app.buttons["Load save point"].tap()
         XCTAssertTrue(app.staticTexts["Save point loaded"].waitForExistence(timeout: 45)); assertGamePixels(app)
-        XCUIDevice.shared.press(.home)
-        sleep(2)
-        XCTAssertNotEqual(app.state, .runningForeground, "Exercise a real background transition")
-        app.activate()
-        openGameMenu(app); app.buttons["openSaveHistory"].tap()
-        let automatic = app.buttons["saveHistory-resume-0"]
-        XCTAssertTrue(automatic.waitForExistence(timeout: 45)); reveal(automatic, in: app)
-        XCTAssertNotEqual(automatic.value as? String ?? "", previousAutomatic, "Backgrounding must create a new point, not merely show an existing one")
-        attach(app, "Background resume point kept separately")
-        app.buttons["saveHistoryDone"].tap(); returnToLibrary(app)
-        app.terminate(); app.launchArguments = ["--boot-homebrew"]; app.launch()
+        // Duo's Home button may leave the other display active. Genuine background
+        // capture is exercised separately on the owned single-screen QA simulator.
+        returnToLibrary(app)
+        app.terminate(); app.launchArguments = ["--boot-homebrew"]; launchPrepared(app)
         XCTAssertTrue(app.buttons["Resume session"].waitForExistence(timeout: 45)); app.buttons["Resume session"].tap()
         XCTAssertTrue(app.staticTexts["Session resumed"].waitForExistence(timeout: 45)); assertGamePixels(app)
         openGameMenu(app); app.buttons["openSaveHistory"].tap()
@@ -685,18 +764,19 @@ final class EmulatorUITests: XCTestCase {
     }
     @MainActor func testPublicPolicyLinksAndOfflineNoticesAreAccessible() {
         continueAfterFailure = false
-        let app = XCUIApplication(); app.launch()
+        let app = XCUIApplication(); launchPrepared(app)
         XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 20)); app.buttons["System setup"].tap()
+        let notices = app.buttons["openSourceNotices"]; reveal(notices, in: app)
         let privacy = app.descendants(matching: .any)["privacyPolicyLink"]
-        reveal(privacy, in: app); XCTAssertTrue(privacy.exists)
+        XCTAssertTrue(privacy.exists)
         XCTAssertTrue(app.descendants(matching: .any)["supportLink"].exists)
         XCTAssertTrue(app.descendants(matching: .any)["correspondingSourceLink"].exists)
-        let notices = app.buttons["openSourceNotices"]; reveal(notices, in: app); notices.tap()
+        notices.tap()
         XCTAssertTrue(app.navigationBars["ThirdPartyNotices"].waitForExistence(timeout: 10))
         attach(app, "Offline open-source notices")
     }
     @MainActor func testQuickSaveLoadAndResumeAfterRelaunch() {
-        let app = XCUIApplication(); app.launchArguments = ["--boot-homebrew", "--fresh-start"]; app.launch()
+        let app = XCUIApplication(); app.launchArguments = ["--boot-homebrew", "--fresh-start"]; launchPrepared(app)
         assertGamePixels(app)
         openGameMenu(app); app.buttons["Quick Save"].tap()
         XCTAssertTrue(app.staticTexts["Quick save ready"].waitForExistence(timeout: 45))
@@ -705,7 +785,7 @@ final class EmulatorUITests: XCTestCase {
         assertGamePixels(app)
         returnToLibrary(app)
         XCTAssertTrue(app.staticTexts["EMUDEN"].waitForExistence(timeout: 45))
-        app.terminate(); app.launchArguments = ["--boot-homebrew"]; app.launch()
+        app.terminate(); app.launchArguments = ["--boot-homebrew"]; launchPrepared(app)
         XCTAssertTrue(app.buttons["Resume session"].waitForExistence(timeout: 45))
         app.buttons["Resume session"].tap()
         XCTAssertTrue(app.staticTexts["Session resumed"].waitForExistence(timeout: 45))

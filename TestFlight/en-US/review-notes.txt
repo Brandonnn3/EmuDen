@@ -1,18 +1,20 @@
-Prepared for a possible later external beta review. This submission is intended for INTERNAL TESTING ONLY.
+EmuDen 0.1.0 supports Nintendo 3DS emulation on iPhone and iPad. No login is required. The initial public release is planned as free in the United States. Only 3DS is offered as playable.
 
-EmuDen is a native iOS/iPadOS retro console emulator frontend. This build supports Nintendo 3DS only. No login or demo account is required. There are no subscriptions, purchases, advertisements, hosted game catalogs or in-app game downloads.
+Test without commercial content:
+1. Open Settings in the bottom dock.
+2. Open Help, tests & open-source notices → Launch 3DS test.
+3. The included 3DS Homebrew Menu 2.4.4 runs in the emulator. Wait for startup, then check displays, touch and controls.
+4. Tap the upper display to reveal controls → menu for pause, Quick Save, Quick Load and Save history. Return to library captures a resume point when enabled.
+5. Test controls opens a separate native input/display diagnostic.
 
-Reproducible test without commercial content:
-1. Launch EmuDen.
-2. Open Settings from the bottom dock.
-3. Open Help, tests & open-source notices, then tap Launch 3DS test.
-4. The bundled, open-source 3DS Homebrew Menu runs in the emulator. Check both displays, audio and controls. Allow initial startup to finish.
-5. Use Return to library to close the emulated application. Test controls opens a separate, clearly labeled native input/display diagnostic.
+No Nintendo game, firmware, console key or original Mii archive is bundled or offered for download. Users import compatible decrypted software through Files. The included homebrew's license/credits and third-party notices are accessible offline in Settings. Mii system data and a local profile picture are separate optional imports.
 
-The included test executable is devkitPro 3DS Homebrew Menu 2.4.4. Its notices are bundled. Azahar 2127.0-rc1 and MoltenVK 1.4.2 are embedded and signed. The emulator runs guest code through the FastInterp CPU interpreter with Vulkan/Metal GPU rendering. CPU and shader JIT are disabled. The corresponding GPL-3.0-or-later core source and local changes are provided in the matching source package.
+Azahar 2127.0-rc1 uses the FastInterp CPU interpreter and Vulkan/Metal graphics through MoltenVK 1.4.2. CPU/shader JIT is disabled. Corresponding source, local patches and rebuilding instructions are published by build number at https://github.com/Brandonnn3/EmuDen and linked in Settings. No private signing keys or user files are in that source.
 
-Users can import their own compatible, decrypted game files through Apple's Files picker. No Nintendo ROM, BIOS, firmware, encryption key or original Mii resource archive is bundled. The guest-face fallback uses an original replacement texture. User-selected console system-data folders are imported locally when needed for game compatibility.
+Build 19 asks before online artwork. Offline use retains bundled/cached/chosen pictures. Online requests reveal connection metadata and requested asset paths to artwork hosts; game files, saves, Mii data and profile pictures are not uploaded. Generated illustrations are not gameplay captures. Privacy details are at https://emuden-support.headyopossum2.chatgpt.site/privacy.html.
 
-The app has no automatic telemetry, account service or game-download server. A public static artwork catalog provides generated illustrations and title/ID metadata; Libretro provides optional cover/scene fallbacks. Ordinary HTTPS requests expose the requested asset path and network information to those hosts. Game files, saves, personal Mii data, the chosen profile picture and diagnostic logs are not uploaded. The WidgetKit extension reads a bounded local App Group snapshot of recent game IDs/titles and cached thumbnails, with no networking. Apple handles TestFlight diagnostics and tester feedback separately.
+Software index: https://emuden-support.headyopossum2.chatgpt.site/software.html. Included demo universal link: https://emuden-support.headyopossum2.chatgpt.site/play/?demo=homebrew. The local library lists imported titles; its menu provides a universal link and labels imported software as unrated. Links open an existing local entry, never download a game. Imported software requires a local adult declaration. On supported iOS versions, regional age-assurance eligibility is checked with Apple's Declared Age Range service; required checks must confirm an adult band. The bundled demo remains available without that declaration.
 
-The current build is an early beta: speed varies, and original Mii rendering, complete Castle Club support and continuous physical Duo display transitions still need testing. Other console cores are not implemented or advertised as available.
+Optional developer tips, if configured with Apple, are repeatable consumables with no feature/content unlock. Settings displays only products returned by StoreKit, at Apple's localized prices. With no available products, the tip section is absent and the app remains free. The WidgetKit extension reads local metadata and cached images; it makes no network requests. No ads, subscription, messaging or game-download service is included.
+
+Performance and compatibility vary by title/device. The owner is validating physical-device gameplay separately. The preparation records do not assert public rights clearance or prior Apple approval; resolve the recorded release holds before submitting this candidate.

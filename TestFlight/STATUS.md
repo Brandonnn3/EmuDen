@@ -1,6 +1,16 @@
+# Build19 — submission candidate
+
+The owner is testing18 on their phone. Build19 has a signed development archive with the new app-only entitlements and four matching real dSYMs,67passing domain tests,2tooling tests, release-control/save/UI coverage and two verified repeatable local StoreKit tips. A genuine single-screen background capture has a fresh timestamp and valid payload checksum. It changes release controls, not the core or phone performance.
+
+The AppStoreConnect0.1.0 draft has listing text/private Apple review information, no sign-in, manual release, free US-only availability, subtitle/categories and privacy URL. ProductInteraction is configured as functionality/linked/no tracking; OtherData details/label publication, age questionnaire, rights decision and final screenshots/build selection remain. No app upload, review submission or new paid agreement occurred. CLI public export still needs working distribution signing; the development archive is not itself a signed public IPA.
+
+Matching source19 is being packaged for publication. Seven native captures are prepared (iPhone/Duo/iPad); the broader iPad preview-animation wait timed out and is retained as a validation limit. The generated artwork and older signed releases/source remain preserved. Rights/branding and actual GPL/store distribution questions are still recorded; no Apple/legal clearance is claimed. See [submission plan](Submission-Plan.md), [build19 details](../Docs/BUILD-19.md) and [review packet](../Docs/Legal/RELEASE-19-REVIEW-PACKET.md).
+
+---
+
 # Public release and build 18 preparation — 11 November 2026
 
-**Public App Store submission remains unconfirmed.** The owner authorized GPL-3.0-or-later for original EmuDen source contributions and public source/support publication, while keeping the generated images. Matching build-17 source is public and its anonymous download checksum is verified. Build 18 adds save history, queued background saving, periodic checkpoints, offline dependency notices and public policy/source links. Build 18 is signed and locally validated with four real dSYMs; source/policy publication is tracked by the final preparation report. These technical checks are not Apple approval.
+**Public App Store submission remains unconfirmed.** The owner authorized GPL-3.0-or-later for original EmuDen source contributions and public source/support publication, while keeping the generated images. Matching build-17 source is public and its anonymous download checksum is verified. Build 18 adds save history, queued background saving, periodic checkpoints, offline dependency notices and public policy/source links. Build 18 is signed and locally validated with four real dSYMs; matching source is public with anonymous checksum verification, and the support/privacy/source Site is public with nine verified paths. These technical checks are not Apple approval.
 
 Generated artwork, archived builds 14–17 and their matching packages remain preserved. Keeping artwork does not establish publisher rights. Distribution terms, artwork basis, accurate privacy/export declarations and final release-device/review checks remain recorded in AppStoreReadiness.json. The artwork automation remains paused. Project QA Simulator data was moved onto the Samsung T7 after internal-disk exhaustion; original Simulator paths are retained as links. The original Duo Simulator was not moved.
 
@@ -12,10 +22,10 @@ Run `python3 Scripts/validate-app-store-readiness.py` for the actual evidence st
 
 Pause → **Save history** provides thumbnails and dates for the latest **10 Quick Saves and 3 automatic points** per game. Load an earlier point with confirmation. Quick Load retains its one-step latest-manual behavior. The newest compatible manual/automatic point is offered on startup.
 
-Periodic Automatic save points default on every five minutes of active play and can be disabled in Player settings. Background/exit capture stays enabled; an in-flight save/load now finishes before a background resume capture is attempted. Capturing briefly pauses play, and OS termination/force-quit/storage failure can still prevent completion. Native in-game saves remain separate; core/system-resource changes can make older snapshots unavailable without deleting them. No missing state on the physical phone has been diagnosed or recovered.
+Periodic Automatic save points default on every five minutes of active play and can be disabled in Player settings. Background/exit capture stays enabled; an in-flight save/load now finishes before a background resume capture is attempted. Capturing briefly pauses play, and OS termination/force-quit/storage failure can still prevent completion. Native in-game saves remain separate; core/system-resource changes can make older snapshots unavailable without deleting them. No missing state on the physical phone has been diagnosed or recovered. Public policy/source pages are at https://emuden-support.headyopossum2.chatgpt.site; all nine authored pages/assets were checked anonymously, accounting for disclosed Cloudflare security-script injection.
 
 - Signed archive: `build/TestFlight/EmuDen-0.1.0-18.xcarchive`.
-- Matching source: `build/TestFlight/EmuDen-0.1.0-18-source.tar.gz` and the matching public source release recorded in the final preparation report.
+- Matching source: `build/TestFlight/EmuDen-0.1.0-18-source.tar.gz` and https://github.com/Brandonnn3/EmuDen/releases/tag/v0.1.0-build.18.
 - Final evidence: `build/TestFlight/Build18-PreparationReport.json`.
 - [Implementation and limits](../Docs/BUILD-18.md).
 

@@ -1,6 +1,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 import QuickLook
+import StoreKit
 
 struct SystemSetupView: View {
     @EnvironmentObject private var library: GameLibrary
@@ -18,6 +19,11 @@ struct SystemSetupView: View {
     @AppStorage("buttonHaptics") private var haptics = true
     @AppStorage("asyncShaderCompilation") private var asyncShaders = true
     @AppStorage("showFPS") private var showFPS = false
+    @AppStorage("onlineArtworkEnabled") private var onlineArtwork = false
+    @AppStorage("hasArtworkChoice") private var hasArtworkChoice = false
+    @AppStorage("importedGameAccess") private var importedGameAccess = "undecided"
+    @State private var showingAgeChoice = false
+    @StateObject private var tips = TipJarStore()
     let testCore: () -> Void
     let testControls: () -> Void
     var embedded = false
@@ -35,7 +41,9 @@ struct SystemSetupView: View {
             .sheet(isPresented: $playerSettings) { PlayerSettingsView() }
             .sheet(isPresented: $showingWidgets) { WidgetShowcaseView() }
             .sheet(isPresented: $miiSetup) { MiiSetupView() }
+            .sheet(isPresented: $showingAgeChoice) { ImportedGameAgeView { adult in importedGameAccess = adult ? "adult" : "under18"; showingAgeChoice = false } }
             .quickLookPreview($noticeURL)
+            .task { await tips.load() }
             .fullScreenCover(isPresented: $duoLayout) { DuoLayoutSettingsView() }
             .fileImporter(isPresented: $importingMii, allowedContentTypes: [.item]) { importFile($0, archive: true) }
             .fileImporter(isPresented: $importingFolder, allowedContentTypes: [.folder]) { importFile($0, archive: false) }
@@ -61,10 +69,39 @@ struct SystemSetupView: View {
                         VStack(spacing: 18) { miiCard; layoutCard }.frame(maxWidth: .infinity)
                     }.cinematicEntrance(delay: 0.04)
                     VStack(alignment: .leading, spacing: 14) {
+                        Label("Artwork & privacy", systemImage: "photo.on.rectangle.angled").font(.headline)
+                        Toggle("Online artwork", isOn: $onlineArtwork).accessibilityIdentifier("onlineArtwork")
+                            .onChange(of: onlineArtwork) { _, _ in hasArtworkChoice = true; menuAudio.play(.focus) }
+                        Text("Find covers and cinematic backgrounds for your games. Artwork hosts receive image requests and connection information. Your game files and saves stay on this device. Turn this off to use bundled, cached or chosen pictures.")
+                            .font(.caption).foregroundStyle(ConsoleTheme.quiet)
+                        Divider()
+                        Button { showingAgeChoice = true } label: { CinematicSettingRow(title: "Imported game access", detail: importedGameAccess == "adult" ? "Adult access confirmed" : "Unrated imports require adult confirmation", symbol: "person.crop.circle.badge.checkmark") }
+                            .accessibilityIdentifier("importedGameAccess")
+                        Text("Imported software is unrated by EmuDen. Play is restricted to users who declare they are 18 or older. The bundled homebrew demo stays available. Only your choice is stored locally; no birth date or identity document is requested.")
+                            .font(.caption).foregroundStyle(ConsoleTheme.quiet)
+                    }.cinematicCard()
+                    if !tips.products.isEmpty {
+                        VStack(alignment: .leading, spacing: 14) {
+                            Label("Support EmuDen", systemImage: "heart.fill").font(.headline)
+                            Text("EmuDen is free. If you’d like to support development, you can leave an optional tip. Every feature stays available to everyone.")
+                                .font(.subheadline).foregroundStyle(ConsoleTheme.quiet)
+                            ForEach(tips.products) { product in
+                                Button { Task { await tips.purchase(product) } } label: {
+                                    HStack { Text(product.displayName); Spacer(); Text(product.displayPrice).fontWeight(.semibold) }.frame(minHeight: 44)
+                                }.accessibilityIdentifier(product.id)
+                            }.disabled(tips.purchasing)
+                            if tips.purchasing { ProgressView("Waiting for Apple…") }
+                            Text("Optional, repeatable purchases handled by Apple. Tips do not unlock content or features.")
+                                .font(.caption).foregroundStyle(ConsoleTheme.quiet)
+                        }.cinematicCard()
+                            .alert("EmuDen support", isPresented: Binding(get: { tips.message != nil }, set: { if !$0 { tips.message = nil } })) { Button("OK") { tips.message = nil } } message: { Text(tips.message ?? "") }
+                    }
+                    VStack(alignment: .leading, spacing: 14) {
                         Label("About EmuDen", systemImage: "info.circle").font(.headline)
                         Link("Privacy policy", destination: URL(string: "https://emuden-support.headyopossum2.chatgpt.site/privacy.html")!).frame(minHeight: 44).accessibilityIdentifier("privacyPolicyLink")
                         Link("Support", destination: URL(string: "https://emuden-support.headyopossum2.chatgpt.site/support.html")!).frame(minHeight: 44).accessibilityIdentifier("supportLink")
                         Link("Source code & rebuilding", destination: URL(string: "https://emuden-support.headyopossum2.chatgpt.site/source.html")!).frame(minHeight: 44).accessibilityIdentifier("correspondingSourceLink")
+                        Link("Bundled software", destination: URL(string: "https://emuden-support.headyopossum2.chatgpt.site/software.html")!).frame(minHeight: 44)
                         Button("Open-source notices", systemImage: "doc.text") {
                             noticeURL = Bundle.main.url(forResource: "ThirdPartyNotices", withExtension: "txt")
                         }.frame(minHeight: 44).accessibilityIdentifier("openSourceNotices")
@@ -160,6 +197,42 @@ struct SystemSetupView: View {
         case .success(let url): Task { await library.importSystem(url, miiArchive: archive); if library.error == nil { menuAudio.play(.save) } }
         case .failure(let error): library.error = error.localizedDescription
         }
+    }
+}
+
+struct OnlineArtworkChoiceView: View {
+    let choose: (Bool) -> Void
+    var body: some View {
+        VStack(alignment: .leading, spacing: 24) {
+            Image(systemName: "photo.stack.fill").font(.system(size: 42)).foregroundStyle(ConsoleTheme.blue)
+            Text("Bring your library to life.").font(.system(size: 32, weight: .bold))
+            Text("Online artwork finds covers and cinematic backgrounds for your games. Artwork hosts receive image requests and connection information. Your game files and saves stay on this device.")
+                .font(.body).foregroundStyle(ConsoleTheme.quiet)
+            Link("Read the privacy policy", destination: URL(string: "https://emuden-support.headyopossum2.chatgpt.site/privacy.html")!)
+            Spacer(minLength: 10)
+            Button { choose(true) } label: { CinematicActionLabel(title: "Use online artwork", symbol: "sparkles", primary: true) }.accessibilityIdentifier("allowOnlineArtwork")
+            Button { choose(false) } label: { CinematicActionLabel(title: "Use offline artwork", symbol: "photo", disclosure: false) }.accessibilityIdentifier("declineOnlineArtwork")
+        }.padding(30).frame(maxWidth: 660).frame(maxWidth: .infinity)
+            .background(ConsoleTheme.ink.ignoresSafeArea()).foregroundStyle(.white).tint(ConsoleTheme.blue)
+            .buttonStyle(ConsolePressStyle()).presentationDetents([.large]).interactiveDismissDisabled()
+    }
+}
+
+struct ImportedGameAgeView: View {
+    let choose: (Bool) -> Void
+    var body: some View {
+        VStack(alignment: .leading, spacing: 22) {
+            Image(systemName: "person.crop.circle.badge.checkmark").font(.system(size: 42)).foregroundStyle(ConsoleTheme.blue)
+            Text("Your games. Your age group.").font(.system(size: 32, weight: .bold))
+            Text("Imported games and homebrew are unrated by EmuDen and may contain mature content. You must be 18 or older to enable imported software. The bundled homebrew demo remains available.")
+                .foregroundStyle(ConsoleTheme.quiet)
+            Text("Your choice stays on this device. No date of birth or identity document is collected.").font(.caption).foregroundStyle(ConsoleTheme.quiet)
+            Spacer(minLength: 12)
+            Button { choose(true) } label: { CinematicActionLabel(title: "I’m 18 or older", symbol: "checkmark", primary: true) }.accessibilityIdentifier("confirmAdultAccess")
+            Button { choose(false) } label: { CinematicActionLabel(title: "I’m under 18", symbol: "arrow.uturn.backward", disclosure: false) }.accessibilityIdentifier("restrictImportedAccess")
+        }.padding(30).frame(maxWidth: 660).frame(maxWidth: .infinity)
+            .foregroundStyle(.white).background(ConsoleTheme.ink.ignoresSafeArea()).tint(ConsoleTheme.blue)
+            .buttonStyle(ConsolePressStyle()).presentationDetents([.large])
     }
 }
 
@@ -273,5 +346,52 @@ struct WidgetShowcaseView: View {
                 try? await Task.sleep(for: .seconds(3))
                 if let directory, let saved = WidgetLibrary.read(from: directory) { snapshot = saved }
             }
+    }
+}
+
+@MainActor
+final class TipJarStore: ObservableObject {
+    static let identifiers = ["com.brandonaleman.Emulator.tip.small", "com.brandonaleman.Emulator.tip.medium", "com.brandonaleman.Emulator.tip.large"]
+    @Published private(set) var products = [Product]()
+    @Published private(set) var purchasing = false
+    @Published var message: String?
+    private var updates: Task<Void, Never>?
+    init() {
+        updates = Task { [weak self] in
+            for await result in StoreKit.Transaction.updates {
+                guard self != nil else { return }
+                if case .verified(let transaction) = result,
+                   Self.identifiers.contains(transaction.productID), transaction.productType == .consumable {
+                    await transaction.finish()
+                }
+            }
+        }
+    }
+    deinit { updates?.cancel() }
+    func load() async {
+        do {
+            products = try await Product.products(for: Self.identifiers)
+                .filter { $0.type == .consumable }
+                .sorted { $0.price < $1.price }
+        } catch { products = [] }
+    }
+    func purchase(_ product: Product) async {
+        guard !purchasing, Self.identifiers.contains(product.id), product.type == .consumable else { return }
+        purchasing = true
+        defer { purchasing = false }
+        do {
+            switch try await product.purchase() {
+            case .success(let result):
+                guard case .verified(let transaction) = result,
+                      transaction.productID == product.id, transaction.productType == .consumable else {
+                    message = "Apple couldn’t verify this transaction. Please check your purchase history with Apple."; return
+                }
+                await transaction.finish()
+                message = "Thank you for supporting EmuDen! Every feature remains free for everyone."
+            case .pending: message = "Your tip is waiting for Apple’s approval. You can keep using EmuDen."
+            case .userCancelled: break
+            @unknown default: message = "The purchase couldn’t be completed. Please try again later."
+            }
+        } catch { message = error.localizedDescription }
     }
 }

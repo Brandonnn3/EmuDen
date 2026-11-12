@@ -1,0 +1,11 @@
+# Public submission handoff — build 19
+
+Reuse the existing EmuDen app record. Do not create a duplicate or use the internal-only IPA as a public submission. Build 18 remains the owner's phone test build. The next candidate's release controls need device validation too.
+
+Prepared decisions: free, United States only, manual release after review; only 3DS playable. StoreListing.json, PrivacyAnswers.json, AgeRatingAnswers.json and TipProducts.json contain reviewable field values. Public policy/support/source pages already exist. Current Review notes are in en-US/review-notes.txt. Contact details for Apple's private review form remain in Private/Contact.json and must not be copied to the public site/source.
+
+Live App Store Connect work remains: enter/check store metadata and categories, pricing/US availability, honest age/privacy questionnaire, export response as applicable, version/build selection, actual screenshots, content-rights declaration and agreements. Native Safari later allowed the listing, free US-only plan, general categories/subtitle, privacy URL and partial data disclosure to be saved. See Submission-Plan.md for exact pending fields. Do not infer other live fields or signed agreements from these local files.
+
+Tips are optional for launch. If the owner has an active Paid Apps Agreement, banking/tax setup and wants tips immediately, create the three consumables, use their actual returned prices, supply review screenshots/notes, test Apple's sandbox and attach the first IAP submission as Apple requires. Otherwise leave products unavailable: the app remains entirely free with no tip card. Local StoreKit configuration tests do not prove live sandbox availability. Never use a real purchase to test.
+
+Release holds: particular generated-character artwork/cover uses need an applicable rights basis; GPL/store distribution terms and brand clearance remain documented questions. Do not affirm an unsupported content-rights declaration. No qualified legal opinion or Apple acceptance is supplied by engineering preparation. Retain the generated images and older assets as the owner requested while these questions are settled. No public submission or automatic release is authorized by a passing technical validator.

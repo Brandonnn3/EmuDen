@@ -1,19 +1,17 @@
-# EmuDen privacy policy reference
+# EmuDen privacy reference — build 19
 
-Effective date: November 11, 2026
+Published policy: https://emuden-support.headyopossum2.chatgpt.site/privacy.html. Effective November 11, 2026. Developer/contact: Brandon Aleman, Godofwaa@gmail.com. No private review phone is published.
 
-EmuDen is developed by Brandon Aleman. Its game library, imported files, console data, saves, recent-play history and diagnostic logs stay on the device. EmuDen does not use advertising, tracking or automatic developer analytics, and does not require an account.
+Imported files, system resources, native saves, save states, history, per-game settings, chosen images and logs are local. Widgets read a bounded local App Group snapshot of recent titles and cached images, without downloading. No advertising, tracking SDK, developer telemetry or EmuDen account is added. Users choose whether to share diagnostic logs; shared logs may include titles/device/settings/timing details.
 
-File access is limited to the app's storage and files or folders you select through the system picker. Compatible controllers provide input during use. Device/GPU details, thermal state and frame timings may appear in locally stored diagnostic logs. You control whether to share those logs.
+Build 19 asks before online artwork downloads. Declining or disabling online artwork retains bundled, cached and user-selected pictures. Requests are HTTPS with persistent cookies, credentials and URL caching disabled; the app has a separate bounded image cache. Hosts still see connection metadata and requested image/catalog paths. Matching stays on-device; game files, saves, Mii data, profile pictures and logs are not uploaded by artwork requests. Builds 18 and earlier requested artwork automatically.
 
-Game artwork and public metadata are downloaded from EmuDen's static artwork site (emuden-artwork-catalog.headyopossum2.chatgpt.site), with additional cover/scene fallbacks from Libretro’s public thumbnail server and GitHub indexes. Matching happens on your device. Requests expose the requested catalog/image path and ordinary network information, such as your IP address, to the host. They do not upload your game contents, saves, personal Mii data, profile picture or diagnostic logs. Downloaded images are cached for offline use.
+Because provider-controlled request logging and retention are not specifically audited, the label conservatively declares Product Interaction and Other Data Types, linked to the user, for app functionality. This covers requested title/artwork paths and potentially retained IP/user-agent metadata, even without an EmuDen account. It does not claim Data Not Collected or promise host-log deletion. Actual hosts are the public EmuDen catalog, Libretro thumbnails and GitHub index sources; the public website uses Sites/Cloudflare, which may add security scripts or cookies. Provider policies are linked on the public page. Reassess the label if provider purposes or integrations change.
 
-Home Screen widgets share up to four recent game IDs/titles and small cached images locally with EmuDen through its App Group. The widget extension makes no network requests. Your chosen profile picture stays in the app and is not included in widget data.
+A local adult-access declaration is stored without a birth date or identity document. On supported iOS versions, regional eligibility and age assurance use Apple's Declared Age Range service where required. The app uses the returned age band only to decide access; no band, document or identity record is sent to a developer server. Imported software can have its own emulated network behavior; there is no claim that the guest HTTP service is disabled.
 
-Deleting the app removes its local storage, subject to backups you control. Imported source files in iCloud Drive or another file provider remain under that provider's control. EmuDen does not operate a cloud-backup service.
+Optional tips use Apple's StoreKit. Apple handles payment details and purchase history. The app verifies/finishes transactions locally; there is no developer purchase-history server or feature entitlement. Apple/TestFlight data collection is governed separately by Apple.
 
-During TestFlight testing, Apple may collect crash reports, usage information and feedback and make them available to the developer under Apple's TestFlight terms. Feedback that you choose to send is used to investigate and improve the app. Avoid sending commercial game files, console encryption keys or personal Mii databases.
+Deleting the app removes local app storage subject to user-controlled backups; imported originals in iCloud/Files remain with their provider. Support email is voluntary and may be retained to address the request and necessary records. Provider-controlled records cannot be remotely erased by this app. The public policy describes these limits and contact/deletion options.
 
-Internal testers may use TestFlight feedback. The separately authorized public contact and policy target are recorded below; no private review phone is published.
-
-Published policy target: https://emuden-support.headyopossum2.chatgpt.site/privacy.html. The owner separately authorized Godofwaa@gmail.com as the public privacy/support contact. The public page includes provider-policy links and does not claim that hosting logs or retention were audited. Final anonymous-access evidence is in the build-18 preparation report. The separate App Privacy questionnaire remains unconfirmed.
+Prepared label answers: `Submission/PrivacyAnswers.json`. No App Store Connect privacy form has been submitted by this work.

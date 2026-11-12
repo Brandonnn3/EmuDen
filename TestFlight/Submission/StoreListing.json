@@ -1,0 +1,29 @@
+{
+  "status": "App Store Connect draft entered in part; see build19 preparation report for exact saved/pending fields",
+  "name": "EmuDen",
+  "subtitle": "Your console collection",
+  "bundleId": "com.brandonaleman.Emulator",
+  "sku": "EMUDEN-IOS-001",
+  "version": "0.1.0",
+  "build": "19",
+  "primaryLocale": "en-US",
+  "price": 0,
+  "currency": "USD",
+  "territories": [
+    "USA"
+  ],
+  "release": "MANUAL",
+  "primaryCategory": "GAMES",
+  "secondaryCategory": "ENTERTAINMENT",
+  "copyright": "2026 Brandon Aleman",
+  "descriptionFile": "../en-US/description.txt",
+  "keywordsFile": "../en-US/keywords.txt",
+  "promotionalTextFile": "../en-US/promotional-text.txt",
+  "reviewNotesFile": "../en-US/review-notes.txt",
+  "privateReviewContactFile": "../Private/Contact.json",
+  "supportURL": "https://emuden-support.headyopossum2.chatgpt.site/support.html",
+  "privacyPolicyURL": "https://emuden-support.headyopossum2.chatgpt.site/privacy.html",
+  "sourceURL": "https://emuden-support.headyopossum2.chatgpt.site/source.html",
+  "contentRightsDeclaration": "Pending specific art/distribution assessment; do not assert blanket rights",
+  "publicSubmissionReady": false
+}

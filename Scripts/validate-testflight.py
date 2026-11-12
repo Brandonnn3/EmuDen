@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate EmuDen's local internal-TestFlight metadata and an optional Xcode archive."""
+"""Validate EmuDen release metadata, an optional Xcode archive and signed export."""
 from pathlib import Path
 import argparse
 import json
@@ -21,14 +21,19 @@ def load_plist(path):
 def check_manifest(path, reasons):
     data = load_plist(path)
     assert data["NSPrivacyTracking"] is False, path
-    assert data["NSPrivacyCollectedDataTypes"] == [], path
+    expected_collection = []
+    if path.name == "PrivacyInfo.xcprivacy" and (path.parent == ROOT / "Resources" or path.parent.name == "EmuDen.app") and int(json.loads((ROOT / "TestFlight/AppInformation.json").read_text())["build"]) >= 19:
+        expected_collection = [{"NSPrivacyCollectedDataType": name, "NSPrivacyCollectedDataTypeLinked": True,
+            "NSPrivacyCollectedDataTypeTracking": False, "NSPrivacyCollectedDataTypePurposes": ["NSPrivacyCollectedDataTypePurposeAppFunctionality"]}
+            for name in ["NSPrivacyCollectedDataTypeProductInteraction", "NSPrivacyCollectedDataTypeOtherDataTypes"]]
+    assert data["NSPrivacyCollectedDataTypes"] == expected_collection, path
     assert data["NSPrivacyTrackingDomains"] == [], path
     actual = {entry["NSPrivacyAccessedAPIType"]: set(entry["NSPrivacyAccessedAPITypeReasons"])
               for entry in data["NSPrivacyAccessedAPITypes"]}
     assert actual == reasons, (path, actual)
 
 
-def check_ipa(path, metadata, reasons):
+def check_ipa(path, metadata, reasons, public_export=False):
     with tempfile.TemporaryDirectory(prefix="emuden-ipa-", dir=ROOT / "build/TestFlight") as temp:
         with zipfile.ZipFile(path) as archive:
             for entry in archive.infolist():
@@ -43,7 +48,7 @@ def check_ipa(path, metadata, reasons):
         assert info["CFBundleIdentifier"] == metadata["bundleId"]
         assert info["CFBundleVersion"] == metadata["build"]
         assert info["CFBundleShortVersionString"] == metadata["version"]
-        assert info["TFInternalTestingOnly"] is True
+        assert info.get("TFInternalTestingOnly") is not True if public_export else info.get("TFInternalTestingOnly") is True
         check_manifest(app / "PrivacyInfo.xcprivacy", reasons["app"])
         for framework in ("Azahar", "MoltenVK"):
             check_manifest(app / f"Frameworks/{framework}.framework/PrivacyInfo.xcprivacy", reasons[framework])
@@ -57,13 +62,14 @@ def check_ipa(path, metadata, reasons):
         assert not profile.get("ProvisionedDevices") and not profile.get("ProvisionsAllDevices")
         assert profile["Entitlements"]["application-identifier"] == entitlements["application-identifier"]
         assert not (app / "Contact.json").exists()
-    print("IPA distribution signatures, Store profile, entitlements, identity, privacy and embedded internal-only flag passed")
+    print("IPA distribution signatures, Store profile, entitlements, identity, privacy and requested export audience passed")
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("archive", nargs="?", type=Path)
     parser.add_argument("--ipa", type=Path)
+    parser.add_argument("--public-export", action="store_true", help="Check an IPA exported for public App Store eligibility rather than internal testing only")
     args = parser.parse_args()
     metadata = json.loads((ROOT / "TestFlight/AppInformation.json").read_text())
     assert metadata["name"] == "EmuDen" and len(metadata["name"]) <= 30
@@ -84,6 +90,14 @@ def main():
     assert export["method"] == "app-store-connect" and export["destination"] == "export"
     assert export["testFlightInternalTestingOnly"] is True
     assert export["manageAppVersionAndBuildNumber"] is False
+    if int(metadata["build"]) >= 19:
+        public_export = load_plist(ROOT / "TestFlight/AppStoreExportOptions.plist")
+        assert public_export["method"] == "app-store-connect" and public_export["destination"] == "export"
+        assert public_export.get("testFlightInternalTestingOnly") is not True
+        assert public_export["manageAppVersionAndBuildNumber"] is False
+        plan = json.loads((ROOT / "TestFlight/Submission/StoreListing.json").read_text())
+        assert plan["price"] == 0 and plan["territories"] == ["USA"] and plan["release"] == "MANUAL"
+        assert plan["build"] == metadata["build"] and plan["publicSubmissionReady"] is False
     icon = (ROOT / "Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png").read_bytes()
     assert icon[:8] == b"\x89PNG\r\n\x1a\n"
     width, height, _, color_type = struct.unpack_from(">IIBB", icon, 16)
@@ -102,7 +116,7 @@ def main():
     print("Metadata, field limits, private contact, internal-only export, icon and privacy checks passed")
     print("Technical internal-beta packaging only; this does not clear copyright, licensing, export classification or public App Review. See TestFlight/AppStoreReadiness.json.")
     if args.ipa:
-        check_ipa(args.ipa, metadata, reasons)
+        check_ipa(args.ipa, metadata, reasons, args.public_export)
     if not args.archive:
         return
     archive = args.archive.resolve()
@@ -114,7 +128,14 @@ def main():
                        "CFBundleShortVersionString": metadata["version"], "CFBundleVersion": metadata["build"]}.items():
         assert info.get(key) == value, (key, info.get(key), value)
     assert set(info["UIDeviceFamily"]) == {1, 2}
-    assert "ITSAppUsesNonExemptEncryption" not in info, "Export declaration remains an explicit owner step"
+    if int(metadata["build"]) >= 19:
+        export_assessment = json.loads((ROOT / "Docs/Legal/EXPORT-ASSESSMENT-19.json").read_text())
+        assert export_assessment["build"] == metadata["build"] and export_assessment["territories"] == ["USA"]
+        assert export_assessment["usesEncryption"] is True and export_assessment["usesNonExemptEncryption"] is False
+        assert info.get("ITSAppUsesNonExemptEncryption") is False
+        assert "ITSEncryptionExportComplianceCode" not in info
+    else:
+        assert "ITSAppUsesNonExemptEncryption" not in info, "Older build retains its original export declaration"
     check_manifest(app / "PrivacyInfo.xcprivacy", reasons["app"])
     for framework in ("Azahar", "MoltenVK"):
         folder = app / f"Frameworks/{framework}.framework"
@@ -135,6 +156,17 @@ def main():
         for bundle in [app, widget]:
             signed = plistlib.loads(subprocess.run(["codesign", "-d", "--entitlements", ":-", str(bundle)], capture_output=True, check=True).stdout)
             profile = plistlib.loads(subprocess.run(["security", "cms", "-D", "-i", str(bundle / "embedded.mobileprovision")], capture_output=True, check=True).stdout)
+            if int(metadata["build"]) >= 19:
+                if bundle == app:
+                    domains = ["applinks:emuden-support.headyopossum2.chatgpt.site"]
+                    assert signed["com.apple.developer.associated-domains"] == domains
+                    assert signed["com.apple.developer.declared-age-range"] is True
+                    allowed = profile["Entitlements"].get("com.apple.developer.associated-domains", [])
+                    assert "*" in allowed or all(domain in allowed for domain in domains)
+                    assert profile["Entitlements"]["com.apple.developer.declared-age-range"] is True
+                else:
+                    assert "com.apple.developer.associated-domains" not in signed
+                    assert "com.apple.developer.declared-age-range" not in signed
             assert signed["com.apple.security.application-groups"] == ["group.com.brandonaleman.Emulator"]
             assert "group.com.brandonaleman.Emulator" in profile["Entitlements"]["com.apple.security.application-groups"]
         subprocess.run([sys.executable, str(ROOT / "Scripts/check-debug-symbols.py"),
@@ -142,7 +174,7 @@ def main():
         print("Widget extension identity, privacy, shared App Group profiles/signatures and real matching dSYM passed")
     for path in app.rglob("*"):
         assert path.name != "Contact.json", "Private review contact must not ship in the app"
-        assert path.suffix.lower() not in {".3ds", ".cci", ".cxi", ".cia", ".elf", ".axf", ".p8", ".p12"}, path
+        assert path.suffix.lower() not in {".3ds", ".cci", ".cxi", ".cia", ".elf", ".axf", ".p8", ".p12", ".storekit"}, path
     assert (app / "boot.3dsx").is_file()
     assert (app / "Azahar-LICENSE.txt").is_file() and (app / "MoltenVK-LICENSE.txt").is_file()
     if int(metadata["build"]) >= 18:

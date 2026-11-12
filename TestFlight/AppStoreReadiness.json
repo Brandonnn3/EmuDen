@@ -1,6 +1,6 @@
 {
   "reviewDate": "2026-11-11",
-  "auditedBuild": "18",
+  "auditedBuild": "19",
   "publicReleaseCleared": false,
   "reviewDocument": "Docs/Legal/REVIEW-2026-11-11.md",
   "criteria": [
@@ -13,8 +13,13 @@
     {
       "id": "corresponding-source",
       "status": "pending",
-      "evidence": [],
-      "resolution": "Original EmuDen contributions are explicitly GPL-3.0-or-later. Build-17 source is public with anonymous checksum verification; verify final build-18 matching release and maintain recipient access."
+      "evidence": [
+        "LICENSE.txt",
+        "COPYRIGHT.md",
+        "TestFlight/SOURCE.md",
+        "Docs/Legal/PUBLICATION-VERIFICATION.json"
+      ],
+      "resolution": "Build17/18 source remains public and checksum-verified. Publish and verify the exact final build19 package before distributing19."
     },
     {
       "id": "store-license-compatibility",
@@ -24,33 +29,45 @@
     },
     {
       "id": "dependency-notices",
-      "status": "pending",
-      "evidence": [],
-      "resolution": "84 full notice/license texts and hashed inventory are generated and accessible offline. Verify the final signed bundle and source delivery; other distribution terms are tracked separately."
+      "status": "resolved",
+      "evidence": [
+        "Resources/ThirdPartyNotices.txt",
+        "Docs/Legal/Notice-Sources.json",
+        "Docs/Legal/PUBLICATION-VERIFICATION.json"
+      ],
+      "resolution": "84 preserved component/header notice texts, hashed inventory and full upstream source/build material are supplied; the final signed app copy matches and is accessible offline. Other distribution obligations remain separately assessed."
     },
     {
       "id": "public-support-privacy",
-      "status": "pending",
-      "evidence": [],
-      "resolution": "Pages, authorized public email and in-app links are implemented. Verify final anonymous deployment; App Privacy/host retention remains separate."
+      "status": "resolved",
+      "evidence": [
+        "Docs/Legal/PUBLICATION-VERIFICATION.json",
+        "App/SettingsView.swift",
+        "TestFlight/AppInformation.json"
+      ],
+      "resolution": "Public support/privacy/source pages with the authorized email and in-app/metadata links are live. Nine anonymous HTTP/content/asset checks pass. App Privacy/host retention is a separate unresolved record."
     },
     {
       "id": "privacy-disclosure",
       "status": "pending",
       "evidence": [],
-      "resolution": "Verify host retention and accurate data disclosures, or remove automatic external artwork requests."
+      "resolution": "Build19 now asks before artwork requests and conservatively discloses linked request metadata. Public policy updated; live App Privacy Other Data use details/publication remain incomplete after desktop lock."
     },
     {
       "id": "export-compliance",
-      "status": "pending",
-      "evidence": [],
-      "resolution": "Complete applicable encryption/export classification and required documentation."
+      "status": "resolved",
+      "evidence": [
+        "Docs/Legal/EXPORT-ASSESSMENT-19.json",
+        "TestFlight/EXPORT-COMPLIANCE.md",
+        "Resources/Info.plist"
+      ],
+      "resolution": "US entertainment-runtime/DRM/OS-HTTPS engineering self-assessment complete; nonexempt flag false, no invented approval code. Reassess territories/features; no BIS/Apple ruling claimed."
     },
     {
       "id": "emulator-content-age",
       "status": "pending",
       "evidence": [],
-      "resolution": "Resolve applicable guideline 4.7 index, universal-link and age-control requirements for the bundled demo/local imports."
+      "resolution": "Local unrated/adult controls, Apple regional age eligibility/service and strict HTTPS links implemented; public AASA/software index verified including Apple CDN. Regional sandbox/device checks and live age questionnaire remain pending."
     },
     {
       "id": "branding-clearance",
@@ -62,7 +79,7 @@
       "id": "release-quality",
       "status": "pending",
       "evidence": [],
-      "resolution": "Verify the final release on supported physical devices, remove unsupported public placeholders, and match metadata/screenshots to it."
+      "resolution": "Final build19 archive/profile/dSYM checks pass;67domain,2tooling and six distinct release-control/save/purchase UI cases pass. Owner gameplay report is build18. Store captures, distribution export and final physical19 validation remain pending."
     }
   ]
 }

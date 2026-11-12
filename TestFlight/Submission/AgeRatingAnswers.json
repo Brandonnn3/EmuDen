@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "build": "19",
+  "status": "Prepared design/mapping; live Apple-calculated rating not obtained",
+  "targetRatingOverride": "18+ where offered; legacy OS values are assigned by Apple",
+  "kidsCategory": false,
+  "ageAssurance": true,
+  "parentalControls": false,
+  "ageAssuranceDescription": "Local declared adult preference; supported iOS additionally checks Apple regional eligibility and requires adult age band where required. Not identity verification by EmuDen.",
+  "userGeneratedSharing": false,
+  "messaging": false,
+  "advertising": false,
+  "gamblingService": false,
+  "bundledSoftware": "3DS Homebrew Menu 2.4.4, source/attribution licensed; not officially age-rated",
+  "imports": "Unrated software controlled by local adult access; no blanket official content rating claimed",
+  "questionnaireInstructions": "Describe sensitive content/capabilities honestly for unrestricted imports; apply conservative adult override. Do not mark every sensitive-content category absent merely because no commercial ROM is bundled.",
+  "remainingValidation": [
+    "Regional age-service sandbox/device checks",
+    "Apple review of local index/universal links for user imports"
+  ],
+  "sources": [
+    "https://developer.apple.com/app-store/review/guidelines/#mini-apps-mini-games-streaming-games-chatbots-plug-ins-and-game-emulators",
+    "https://developer.apple.com/support/age-assurance/",
+    "https://developer.apple.com/help/app-store-connect/reference/app-information/age-ratings-values-and-definitions/"
+  ]
+}

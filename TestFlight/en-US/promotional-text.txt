@@ -1,1 +1,1 @@
-Your pocket console collection: a native game library, dual-screen play, touch controls and gamepad support. This first beta supports Nintendo 3DS.
+Your pocket console collection: a native library, dual-screen play, touch controls and gamepad support. Bring your own compatible 3DS games.

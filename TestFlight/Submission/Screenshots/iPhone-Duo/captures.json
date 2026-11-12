@@ -1,0 +1,32 @@
+[
+  {
+    "content" : "Actual app and licensed Homebrew Menu; no commercial ROM artwork",
+    "device" : "67C8F120-B47E-44D3-9FE2-2B69D10E3540",
+    "file" : "03-play-and-saves.png",
+    "height" : 2034,
+    "rawFile" : "C66CD9D4-4460-4306-9F62-DFD430E36497.png",
+    "rescaled" : false,
+    "title" : "Store - Homebrew play and save controls_0_E1CAC33C-EDD7-49CD-82F7-FEA6857C21CA.png",
+    "width" : 1398
+  },
+  {
+    "content" : "Actual app and licensed Homebrew Menu; no commercial ROM artwork",
+    "device" : "67C8F120-B47E-44D3-9FE2-2B69D10E3540",
+    "file" : "02-console-layout.png",
+    "height" : 2034,
+    "rawFile" : "256FD52C-C726-43CC-ABD6-14A00FC0B4B4.png",
+    "rescaled" : false,
+    "title" : "Store - Console layout and screen options_0_132D05A6-ACB0-4265-B226-C99B707B1322.png",
+    "width" : 1398
+  },
+  {
+    "content" : "Actual app and licensed Homebrew Menu; no commercial ROM artwork",
+    "device" : "67C8F120-B47E-44D3-9FE2-2B69D10E3540",
+    "file" : "01-library.png",
+    "height" : 2034,
+    "rawFile" : "E3B52992-E2DC-4ECF-BFF5-8AF7DEE98BD6.png",
+    "rescaled" : false,
+    "title" : "Store - Library with licensed homebrew_0_475F501C-F892-40BE-9208-01FC2C7A91D0.png",
+    "width" : 1398
+  }
+]

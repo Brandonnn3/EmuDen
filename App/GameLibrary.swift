@@ -14,7 +14,7 @@ final class GameLibrary: ObservableObject {
     @Published var sceneRevision = 0
     @Published var featuredGameID: UUID?
     @Published private(set) var coreReady = false
-    @Published private(set) var artworkFetchingEnabled = true
+    @Published private(set) var artworkFetchingEnabled = ArtworkNetwork.isEnabled()
     private var catalogReadable = true
     private var widgetTask: Task<Void, Never>?
     let storage: LibraryStorage

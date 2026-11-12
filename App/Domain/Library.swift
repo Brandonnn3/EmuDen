@@ -1,5 +1,15 @@
 import Foundation
 
+enum ImportedGameAccess: String, CaseIterable {
+    case undecided, under18, adult
+    var allowsImportedGames: Bool { self == .adult }
+    static func stored(_ value: String) -> Self { Self(rawValue: value) ?? .undecided }
+    static func isAdultAgeBand(lowerBound: Int?, upperBound: Int?) -> Bool {
+        guard let lowerBound, lowerBound >= 18 else { return false }
+        return upperBound.map { $0 >= lowerBound } ?? true
+    }
+}
+
 public struct Game: Codable, Identifiable, Equatable, Sendable {
     public let id: UUID
     public var title: String

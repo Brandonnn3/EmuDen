@@ -1,25 +1,25 @@
-EmuDen 0.1.0 (18) — internal beta
+Build 19 release controls. Build 18 remains the owner's current phone test build; no new core/graphics speed gain is claimed in build 19.
 
-Save history:
-• Pause → Quick Save twice, then Save history. Check dated thumbnails and load an earlier point. Reopen the app and check those points remain. History keeps 10 manual and 3 automatic points independently; Quick Load selects the latest manual point.
-• Background/close the game to keep a resume point. Periodic Automatic save points default on every five minutes of active play; change it in Player settings. Capturing briefly pauses play. Force-quitting can interrupt saving. The game's own Save / Continue feature is separate and should still be used. Old core/system-resource snapshots remain on disk but may be incompatible.
+Privacy, access and optional support:
+• First library use asks whether to download online artwork. Decline, relaunch and verify the choice persists; bundled/cached/chosen pictures remain. Settings → Online artwork changes the choice.
+• Imported games, links and widgets require declared adult access. An under-18 choice blocks imported titles; the bundled Homebrew Menu demo remains available. In applicable regions on supported iOS, Apple must return an adult age band. Regional sandbox/device validation remains required.
+• Release console menus offer only playable 3DS. Verify HTTPS game links from another app on the installed device; missing local entries should show a useful error. Check Privacy, Support, Source and offline Open-source notices in Settings.
+• Tips appear only if Apple returns configured products. All features stay free. Use StoreKit local tests or Apple's sandbox, never a real purchase. Without available products, there should be no tip card or unfinished purchase screen.
 
-Graphics:
-• Long-press a cover → Game settings → Customize this game. Try 1×, 2× and 3× and Game default/Crisp/Smooth textures. Open another game to confirm its choices stay independent. Turning customization off uses app defaults. During play, changes apply when you resume from Player Settings.
-• Automatic quality is optional and off by default. It uses the chosen resolution as a ceiling, steps down after sustained slowdown/heat and recovers slowly. It cannot go below 1× or remove a first-time shader stall. Show frame-time graph adds mean/worst core time, speed, resolution and heat; Show FPS remains separate.
-• Prepare known shaders before play is optional. Reopen a game to use it. Startup may take longer with visible progress; unseen effects can still pause. Reset this game's shader cache is available from its cover settings while closed; saves, Mii resources and other games' caches should remain.
+Saves:
+• Make multiple Quick Saves at distinct moments. Save history should show dates/thumbnails and let you load an earlier point. It keeps 10 manual and 3 automatic points per game.
+• Leave through Return to library, relaunch and check Resume session. With automatic points on, background/exit and five minutes of active play should capture points. A force-quit can interrupt an unfinished capture.
+• Use the game's own Save/Continue too. Native in-game saves and emulator snapshots are separate; switching games should preserve both. Back up before uninstalling or changing system data.
 
-Dark Moon and Mario Golf:
-• Dark Moon: use 1× with Reduce shader pauses on. Repeat the first outdoor route and early ghost window, then revisit them in the same session. Compare lowest FPS and pause length with the same settings. Try shader preparation after its cache has learned the scenes. New phone gains remain unmeasured; Simulator cannot complete this game's problem route.
-• Repeat Mario Golf's perfect-max Donkey Kong shot, including 3× if desired. Check pacing, audio, Mii faces, native saves, state history and resume. The existing 3×→1×→2×→3× Simulator renderer check is correctness evidence, not a phone speed measurement.
-• Controller → Duo layout → Fill display should remove the outer-display inset. Check orientations, inner folding, toolbar fading, touch edges and controls/haptics. Picture sizing/balance adjust flat layouts; the inner display keeps fold regions. Live landscape/folding and sustained thermals need device checks.
+Graphics and gameplay:
+• Dark Moon: use 1× with Reduce shader pauses on. Repeat the first outdoor route/ghost window, then revisit in the same session. Record lowest FPS and pause duration. Try preparing known shaders after those scenes have been cached. Exact phone gains remain unmeasured.
+• Repeat Mario Golf's perfect-max Donkey Kong shot; check 3×, audio, Mii faces, native saves and history. Original faces require authorized shared head resources; a saved Mii database is different. The Settings portrait is a separately chosen local picture.
+• Long-press a cover → Game settings. Verify independent 1×–3× resolution, texture sampling and shader preferences; disabling customization restores defaults. During play, changes apply on resume.
+• Automatic quality is optional/off by default. It treats chosen resolution as a ceiling, reduces it after sustained slowdown/heat and recovers slowly. It cannot go below 1× or eliminate an unseen shader stall. Shader preparation can lengthen startup.
+• Controller → Duo layout → Fill display should remove the outer-screen inset. Check orientations, inner folding, touch edges, button hiding/haptics and upper-toolbar fading. FPS and frame-time graph are separate optional displays.
 
-Widgets, Mii and information:
-• Add Continue Playing (small/medium) or Recent Games (medium/large) from the widget gallery. Check cached artwork, color/clear/tinted appearance, recent ordering, game links and save-before-switch. A missing game should show a useful message. Phone Home Screen placement remains unverified.
-• The Mii portrait accepts a Files image and persists; long-press to reset. A resource archive contains shared head models, not a personal portrait. Original faces ready is a separate status badge. Import a decrypted resource archive you have the right to use; CFL_DB.dat contains records, not head models.
-• Settings → About EmuDen: verify Privacy policy, Support, Source code & rebuilding and offline Open-source notices. Source/policy publication is not App Store clearance.
+Library and widgets:
+• Test search/dock hiding, fast cover selection, offline artwork and Reduced Motion. Existing catalog v7 has 42 backgrounds and 24 covers; images are preserved and generation remains paused for release review.
+• Add Continue Playing/Recent Games widgets. Check cached images, appearance, recent ordering, game links and save-before-switch. Actual Home Screen/regional age-service behavior still needs phone checks.
 
-Artwork:
-• Catalog v7 has 42 backgrounds and 24 covers. Known scenes fade from dark; missing images keep console/cover fallbacks. Check fast selection, search dock hiding, cached/offline use and Reduced Motion. These illustrations are fan art, not gameplay captures. Images are preserved; scheduled generation is paused during release review.
-
-Only 3DS is playable. No ROMs, personal saves or Nintendo system archives are bundled. Report device/build, title, settings, scene and repeatable steps.
+Only 3DS is playable. No commercial ROMs or Nintendo system archives are included. Report device/build, title, settings, scene and reproducible steps.

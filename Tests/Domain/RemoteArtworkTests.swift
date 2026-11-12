@@ -3,6 +3,37 @@ import CryptoKit
 @testable import EmulatorDomain
 
 @MainActor final class RemoteArtworkTests: XCTestCase {
+    func testArtworkTransportDoesNotPersistCookiesCredentialsOrHTTPCache() {
+        let config = ArtworkNetwork.configuration()
+        XCTAssertFalse(config.httpShouldSetCookies)
+        XCTAssertEqual(config.httpCookieAcceptPolicy, .never)
+        XCTAssertNil(config.httpCookieStorage)
+        XCTAssertNil(config.urlCredentialStorage)
+        XCTAssertNil(config.urlCache)
+    }
+    func testNetworkingRequiresAnAffirmativeArtworkChoice() throws {
+        let name = "EmuDenArtworkChoice-" + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: name))
+        defer { defaults.removePersistentDomain(forName: name) }
+        XCTAssertFalse(ArtworkNetwork.isEnabled(in: defaults))
+        defaults.set(true, forKey: "onlineArtworkEnabled")
+        XCTAssertFalse(ArtworkNetwork.isEnabled(in: defaults))
+        defaults.set(true, forKey: "hasArtworkChoice")
+        XCTAssertTrue(ArtworkNetwork.isEnabled(in: defaults))
+        defaults.set(false, forKey: "onlineArtworkEnabled")
+        XCTAssertFalse(ArtworkNetwork.isEnabled(in: defaults))
+    }
+    func testDisabledCatalogDoesNotRequestBeforeConsent() async throws {
+        let json = manifest(), transport = session(), bytes = Data("first image".utf8)
+        let catalog = RemoteArtworkCatalog(seed: try pack(json), directory: try directory(), session: transport, initiallyEnabled: false)
+        let image = await catalog.image(for: game, kind: .scene)
+        let refreshed = await catalog.refresh(force: true)
+        XCTAssertNil(image); XCTAssertFalse(refreshed); XCTAssertEqual(ArtworkProtocol.count, 0)
+        ArtworkProtocol.reply(path(json, "scene"), data: bytes)
+        await catalog.setFetchingEnabled(true)
+        let accepted = await catalog.image(for: game, kind: .scene)
+        XCTAssertEqual(accepted?.data, bytes); XCTAssertEqual(ArtworkProtocol.count, 1)
+    }
     private let root = URL(string: "https://artwork.example/")!
     private let game = Game(title: "Renamed", fileName: "a.cci", programID: "00040000000CCE00")
     private func asset(_ bytes: Data, key: String = "donkey-kong", scene: Bool = false) -> [String: Any] {

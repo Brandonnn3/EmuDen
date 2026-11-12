@@ -1,0 +1,301 @@
+{
+  "schema": 1,
+  "date": "2026-11-11T23:39:37.977034+00:00",
+  "build": "19",
+  "territories": [
+    "USA"
+  ],
+  "assessmentType": "Engineering self-classification, not a BIS/Apple ruling",
+  "primaryFunction": "Consumer 3DS game/homebrew emulation",
+  "usesEncryption": true,
+  "usesNonExemptEncryption": false,
+  "classification": "EAR99 technical assessment for the described consumer gaming runtime",
+  "basis": [
+    "5A002.a Technical Note 1(e): DRM, including execution of copy-protected software",
+    "5A002.a Technical Note 1(f): encryption/decryption supporting entertainment, expressly including gaming runtime software",
+    "Integrity, signatures/authentication and related key management exclusions; Apple OS HTTPS for artwork"
+  ],
+  "scopeLimits": [
+    "No general-purpose encryption service, VPN, secure messenger, cryptanalysis or military function is offered",
+    "LibreSSL guest HTTPS and console AES/key handling support emulated entertainment software",
+    "Other CCL categories reviewed for described consumer software; no controlled function identified",
+    "Additional territories/features and non-entertainment crypto interfaces require reassessment",
+    "No CCATS, government approval code or filing is claimed"
+  ],
+  "sources": [
+    "https://www.bis.gov/learn-support/encryption-controls/cryptography-for-data-confidentiality",
+    "https://www.bis.gov/regulations/ear/interactive-commerce-control-list?category=5",
+    "https://developer.apple.com/help/app-store-connect/manage-app-information/determine-and-upload-app-encryption-documentation/"
+  ],
+  "sourceInventory": [
+    {
+      "source": "Vendor/Azahar/Source/src/citra_room/citra_room.cpp",
+      "sha256": "2ce18a7acd56ade806484f19d28b860ecffd29b8a2b8db8799bedbf678904054",
+      "includes": [
+        "cryptopp/base64.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/common/file_derived.cpp",
+      "sha256": "0608d46a4b6d9f95450f7e4e068a2b0b27f166ea2f78b25a9bc562d637096ae3",
+      "includes": [
+        "cryptopp/aes.h",
+        "cryptopp/modes.h",
+        "cryptopp/sha.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/common/file_util.cpp",
+      "sha256": "d2a33c031cc4ecd64fc085e3455ae50e53d2831270bb4e9a781abc80e2d6e699",
+      "includes": [
+        "cryptopp/aes.h",
+        "cryptopp/modes.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/file_sys/certificate.cpp",
+      "sha256": "6c76202d959c7eb3134c029ddca7a3778e25867dde01d2e24cbf9b84f45c60f1",
+      "includes": [
+        "cryptopp/eccrypto.h",
+        "cryptopp/oids.h",
+        "cryptopp/osrng.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/file_sys/cia_container.cpp",
+      "sha256": "11e767afd7f664d965c31ba8749ffae1bbe828c4bf626a19ab27e8beb009782e",
+      "includes": [
+        "cryptopp/sha.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/file_sys/ncch_container.cpp",
+      "sha256": "7a731211d2acd6c97394f103a99db208fce26dcdaf96db10dbc50067b6e4f2e1",
+      "includes": [
+        "cryptopp/aes.h",
+        "cryptopp/modes.h",
+        "cryptopp/sha.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/file_sys/otp.cpp",
+      "sha256": "59198ec1d127da5740c99d1fa7c205f337c176032b53f2bdc527d3e270c4a605",
+      "includes": [
+        "cryptopp/aes.h",
+        "cryptopp/modes.h",
+        "cryptopp/sha.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/file_sys/romfs_reader.cpp",
+      "sha256": "94bf3c42bc5f725d0919f1c4100cbfdf7243ac5115aa9d4fa23c28962742ea54",
+      "includes": [
+        "cryptopp/aes.h",
+        "cryptopp/modes.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/file_sys/ticket.cpp",
+      "sha256": "c39efa479d466162b072838d0aa8ca6a4ef59140611c9b388b68b503e442e35b",
+      "includes": [
+        "cryptopp/aes.h",
+        "cryptopp/modes.h",
+        "cryptopp/sha.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/file_sys/title_metadata.cpp",
+      "sha256": "42cf6453a549f85176c0252a6cd858a92e12ac7421f85adee9469e585d81866a",
+      "includes": [
+        "cryptopp/sha.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hle/service/am/am.cpp",
+      "sha256": "49581eca3dd04ca0cd1641dfef4627e4e81ac58d2e12150ce63446495bd50d64",
+      "includes": [
+        "cryptopp/aes.h",
+        "cryptopp/modes.h",
+        "openssl/rand.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hle/service/cecd/cecd.cpp",
+      "sha256": "39e93273ba0bc2be5b2aed62e2d1b6e065c7e1a098881883b7de6a31d312cad0",
+      "includes": [
+        "cryptopp/base64.h",
+        "cryptopp/hmac.h",
+        "cryptopp/sha.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hle/service/cfg/cfg.cpp",
+      "sha256": "56d74d047c71eabe27a7a1f3789ca3acd23af8a3c4d90dc71a2ddb4fc3103303",
+      "includes": [
+        "cryptopp/osrng.h",
+        "cryptopp/sha.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hle/service/dlp/dlp_base.cpp",
+      "sha256": "814b56b5b57e0597edc7d521c00bab4315e182121f099f068ddd531debaf27e5",
+      "includes": [
+        "cryptopp/aes.h",
+        "cryptopp/modes.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hle/service/dlp/dlp_crypto.cpp",
+      "sha256": "89edd90aa03effffb326985c02dcc0732f329876b3bc0cfa3e633efed84e33fe",
+      "includes": [
+        "cryptopp/aes.h",
+        "cryptopp/modes.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hle/service/fs/fs_user.cpp",
+      "sha256": "9e474df0f483fb1c24d9ec35a5175bbf4ed4e1b11fa87aa9aa5b589eed300c3d",
+      "includes": [
+        "cryptopp/aes.h",
+        "cryptopp/cmac.h",
+        "cryptopp/modes.h",
+        "cryptopp/sha.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hle/service/http/http_c.cpp",
+      "sha256": "86faf50976a5a2494857bcd6611d43aa8c2abdf35f1912da54f5825d21128a59",
+      "includes": [
+        "cryptopp/aes.h",
+        "cryptopp/modes.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hle/service/nfc/amiibo_crypto.cpp",
+      "sha256": "c423e2a4d97311ca8d16f7a405c0a82e5a4dc33c62f79b8b5bc938c6ac242697",
+      "includes": [
+        "cryptopp/aes.h",
+        "cryptopp/hmac.h",
+        "cryptopp/modes.h",
+        "cryptopp/sha.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hle/service/nfc/nfc_device.cpp",
+      "sha256": "b5dc0c459c218122895b1cc8e9973537d5444d7b8f787ce0b3dc79e70fee8f97",
+      "includes": [
+        "cryptopp/osrng.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hle/service/nwm/nwm_uds.cpp",
+      "sha256": "53e7834340e83d5f2b28d3ebda65963e7b596a50d7287e70f1cc42b000cf2801",
+      "includes": [
+        "cryptopp/osrng.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hle/service/nwm/uds_beacon.cpp",
+      "sha256": "877e07d99e1cee4feed27f4cf7ec3d79bc6ac58c009d02f527b51571506babb0",
+      "includes": [
+        "cryptopp/aes.h",
+        "cryptopp/md5.h",
+        "cryptopp/modes.h",
+        "cryptopp/sha.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hle/service/nwm/uds_data.cpp",
+      "sha256": "c69d1a891a1a095b4eb0c1cc3b026a04153e8b3e4dccd953f45ead91c8e3aa72",
+      "includes": [
+        "cryptopp/aes.h",
+        "cryptopp/ccm.h",
+        "cryptopp/filters.h",
+        "cryptopp/md5.h",
+        "cryptopp/modes.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hle/service/ps/ps_ps.cpp",
+      "sha256": "cc01d35b6b046fad3398364fa1764d7300595b10318471e7a3910556d2ea4bb5",
+      "includes": [
+        "cryptopp/aes.h",
+        "cryptopp/modes.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hle/service/ssl/ssl_c.cpp",
+      "sha256": "f479f79ee45a1af78ee5695e4b1fe53284fbac356c6e8b15d2002ed6eaeb303c",
+      "includes": [
+        "openssl/rand.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hw/aes/ccm.cpp",
+      "sha256": "fcd94f483a2345cd69309cae34f6f938fa491b8c996fddd87882be979f61e3e4",
+      "includes": [
+        "cryptopp/aes.h",
+        "cryptopp/ccm.h",
+        "cryptopp/cryptlib.h",
+        "cryptopp/filters.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hw/aes/key.cpp",
+      "sha256": "89f69351adb8658f1e2bc8bd34becbe7fe5bbbd7ee2891e0e05686154eb837f2",
+      "includes": [
+        "cryptopp/aes.h",
+        "cryptopp/modes.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hw/ecc.cpp",
+      "sha256": "7a10aae2cbf1128db85c0cbfa803f327e679384bc8a5d20d7f47357dacec6364",
+      "includes": [
+        "cryptopp/osrng.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hw/ecc.h",
+      "sha256": "369a7592a2692d01be73765174e80e878cfa213d10e4b129698c8ace56dd4b71",
+      "includes": [
+        "cryptopp/eccrypto.h",
+        "cryptopp/oids.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hw/rsa/rsa.cpp",
+      "sha256": "0f9ef2e033cdde08513cfad3e34e9a349859e5d770b7ac15171d87764f8fc8c2",
+      "includes": [
+        "cryptopp/hex.h",
+        "cryptopp/integer.h",
+        "cryptopp/nbtheory.h",
+        "cryptopp/osrng.h",
+        "cryptopp/rsa.h",
+        "cryptopp/sha.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/hw/unique_data.cpp",
+      "sha256": "e693911c24dbe445c407379d7078e361d37a75a34a0018f215a06bbc4e9fdf8d",
+      "includes": [
+        "cryptopp/sha.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/movie.cpp",
+      "sha256": "ef314bc4558327d3f399ddc3496edd63b7959e18371cfae01a3c2d17e8bccfe7",
+      "includes": [
+        "cryptopp/hex.h",
+        "cryptopp/osrng.h"
+      ]
+    },
+    {
+      "source": "Vendor/Azahar/Source/src/core/savestate.cpp",
+      "sha256": "2061b1e81ece8acc2512ef3404ef862e7c296e0aed8e4ab4ee64d13e955679da",
+      "includes": [
+        "cryptopp/hex.h"
+      ]
+    }
+  ]
+}

@@ -5,9 +5,8 @@ enum ArtworkResources {
         guard let url = Bundle.main.url(forResource: "Artwork-Pack", withExtension: "json", subdirectory: "CinematicArt"),
               let data = try? Data(contentsOf: url), let pack = try? JSONDecoder().decode(ArtworkPack.self, from: data),
               let caches = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else { return nil }
-        let config = URLSessionConfiguration.ephemeral
-        config.httpMaximumConnectionsPerHost = 2; config.timeoutIntervalForResource = 20
-        return RemoteArtworkCatalog(seed: pack, directory: caches.appendingPathComponent("EmuDenArtwork", isDirectory: true), session: URLSession(configuration: config))
+        return RemoteArtworkCatalog(seed: pack, directory: caches.appendingPathComponent("EmuDenArtwork", isDirectory: true),
+            initiallyEnabled: ArtworkNetwork.isEnabled())
     }()
     static let covers: ArtworkCatalog = {
         guard let url = Bundle.main.url(forResource: "3ds-artwork-index", withExtension: "json"), let data = try? Data(contentsOf: url),

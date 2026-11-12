@@ -8,16 +8,13 @@ actor ArtworkStore {
     private let cache = NSCache<NSString, UIImage>()
     private var requests = [UUID: (id: UUID, name: String, task: Task<UIImage?, Never>)]()
     private var retryAfter = [UUID: Date]()
-    private var fetchingEnabled = true
+    private var fetchingEnabled = ArtworkNetwork.isEnabled()
     private let session: URLSession
 
     init(directory: URL, kind: ArtworkKind = .cover) {
         self.directory = directory; self.kind = kind
         cache.totalCostLimit = 24 * 1024 * 1024; cache.countLimit = 48
-        let config = URLSessionConfiguration.ephemeral
-        config.timeoutIntervalForRequest = 12; config.timeoutIntervalForResource = 20
-        config.httpMaximumConnectionsPerHost = 2
-        session = URLSession(configuration: config)
+        session = URLSession(configuration: ArtworkNetwork.configuration())
     }
     func setFetchingEnabled(_ enabled: Bool) {
         fetchingEnabled = enabled
@@ -65,6 +62,8 @@ actor ArtworkStore {
         if FileManager.default.fileExists(atPath: file(game, "custom").path) { return true }
         let savedName = try? String(contentsOf: file(game, "name"), encoding: .utf8)
         if (savedName == nil || savedName == game.artworkName), FileManager.default.fileExists(atPath: file(game, "png").path) { return true }
+        if await ArtworkResources.catalog?.cachedImage(for: game, kind: kind) != nil { return true }
+        guard fetchingEnabled else { return false }
         return await ArtworkResources.catalog?.hasAsset(for: game, kind: kind) == true
     }
     func preferredImage(for game: Game, refresh: Bool = false) async -> UIImage? {

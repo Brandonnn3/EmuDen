@@ -1,9 +1,34 @@
 import Foundation
 
+enum EmuDenLink {
+    static let host = "emuden-support.headyopossum2.chatgpt.site"
+    enum Destination: Equatable { case library, homebrew, game(UUID) }
+    static var homebrew: URL { URL(string: "https://\(host)/play/?demo=homebrew")! }
+    static func game(_ id: UUID) -> URL { URL(string: "https://\(host)/play/?game=" + id.uuidString)! }
+    static func destination(_ url: URL) -> Destination? {
+        guard url.user == nil, url.password == nil, url.port == nil, url.fragment == nil,
+              let parts = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return nil }
+        if url.scheme == "emuden", url.query == nil {
+            if url.host == "library", url.path.isEmpty { return .library }
+            if url.host == "demo", url.path == "/homebrew" { return .homebrew }
+            guard url.host == "play", url.pathComponents.count == 2,
+                  let id = UUID(uuidString: url.lastPathComponent) else { return nil }
+            return .game(id)
+        }
+        guard url.scheme == "https", url.host == host,
+              ["/play", "/play/"].contains(parts.percentEncodedPath),
+              let items = parts.queryItems, items.count == 1 else { return nil }
+        if items[0].name == "demo", items[0].value == "homebrew" { return .homebrew }
+        guard items[0].name == "game", let value = items[0].value, value.count == 36,
+              let id = UUID(uuidString: value) else { return nil }
+        return .game(id)
+    }
+}
+
 struct WidgetGame: Codable, Equatable, Identifiable, Sendable {
     let id: UUID
     let title: String
-    var link: URL { URL(string: "emuden://play/" + id.uuidString)! }
+    var link: URL { EmuDenLink.game(id) }
     func imageURL(in directory: URL, scene: Bool = false) -> URL {
         directory.appendingPathComponent(id.uuidString + (scene ? "-scene.jpg" : "-cover.jpg"))
     }
@@ -15,10 +40,8 @@ struct WidgetLibrary: Codable, Equatable, Sendable {
     var updated: Date
     static let empty = WidgetLibrary(games: [], updated: .distantPast)
     static func gameID(from url: URL) -> UUID? {
-        guard url.scheme == "emuden", url.host == "play", url.user == nil, url.password == nil,
-              url.port == nil, url.query == nil, url.fragment == nil,
-              url.pathComponents.count == 2 else { return nil }
-        return UUID(uuidString: url.lastPathComponent)
+        if case let .game(id) = EmuDenLink.destination(url) { return id }
+        return nil
     }
     static func read(from directory: URL) -> Self? {
         let file = directory.appendingPathComponent("library.json")

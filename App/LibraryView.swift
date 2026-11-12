@@ -1,6 +1,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 import GameController
+import DeclaredAgeRange
 
 struct LibraryView: View {
     @EnvironmentObject private var library: GameLibrary
@@ -12,6 +13,7 @@ struct LibraryView: View {
     @State private var artworkGame: Game?
     @State private var settingsGame: Game?
     @State private var pendingWidgetGameID: UUID?
+    @State private var pendingHomebrew = false
     @State private var showingSystem = false
     @State private var showingMii = false
     @State private var showingLayout = false
@@ -25,6 +27,11 @@ struct LibraryView: View {
     @State private var shelfPosition: UUID?
     @State private var handledLaunchArguments = false
     @State private var hoverTask: Task<Void, Never>?
+    @AppStorage("onlineArtworkEnabled") private var onlineArtwork = false
+    @AppStorage("hasArtworkChoice") private var hasArtworkChoice = false
+    @State private var showingArtworkConsent = false
+    @AppStorage("importedGameAccess") private var importedGameAccess = "undecided"
+    @State private var ageCheckedLaunch: Launch?
     @FocusState private var searchFocused: Bool
     @Namespace private var dockNamespace
     @Namespace private var searchNamespace
@@ -34,7 +41,7 @@ struct LibraryView: View {
     private var menuActive: Bool { launch == nil && !launchPending && !showingSystem && !showingLayout && !showingMii && !importing && artworkGame == nil && settingsGame == nil && !library.busy && scenePhase == .active }
     private var menuAudioActive: Bool { launch == nil && scenePhase == .active }
 
-    private var artworkNetworkActive: Bool { launch == nil && !launchPending && scenePhase == .active }
+    private var artworkNetworkActive: Bool { onlineArtwork && hasArtworkChoice && launch == nil && !launchPending && scenePhase == .active }
 
     var body: some View {
         GeometryReader { geometry in
@@ -75,6 +82,17 @@ struct LibraryView: View {
         .sheet(item: $settingsGame) { PlayerSettingsView(game: $0) }
         .fullScreenCover(isPresented: $showingLayout) { DuoLayoutSettingsView() }
         .sheet(isPresented: $showingMii) { MiiSetupView() }
+        .sheet(isPresented: $showingArtworkConsent) {
+            OnlineArtworkChoiceView { enabled in
+                onlineArtwork = enabled; hasArtworkChoice = true; showingArtworkConsent = false
+            }
+        }
+        .sheet(item: $ageCheckedLaunch) { item in
+            ImportedGameAgeView { adult in
+                importedGameAccess = adult ? "adult" : "under18"; ageCheckedLaunch = nil
+                if adult { DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { beginLaunch(item) } }
+            }
+        }
         .fullScreenCover(item: $launch, onDismiss: openPendingWidgetGame) { item in
             PlayerView(launch: item, saves: library.storage.savesDirectory, onPreview: { image in
                 if let game = library.games.first(where: { library.storage.gameURL($0) == item.url }) { library.rememberScene(image, for: game) }
@@ -102,18 +120,12 @@ struct LibraryView: View {
             await library.refreshArtworkCatalog()
             library.refreshWidgets()
         }
-        .onChange(of: library.coreReady, initial: true) { _, ready in if ready { handleStartup(); openPendingWidgetGame() } }
+        .onChange(of: library.coreReady, initial: true) { _, ready in if ready { handleStartup(); openPendingWidgetGame(); offerArtworkChoice() } }
         .onChange(of: scenePhase) { _, phase in if phase == .active, library.coreReady { handleStartup(); openPendingWidgetGame(); library.refreshWidgets() } }
-        .onChange(of: library.games) { _, _ in library.refreshWidgets() }
+        .onChange(of: library.games) { _, _ in library.refreshWidgets(); offerArtworkChoice() }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("EmuDenArtworkUpdated"))) { _ in library.refreshWidgets() }
-        .onOpenURL { url in
-            if url.absoluteString == "emuden://library" { if launch == nil { backToHome(); collection = true }; return }
-            guard let id = WidgetLibrary.gameID(from: url) else { return }
-            if let game = library.games.first(where: { $0.id == id }), launch?.url == library.storage.gameURL(game) { return }
-            pendingWidgetGameID = id
-            if launch != nil { NotificationCenter.default.post(name: Notification.Name("EmuDenWidgetSwitchGame"), object: nil) }
-            else { openPendingWidgetGame() }
-        }
+        .onOpenURL(perform: openLink)
+        .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in if let url = activity.webpageURL { openLink(url) } }
         .task(id: searching) {
             guard searching else { searchFocused = false; return }
             try? await Task.sleep(for: .milliseconds(reduceMotion ? 0 : 180))
@@ -126,7 +138,7 @@ struct LibraryView: View {
             if old != nil, new != nil, menuActive, !searching, system.available { menuAudio.play(.focus) }
         }
         .onChange(of: menuAudioActive) { _, active in menuAudio.setActive(active) }
-        .onChange(of: menuActive) { _, active in if !active { hoverTask?.cancel() }; configureInput() }
+        .onChange(of: menuActive) { _, active in if !active { hoverTask?.cancel() }; configureInput(); offerArtworkChoice() }
         .onChange(of: searching) { _, _ in configureInput() }
         .onReceive(NotificationCenter.default.publisher(for: .GCControllerDidConnect)) { _ in configureInput() }
         .onReceive(NotificationCenter.default.publisher(for: .GCControllerDidDisconnect)) { _ in configureInput() }
@@ -195,13 +207,13 @@ struct LibraryView: View {
         HStack(spacing: wide ? 16 : 12) {
             consolePicker
             librarySearch(compact: !wide)
-            if wide { plannedPicker }
+            if wide && ConsoleSystem.visibleSystems.contains(where: { !$0.available }) { plannedPicker }
         }
     }
 
     private var consolePicker: some View {
         Menu {
-            ForEach(ConsoleSystem.allCases) { item in
+            ForEach(ConsoleSystem.visibleSystems) { item in
                 Button { selectSystem(item) } label: {
                     Label(item.available ? item.name : "\(item.name) · Coming soon", systemImage: item.symbol)
                 }.accessibilityIdentifier("system-\(item.rawValue)")
@@ -268,7 +280,7 @@ struct LibraryView: View {
     private func selectedInfo(compact: Bool = false, wide: Bool = false) -> some View {
         VStack(alignment: .leading, spacing: 9) {
             Menu {
-                ForEach(ConsoleSystem.allCases) { console in
+                ForEach(ConsoleSystem.visibleSystems) { console in
                     Button { selectSystem(console) } label: { Label(console.available ? console.name : "\(console.name) · Coming soon", systemImage: console.symbol) }
                         .accessibilityIdentifier("system-\(console.rawValue)")
                 }
@@ -359,9 +371,11 @@ struct LibraryView: View {
     }
 
     @ViewBuilder private func gameActions(_ game: Game) -> some View {
+        Text("Age rating: Unrated · Adult access required")
         Button("Play game", systemImage: "play.fill") { selectedID = game.id; startSelected() }
         Button("Change artwork", systemImage: "photo.stack") { menuAudio.play(.open); artworkGame = game }.accessibilityIdentifier("changeArtwork")
         Button("Game settings", systemImage: "slider.horizontal.3") { settingsGame = game }
+        ShareLink(item: EmuDenLink.game(game.id)) { Label("Share game link", systemImage: "link") }
         if CinematicArt.match(game.artworkName) == nil {
             Button("Find game artwork", systemImage: "photo") { Task { await library.refreshArtwork(game) } }
         }
@@ -474,20 +488,71 @@ struct LibraryView: View {
     }
     private func beginLaunch(_ item: Launch) {
         guard library.coreReady, !launchPending, launch == nil else { return }
-        launchPending = true; let duration = max(reduceMotion ? 0 : 0.22, menuAudio.play(.launch))
+        if let url = item.url, url != Bundle.main.url(forResource: "boot", withExtension: "3dsx"),
+           !ImportedGameAccess.stored(importedGameAccess).allowsImportedGames {
+            if ImportedGameAccess.stored(importedGameAccess) == .under18 {
+                library.error = "Imported software is unrated and restricted to adults. The bundled homebrew demo is available. You can review your declared age group in Settings."
+            } else { ageCheckedLaunch = item }
+            return
+        }
+        launchPending = true
         Task { @MainActor in
+            defer { launchPending = false }
+            if let url = item.url, url != Bundle.main.url(forResource: "boot", withExtension: "3dsx"),
+               !(await regionalAdultAccessAllowed()) { return }
+            guard UIApplication.shared.applicationState == .active else { return }
+            let duration = max(reduceMotion ? 0 : 0.22, menuAudio.play(.launch))
             if duration > 0 { try? await Task.sleep(for: .seconds(duration)) }
-            if UIApplication.shared.applicationState == .active { launch = item }; launchPending = false
+            if UIApplication.shared.applicationState == .active { launch = item }
         }
     }
+    @MainActor private func regionalAdultAccessAllowed() async -> Bool {
+        // The OS determines whether regional age assurance applies. Never infer it
+        // from the storefront, a location permission or the user's local choice.
+        guard #available(iOS 26.2, *) else { return true }
+        do {
+            guard try await AgeRangeService.shared.isEligibleForAgeFeatures else { return true }
+            guard let window = UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene })
+                .first(where: { $0.activationState == .foregroundActive })?.windows.first(where: \.isKeyWindow),
+                  var presenter = window.rootViewController else {
+                library.error = "Age confirmation couldn’t open. Please try again."; return false
+            }
+            while let presented = presenter.presentedViewController { presenter = presented }
+            let response = try await AgeRangeService.shared.requestAgeRange(ageGates: 18, in: presenter)
+            if case .sharing(let range) = response,
+               ImportedGameAccess.isAdultAgeBand(lowerBound: range.lowerBound, upperBound: range.upperBound) { return true }
+            library.error = "Apple hasn’t confirmed an adult age range for imported software. The included homebrew demo is still available."
+        } catch {
+            library.error = "Apple’s regional age check is unavailable. Please try again before opening imported software. The included homebrew demo is still available."
+        }
+        return false
+    }
     private func openPendingWidgetGame() {
-        guard launch == nil, !launchPending, library.coreReady, scenePhase == .active, let id = pendingWidgetGameID else { return }
+        guard launch == nil, !launchPending, library.coreReady, scenePhase == .active else { return }
+        if pendingHomebrew { pendingHomebrew = false; launchHomebrew(); return }
+        guard let id = pendingWidgetGameID else { return }
         pendingWidgetGameID = nil
         guard let game = library.games.first(where: { $0.id == id }) else { library.error = "This game is no longer in your library."; return }
         guard FileManager.default.fileExists(atPath: library.storage.gameURL(game).path) else { library.error = "This game's file is missing. Import it again to play."; return }
         showingSystem = false; showingMii = false; showingLayout = false; artworkGame = nil; settingsGame = nil
         searching = false; searchFocused = false; system = .threeDS; selectedID = game.id
         beginLaunch(Launch(title: game.title, url: library.storage.gameURL(game)))
+    }
+    private func openLink(_ url: URL) {
+        guard let destination = EmuDenLink.destination(url) else { return }
+        switch destination {
+        case .library:
+            if launch == nil { backToHome(); collection = true }
+            return
+        case .homebrew:
+            if let launch, launch.url == Bundle.main.url(forResource: "boot", withExtension: "3dsx") { return }
+            pendingHomebrew = true; pendingWidgetGameID = nil
+        case .game(let id):
+            if let game = library.games.first(where: { $0.id == id }), launch?.url == library.storage.gameURL(game) { return }
+            pendingWidgetGameID = id; pendingHomebrew = false
+        }
+        if launch != nil { NotificationCenter.default.post(name: Notification.Name("EmuDenWidgetSwitchGame"), object: nil) }
+        else { openPendingWidgetGame() }
     }
     private func handleStartup() {
         guard library.coreReady, scenePhase == .active, !handledLaunchArguments else { return }; handledLaunchArguments = true
@@ -507,7 +572,7 @@ struct LibraryView: View {
         guard value != system else { return }; menuAudio.play(value.available ? .confirm : .planned)
         withAnimation(ConsoleMotion.response(reduceMotion)) { search = ""; searching = false; collection = false; system = value }
     }
-    private func moveSystem(_ offset: Int) { let list = ConsoleSystem.allCases; let index = list.firstIndex(of: system) ?? 0; selectSystem(list[(index + offset + list.count) % list.count]) }
+    private func moveSystem(_ offset: Int) { let list = ConsoleSystem.visibleSystems; let index = list.firstIndex(of: system) ?? 0; selectSystem(list[(index + offset + list.count) % list.count]) }
     private func back() { if searching { toggleSearch() } else { menuAudio.play(.back); backToHome() } }
     private func configureInput() {
         guard menuActive, !searching else { menuInput.stop(); return }
@@ -528,6 +593,12 @@ struct LibraryView: View {
             .replacingOccurrences(of: #"^(.+), The( - |$)"#, with: "The $1$2", options: .regularExpression)
     }
     private func launchControls() { showingSystem = false; DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { beginLaunch(Launch(title: "Input & display test", url: nil)) } }
+    private func offerArtworkChoice() {
+        let arguments = ProcessInfo.processInfo.arguments
+        guard menuActive, library.coreReady, !library.games.isEmpty, !hasArtworkChoice,
+              !arguments.contains("--boot-homebrew"), !arguments.contains("--boot-test-game") else { return }
+        showingArtworkConsent = true
+    }
     private func launchHomebrew() {
         guard library.coreReady else { return }; showingSystem = false
         guard let url = Bundle.main.url(forResource: "boot", withExtension: "3dsx") else { library.error = "The bundled homebrew test is missing from this build."; return }

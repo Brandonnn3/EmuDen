@@ -1,0 +1,64 @@
+{
+  "identifier": "264bf26e-1f6f-4dd6-a42d-1b52bf86d01b",
+  "nonRenewingSubscriptions": [],
+  "products": [
+    {
+      "displayPrice": "0.99",
+      "familyShareable": false,
+      "internalID": "5fb850a7-f7be-4919-8d02-53712eeaef96",
+      "localizations": [
+        {
+          "description": "An optional, repeatable tip. Every EmuDen feature remains free.",
+          "displayName": "Small thank-you",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "com.brandonaleman.Emulator.tip.small",
+      "referenceName": "EmuDen small tip",
+      "type": "Consumable"
+    },
+    {
+      "displayPrice": "2.99",
+      "familyShareable": false,
+      "internalID": "01c4b132-8b26-4d4c-b1ac-fe9c472dc6eb",
+      "localizations": [
+        {
+          "description": "An optional, repeatable tip. Every EmuDen feature remains free.",
+          "displayName": "Extra support",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "com.brandonaleman.Emulator.tip.medium",
+      "referenceName": "EmuDen medium tip",
+      "type": "Consumable"
+    },
+    {
+      "displayPrice": "4.99",
+      "familyShareable": false,
+      "internalID": "86b0c35a-fa5d-4d2e-85bc-78780cff87f6",
+      "localizations": [
+        {
+          "description": "An optional, repeatable tip. Every EmuDen feature remains free.",
+          "displayName": "Big thank-you",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "com.brandonaleman.Emulator.tip.large",
+      "referenceName": "EmuDen large tip",
+      "type": "Consumable"
+    }
+  ],
+  "settings": {
+    "_applicationInternalID": "",
+    "_developerTeamID": "NKC9X96J5A",
+    "_failTransactionsEnabled": false,
+    "_locale": "en_US",
+    "_storefront": "USA",
+    "_storeKitErrors": []
+  },
+  "subscriptionGroups": [],
+  "version": {
+    "major": 3,
+    "minor": 0
+  }
+}
