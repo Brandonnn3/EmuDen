@@ -1,0 +1,16 @@
+{
+  "checked": "2026-11-12",
+  "repository": "https://github.com/rileytestut/Delta",
+  "commit": "8d768919b1fb6bf99ec2899b6e8e0146a8268637",
+  "storeListing": "https://apps.apple.com/us/app/delta-game-emulator/id1048524688",
+  "files": {
+    "README.md": {
+      "url": "https://raw.githubusercontent.com/rileytestut/Delta/8d768919b1fb6bf99ec2899b6e8e0146a8268637/README.md",
+      "sha256": "6aeec89cebf048ed152a54ea46ef2b12f2ebfb1f3f782118caa1fc0f33a0e633"
+    },
+    "COPYING": {
+      "url": "https://raw.githubusercontent.com/rileytestut/Delta/8d768919b1fb6bf99ec2899b6e8e0146a8268637/COPYING",
+      "sha256": "4df3c306dddaaf4baffdff5ca820cc679ac8cd6dc263c6a74517783e42fa7a3b"
+    }
+  }
+}

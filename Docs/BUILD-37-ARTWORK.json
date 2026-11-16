@@ -1,0 +1,118 @@
+{
+  "catalogVersion": 16,
+  "siteVersion": 15,
+  "url": "https://emuden-artwork-catalog.headyopossum2.chatgpt.site",
+  "commit": "e77876720affe55760a117f77ebb503061dbd8a3",
+  "deployment": {
+    "id": "appgdep_6afb2907d58081918bbc9c8e6756c468",
+    "project_id": "appgprj_6af37270360881919fa6b473672db145",
+    "title": "EmuDen Artwork Catalog",
+    "version_id": "appgprj_6af37270360881919fa6b473672db145~appgver_a0de73ade78481918ac55f74fd8b874d",
+    "type": "publish",
+    "status": "succeeded",
+    "url": "https://emuden-artwork-catalog.headyopossum2.chatgpt.site",
+    "has_mcp": false,
+    "screenshot_asset_pointer": null,
+    "provider_deployment_id": "site---6af37270360881919fa6b473672db145",
+    "failure_message": null,
+    "env_set_revision": 0,
+    "updated_at": "2026-11-16T16:02:27.699493+00:00"
+  },
+  "counts": {
+    "covers": 79,
+    "scenes": 78
+  },
+  "newAssets": [
+    {
+      "key": "gamecube-sonic-riders",
+      "title": "Sonic Riders",
+      "aliases": [
+        "Sonic Riders.nkit",
+        "Sonic Riders (USA)",
+        "Sonic_Riders"
+      ],
+      "platform": "gamecube",
+      "programIDs": [],
+      "coverIsSceneFallback": false,
+      "cover": {
+        "path": "images/gamecube-sonic-riders/cover-f780b000f3cf.jpg",
+        "sha256": "f780b000f3cf2d43471b49843c59f79840e03975040e42b8183fbbf5f6436fe0",
+        "bytes": 582625,
+        "width": 1024,
+        "height": 1456
+      },
+      "scene": {
+        "path": "images/gamecube-sonic-riders/scene-2e8f76bf339a.jpg",
+        "sha256": "2e8f76bf339a6840373adf89c6273d8bc54511963453860b77f2977ea37dbb48",
+        "bytes": 670133,
+        "width": 1536,
+        "height": 1024
+      },
+      "sceneFocusX": 0.56
+    },
+    {
+      "key": "ps1-walt-disney-world-quest",
+      "title": "Walt Disney World Quest: Magical Racing Tour",
+      "aliases": [
+        "Walt Disney World Quest",
+        "Walt Disney World Quest - Magical Racing Tour",
+        "Disney World Quest - Magical Racing Tour",
+        "Walt Disney World Quest - Magical Racing Tour (USA)"
+      ],
+      "platform": "ps1",
+      "programIDs": [],
+      "coverIsSceneFallback": false,
+      "cover": {
+        "path": "images/ps1-walt-disney-world-quest/cover-ba019212de6a.jpg",
+        "sha256": "ba019212de6aff87bfb0bd8156fcb884c38d10e9155d4e79c0cfbfe7c536ccff",
+        "bytes": 437705,
+        "width": 1024,
+        "height": 1456
+      },
+      "scene": {
+        "path": "images/ps1-walt-disney-world-quest/scene-6816c5958b78.jpg",
+        "sha256": "6816c5958b7841d7cbdc99dd798e710be829a3ef0d564ef7ff7ffb90005dea0d",
+        "bytes": 760861,
+        "width": 1536,
+        "height": 1024
+      },
+      "sceneFocusX": 0.56
+    }
+  ],
+  "live": {
+    "version": 16,
+    "client": "ordinary curl public unauthenticated HTTPS",
+    "assets": [
+      {
+        "key": "gamecube-sonic-riders",
+        "kind": "cover",
+        "sha256": "f780b000f3cf2d43471b49843c59f79840e03975040e42b8183fbbf5f6436fe0",
+        "bytes": 582625
+      },
+      {
+        "key": "gamecube-sonic-riders",
+        "kind": "scene",
+        "sha256": "2e8f76bf339a6840373adf89c6273d8bc54511963453860b77f2977ea37dbb48",
+        "bytes": 670133
+      },
+      {
+        "key": "ps1-walt-disney-world-quest",
+        "kind": "cover",
+        "sha256": "ba019212de6aff87bfb0bd8156fcb884c38d10e9155d4e79c0cfbfe7c536ccff",
+        "bytes": 437705
+      },
+      {
+        "key": "ps1-walt-disney-world-quest",
+        "kind": "scene",
+        "sha256": "6816c5958b7841d7cbdc99dd798e710be829a3ef0d564ef7ff7ffb90005dea0d",
+        "bytes": 760861
+      }
+    ]
+  },
+  "previousBytesAndRecordsUnchanged": true,
+  "coverMethod": "Original retail fronts isolated and uniformly resampled, full art preserved; not AI detail reconstruction. Both AI upscale edits were blocked. No retry.",
+  "sceneMethod": "Built-in image generation; environment-only scenic backgrounds. Prompts/masters/provenance retained under main Artwork-Catalog-16.",
+  "browserVisualQA": "Unavailable: native browser pipe absent; preview HTTP200 and asset ImageIO/hash checks passed.",
+  "defaultAppProvider": false,
+  "nativeClientVerified": "Foundation URLSession HTTP200/catalog16 and production ArtworkPack decoder/platform-scoped matcher select both requested title/filename aliases after custom rename."
+}

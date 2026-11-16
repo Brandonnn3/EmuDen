@@ -3,6 +3,16 @@ import CoreGraphics
 
 /// Screen regions follow the system's fold, including when the device rotates.
 struct DuoLayout {
+    static func usableDivision(_ rect: CGRect, in size: CGSize) -> CGRect? {
+        guard [rect.minX, rect.minY, rect.width, rect.height, size.width, size.height].allSatisfy(\.isFinite),
+              rect.width >= 0, rect.height >= 0 else { return nil }
+        let vertical = rect.height >= rect.width
+        let before = vertical ? rect.minX : rect.minY
+        let after = vertical ? size.width - rect.maxX : size.height - rect.maxY
+        // The outer display may report an inactive hinge at its edge.
+        guard before >= 64, after >= 64 else { return nil }
+        return rect
+    }
     let topPanel: CGRect
     let bottomPanel: CGRect
     let controlsBesideScreen: Bool

@@ -1,49 +1,58 @@
 {
-  "reviewDate": "2026-11-12",
-  "auditedBuild": "21",
+  "reviewDate": "2026-11-16",
+  "auditedBuild": "37",
   "publicReleaseCleared": false,
-  "reviewDocument": "Docs/Legal/RELEASE-21-REVIEW.md",
+  "reviewDocument": "Docs/Legal/RELEASE-22-LEGAL-DECISION.md",
   "criteria": [
     {
       "id": "artwork-rights",
-      "status": "resolved",
+      "status": "pending",
       "evidence": [
         "Docs/Legal/ASSET-REGISTER-21.json",
         "Scripts/verify-release-artwork.py",
         "Docs/BUILD-21.md"
       ],
-      "resolution": "For this candidate only: removed character gallery/bundled concepts/online covers and old automatic-cache display. Original unbranded assets, licensed demo and personal local imports remain. Preserved gallery rights are not declared cleared."
+      "resolution": "Build23 adds optional user-supplied catalogs without a bundled source or default provider. Confirm provider rights/disclosures and deliver exact matching source before distribution. This feature does not clear the preserved character gallery."
     },
     {
       "id": "corresponding-source",
-      "status": "resolved",
+      "status": "pending",
       "evidence": [
         "LICENSE.txt",
         "COPYRIGHT.md",
         "TestFlight/SOURCE.md",
-        "Docs/Legal/PUBLICATION-VERIFICATION-21.json"
+        "Docs/Legal/PUBLICATION-VERIFICATION-21.json",
+        "Docs/Legal/DEPENDENCY-INVENTORY-28.json",
+        "Vendor/Dolphin/source-manifest.json"
       ],
-      "resolution": "Exact build21 matching source is public and anonymously verified:66,198,534 bytes, SHA256157d88f7301a99a47be659c73aa5c328af6d9e9d6816c56fc10aa4aaca9b4d47; source commit558c41cfa90de567c990753c14ef09eaaad02ced. Prior17\u201319 URLs remain intact. Compiled inputs remain frozen."
+      "resolution": "Build28 adds pinned sanitized Dolphin interpreter/Metal source and148 complete offline notices. Exact corresponding source accompanies the local candidate; public source delivery and actual Apple/GPL distribution review remain required. Native engineering checks do not clear these rights."
     },
     {
       "id": "store-license-compatibility",
       "status": "pending",
       "evidence": [
+        "Docs/Legal/RELEASE-22-LEGAL-DECISION.md",
         "TestFlight/OPEN-SOURCE-DISTRIBUTION.md",
-        "Docs/Legal/RELEASE-21-REVIEW.md"
+        "Docs/Legal/DEPENDENCY-INVENTORY-28.json",
+        "Vendor/Dolphin/source-manifest.json"
       ],
-      "resolution": "Specific GPLv3 sections6/10 versus actual Apple Standard/custom EULA, Usage Rules and delivery restrictions need a qualified distribution assessment; no exception or custom agreement fabricated."
+      "resolution": "Build28 adds pinned sanitized Dolphin interpreter/Metal source and148 complete offline notices. Exact corresponding source accompanies the local candidate; public source delivery and actual Apple/GPL distribution review remain required. Native engineering checks do not clear these rights."
     },
     {
       "id": "dependency-notices",
-      "status": "resolved",
+      "status": "pending",
       "evidence": [
         "Resources/ThirdPartyNotices.txt",
+        "Resources/ThirdPartyNotices.json",
         "Docs/Legal/Notice-Sources.json",
-        "Docs/BUILD-21.md",
-        "Resources/ThirdPartyNotices.json"
+        "Docs/Legal/TLS-REPLACEMENT-VERIFICATION-22.json",
+        "Docs/Legal/FONT-PROVENANCE-22.json",
+        "Docs/Legal/APP-RESOURCE-VERIFICATION-22.json",
+        "Docs/Legal/DEPENDENCY-INVENTORY-22.json",
+        "Docs/Legal/DEPENDENCY-INVENTORY-28.json",
+        "Vendor/Dolphin/source-manifest.json"
       ],
-      "resolution": "84 pinned component/header notice texts checked unchanged; final signed21 archive copy matches and Settings exposes it offline."
+      "resolution": "Build28 adds pinned sanitized Dolphin interpreter/Metal source and148 complete offline notices. Exact corresponding source accompanies the local candidate; public source delivery and actual Apple/GPL distribution review remain required. Native engineering checks do not clear these rights."
     },
     {
       "id": "public-support-privacy",
@@ -82,7 +91,7 @@
         "App/LibraryView.swift",
         "TestFlight/Submission/AgeRatingAnswers.json"
       ],
-      "resolution": "Adult declaration/regional Apple check and index/links retained; final regional device validation and live questionnaire remain."
+      "resolution": "37 removes the blanket local adult declaration/Unrated labels, retains OS-required regional Apple checks and index/links. Final regional device validation and live questionnaire remain."
     },
     {
       "id": "branding-clearance",

@@ -43,6 +43,16 @@ final class ArtworkIdentityTests: XCTestCase {
         XCTAssertEqual(identities.name(for: game, covers: names), game.title)
         XCTAssertEqual(identities.name(for: game, covers: ArtworkCatalog(files: [])), game.title)
     }
+    func testVerifiedIdentityKeepsMatchingRegionAndRevisionTags() {
+        let names = ArtworkCatalog(files: ["WarioWare Gold (USA).png", "WarioWare Gold (USA) (Rev 1).png", "WarioWare Gold (Europe).png"])
+        let identities = ArtworkIdentityCatalog(titles: ["00040000001D1C00": "WarioWare Gold"])
+        var game = Game(title: "WarioWare Gold (USA) (Rev 1)", fileName: "a.cci", programID: "00040000001D1C00")
+        XCTAssertEqual(names.match(identities.name(for: game, covers: names)), "WarioWare Gold (USA) (Rev 1).png")
+        game.title = "WarioWare Gold (Europe)"
+        XCTAssertEqual(names.match(identities.name(for: game, covers: names)), "WarioWare Gold (Europe).png")
+        game.title = "Renamed copy"
+        XCTAssertEqual(identities.name(for: game, covers: names), "WarioWare Gold")
+    }
     func testOldLibraryAndNewArtworkPreferencesRoundTrip() throws {
         let data = Data("[{\"id\":\"AA000000-0000-0000-0000-000000000001\",\"title\":\"Old game\",\"fileName\":\"a.3dsx\",\"added\":0}]".utf8)
         var games = try JSONDecoder().decode([Game].self, from: data)

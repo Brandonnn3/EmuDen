@@ -12,7 +12,7 @@ enum ArtworkResources {
         return ArtworkIdentityCatalog(titles: titles)
     }()
     private static let consoleCache: NSCache<NSString, UIImage> = {
-        let cache = NSCache<NSString, UIImage>(); cache.countLimit = 2; return cache
+        let cache = NSCache<NSString, UIImage>(); cache.countLimit = 3; return cache
     }()
     static func consoleImage(_ system: ConsoleSystem) -> UIImage? {
         let key = system.rawValue as NSString
@@ -25,7 +25,7 @@ enum ArtworkResources {
 }
 
 extension Game {
-    var artworkName: String { ArtworkResources.identities.name(for: self, covers: ArtworkResources.covers) }
+    var artworkName: String { console == .ps1 ? (artworkTitle ?? title) : ArtworkResources.identities.name(for: self, covers: ArtworkResources.covers) }
 }
 
 struct ConsoleSceneBackground: View {

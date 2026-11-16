@@ -1,11 +1,11 @@
 {
-  "status": "Prepared build21 local-artwork candidate; live draft still refers to build19 until reconciled",
+  "status": "Unsubmitted internal three-console draft; public legal/distribution review remains open",
   "name": "EmuDen",
   "subtitle": "Your console collection",
   "bundleId": "com.brandonaleman.Emulator",
   "sku": "EMUDEN-IOS-001",
   "version": "0.1.0",
-  "build": "21",
+  "build": "37",
   "primaryLocale": "en-US",
   "price": 0,
   "currency": "USD",
@@ -24,6 +24,6 @@
   "supportURL": "https://emuden-support.headyopossum2.chatgpt.site/support.html",
   "privacyPolicyURL": "https://emuden-support.headyopossum2.chatgpt.site/privacy.html",
   "sourceURL": "https://emuden-support.headyopossum2.chatgpt.site/source.html",
-  "contentRightsDeclaration": "Only original unbranded presentation, licensed open-source homebrew and user-provided local files. No publisher-character gallery or cover-service downloads in build21. Broader licensing/brand review remains separate.",
+  "contentRightsDeclaration": "Original console presentation, licensed replacement resources and homebrew, explicit local imports and optional user-selected HTTPS artwork sources. No artwork provider is configured by default. Chosen-source rights, actual GPL/Apple distribution and name review remain open.",
   "publicSubmissionReady": false
 }

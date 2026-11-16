@@ -1,0 +1,45 @@
+{
+  "records": [
+    {
+      "component": "shared_font",
+      "commit": "848af476fb2fad4144962dfb2548bd7841f1b72a",
+      "sourceURL": "https://codeload.github.com/B3n30/citra_system_archives/tar.gz/848af476fb2fad4144962dfb2548bd7841f1b72a",
+      "sourceArchive": "Upstream/citra-system-archives-848af476fb2fad4144962dfb2548bd7841f1b72a.tar.gz",
+      "sha256": "13f213b7971c04189646775b1f4ef4f82a830b189130d07006556453cb731760",
+      "bytes": 3401777,
+      "generatorLicense": "GPL-2.0 as provided; no later-version grant inferred from the template",
+      "status": "Independent replacement-resource generator/source; font inputs retain their own licenses"
+    },
+    {
+      "component": "mii",
+      "commit": "5e6b5df2f58811b75f62a526f6602732e2ad26db",
+      "sourceURL": "https://codeload.github.com/B3n30/citra_system_archives/tar.gz/5e6b5df2f58811b75f62a526f6602732e2ad26db",
+      "sourceArchive": "Upstream/citra-system-archives-5e6b5df2f58811b75f62a526f6602732e2ad26db.tar.gz",
+      "sha256": "cc01aec5965d829dccdeea1714672293a4099af7aa909cbc9aa2d572341358a1",
+      "bytes": 3602263,
+      "generatorLicense": "GPL-2.0 as provided; no later-version grant inferred from the template",
+      "status": "Independent replacement-resource generator/source; font inputs retain their own licenses"
+    },
+    {
+      "component": "country_list",
+      "commit": "bbe60b5477fc8d7f317d9a82a9f2e6a789af931c",
+      "sourceURL": "https://codeload.github.com/B3n30/citra_system_archives/tar.gz/bbe60b5477fc8d7f317d9a82a9f2e6a789af931c",
+      "sourceArchive": "Upstream/citra-system-archives-bbe60b5477fc8d7f317d9a82a9f2e6a789af931c.tar.gz",
+      "sha256": "2037a1f42f7791056b3882541f8554462984dbf137159f64cc8d4ab317f4b41d",
+      "bytes": 3580913,
+      "generatorLicense": "GPL-2.0 as provided; no later-version grant inferred from the template",
+      "status": "Independent replacement-resource generator/source; font inputs retain their own licenses"
+    },
+    {
+      "component": "bad_word_list",
+      "commit": "47cdc9394501a61406529e3037763745c9642b23",
+      "sourceURL": "https://codeload.github.com/B3n30/citra_system_archives/tar.gz/47cdc9394501a61406529e3037763745c9642b23",
+      "sourceArchive": "Upstream/citra-system-archives-47cdc9394501a61406529e3037763745c9642b23.tar.gz",
+      "sha256": "709346ff7cea2b2f1d1d22f54302a411eeebd3b99a162479be51f2f0a64faae2",
+      "bytes": 3402544,
+      "generatorLicense": "GPL-2.0 as provided; no later-version grant inferred from the template",
+      "status": "Independent replacement-resource generator/source; font inputs retain their own licenses"
+    }
+  ],
+  "scope": "Community-generated replacements, not a Nintendo system dump; not an App Store/GPL opinion"
+}

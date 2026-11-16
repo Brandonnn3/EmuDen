@@ -12,6 +12,10 @@ struct PlayerView: View {
     @EnvironmentObject private var library: GameLibrary
     @StateObject private var session: EmulatorSession
     @State private var showControls = true
+    @State private var editingControls = false
+    @State private var editingWasPaused = false
+    @State private var controlLayoutKey = ""
+    @AppStorage("touchControlLayouts") private var touchLayouts = Data()
     @State private var showingSettings = false
     @State private var showingGameMenu = false
     @State private var showingLayout = false
@@ -28,23 +32,26 @@ struct PlayerView: View {
     @State private var preferences = PlayerPreferences()
     @State private var currentGame: Game?
     @State private var pendingWidgetSwitch = false
+    @State private var viewport = CGSize.zero
     private var headerPinned: Bool {
         launch.diagnostic || session.booting || session.paused || session.closing || session.stateBusy ||
-        showingGameMenu || showingSettings || showingLayout || showingSaveHistory || session.offerResume || session.message != nil ||
+        editingControls || showingGameMenu || showingSettings || showingLayout || showingSaveHistory || session.offerResume || session.message != nil ||
         scenePhase != .active || UIAccessibility.isVoiceOverRunning
     }
     private var controlsVisible: Bool { showControls && !session.hasController }
-    private var immersive: Bool { !controlsVisible && controllerPresentation == "panels" }
+    private var immersive: Bool { (!controlsVisible && controllerPresentation == "panels") || (session.hasController && viewport.width > viewport.height * 1.25) }
     private var fillPicture: Bool { preferences.sizing == .fill || (preferences.sizing == .automatic && immersive) }
     init(launch: Launch, saves: URL, onPreview: @escaping (UIImage) -> Void = { _ in }, onBoot: @escaping () -> Void) {
         self.launch = launch; self.saves = saves; self.onBoot = onBoot; self.onPreview = onPreview
-        _session = StateObject(wrappedValue: EmulatorSession(diagnostic: launch.diagnostic))
+        _session = StateObject(wrappedValue: EmulatorSession(diagnostic: launch.diagnostic, platform: launch.platform))
     }
     var body: some View {
         GeometryReader { geometry in
             let horizontal = geometry.size.width > geometry.size.height * 1.25
             Group {
-                if let division = foldDivision(in: geometry) {
+                if launch.platform != .threeDS, (launch.platform == .ps1 ? preferences.ps1Folded : preferences.gameCubeFolded), let division = foldDivision(in: geometry) {
+                    singleScreenFolded(size: geometry.size, division: division)
+                } else if launch.platform == .threeDS, let division = foldDivision(in: geometry) {
                     duoPlayer(size: geometry.size, division: division)
                 } else {
                     standardPlayer(horizontal: horizontal, insets: geometry.safeAreaInsets)
@@ -59,20 +66,28 @@ struct PlayerView: View {
                         VStack(spacing: 12) {
                             if session.shaderProgress >= 0 { ProgressView(value: session.shaderProgress).frame(width: 210) }
                             else { ProgressView() }
-                            Text(session.shaderStage.map { "Preparing graphics · " + $0 } ?? "Starting Azahar…").font(.subheadline)
+                            Text(session.shaderStage.map { "Preparing graphics · " + $0 } ?? "Starting \(launch.platform.name)…").font(.subheadline)
                         }.padding(24).background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20)).accessibilityIdentifier("graphicsPreparation")
                     }
                 }
                 .overlay { if session.closing { ProgressView("Closing game…").padding(24).background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20)) } }
-                .overlay { if session.stateBusy && !session.closing { ProgressView("Updating save state…").padding(24).background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20)) } }
-                .overlay(alignment: .bottom) {
-                    if let notice = session.notice {
-                        Text(notice).font(.subheadline.bold()).padding(14).background(.ultraThinMaterial, in: Capsule())
-                            .padding(.bottom, 12).allowsHitTesting(false)
+                .overlay { if session.stateBusy && !session.savingState && !session.closing { ProgressView("Updating save state…").padding(24).background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20)) } }
+                .overlay(alignment: .top) {
+                    if session.savingState || session.notice != nil {
+                        HStack(spacing: 7) {
+                            if session.savingState { ProgressView().controlSize(.mini) }
+                            else { Image(systemName: "checkmark.circle.fill").foregroundStyle(.mint) }
+                            Text(session.savingState ? "Saving…" : (session.notice ?? "")).font(.caption.weight(.semibold))
+                        }.padding(.horizontal, 12).padding(.vertical, 8).background(.ultraThinMaterial, in: Capsule())
+                            .padding(.top, 64).allowsHitTesting(false).accessibilityIdentifier("saveBanner")
+                            .transition(.opacity)
                     }
                 }
+                .onChange(of: geometry.size, initial: true) { _, size in if controlsVisible { session.releaseTouchControls() }; viewport = size }
+                .overlay(alignment: .top) { if editingControls { controlEditorBar.padding(.top, 8) } }
         }
         .ignoresSafeArea(.container, edges: immersive ? .all : [])
+        .animation(ConsoleMotion.response(reduceMotion), value: controlsVisible)
         .overlay { if showingGameMenu { gameMenu.transition(.opacity.combined(with: .scale(scale: reduceMotion ? 1 : 0.97))) } }
         .animation(ConsoleMotion.response(reduceMotion), value: showingGameMenu)
         .statusBarHidden(true)
@@ -80,7 +95,7 @@ struct PlayerView: View {
         .onAppear {
             UIApplication.shared.isIdleTimerDisabled = true
             if let url = launch.url {
-                currentGame = library.games.first { library.storage.gameURL($0) == url } ?? Game(title: launch.title, fileName: url.lastPathComponent, programID: ThreeDSProgramID.read(url))
+                currentGame = library.games.first { library.storage.gameURL($0) == url } ?? Game(title: launch.title, fileName: url.lastPathComponent, programID: launch.platform == .threeDS ? ThreeDSProgramID.read(url) : nil, platform: launch.platform)
             }
             refreshPreferences()
             session.start(url: launch.url, saves: saves, preferences: preferences, onBoot: onBoot)
@@ -93,7 +108,7 @@ struct PlayerView: View {
         .onChange(of: scenePhase) { _, phase in
             if phase == .background { rememberScene(); session.background() }
             else if phase == .inactive { session.suspend() }
-            else if phase == .active { session.foreground() }
+            else if phase == .active { session.foreground(); if editingControls { session.setPaused(true) } }
         }
         .task(id: session.notice) {
             guard session.notice != nil else { return }
@@ -106,7 +121,7 @@ struct PlayerView: View {
             menuAudio.setActive(visible && scenePhase == .active)
             if !visible {
                 closingMenu = false
-                if !session.closing { Task { @MainActor in
+                if !session.closing && !editingControls { Task { @MainActor in
                     if scenePhase == .active { session.setPaused(menuWasPaused) } else { session.suspend() }
                 } }
             }
@@ -127,31 +142,92 @@ struct PlayerView: View {
             Button("Return without resume point") { Task { @MainActor in session.message = nil; session.closeWithoutState { dismiss() } } }
         } message: { Text(session.message ?? "") }
     }
+    private func controlCanvas(size: CGSize, area: CGRect, startArea: CGRect, mode: String) -> some View {
+        TouchControls(session: session, size: size, area: area, startArea: startArea, mode: mode, editing: editingControls)
+            .onAppear { controlLayoutKey = launch.platform.rawValue + "." + mode }
+            .onChange(of: mode) { _, value in controlLayoutKey = launch.platform.rawValue + "." + value }
+    }
     private func standardPlayer(horizontal: Bool, insets: EdgeInsets) -> some View {
-        VStack(spacing: horizontal ? 8 : 16) {
-                if horizontal {
-                    HStack(spacing: 18) {
-                        if controlsVisible { leftControls.frame(width: 124) }
-                        screens(horizontal: true).frame(maxWidth: .infinity, maxHeight: .infinity)
-                        if controlsVisible { rightControls.frame(width: 136) }
-                    }
-                } else {
-                    screens(horizontal: false).frame(maxHeight: .infinity)
-                    if controlsVisible {
-                        HStack(alignment: .center) { leftControls; Spacer(minLength: 12); rightControls }.frame(maxWidth: 640)
-                    }
+        GeometryReader { geometry in
+            let size = geometry.size
+            let bounds = CGRect(origin: .zero, size: size)
+            let controlHeight = min(340.0, size.height * 0.49)
+            let video = !controlsVisible ? bounds : (horizontal ? CGRect(x: 150, y: 0, width: max(0, size.width - 300), height: max(0, size.height - 48)) : CGRect(x: 12, y: 0, width: max(0, size.width - 24), height: max(0, size.height - controlHeight - 48)))
+            let area = horizontal ? CGRect(x: 4, y: 48, width: size.width - 8, height: max(0, size.height - 104)) : CGRect(x: 4, y: video.maxY + 4, width: size.width - 8, height: controlHeight - 4)
+            let start = CGRect(x: 0, y: size.height - 48, width: size.width, height: 44)
+            ZStack(alignment: .topLeading) {
+                screens(horizontal: horizontal).frame(width: video.width, height: video.height).position(x: video.midX, y: video.midY)
+                if controlsVisible { controlCanvas(size: size, area: area, startArea: start, mode: horizontal ? "landscape" : "portrait") }
+            }.frame(width: size.width, height: size.height)
+                .background { if !immersive { ConsoleShell(top: false) } }
+                .overlay(alignment: .top) {
+                    if !editingControls { toolbar.padding(.horizontal, horizontal ? 18 : 16).padding(.top, 12 + (immersive ? insets.top : 0)) }
                 }
-                if controlsVisible { startControls.frame(height: 44) }
-            }.padding(.horizontal, immersive ? 0 : (horizontal ? 18 : 22)).padding(.vertical, immersive ? 0 : 12)
-            .background { if !immersive { ConsoleShell(top: false) } }
-            .overlay(alignment: .top) {
-                toolbar.padding(.leading, (horizontal ? 18 : 22) + (immersive ? insets.leading : 0))
-                    .padding(.trailing, (horizontal ? 18 : 22) + (immersive ? insets.trailing : 0))
-                    .padding(.top, 12 + (immersive ? insets.top : 0))
+        }
+    }
+    private func singleScreenFolded(size: CGSize, division: CGRect) -> some View {
+        let layout = DuoLayout(size: size, division: division, controls: false, immersive: true)
+        let top = DuoLayout.fit(aspect: 4.0 / 3, in: layout.topPanel)
+        let panel = layout.bottomPanel
+        let ps1 = launch.platform == .ps1
+        let blank = !ps1 && preferences.gameCubePanelBlank
+        let fps = ps1 ? preferences.ps1PanelFPS : preferences.gameCubePanelFPS
+        let saves = ps1 ? preferences.ps1PanelSaves : preferences.gameCubePanelSaves
+        let speed = ps1 && preferences.ps1PanelSpeed
+        let prefix = ps1 ? "ps1" : "gameCube"
+        let touch = editingControls || (!blank && controlsVisible && (ps1 ? preferences.ps1PanelTouch : preferences.gameCubePanelTouch))
+        let quickHeight: CGFloat = !blank && !editingControls && (ps1 || !touch) && (speed || fps || saves) ? (touch ? min(112, panel.height * 0.27) : panel.height) : 0
+        let area = CGRect(x: 4, y: quickHeight + 8, width: max(0, panel.width - 8), height: max(0, panel.height - quickHeight - 60))
+        return ZStack(alignment: .topLeading) {
+            screen(image: session.top, bottom: false).frame(width: top.width, height: top.height).position(x: top.midX, y: top.midY)
+            ZStack(alignment: .topLeading) {
+                Color.black.allowsHitTesting(false)
+                if quickHeight > 0 {
+                    ScrollView {
+                        VStack(spacing: 8) {
+                            if speed { playbackSpeedControl }
+                            if fps { HStack { Label("Frame rate", systemImage: "waveform.path.ecg"); Spacer(); frameRate }.font(.subheadline).accessibilityIdentifier(prefix + "PanelFrameRate") }
+                            if saves {
+                                HStack(spacing: 12) {
+                                    Button { Task { await session.save(.quick) } } label: {
+                                        Label("Quick Save", systemImage: "square.and.arrow.down").frame(maxWidth: .infinity, minHeight: 48).contentShape(Rectangle())
+                                    }.background(.white.opacity(0.07), in: RoundedRectangle(cornerRadius: 14)).accessibilityIdentifier(prefix + "PanelSave")
+                                    Button { Task { await session.load(.quick) } } label: {
+                                        Label("Quick Load", systemImage: "arrow.counterclockwise").frame(maxWidth: .infinity, minHeight: 48).contentShape(Rectangle())
+                                    }.background(.white.opacity(0.07), in: RoundedRectangle(cornerRadius: 14)).disabled(session.quickDate == nil).accessibilityIdentifier(prefix + "PanelLoad")
+                                }.font(.subheadline.weight(.semibold)).lineLimit(1).minimumScaleFactor(0.8).buttonStyle(ConsolePressStyle()).disabled(session.stateBusy || session.closing)
+                            }
+                        }.padding(.horizontal, 20).padding(.vertical, 8).frame(maxWidth: 620).frame(maxWidth: .infinity)
+                    }.frame(height: quickHeight)
+                }
+                if touch {
+                    // Touch controls never belong to the quick-settings ScrollView.
+                    controlCanvas(size: panel.size, area: area, startArea: CGRect(x: 0, y: panel.height - 48, width: panel.width, height: 44), mode: division.width > division.height ? "tabletop" : "book")
+                }
+            }.frame(width: panel.width, height: panel.height).position(x: panel.midX, y: panel.midY).accessibilityElement(children: .contain).accessibilityIdentifier(prefix + "QuickPanel")
+            if !editingControls { toolbar.frame(width: max(0, layout.topPanel.width - 32), height: 44).position(x: layout.topPanel.midX, y: layout.topPanel.minY + 34) }
+        }.frame(width: size.width, height: size.height)
+    }
+    private var controlEditorBar: some View {
+        VStack(spacing: 6) {
+            HStack(spacing: 20) {
+                Text("Move controls").font(.headline)
+                Spacer()
+                Button("Reset") {
+                    var layouts = ControlLayouts.decode(touchLayouts); layouts.layouts.removeValue(forKey: controlLayoutKey); touchLayouts = layouts.encoded()
+                }.accessibilityIdentifier("resetTouchLayout")
+                Button("Done") { editingControls = false; session.releaseTouchControls(); session.setPaused(editingWasPaused) }.fontWeight(.bold).accessibilityIdentifier("finishTouchLayout")
             }
+            Text("Drag each button or stick. Saved for this console and orientation.").font(.caption).foregroundStyle(.secondary)
+        }.padding(16).background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20)).padding(.horizontal, 12)
     }
     private func foldDivision(in geometry: GeometryProxy) -> CGRect? {
         // UI test fixtures exercise both fold axes without depending on Device Hub's pose controls.
+#if targetEnvironment(simulator)
+        if ProcessInfo.processInfo.arguments.contains("--duo-tabletop-preview") {
+            return CGRect(x: 0, y: geometry.size.height / 2 - 10, width: geometry.size.width, height: 20)
+        }
+#endif
         if launch.diagnostic && ProcessInfo.processInfo.arguments.contains("--duo-tabletop-preview") {
             return CGRect(x: 0, y: geometry.size.height / 2 - 10, width: geometry.size.width, height: 20)
         }
@@ -159,9 +235,9 @@ struct PlayerView: View {
             return CGRect(x: geometry.size.width / 2 - 10, y: 0, width: 20, height: geometry.size.height)
         }
         if #available(iOS 27.1, *),
-           let region = geometry.reservedRegions(kind: .division, options: .includeInactive, layoutDirectionBehavior: .fixed).first {
-            return region.frame.inset(by: UIEdgeInsets(top: -region.margins.top, left: -region.margins.leading,
-                                                     bottom: -region.margins.bottom, right: -region.margins.trailing))
+           let region = geometry.reservedRegions(kind: .division, options: launch.platform == .threeDS ? .includeInactive : [], layoutDirectionBehavior: .fixed).first {
+            return DuoLayout.usableDivision(region.frame.inset(by: UIEdgeInsets(top: -region.margins.top, left: -region.margins.leading,
+                                                     bottom: -region.margins.bottom, right: -region.margins.trailing)), in: geometry.size)
         }
         return nil
     }
@@ -186,29 +262,13 @@ struct PlayerView: View {
                 .frame(width: top.width, height: top.height).position(x: top.midX, y: top.midY)
             screen(image: session.bottom, bottom: true)
                 .frame(width: bottom.width, height: bottom.height).position(x: bottom.midX, y: bottom.midY)
-            toolbar.frame(width: max(0, layout.topPanel.width - 32), height: 44)
-                .position(x: layout.topPanel.midX, y: layout.topPanel.minY + 34)
+            if !editingControls { toolbar.frame(width: max(0, layout.topPanel.width - 32), height: 44)
+                .position(x: layout.topPanel.midX, y: layout.topPanel.minY + 34) }
             if controlsVisible {
-                HStack {
-                    Group {
-                        if layout.controlsArea.height < 286 { compactLeftControls }
-                        else { leftControls }
-                    }.frame(width: 124)
-                    Spacer(minLength: 12)
-                    rightControls.frame(width: 136)
-                }.frame(width: layout.controlsArea.width, height: layout.controlsArea.height)
-                    .position(x: layout.controlsArea.midX, y: layout.controlsArea.midY)
-                startControls.frame(width: layout.startArea.width, height: layout.startArea.height)
-                    .position(x: layout.startArea.midX, y: layout.startArea.midY)
+                controlCanvas(size: size, area: layout.controlsArea, startArea: layout.startArea, mode: division.width > division.height ? "tabletop" : "book")
             }
         }.frame(width: size.width, height: size.height)
             .overlay { if session.paused { Label("Paused", systemImage: "pause.fill").padding(20).background(.regularMaterial, in: Capsule()) } }
-    }
-    private var startControls: some View {
-        HStack(spacing: 28) {
-            ControlButton(label: "SELECT", id: 2, session: session, small: true)
-            ControlButton(label: "START", id: 3, session: session, small: true)
-        }
     }
     private var toolbar: some View {
         HStack(spacing: 12) {
@@ -216,7 +276,7 @@ struct PlayerView: View {
                 .accessibilityLabel("Return to library").accessibilityIdentifier("playerBack")
             VStack(alignment: .leading, spacing: 3) {
                 Text(launch.title).font(.subheadline.bold()).lineLimit(1)
-                Text(launch.diagnostic ? "INPUT & DISPLAY TEST" : "3DS · METAL GPU").font(.system(size: 8, weight: .medium, design: .monospaced)).tracking(1).foregroundStyle(Palette.muted)
+                Text(launch.diagnostic ? "INPUT & DISPLAY TEST" : (launch.platform == .ps1 ? "PS1 · INTERPRETER" : (launch.platform == .gamecube ? "GAMECUBE · EXPERIMENTAL" : "3DS · METAL GPU"))).font(.system(size: 8, weight: .medium, design: .monospaced)).tracking(1).foregroundStyle(Palette.muted)
             }
             Spacer(minLength: 4)
             Button { withAnimation(ConsoleMotion.response(reduceMotion)) { showControls.toggle() } } label: { Image(systemName: session.hasController ? "gamecontroller.fill" : "gamecontroller").contentTransition(.symbolEffect(.replace)).frame(width: 44, height: 44) }
@@ -238,6 +298,24 @@ struct PlayerView: View {
     private var frameRate: some View {
         Text(String(format: "%.1f FPS", session.fps)).font(.system(size: 10, design: .monospaced))
             .foregroundStyle(Palette.accent)
+    }
+    private var playbackSpeedControl: some View {
+        HStack(spacing: 6) {
+            ForEach([1.0, 1.5, 2.0], id: \.self) { speed in
+                Button {
+                    menuAudio.play(.focus); session.setPlaybackSpeed(speed)
+                } label: {
+                    Text("\(speed.formatted())×").font(.subheadline.weight(.semibold))
+                        .frame(maxWidth: .infinity, minHeight: 48)
+                        .background(.white.opacity(session.playbackSpeed == speed ? 0.2 : 0.04), in: RoundedRectangle(cornerRadius: 12))
+                        .contentShape(Rectangle())
+                }.accessibilityIdentifier("ps1Speed-\(speed)")
+                    .accessibilityValue(session.playbackSpeed == speed ? "Selected" : "")
+                    .accessibilityAddTraits(session.playbackSpeed == speed ? .isSelected : [])
+            }
+        }.buttonStyle(ConsolePressStyle()).padding(4)
+            .background(.white.opacity(0.05), in: RoundedRectangle(cornerRadius: 16))
+            .accessibilityElement(children: .contain).accessibilityLabel("Playback speed").accessibilityIdentifier("ps1PlaybackSpeed")
     }
     private func wakeHeader() {
         withAnimation(reduceMotion ? .none : .easeOut(duration: 0.2)) { resetHeaderTimer() }
@@ -265,11 +343,16 @@ struct PlayerView: View {
                             Text("Paused").font(.system(size: 26, weight: .bold)).frame(maxWidth: .infinity).padding(.vertical, 6)
                                 .overlay(alignment: .trailing) {
                                     Menu {
-                                        Button("Player Settings", systemImage: "slider.horizontal.3") { menuAudio.play(.open); showingSettings = true }
+                                        Button("Graphics settings", systemImage: "slider.horizontal.3") { menuAudio.play(.open); showingSettings = true }
+                                        Button("Customize controls", systemImage: "hand.draw") {
+                                            editingWasPaused = menuWasPaused; showControls = true; session.releaseTouchControls()
+                                            showingGameMenu = false; editingControls = true; session.setPaused(true)
+                                        }.disabled(session.hasController).accessibilityIdentifier("customizeTouchControls")
                                         Button("Load Resume Point", systemImage: "clock.arrow.circlepath") { performState(.resume, load: true) }.disabled(session.resumeDate == nil || session.booting)
                                     } label: { Image(systemName: "ellipsis").font(.system(size: 18, weight: .semibold)).frame(width: 44, height: 44) }
                                         .accessibilityLabel("More game options").accessibilityIdentifier("moreGameOptions")
                                 }
+                            if launch.platform == .ps1 { playbackSpeedControl }
                             Button(action: resumeGameMenu) { CinematicActionLabel(title: "Resume", symbol: "play.fill", primary: true) }.accessibilityLabel("Resume game")
                             Button { performState(.quick, load: false) } label: { CinematicActionLabel(title: "Quick save", symbol: "square.and.arrow.down", disclosure: false) }
                                 .cinematicGlass(radius: 28, interactive: true).accessibilityLabel("Quick Save").disabled(session.booting || launch.diagnostic)
@@ -277,8 +360,9 @@ struct PlayerView: View {
                                 .cinematicGlass(radius: 28, interactive: true).accessibilityLabel("Quick Load").disabled(session.quickDate == nil || session.booting)
                             Button { menuAudio.play(.open); showingSaveHistory = true } label: { CinematicActionLabel(title: "Save history", symbol: "clock.arrow.circlepath") }
                                 .cinematicGlass(radius: 28, interactive: true).accessibilityIdentifier("openSaveHistory").disabled(session.booting || launch.diagnostic)
-                            Button { menuAudio.play(.open); showingLayout = true } label: { CinematicActionLabel(title: "Screen layout", symbol: "rectangle.split.1x2") }
+                            if launch.platform == .threeDS { Button { menuAudio.play(.open); showingLayout = true } label: { CinematicActionLabel(title: "Screen layout", symbol: "rectangle.split.1x2") }
                                 .cinematicGlass(radius: 28, interactive: true).accessibilityIdentifier("openGameDuoLayout")
+                            }
                             Button { menuAudio.play(.back); close() } label: { CinematicActionLabel(title: "Return to library", symbol: "arrow.uturn.backward", disclosure: false) }
                                 .cinematicGlass(radius: 28, interactive: true)
                                 .accessibilityIdentifier("gameMenuBack")
@@ -290,7 +374,7 @@ struct PlayerView: View {
                 }.scrollIndicators(.hidden)
             }.frame(width: area.size.width, height: area.size.height).clipped()
                 .sheet(isPresented: $showingSettings, onDismiss: { refreshPreferences(); session.updateGraphics(preferences) }) {
-                    PlayerSettingsView(game: currentGame, isPlaying: !launch.diagnostic, controllerConnected: session.hasController, topPreview: session.top, bottomPreview: session.bottom)
+                    PlayerSettingsView(game: currentGame, isPlaying: !launch.diagnostic, controllerConnected: session.hasController, topPreview: session.top, bottomPreview: session.bottom, motionStatus: session.motionStatus)
                 }
                 .sheet(isPresented: $showingSaveHistory) {
                     SaveStateHistoryView(session: session) { entry in
@@ -302,7 +386,7 @@ struct PlayerView: View {
                         }
                     }
                 }
-                .fullScreenCover(isPresented: $showingLayout) { DuoLayoutSettingsView(controllerConnected: session.hasController, topPreview: session.top, bottomPreview: session.bottom) }
+                .fullScreenCover(isPresented: $showingLayout) { DuoLayoutSettingsView(system: ConsoleSystem(rawValue: launch.platform.rawValue) ?? .threeDS, controllerConnected: session.hasController, topPreview: session.top, bottomPreview: session.bottom) }
         }.tint(.white).accessibilityAddTraits(.isModal)
     }
     private func resumeGameMenu() {
@@ -316,6 +400,10 @@ struct PlayerView: View {
 
     private func performState(_ slot: SaveStateStore.Slot, load: Bool) {
         menuAudio.play(.confirm)
+        if !load {
+            showingGameMenu = false
+            session.setPaused(menuWasPaused)
+        }
         Task {
             if load { await session.load(slot) } else { await session.save(slot) }
             guard session.message == nil else { return }
@@ -326,7 +414,11 @@ struct PlayerView: View {
     }
     private func screens(horizontal: Bool) -> some View {
         GeometryReader { area in
-            if immersive || preferences.sizing != .automatic || preferences.screenBalance != 0.5 {
+            if launch.platform != .threeDS {
+                let rect = fillPicture ? CGRect(origin: .zero, size: area.size) : DuoLayout.fit(aspect: 4.0 / 3, in: CGRect(origin: .zero, size: area.size))
+                screen(image: session.top, bottom: false).frame(width: rect.width, height: rect.height)
+                    .position(x: rect.midX, y: rect.midY)
+            } else if immersive || preferences.sizing != .automatic || preferences.screenBalance != 0.5 {
                 let regions = DuoLayout.expandedScreens(in: area.size, horizontal: horizontal, balance: preferences.screenBalance)
                 let frames = (top: fillPicture ? regions.top : DuoLayout.fit(aspect: 5.0 / 3, in: regions.top),
                               bottom: fillPicture ? regions.bottom : DuoLayout.fit(aspect: 4.0 / 3, in: regions.bottom))
@@ -354,11 +446,16 @@ struct PlayerView: View {
     private func screen(image: UIImage?, bottom: Bool) -> some View {
         ZStack {
             Color.black
-            if let image {
-                Image(uiImage: image).resizable().interpolation(.none)
-                    .accessibilityLabel(bottom ? "3DS bottom screen" : "3DS top screen")
+            if launch.platform == .gamecube {
+                NativeGameCubeSurface(bridge: session.bridge)
+                    .accessibilityLabel("GameCube screen")
+                    .accessibilityIdentifier("topScreen")
+                    .accessibilityValue(session.frameDescription)
+            } else if let image {
+                Image(uiImage: image).resizable().interpolation(launch.platform == .ps1 && preferences.ps1Smooth ? .medium : .none)
+                    .accessibilityLabel(launch.platform == .ps1 ? "PlayStation screen" : (bottom ? "3DS bottom screen" : "3DS top screen"))
                     .accessibilityIdentifier(bottom ? "bottomScreen" : "topScreen")
-                    .accessibilityValue("\(session.frames) frames received")
+                    .accessibilityValue(session.frameDescription)
             }
             else if launch.diagnostic {
                 LinearGradient(colors: bottom ? [Color(red: 0.08, green: 0.16, blue: 0.18), .black] : [Color(red: 0.18, green: 0.27, blue: 0.12), .black], startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -417,45 +514,39 @@ struct PlayerView: View {
         guard pendingWidgetSwitch, !session.stateBusy else { return }
         pendingWidgetSwitch = false; close()
     }
-    private var leftControls: some View {
-        VStack(spacing: 12) {
-            HStack(spacing: 8) { ControlButton(label: "L", id: 10, session: session, small: true); ControlButton(label: "ZL", id: 12, session: session, small: true) }
-            AnalogPad(session: session).frame(width: 86, height: 86)
-            directionPad
-        }
-    }
-    private var compactLeftControls: some View {
-        VStack(spacing: 4) {
-            HStack(spacing: 4) {
-                VStack(spacing: 0) {
-                    ControlButton(label: "L", id: 10, session: session, small: true)
-                    ControlButton(label: "ZL", id: 12, session: session, small: true)
-                }
-                AnalogPad(session: session).frame(width: 64, height: 64)
-            }
-            directionPad
-        }
-    }
-    private var directionPad: some View {
-        VStack(spacing: 0) {
-            ControlButton(label: "↑", id: 4, session: session, size: 36)
-            HStack(spacing: 20) { ControlButton(label: "←", id: 6, session: session, size: 36); ControlButton(label: "→", id: 7, session: session, size: 36) }
-            ControlButton(label: "↓", id: 5, session: session, size: 36)
-        }
-    }
-    private var rightControls: some View {
-        VStack(spacing: 24) {
-            HStack(spacing: 8) { ControlButton(label: "ZR", id: 13, session: session, small: true); ControlButton(label: "R", id: 11, session: session, small: true) }
-            VStack(spacing: 0) {
-                ControlButton(label: "X", id: 9, session: session)
-                HStack(spacing: 28) { ControlButton(label: "Y", id: 1, session: session); ControlButton(label: "A", id: 8, session: session) }
-                ControlButton(label: "B", id: 0, session: session)
-            }
-            if session.controllerName != nil { Image(systemName: "gamecontroller.fill").foregroundStyle(Palette.accent).font(.caption) }
-        }
-    }
     private func rememberScene() { if !launch.diagnostic, session.frames >= 120, let image = session.top { onPreview(image) } }
-    private func close() { rememberScene(); session.close { dismiss() } }
+    private func close() { session.close { rememberScene(); dismiss() } }
+}
+
+private struct NativeGameCubeSurface: UIViewRepresentable {
+    let bridge: EmulatorBridge
+    func makeUIView(context: Context) -> Surface { Surface(bridge: bridge) }
+    func updateUIView(_ view: Surface, context: Context) { view.setNeedsLayout() }
+    static func dismantleUIView(_ view: Surface, coordinator: ()) {
+        if view.bridge.nativeLayer.superlayer === view.layer { view.bridge.nativeLayer.removeFromSuperlayer() }
+    }
+    final class Surface: UIView {
+        let bridge: EmulatorBridge
+        init(bridge: EmulatorBridge) {
+            self.bridge = bridge
+            super.init(frame: .zero)
+            backgroundColor = .black; isAccessibilityElement = true
+            bridge.nativeLayer.removeFromSuperlayer()
+            layer.addSublayer(bridge.nativeLayer)
+        }
+        required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+        override func layoutSubviews() {
+            super.layoutSubviews()
+            let metal = bridge.nativeLayer
+            let scale = window?.screen.scale ?? traitCollection.displayScale
+            let size = CGSize(width: max(1, bounds.width * scale), height: max(1, bounds.height * scale))
+            let changed = metal.drawableSize != size
+            CATransaction.begin(); CATransaction.setDisableActions(true)
+            metal.frame = bounds; metal.contentsScale = scale; metal.drawableSize = size
+            CATransaction.commit()
+            if changed { bridge.nativeSurfaceChanged() }
+        }
+    }
 }
 
 private struct SaveStateHistoryView: View {
@@ -528,57 +619,6 @@ private struct SaveStateThumbnail: View {
             if let data, let image = ArtworkStore.decode(data, maxSize: 320) { Image(uiImage: image).resizable().scaledToFit() }
             else { Image(systemName: "bookmark").font(.title2).foregroundStyle(ConsoleTheme.quiet) }
         }.accessibilityHidden(true)
-    }
-}
-
-private struct ControlButton: View {
-    let label: String
-    let id: UInt32
-    @ObservedObject var session: EmulatorSession
-    var small = false
-    var size: CGFloat = 44
-    @State private var held = false
-    var body: some View {
-        Text(label).font(.system(size: small ? 10 : 15, weight: .bold, design: .rounded))
-            .frame(width: small ? 54 : size, height: small ? 28 : size)
-            .foregroundStyle(held ? Palette.background : .white.opacity(0.8))
-            .background {
-                RoundedRectangle(cornerRadius: small ? 8 : size / 2)
-                    .fill(LinearGradient(colors: held ? [Color.black, Color(white: 0.16)] : [Color(white: 0.28), Color(white: 0.07)], startPoint: .topLeading, endPoint: .bottomTrailing))
-                    .overlay { RoundedRectangle(cornerRadius: small ? 8 : size / 2).stroke(.white.opacity(held ? 0.05 : 0.24), lineWidth: 1) }
-                    .shadow(color: .black.opacity(0.8), radius: held ? 0 : 2, y: held ? 0 : 3)
-            }
-            .frame(minWidth: 44, minHeight: 44)
-            .contentShape(Rectangle())
-            .overlay { TouchSurface { _, down in held = down; session.button(id, label, down) }.accessibilityHidden(true) }
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel(label).accessibilityAddTraits(.isButton)
-            .accessibilityAction { session.button(id,label,true); session.button(id,label,false) }
-    }
-}
-
-private struct AnalogPad: View {
-    @ObservedObject var session: EmulatorSession
-    @State private var offset = CGSize.zero
-    var body: some View {
-        GeometryReader { geometry in
-        let diameter = min(geometry.size.width, geometry.size.height)
-        ZStack {
-            Circle().fill(.black).overlay { Circle().stroke(.white.opacity(0.07), lineWidth: 1) }
-            Circle().fill(Palette.surface).frame(width: diameter * 0.628, height: diameter * 0.628).overlay { Circle().stroke(.white.opacity(0.1), lineWidth: 1) }.offset(offset)
-        }.contentShape(Circle())
-            .overlay {
-                TouchSurface { point, down in
-                    if down {
-                        let x = Float((point.x - 0.5) / 0.372), y = Float((point.y - 0.5) / 0.372)
-                        let distance = max(1, hypot(x, y))
-                        session.analog(x: x / distance, y: y / distance)
-                        offset = CGSize(width: CGFloat(x / distance) * diameter * 0.267, height: CGFloat(y / distance) * diameter * 0.267)
-                    } else { offset = .zero; session.analog(x: 0, y: 0) }
-                }.clipShape(Circle())
-            }
-            .accessibilityLabel("Circle pad")
-        }
     }
 }
 

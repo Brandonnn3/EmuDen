@@ -13,14 +13,22 @@ args = parser.parse_args()
 pattern = re.compile(r"^(LICENSE|LICENCE|COPYING|NOTICE|COPYRIGHT|UNLICENSE)([-_.].*)?$", re.I)
 sources = [ROOT / p for p in [
     "Vendor/Azahar/Source/LICENSE.txt", "Vendor/MoltenVK/Source/LICENSE",
+    "Vendor/Dolphin/Source/COPYING", "Vendor/Dolphin/Source/Externals/licenses.md",
     "Resources/Homebrew-NOTICE.txt", "Resources/MenuAudio/NOTICE.txt",
     "Bridge/libretro.h", "Bridge/libretro_vulkan.h",
+    "Vendor/PCSX-ReARMed/Source/COPYING", "Vendor/PCSX-ReARMed/Source/AUTHORS",
+    "Vendor/OpenSSL/Source/LICENSE.txt",
+    "Vendor/Azahar/Source/externals/faad2/faad2/libfaad/decoder.c",
+    "Resources/Licenses/Citra-System-Archives-NOTICE.txt",
+    "Resources/Licenses/Montserrat-OFL.txt",
+    "Resources/Licenses/Unifont-10.0.05-COPYING.txt",
 ]]
-for folder in ["Vendor/Azahar/Source/externals", "Vendor/MoltenVK/Source/External"]:
+for folder in ["Vendor/Azahar/Source/externals", "Vendor/MoltenVK/Source/External", "Vendor/PCSX-ReARMed/Source/deps", "Vendor/Dolphin/Source/Externals"]:
     base = ROOT / folder
     assert base.is_dir(), base
     sources += [p for p in base.rglob("*") if p.is_file() and p.stat().st_size > 0 and ".git" not in p.parts
                 and pattern.fullmatch(p.name) and p.suffix.lower() in {"", ".txt", ".md", ".rst"}]
+sources += [p for p in (ROOT / "Vendor/Dolphin/Source/LICENSES").rglob("*") if p.is_file()]
 sources = sorted(set(sources))
 assert len(sources) >= 40
 parts = ["EmuDen — open-source notices\n\n"
@@ -36,7 +44,11 @@ for source in sources:
         value = raw.decode("utf-8")
     except UnicodeDecodeError:
         value = raw.decode("latin-1")
-    if source.parent.name == "Bridge":
+    if source.suffix == ".c":
+        header = re.match(r"/\*.*?\*/", value, re.S)
+        assert header and "Code from FAAD2 is copyright" in header.group(), source
+        value = header.group()
+    elif source.parent.name == "Bridge":
         header = re.match(r"/\*.*?\*/", value, re.S)
         assert header and "Permission is hereby granted" in header.group(), source
         value = header.group()

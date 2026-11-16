@@ -3,6 +3,931 @@ import UIKit
 import StoreKitTest
 
 final class EmulatorUITests: XCTestCase {
+    @MainActor func testLiveQuickSaveBannerForAllConsoles() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        for (platform,flag) in [("ps1","--boot-ps1-demo"),("gamecube","--boot-gamecube-demo"),("3ds","--boot-homebrew")] {
+            let app = XCUIApplication()
+            app.launchArguments = [flag,"--gamecube-qa-status","--fresh-start","--save-feedback-test","--controller-preview","-onlineArtworkEnabled","NO","-automaticResumeSaves","NO"]
+            launchPrepared(app)
+            if platform == "ps1" { assertPS1Pixels(app) } else if platform == "gamecube" { assertGameCubePixels(app) } else { assertGamePixels(app) }
+            openGameMenu(app)
+            app.buttons["Quick Save"].tap()
+            let banner = app.descendants(matching: .any)["saveBanner"].firstMatch
+            XCTAssertTrue(banner.waitForExistence(timeout: 10))
+            XCTAssertFalse(app.staticTexts["Updating save state…"].exists)
+            XCTAssertTrue(app.buttons["Pause"].exists, "Save must leave the live session unpaused")
+            XCTAssertLessThan(banner.frame.height, 70)
+            let top = app.descendants(matching: .any)["topScreen"].firstMatch
+            let frames = Int((top.value as? String ?? "").split(separator: " ").first ?? "0") ?? 0
+            XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                (Int((top.value as? String ?? "").split(separator: " ").first ?? "0") ?? 0) > frames
+            }, object: nil)], timeout: 4), .completed, "Frames must continue while the detached save writes")
+            attach(app, "\(platform) compact live-save banner")
+            XCTAssertTrue(app.staticTexts["Quick save ready"].waitForExistence(timeout: 40))
+            XCTAssertFalse(app.staticTexts["Paused"].exists)
+            openGameMenu(app); app.buttons["Quick Load"].tap()
+            XCTAssertTrue(app.staticTexts["Quick save loaded"].waitForExistence(timeout: 40))
+            XCTAssertTrue(app.buttons["Pause"].waitForExistence(timeout: 5)); app.buttons["Pause"].tap()
+            openGameMenu(app); app.buttons["Quick Save"].tap()
+            XCTAssertTrue(app.staticTexts["Quick save ready"].waitForExistence(timeout: 40))
+            XCTAssertTrue(app.buttons["Resume"].exists, "Save completion must preserve an already paused session")
+            XCTAssertFalse(app.buttons["Pause"].exists)
+            app.buttons["Resume"].tap()
+            returnToLibrary(app); app.terminate()
+        }
+    }
+    @MainActor func testRenameAndNoBlanketAgeLabelsSurviveRelaunch() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        let app = XCUIApplication(); app.launchArguments = ["-favoriteConsole","gamecube","-importedGameAccess","under18","-onlineArtworkEnabled","NO"]
+        launchPrepared(app)
+        app.buttons["consoleCollection"].tap()
+        let original = app.buttons["Select QA Sonic Riders.nkit"]
+        XCTAssertTrue(original.waitForExistence(timeout: 20)); original.press(forDuration: 1)
+        XCTAssertFalse(app.staticTexts["Age rating: Unrated · Adult access required"].exists)
+        app.buttons["renameGame"].tap()
+        // UIKit's alert text field retains its placeholder but drops the SwiftUI identifier.
+        let field = app.alerts["Rename game"].textFields.firstMatch
+        XCTAssertTrue(field.waitForExistence(timeout: 5))
+        // The alert already focuses the field at the end. Tapping its middle moves
+        // the caret; UIKit's editing menu also triggers XCTest's alert interrupter.
+        field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: (field.value as? String ?? "").count))
+        XCTAssertTrue(["", "Game name"].contains(field.value as? String ?? ""))
+        field.typeText("Sonic Riders (My favorite)")
+        app.buttons["confirmRenameGame"].firstMatch.tap()
+        let renamed = app.buttons["Select Sonic Riders (My favorite)"]
+        XCTAssertTrue(renamed.waitForExistence(timeout: 10)); renamed.tap()
+        XCTAssertTrue(app.staticTexts["selectedGameTitle"].label.contains("Sonic Riders (My favorite)"))
+        attach(app, "Custom game name retains punctuation without rating labels")
+        app.terminate(); launchPrepared(app); app.buttons["consoleCollection"].tap()
+        XCTAssertTrue(renamed.waitForExistence(timeout: 20))
+        app.buttons["System setup"].tap()
+        XCTAssertFalse(app.buttons["importedGameAccess"].exists)
+        XCTAssertFalse(app.staticTexts["Unrated imports require adult confirmation"].exists)
+        attach(app, "Rename persists; old age preference does not restore the removed box")
+    }
+    @MainActor func testGameCubeFoldedControllerQuickPanelAndBlankPersistence() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        defer { XCUIDevice.shared.orientation = .portrait }
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-gamecube-demo", "--gamecube-qa-status", "--fresh-start", "--controller-preview", "--duo-tabletop-preview", "-gameCubeFolded", "YES", "-gameCubePanelBlank", "NO", "-gameCubePanelFPS", "YES", "-gameCubePanelSaves", "YES", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app); assertGameCubePixels(app)
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
+        setSwitch(app.switches["customizeGame"], on: false, in: app)
+        app.buttons["playerSettingsDone"].tap(); app.buttons["Resume game"].tap()
+        let panel = app.descendants(matching: .any)["gameCubeQuickPanel"].firstMatch, top = app.otherElements["topScreen"]
+        XCTAssertTrue(panel.waitForExistence(timeout: 10))
+        XCTAssertLessThanOrEqual(top.frame.maxY, panel.frame.minY)
+        XCTAssertTrue(app.descendants(matching: .any)["gameCubePanelFrameRate"].firstMatch.exists)
+        XCTAssertFalse(app.buttons["control-0"].exists)
+        XCTAssertFalse(app.buttons["ps1Speed-1.5"].exists)
+        app.buttons["gameCubePanelSave"].tap()
+        let load = app.buttons["gameCubePanelLoad"]
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "enabled == true"), object: load)], timeout: 45), .completed)
+        load.tap()
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "value CONTAINS %@", "Snapshot counter restored"), object: top)], timeout: 45), .completed)
+        attach(app, "GameCube folded native video with controller FPS and working Quick Save Load")
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            app.frame.width > app.frame.height && top.frame.maxY <= panel.frame.minY
+        }, object: nil)], timeout: 15), .completed)
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
+        setSwitch(app.switches["customizeGame"], on: true, in: app)
+        app.segmentedControls["graphicsCategory"].buttons["Controls"].tap()
+        setSwitch(app.switches["gameCubePanelBlank"], on: true, in: app)
+        app.buttons["playerSettingsDone"].tap(); app.buttons["Resume game"].tap()
+        XCTAssertFalse(load.exists); XCTAssertFalse(app.buttons["gameCubePanelSave"].exists)
+        XCTAssertFalse(app.descendants(matching: .any)["gameCubePanelFrameRate"].firstMatch.exists)
+        XCTAssertLessThanOrEqual(top.frame.maxY, panel.frame.minY)
+        attach(app, "GameCube lower panel during menu transition")
+        let blank = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            let black = self.meanColor(app, in: panel.frame.insetBy(dx: 20, dy: 20))
+            return max(black.0, black.1, black.2) < 10
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [blank], timeout: 8), .completed, "Blank lower panel after the menu transition: app \(app.frame), panel \(panel.frame)")
+        attach(app, "GameCube folded blank lower panel after transition settles")
+        returnToLibrary(app); app.terminate(); XCUIDevice.shared.orientation = .portrait
+        launchPrepared(app); assertGameCubePixels(app)
+        XCTAssertTrue(panel.exists); XCTAssertFalse(load.exists)
+        XCTAssertLessThanOrEqual(top.frame.maxY, panel.frame.minY)
+        attach(app, "GameCube blank panel preference survives relaunch")
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
+        setSwitch(app.switches["customizeGame"], on: false, in: app)
+        app.buttons["playerSettingsDone"].tap(); app.buttons["Resume game"].tap()
+        returnToLibrary(app)
+    }
+    @MainActor func testGameCubeFoldedTouchExcursionAndEditableLayout() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-gamecube-demo", "--gamecube-qa-status", "--fresh-start", "--touch-controls-preview", "--duo-tabletop-preview", "--touch-excursion-test", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app); assertGameCubePixels(app)
+        let panel = app.descendants(matching: .any)["gameCubeQuickPanel"].firstMatch, top = app.otherElements["topScreen"]
+        let left = app.descendants(matching: .any)["leftAnalogStick"].firstMatch, right = app.descendants(matching: .any)["rightAnalogStick"].firstMatch
+        XCTAssertTrue(left.waitForExistence(timeout: 10), app.debugDescription); XCTAssertTrue(right.exists)
+        let panelFrame = panel.frame, startFrame = app.buttons["control-3"].frame
+        for stick in [left, right] {
+            let from = stick.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            let to = stick.coordinate(withNormalizedOffset: CGVector(dx: -0.7, dy: 0.5))
+            from.press(forDuration: 0.1, thenDragTo: to, withVelocity: .slow, thenHoldForDuration: 1.5)
+        }
+        XCTAssertEqual(panel.frame, panelFrame); XCTAssertEqual(app.buttons["control-3"].frame, startFrame, "Stick excursion must never scroll the panel")
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "value CONTAINS %@ AND value CONTAINS %@", "Touch SI 3", "Center true"), object: top)], timeout: 20), .completed)
+        app.buttons["control-0"].press(forDuration: 1.5)
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "value CONTAINS %@", "A press/release verified"), object: top)], timeout: 20), .completed)
+        XCTAssertGreaterThan(app.buttons["control-0"].frame.width, app.buttons["control-8"].frame.width * 1.4)
+        let face = app.buttons["control-0"].frame.insetBy(dx: 1, dy: 1)
+        for id in ["1", "8", "9"] { XCTAssertFalse(face.intersects(app.buttons["control-" + id].frame.insetBy(dx: 1, dy: 1)), "A must not overlap another face-button target") }
+        attach(app, "Fixed folded GameCube controls, colored proportions and native SI excursion/release")
+        let original = app.buttons["control-0"].frame
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["customizeTouchControls"].tap()
+        let movable = app.descendants(matching: .any)["move-0"].firstMatch
+        XCTAssertTrue(movable.waitForExistence(timeout: 10))
+        movable.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).press(forDuration: 0.1, thenDragTo: movable.coordinate(withNormalizedOffset: CGVector(dx: -0.3, dy: 0.4)))
+        let moved = movable.frame
+        XCTAssertLessThan(moved.midX, original.midX - 30)
+        app.buttons["finishTouchLayout"].tap()
+        XCTAssertEqual(app.buttons["control-0"].frame.midX, moved.midX, accuracy: 2)
+        returnToLibrary(app); app.terminate(); launchPrepared(app); assertGameCubePixels(app)
+        XCTAssertEqual(app.buttons["control-0"].frame.midX, moved.midX, accuracy: 2, "Layout survives player and app relaunch")
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["customizeTouchControls"].tap()
+        app.buttons["resetTouchLayout"].tap(); app.buttons["finishTouchLayout"].tap()
+        XCTAssertEqual(app.buttons["control-0"].frame.midX, original.midX, accuracy: 2)
+        attach(app, "Persisted per-console folded layout with Reset and Done")
+        returnToLibrary(app)
+    }
+    @MainActor func testPlayStationDualAnalogTouchAndRelease() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-ps1-demo", "--fresh-start", "--touch-controls-preview", "--duo-tabletop-preview", "--ps1-analog-test", "-ps1Analog", "YES", "-ps1PanelSpeed", "NO", "-ps1PanelFPS", "NO", "-ps1PanelSaves", "NO", "-ps1PanelTouch", "YES", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app); assertPS1Pixels(app)
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
+        setSwitch(app.switches["customizeGame"], on: true, in: app)
+        app.segmentedControls["graphicsCategory"].buttons["Controls"].tap()
+        setSwitch(app.switches["ps1Folded"], on: true, in: app)
+        setSwitch(app.switches["ps1PanelTouch"], on: true, in: app)
+        setSwitch(app.switches["ps1Analog"], on: true, in: app)
+        app.buttons["playerSettingsDone"].tap(); app.buttons["Resume game"].tap()
+        let top = app.images["topScreen"]
+        let left = app.descendants(matching: .any)["leftAnalogStick"].firstMatch, right = app.descendants(matching: .any)["rightAnalogStick"].firstMatch
+        XCTAssertTrue(left.waitForExistence(timeout: 10), app.debugDescription); XCTAssertTrue(right.exists)
+        for stick in [left, right] {
+            stick.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).press(forDuration: 0.1, thenDragTo: stick.coordinate(withNormalizedOffset: CGVector(dx: -0.6, dy: -0.6)), withVelocity: .slow, thenHoldForDuration: 1)
+        }
+        let released = NSPredicate(format: "value CONTAINS %@", "PS1 axes L(0,0) R(0,0) seen=15 excursion=15 mode=1")
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: released, object: top)], timeout: 15), .completed, "Actual core must poll both sticks and receive neutral after touch-up: \(top.value ?? "missing")")
+        app.buttons["control-0"].press(forDuration: 1)
+        attach(app, "PlayStation dual analog touch controls and actual libretro polls")
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
+        app.segmentedControls["graphicsCategory"].buttons["Controls"].tap()
+        setSwitch(app.switches["customizeGame"], on: true, in: app)
+        setSwitch(app.switches["ps1Analog"], on: false, in: app)
+        setSwitch(app.switches["ps1PanelTouch"], on: false, in: app)
+        app.buttons["playerSettingsDone"].tap(); app.buttons["Resume game"].tap()
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "value CONTAINS %@", "mode=0"), object: top)], timeout: 15), .completed)
+        XCTAssertFalse(left.exists)
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["customizeTouchControls"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["move-stick"].firstMatch.waitForExistence(timeout: 10), "Editing must reveal controls even when the folded panel normally hides them")
+        app.buttons["finishTouchLayout"].tap()
+        XCTAssertFalse(left.exists, "Done restores the hidden-touch preference")
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
+        app.segmentedControls["graphicsCategory"].buttons["Controls"].tap()
+        setSwitch(app.switches["ps1PanelTouch"], on: true, in: app)
+        app.buttons["playerSettingsDone"].tap(); app.buttons["Resume game"].tap()
+        returnToLibrary(app)
+    }
+    @MainActor func testSettingsOrganizationGameCubeBackgroundAndDeleteConfirmation() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        let app = XCUIApplication(); app.launchArguments = ["-favoriteConsole", "gamecube", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app); XCTAssertTrue(app.buttons["headerConsolePicker"].waitForExistence(timeout: 25))
+        waitForConsole("GameCube", in: app)
+        attach(app, "GameCube default console background")
+        app.buttons["System setup"].tap()
+        XCTAssertTrue(app.staticTexts["Graphics & display"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Controls & Duo"].exists)
+        app.buttons["advancedPlayerSettings"].tap()
+        XCTAssertTrue(app.staticTexts["Graphics settings"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["GameCube graphics"].exists)
+        app.buttons["playerSettingsDone"].tap()
+        attach(app, "Organized bento settings with console-specific Graphics settings")
+        app.buttons["consoleCollection"].tap()
+        let fixture = app.buttons["Select QA Delete Only"]
+        reveal(fixture, in: app); XCTAssertTrue(fixture.exists)
+        fixture.press(forDuration: 1); app.buttons["deleteGame"].tap()
+        XCTAssertTrue(app.buttons["confirmDeleteGame"].waitForExistence(timeout: 5))
+        app.buttons["Cancel"].tap(); XCTAssertTrue(fixture.exists)
+        fixture.press(forDuration: 1); app.buttons["deleteGame"].tap(); app.buttons["confirmDeleteGame"].firstMatch.tap()
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: fixture)], timeout: 10), .completed)
+        XCTAssertTrue(app.buttons["Select QA GC Alpha"].exists)
+        attach(app, "Confirmed deletion of a disposable original fixture, other games retained")
+    }
+    @MainActor func testThreeDSFreelyMovableTouchControls() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        let app = XCUIApplication(); app.launchArguments = ["--input-test", "--touch-controls-preview"]
+        launchPrepared(app)
+        let a = app.buttons["control-8"]
+        XCTAssertTrue(a.waitForExistence(timeout: 20))
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["customizeTouchControls"].tap()
+        app.buttons["resetTouchLayout"].tap(); app.buttons["finishTouchLayout"].tap()
+        let original = a.frame
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["customizeTouchControls"].tap()
+        let movable = app.descendants(matching: .any)["move-8"].firstMatch
+        XCTAssertTrue(movable.waitForExistence(timeout: 10))
+        movable.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).press(forDuration: 0.1, thenDragTo: movable.coordinate(withNormalizedOffset: CGVector(dx: -0.8, dy: -0.3)))
+        let moved = movable.frame
+        app.buttons["finishTouchLayout"].tap()
+        XCTAssertLessThan(a.frame.midX, original.midX - 30)
+        a.tap(); XCTAssertTrue(app.staticTexts["A pressed"].exists)
+        app.terminate(); launchPrepared(app)
+        XCTAssertTrue(a.waitForExistence(timeout: 20)); XCTAssertEqual(a.frame.midX, moved.midX, accuracy: 2)
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(a.exists)
+        XCUIDevice.shared.orientation = .portrait
+        let settled = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            app.frame.height > app.frame.width && app.frame.contains(a.frame) && abs(a.frame.midX - moved.midX) <= 2
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [settled], timeout: 10), .completed, "Rotation must settle inside the display at the saved portrait position")
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["customizeTouchControls"].tap()
+        app.buttons["resetTouchLayout"].tap(); app.buttons["finishTouchLayout"].tap()
+        XCTAssertEqual(a.frame.midX, original.midX, accuracy: 2)
+        attach(app, "3DS independently movable controls, orientation isolation and persisted Reset")
+        returnToLibrary(app)
+    }
+    @MainActor func testConsoleNavigationFavoriteAndLibraryFilters() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        let app = XCUIApplication(); launchPrepared(app)
+        let header = app.buttons["headerConsolePicker"]
+        XCTAssertTrue(header.waitForExistence(timeout: 30))
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "enabled == true AND hittable == true"), object: header)], timeout: 60), .completed)
+        header.tap(); app.buttons["header-system-ps1"].tap()
+        waitForConsole("PlayStation", in: app)
+        app.buttons["consoleCollection"].tap()
+        let grid = app.scrollViews["gameCollection"]
+        XCTAssertTrue(grid.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Select QA PS1 Alpha"].exists)
+        XCTAssertFalse(app.buttons["Select QA GC Alpha"].exists)
+        app.buttons["librarySort"].tap(); app.buttons["A–Z"].tap()
+        XCTAssertEqual(app.buttons["librarySort"].value as? String, "A–Z")
+        let sorted = app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Select QA PS1'")).allElementsBoundByIndex.map(\.label)
+        XCTAssertEqual(sorted, ["Select QA PS1 Alpha", "Select QA PS1 Zulu"])
+        app.buttons["consoleFilter"].tap(); app.buttons["system-gamecube"].tap()
+        XCTAssertTrue(grid.exists, "Console filtering must stay on the Library tab")
+        XCTAssertTrue(app.buttons["Select QA GC Alpha"].exists)
+        XCTAssertFalse(app.buttons["Select QA PS1 Alpha"].exists)
+        app.buttons["librarySort"].tap(); app.buttons["Recently added"].tap()
+        let recent = app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Select QA GC'")).allElementsBoundByIndex.map(\.label)
+        XCTAssertEqual(recent, ["Select QA GC Zulu", "Select QA GC Alpha"])
+        attach(app, "Console-filtered GameCube library and persistent sort menu")
+        app.buttons["System setup"].tap()
+        app.buttons["favoriteConsole"].tap(); app.buttons["PlayStation"].firstMatch.tap()
+        app.buttons["consoleHome"].tap()
+        waitForConsole("PlayStation", in: app)
+        app.terminate(); launchPrepared(app)
+        XCTAssertTrue(header.waitForExistence(timeout: 20))
+        waitForConsole("PlayStation", in: app)
+        header.tap(); app.buttons["header-system-gamecube"].tap()
+        waitForConsole("GameCube", in: app)
+        app.buttons["consoleHome"].tap()
+        waitForConsole("PlayStation", in: app)
+        app.buttons["System setup"].tap()
+        app.buttons["favoriteConsole"].tap(); app.buttons["Nintendo 3DS"].firstMatch.tap()
+        app.buttons["consoleHome"].tap()
+        waitForConsole("Nintendo 3DS", in: app)
+        attach(app, "Header console switcher and favorite Home destination")
+    }
+    @MainActor private func waitForConsole(_ name: String, in app: XCUIApplication) {
+        let header = app.buttons["headerConsolePicker"]
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", name), object: header)], timeout: 10), .completed, "Selected console should be \(name); actual \(header.value ?? "missing")")
+    }
+    @MainActor func testConsoleSpecificControllerConnections() {
+        continueAfterFailure = false
+        let app = XCUIApplication(); launchPrepared(app)
+        for (console, name) in [("ps1", "PlayStation"), ("gamecube", "GameCube"), ("3ds", "Nintendo 3DS")] {
+            let header = app.buttons["headerConsolePicker"]
+            XCTAssertTrue(header.waitForExistence(timeout: 20))
+            header.tap(); app.buttons["header-system-\(console)"].tap()
+            app.buttons["Controller layout"].tap()
+            let preview = app.descendants(matching: .any)["openingConsolePreview"].firstMatch
+            XCTAssertTrue(preview.waitForExistence(timeout: 5))
+            XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == 'Open'"), object: preview)], timeout: 5), .completed)
+            if console == "3ds" { XCTAssertTrue(app.buttons["Console skin"].exists) }
+            else {
+                XCTAssertTrue(preview.label.contains(name)); XCTAssertFalse(app.buttons["Console skin"].exists)
+                let start = preview.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.8))
+                start.press(forDuration: 0.1, thenDragTo: preview.coordinate(withNormalizedOffset: CGVector(dx: 0.65, dy: 0.72)))
+            }
+            attach(app, "\(name) native responsive controller presentation")
+            if console != "3ds" {
+                XCUIDevice.shared.orientation = .landscapeLeft
+                XCTAssertLessThanOrEqual(preview.frame.maxX, app.frame.maxX + 1)
+                attach(app, "\(name) controller presentation in landscape")
+                XCUIDevice.shared.orientation = .portrait
+            }
+            reveal(app.buttons["replayControllerAnimation"], in: app); app.buttons["replayControllerAnimation"].tap()
+            XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == 'Open'"), object: preview)], timeout: 5), .completed)
+            reveal(app.buttons["duoLayoutDone"], in: app); app.buttons["duoLayoutDone"].tap()
+        }
+    }
+    @MainActor func testGameCubeGraphicsChangeActualEFBAndReturnToNative() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-gamecube-gx-card", "--gamecube-qa-status", "--fresh-start", "--controller-preview", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app)
+        let top = app.otherElements["topScreen"]
+        XCTAssertTrue(top.waitForExistence(timeout: 90))
+        for (scale, width, height) in [(2,1280,1056), (4,2560,2112), (1,640,528)] {
+            openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
+            setSwitch(app.switches["customizeGame"], on: true, in: app)
+            let resolution = app.segmentedControls["gameCubeResolution"]
+            reveal(resolution, in: app); resolution.buttons[scale == 1 ? "1× · Native" : "\(scale)×"].tap()
+            if scale == 2 {
+                app.buttons["gameCubeSampling"].tap(); app.buttons["Smooth"].tap()
+                app.buttons["gameCubeAnisotropy"].tap(); app.buttons["16×"].tap()
+            }
+            if scale == 1 {
+                app.buttons["gameCubeSampling"].tap(); app.buttons["Game default"].tap()
+                app.buttons["gameCubeAnisotropy"].tap(); app.buttons["Game default"].tap()
+            }
+            app.buttons["playerSettingsDone"].tap(); app.buttons["Resume game"].tap()
+            let expected = "GFX \(scale)x \(width)×\(height) filter\(scale == 1 ? 0 : 2) AF\(scale == 1 ? -1 : 4)"
+            XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "value CONTAINS %@", expected), object: top)], timeout: 45), .completed, "Actual Metal EFB and config should change: \(top.value ?? "missing")")
+            attach(app, "GameCube actual \(scale)x EFB with original GX geometry")
+        }
+        returnToLibrary(app)
+    }
+    @MainActor func testGameCubeGXDepthAndNativeCardRelaunch() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-gamecube-gx-card","--gamecube-qa-status","--fresh-start","--controller-preview","-onlineArtworkEnabled","NO"]
+        launchPrepared(app)
+        let top = app.otherElements["topScreen"]
+        XCTAssertTrue(top.waitForExistence(timeout:90))
+        let colored = XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in
+            let center = self.meanColor(app,in: CGRect(x:top.frame.midX-12,y:top.frame.midY-12,width:24,height:24))
+            return center.0 > 120 && center.0 > center.2*2
+        },object:nil)
+        XCTAssertEqual(XCTWaiter.wait(for:[colored],timeout:90),.completed,"GX near triangle must occlude the later far triangle")
+        let blue = meanColor(app,in:CGRect(x:top.frame.minX+top.frame.width*0.175-4,y:top.frame.minY+top.frame.height*0.75-4,width:8,height:8))
+        XCTAssertGreaterThan(blue.2,blue.0*1.5,"Far blue geometry remains visible outside the red near triangle")
+        attach(app,"Original guest GX geometry and native memory-card write")
+        returnToLibrary(app); app.terminate(); launchPrepared(app)
+        XCTAssertTrue(top.waitForExistence(timeout:90))
+        let persisted = XCTNSPredicateExpectation(predicate:NSPredicate(format:"value CONTAINS %@","Native card 454d4338"),object:top)
+        XCTAssertEqual(XCTWaiter.wait(for:[persisted],timeout:60),.completed,"Guest reads its own native raw-card marker after core teardown/relaunch")
+        attach(app,"Original guest native memory-card marker read after relaunch")
+        returnToLibrary(app)
+    }
+    @MainActor private func meanColor(_ app:XCUIApplication,in frame:CGRect) -> (Double,Double,Double) {
+        let captured = XCUIScreen.main.screenshot().image
+        // Draw through UIKit so landscape UIImage orientation matches accessibility coordinates.
+        let format = UIGraphicsImageRendererFormat(); format.scale = 1
+        let screenshot = UIGraphicsImageRenderer(size: captured.size, format: format).image { _ in captured.draw(at: .zero) }
+        guard let cg = screenshot.cgImage else { return (0,0,0) }
+        let display = app.frame
+        let sx = CGFloat(cg.width)/display.width, sy = CGFloat(cg.height)/display.height
+        guard let crop = cg.cropping(to:CGRect(x:frame.minX*sx,y:frame.minY*sy,width:frame.width*sx,height:frame.height*sy)) else { return (0,0,0) }
+        var pixel=[UInt8](repeating:0,count:4)
+        pixel.withUnsafeMutableBytes { memory in
+            let context=CGContext(data:memory.baseAddress,width:1,height:1,bitsPerComponent:8,bytesPerRow:4,space:CGColorSpaceCreateDeviceRGB(),bitmapInfo:CGImageAlphaInfo.noneSkipLast.rawValue)
+            context?.draw(crop,in:CGRect(x:0,y:0,width:1,height:1))
+        }
+        return (Double(pixel[0]),Double(pixel[1]),Double(pixel[2]))
+    }
+    @MainActor func testGameCubeBothSticksAnalogTriggersAndDisconnect() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-gamecube-demo","--gamecube-qa-status","--gamecube-controller-test","--fresh-start","-onlineArtworkEnabled","NO"]
+        launchPrepared(app); assertGameCubePixels(app)
+        let top = app.otherElements["topScreen"]
+        let input = XCTNSPredicateExpectation(predicate: NSPredicate(format:"value CONTAINS %@","GameCube full input passed"),object:top)
+        XCTAssertEqual(XCTWaiter.wait(for:[input],timeout:60),.completed,"\(top.value ?? "No native status")")
+        XCTAssertFalse(app.buttons["A"].exists)
+        attach(app,"Real GameCube SI main/C-stick, partial/full triggers, clamping, pause and controller disconnect")
+        returnToLibrary(app)
+    }
+    @MainActor func testGameCubeSettingsUseSingleScreenOptions() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-gamecube-demo","--gamecube-qa-status","--fresh-start","--touch-controls-preview","-onlineArtworkEnabled","NO"]
+        launchPrepared(app); assertGameCubePixels(app)
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
+        XCTAssertTrue(app.scrollViews["playerSettingsScroll"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.switches["prepareShaders"].exists)
+        XCTAssertFalse(app.switches["motionControls"].exists)
+        XCTAssertFalse(app.segmentedControls["ps1Resolution"].exists)
+        XCTAssertFalse(app.sliders["screenBalance"].exists)
+        XCTAssertTrue(app.staticTexts["GameCube graphics"].exists)
+        attach(app,"GameCube single-screen settings without3DS shader or dual-screen options")
+        app.buttons["playerSettingsDone"].tap(); app.buttons["Resume game"].tap()
+        returnToLibrary(app)
+    }
+    @MainActor func testThreeDSCoreRequestsMotionAndPauseStopsInput() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-homebrew", "--fresh-start", "--motion-interface-test", "--controller-preview", "-motionControls", "YES", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app); assertGamePixels(app)
+        let top = app.images["topScreen"]
+        let requested = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value CONTAINS %@", "MotionQA 3"), object: top)
+        XCTAssertEqual(XCTWaiter.wait(for: [requested], timeout: 15), .completed)
+        showPlayerHeader(app); app.buttons["Pause"].tap()
+        let stopped = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value CONTAINS %@", "MotionQA 1"), object: top)
+        XCTAssertEqual(XCTWaiter.wait(for: [stopped], timeout: 10), .completed)
+        app.buttons["Resume"].tap()
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "value CONTAINS %@", "MotionQA 3"), object: top)], timeout: 10), .completed)
+        attach(app, "Real3DS core requests both motion sensors; pause and resume gate input")
+        returnToLibrary(app)
+    }
+    @MainActor func testPlayStationEnhancedResolutionAndLiveReturnToNative() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-ps1-demo", "--fresh-start", "--controller-preview", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app); assertPS1Pixels(app)
+        let top = app.images["topScreen"]
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
+        setSwitch(app.switches["customizeGame"], on: true, in: app)
+        let resolution = app.segmentedControls["ps1Resolution"]
+        reveal(resolution, in: app); resolution.buttons["1× · Original"].tap()
+        app.buttons["playerSettingsDone"].tap(); app.buttons["Resume game"].tap()
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "value CONTAINS %@", "Video 320x240"), object: top)], timeout: 25), .completed, "Establish native through UI even if a previous QA run left an enhanced per-game profile")
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
+        reveal(resolution, in: app); resolution.buttons["2× · Enhanced"].tap()
+        setSwitch(app.switches["ps1Smooth"], on: true, in: app)
+        setSwitch(app.switches["ps1Dithering"], on: false, in: app)
+        setSwitch(app.switches["ps1TextureFix"], on: false, in: app)
+        app.buttons["playerSettingsDone"].tap(); app.buttons["Resume game"].tap()
+        let enhanced = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value CONTAINS %@", "Video 640x480"), object: top)
+        XCTAssertEqual(XCTWaiter.wait(for: [enhanced], timeout: 25), .completed)
+        attach(app, "PS1 actual 2x internal framebuffer")
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
+        XCTAssertEqual(app.switches["ps1Smooth"].value as? String, "1")
+        XCTAssertEqual(app.switches["ps1Dithering"].value as? String, "0")
+        setSwitch(app.switches["ps1Smooth"], on: false, in: app)
+        setSwitch(app.switches["ps1Dithering"], on: true, in: app)
+        setSwitch(app.switches["ps1TextureFix"], on: true, in: app)
+        reveal(resolution, in: app); resolution.buttons["1× · Original"].tap()
+        app.buttons["playerSettingsDone"].tap(); app.buttons["Resume game"].tap()
+        let native = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value CONTAINS %@", "Video 320x240"), object: top)
+        XCTAssertEqual(XCTWaiter.wait(for: [native], timeout: 25), .completed)
+        returnToLibrary(app)
+    }
+    @MainActor func testPlayStationFoldedQuickPanelSpeedAndBlankOptions() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        defer { XCUIDevice.shared.orientation = .portrait }
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-ps1-demo", "--fresh-start", "--duo-tabletop-preview", "--controller-preview", "-ps1Resolution", "1", "-ps1Folded", "YES", "-ps1PanelSpeed", "YES", "-ps1PanelFPS", "YES", "-ps1PanelSaves", "YES", "-ps1PanelTouch", "YES", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app); assertPS1Pixels(app)
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
+        setSwitch(app.switches["customizeGame"], on: false, in: app)
+        app.buttons["playerSettingsDone"].tap(); app.buttons["Resume game"].tap()
+        let top = app.images["topScreen"], panel = app.descendants(matching: .any)["ps1QuickPanel"].firstMatch
+        XCTAssertTrue(panel.waitForExistence(timeout: 10))
+        XCTAssertLessThanOrEqual(top.frame.maxY, panel.frame.minY)
+        XCTAssertFalse(app.buttons["Cross"].exists)
+        let speeds = app.descendants(matching: .any)["ps1PlaybackSpeed"].firstMatch
+        for (speed, minimum) in [(1.5, 75), (2.0, 100), (1.0, 45)] {
+            let button = app.buttons["ps1Speed-\(speed)"]
+            XCTAssertTrue(button.isHittable); button.tap()
+            let paced = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                let value = top.value as? String ?? ""
+                guard let range = value.range(of: "Core FPS ") else { return false }
+                let fps = Int(value[range.upperBound...].split(separator: " ").first ?? "0") ?? 0
+                return fps >= minimum && (speed != 1 || fps < 75)
+            }, object: nil)
+            XCTAssertEqual(XCTWaiter.wait(for: [paced], timeout: 20), .completed, "Actual core pacing at \(speed)×: \(top.value ?? "missing value")")
+        }
+        attach(app, "PS1 folded video and quick controls with controller")
+        XCUIDevice.shared.orientation = .landscapeLeft
+        let rotated = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            app.frame.width > app.frame.height && top.frame.maxY <= panel.frame.minY
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [rotated], timeout: 15), .completed,
+                       "Rotation frames: app=\(app.frame), top=\(top.frame), panel=\(panel.frame)")
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
+        setSwitch(app.switches["customizeGame"], on: true, in: app)
+        app.segmentedControls["graphicsCategory"].buttons["Controls"].tap()
+        for key in ["ps1PanelSpeed", "ps1PanelFPS", "ps1PanelSaves", "ps1PanelTouch"] {
+            setSwitch(app.switches[key], on: false, in: app)
+        }
+        app.buttons["playerSettingsDone"].tap(); app.buttons["Resume game"].tap()
+        XCTAssertTrue(app.buttons["ps1Speed-1.5"].waitForNonExistence(timeout: 8), "Wait for the folded panel and menu dismissal to settle")
+        XCTAssertFalse(app.buttons["ps1Speed-1.5"].exists)
+        XCTAssertFalse(app.buttons["ps1PanelSave"].exists)
+        XCTAssertFalse(app.descendants(matching: .any)["ps1PanelFrameRate"].firstMatch.exists)
+        XCTAssertLessThanOrEqual(top.frame.maxY, panel.frame.minY)
+        attach(app, "PS1 folded blank lower panel in landscape")
+        XCUIDevice.shared.orientation = .portrait
+        app.terminate()
+        launchPrepared(app); assertPS1Pixels(app)
+        XCTAssertTrue(panel.waitForExistence(timeout: 10))
+        XCTAssertFalse(speeds.exists); XCTAssertFalse(app.buttons["ps1PanelSave"].exists)
+        XCTAssertFalse(app.descendants(matching: .any)["ps1PanelFrameRate"].firstMatch.exists)
+        XCTAssertFalse(app.buttons["Cross"].exists)
+        attach(app, "PS1 folded blank lower panel")
+        returnToLibrary(app)
+    }
+    @MainActor func testLibraryPostersKeepPortraitProportionsInBothOrientations() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["-onlineArtworkEnabled", "NO"]
+        XCUIDevice.shared.orientation = .portrait
+        defer { XCUIDevice.shared.orientation = .portrait }
+        launchPrepared(app)
+        for orientation in [UIDeviceOrientation.portrait, .landscapeLeft] {
+            XCUIDevice.shared.orientation = orientation
+            let rotated = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                (app.frame.width > app.frame.height) == (orientation == .landscapeLeft)
+            }, object: nil)
+            XCTAssertEqual(XCTWaiter.wait(for: [rotated], timeout: 10), .completed)
+            let tile = app.buttons["selectedGameTile"]
+            XCTAssertTrue(tile.waitForExistence(timeout: 15))
+            if orientation == .landscapeLeft { app.swipeUp() }
+            let portrait = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                let display = app.frame, frame = tile.frame
+                return abs(frame.width / frame.height - 0.71) < 0.025 &&
+                    frame.intersection(display).height >= frame.height - 2
+            }, object: nil)
+            XCTAssertEqual(XCTWaiter.wait(for: [portrait], timeout: 10), .completed,
+                           "Cover frame=\(tile.frame), display=\(app.frame)")
+            attach(app, "Portrait game covers in \(orientation == .portrait ? "portrait" : "landscape")")
+        }
+    }
+    @MainActor func testGameCubeOriginalDiscImportBootAndState() {
+        checkGameCubeDiscImport("--boot-gamecube-disc")
+    }
+    @MainActor func testGameCubeGCMImportBootAndState() {
+        checkGameCubeDiscImport("--boot-gamecube-gcm")
+    }
+    @MainActor private func checkGameCubeDiscImport(_ argument: String) {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = [argument, "--gamecube-qa-status", "--fresh-start", "--touch-controls-preview", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app); assertGameCubePixels(app)
+        let audio = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value CONTAINS %@", "Audio PCM verified"), object: app.otherElements["topScreen"])
+        XCTAssertEqual(XCTWaiter.wait(for: [audio], timeout: 30), .completed)
+        app.buttons["control-0"].press(forDuration: 2.2)
+        let top = app.otherElements["topScreen"]
+        let input = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            (top.value as? String ?? "").contains("A press/release verified")
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [input], timeout: 15), .completed)
+        openGameMenu(app); app.buttons["Quick Save"].tap()
+        XCTAssertTrue(app.staticTexts["Quick save ready"].waitForExistence(timeout: 35))
+        openGameMenu(app); app.buttons["Quick Load"].tap()
+        XCTAssertTrue(app.staticTexts["Quick save loaded"].waitForExistence(timeout: 35))
+        XCTAssertTrue((top.value as? String ?? "").contains("Snapshot counter restored"))
+        attach(app, "Original GameCube disc imported and booted with state restore")
+        returnToLibrary(app)
+    }
+    @MainActor func testGameCubeHomebrewInputStateHistoryAndRelaunch() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-gamecube-demo", "--gamecube-qa-status", "--fresh-start", "--touch-controls-preview", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app); assertGameCubePixels(app)
+        app.buttons["control-0"].press(forDuration: 2.2)
+        let top = app.otherElements["topScreen"]
+        let input = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            (top.value as? String ?? "").contains("A press/release verified")
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [input], timeout: 15), .completed)
+        attach(app, "GameCube homebrew native EmuDen player")
+        openGameMenu(app); app.buttons["Quick Save"].tap()
+        XCTAssertTrue(app.staticTexts["Quick save ready"].waitForExistence(timeout: 35))
+        openGameMenu(app); app.buttons["Quick Load"].tap()
+        XCTAssertTrue(app.staticTexts["Quick save loaded"].waitForExistence(timeout: 35))
+        let restored = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            (top.value as? String ?? "").contains("Snapshot counter restored")
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [restored], timeout: 10), .completed)
+        assertGameCubePixels(app)
+        openGameMenu(app); app.buttons["Quick Save"].tap()
+        XCTAssertTrue(app.staticTexts["Quick save ready"].waitForExistence(timeout: 35))
+        openGameMenu(app); app.buttons["openSaveHistory"].tap()
+        XCTAssertTrue(app.buttons["saveHistory-quick-1"].waitForExistence(timeout: 10))
+        attach(app, "GameCube independent save history and native preview")
+        app.buttons["saveHistoryDone"].tap()
+        returnToLibrary(app)
+        app.terminate(); app.launchArguments = ["--boot-gamecube-demo", "--gamecube-qa-status", "--touch-controls-preview", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app)
+        XCTAssertTrue(app.buttons["Resume session"].waitForExistence(timeout: 90)); app.buttons["Resume session"].tap()
+        XCTAssertTrue(app.staticTexts["Session resumed"].waitForExistence(timeout: 35))
+        assertGameCubePixels(app)
+        returnToLibrary(app)
+    }
+    @MainActor func testGameCubeLandscapeControllerFillsDisplay() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        defer { XCUIDevice.shared.orientation = .portrait }
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-gamecube-demo", "--gamecube-qa-status", "--fresh-start", "--controller-preview", "-screenSizing", "automatic", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app); assertGameCubePixels(app)
+        XCUIDevice.shared.orientation = .landscapeLeft
+        let top = app.otherElements["topScreen"]
+        let filled = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            abs(top.frame.width - app.frame.width) < 2 && abs(top.frame.height - app.frame.height) < 2
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [filled], timeout: 15), .completed)
+        XCTAssertFalse(app.buttons["control-0"].exists)
+        attach(app, "GameCube landscape full display with controller")
+        returnToLibrary(app)
+    }
+    @MainActor func testGameCubeLandscapeTouchControlsHaveSpace() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        defer { XCUIDevice.shared.orientation = .portrait }
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-gamecube-demo", "--gamecube-qa-status", "--fresh-start", "--touch-controls-preview", "-screenSizing", "automatic", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app); assertGameCubePixels(app)
+        XCUIDevice.shared.orientation = .landscapeLeft
+        let wide = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in app.frame.width > app.frame.height }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [wide], timeout: 15), .completed)
+        let a = app.buttons["control-0"], left = app.buttons["control-6"], top = app.otherElements["topScreen"]
+        XCTAssertTrue(app.frame.contains(a.frame)); XCTAssertTrue(app.frame.contains(left.frame))
+        XCTAssertGreaterThanOrEqual(a.frame.width, 52)
+        XCTAssertLessThanOrEqual(left.frame.maxX, top.frame.minX)
+        XCTAssertGreaterThanOrEqual(a.frame.minX, top.frame.maxX)
+        attach(app, "GameCube landscape with separate touch controls")
+        returnToLibrary(app)
+    }
+    @MainActor private func assertGameCubePixels(_ app: XCUIApplication) {
+        let top = app.otherElements["topScreen"]
+        XCTAssertTrue(top.waitForExistence(timeout: 90))
+        let rendered = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            let value = top.value as? String ?? ""
+            let frames = Int(value.split(separator: " ").first ?? "0") ?? 0
+            return frames >= 90 && value.contains("PowerPC boot verified") && self.hasColoredContent(app, in: top.frame)
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [rendered], timeout: 90), .completed,"Native GameCube: \(top.value ?? "No status")")
+    }
+    @MainActor func testGameCubeTeardownAllowsPlayStationAndThreeDS() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-gamecube-demo", "--gamecube-qa-status", "--fresh-start", "--touch-controls-preview", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app); assertGameCubePixels(app)
+        returnToLibrary(app)
+        app.buttons["headerConsolePicker"].tap(); app.buttons["header-system-ps1"].tap()
+        waitForConsole("PlayStation", in: app)
+        XCTAssertTrue(app.buttons["launchPS1Demo"].waitForExistence(timeout: 10)); app.buttons["launchPS1Demo"].tap()
+        if app.buttons["Resume session"].waitForExistence(timeout: 8) { app.buttons["Resume session"].tap() }
+        assertPS1Pixels(app)
+        attach(app, "PS1 video after GameCube teardown")
+        returnToLibrary(app)
+        app.buttons["headerConsolePicker"].tap(); app.buttons["header-system-3ds"].tap()
+        waitForConsole("Nintendo 3DS", in: app)
+        XCTAssertTrue(app.buttons["launchHomebrew"].waitForExistence(timeout: 10)); app.buttons["launchHomebrew"].tap()
+        if app.buttons["Resume session"].waitForExistence(timeout: 8) { app.buttons["Resume session"].tap() }
+        assertGamePixels(app)
+        attach(app, "3DS video after GameCube and PS1 teardown")
+        returnToLibrary(app)
+        app.buttons["headerConsolePicker"].tap(); app.buttons["header-system-gamecube"].tap()
+        XCTAssertTrue(app.buttons["selectedGameTile"].waitForExistence(timeout: 10))
+        attach(app, "All three consoles available in the internal candidate")
+    }
+    @MainActor func testPlayStationDemoSaveHistoryAndSwitchBackTo3DS() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-ps1-demo", "--fresh-start", "--touch-controls-preview", "-onlineArtworkEnabled", "NO", "-hasArtworkChoice", "YES"]
+        launchPrepared(app)
+        assertPS1Pixels(app)
+        attach(app, "PS1 initial native layout")
+        for label in ["Triangle", "Square", "Circle", "Cross", "L1", "L2", "R1", "R2"] { XCTAssertTrue(app.buttons[label].exists, label) }
+        app.buttons["Cross"].press(forDuration: 0.15)
+        attach(app, "PS1 homebrew with native PlayStation controls")
+        for _ in 0..<2 {
+            openGameMenu(app); app.buttons["Quick Save"].tap()
+            XCTAssertTrue(app.staticTexts["Quick save ready"].waitForExistence(timeout: 30))
+        }
+        openGameMenu(app); app.buttons["openSaveHistory"].tap()
+        let older = app.buttons["saveHistory-quick-1"]
+        XCTAssertTrue(older.waitForExistence(timeout: 10)); reveal(older, in: app)
+        attach(app, "PS1 independent save history")
+        older.tap(); app.buttons["Load save point"].tap()
+        XCTAssertTrue(app.staticTexts["Save point loaded"].waitForExistence(timeout: 30)); assertPS1Pixels(app)
+        returnToLibrary(app)
+        app.terminate(); app.launchArguments = ["--boot-ps1-demo", "--touch-controls-preview", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app)
+        XCTAssertTrue(app.buttons["Resume session"].waitForExistence(timeout: 30)); app.buttons["Resume session"].tap()
+        XCTAssertTrue(app.staticTexts["Session resumed"].waitForExistence(timeout: 30)); assertPS1Pixels(app)
+        returnToLibrary(app)
+        app.buttons["System setup"].tap()
+        let help = app.buttons["Help, tests & open-source notices"]
+        reveal(help, in: app); help.tap()
+        let threeDS = app.buttons["Launch 3DS test"]
+        reveal(threeDS, in: app); threeDS.tap()
+        if app.buttons["Resume session"].waitForExistence(timeout: 8) { app.buttons["Resume session"].tap() }
+        assertGamePixels(app)
+        attach(app, "3DS renderer after PS1 teardown")
+        returnToLibrary(app)
+        app.buttons["consoleFilter"].firstMatch.tap()
+        app.buttons["system-ps1"].tap()
+        XCTAssertTrue(app.buttons["launchPS1Demo"].waitForExistence(timeout: 10)); app.buttons["launchPS1Demo"].tap()
+        if app.buttons["Resume session"].waitForExistence(timeout: 8) { app.buttons["Resume session"].tap() }
+        assertPS1Pixels(app)
+        returnToLibrary(app)
+    }
+    @MainActor func testPlayStationControllerHidesTouchControls() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-ps1-demo", "--fresh-start", "--controller-preview", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app); assertPS1Pixels(app)
+        XCTAssertFalse(app.buttons["Cross"].exists); XCTAssertFalse(app.buttons["L1"].exists)
+        showPlayerHeader(app); XCTAssertTrue(app.buttons["Controller connected"].exists)
+        attach(app, "PS1 controller presentation")
+        returnToLibrary(app)
+    }
+    @MainActor func testPlayStationAppleVirtualControllerReachesEmulatedPAD() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-ps1-demo", "--fresh-start", "--ps1-controller-test", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app); assertPS1Pixels(app)
+        let result = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value CONTAINS %@", "Controller input passed"), object: app.images["topScreen"])
+        XCTAssertEqual(XCTWaiter.wait(for: [result], timeout: 30), .completed)
+        attach(app, "Apple controller Cross, analog D-pad and disconnect check")
+        returnToLibrary(app)
+    }
+    @MainActor func testPlayStationLandscapeControllerFillsScreen() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        defer { XCUIDevice.shared.orientation = .portrait }
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-ps1-demo", "--fresh-start", "--controller-preview", "-screenSizing", "automatic", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app); assertPS1Pixels(app)
+        XCUIDevice.shared.orientation = .landscapeLeft
+        let top = app.images["topScreen"]
+        let fullscreen = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            abs(top.frame.width - app.frame.width) < 2 && abs(top.frame.height - app.frame.height) < 2
+        }, object: nil)
+        let filled = XCTWaiter.wait(for: [fullscreen], timeout: 10)
+        if filled != .completed { print("LANDSCAPE app=\(app.frame), screen=\(top.frame), orientation=\(XCUIDevice.shared.orientation.rawValue)") }
+        attach(app, "PS1 landscape controller frame check")
+        XCTAssertEqual(filled, .completed)
+        XCTAssertFalse(app.buttons["Cross"].exists)
+        attach(app, "PS1 landscape full display with controller")
+        returnToLibrary(app)
+    }
+    @MainActor func testPlayStationLandscapeTouchControlsHaveSpace() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        defer { XCUIDevice.shared.orientation = .portrait }
+        let app = XCUIApplication()
+        app.launchArguments = ["--boot-ps1-demo", "--fresh-start", "--touch-controls-preview", "-screenSizing", "automatic", "-onlineArtworkEnabled", "NO"]
+        launchPrepared(app); assertPS1Pixels(app)
+        XCUIDevice.shared.orientation = .landscapeLeft
+        let wide = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in app.frame.width > app.frame.height }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [wide], timeout: 10), .completed)
+        let cross = app.buttons["Cross"], up = app.buttons["control-4"], top = app.images["topScreen"]
+        print("LANDSCAPE_TOUCH app=\(app.frame) cross=\(cross.frame) up=\(up.frame) screen=\(top.frame)")
+        XCTAssertTrue(cross.exists); XCTAssertTrue(up.exists)
+        XCTAssertTrue(app.frame.contains(cross.frame)); XCTAssertTrue(app.frame.contains(up.frame))
+        XCTAssertGreaterThanOrEqual(cross.frame.width, 52)
+        XCTAssertLessThanOrEqual(up.frame.maxX, top.frame.minX)
+        XCTAssertGreaterThanOrEqual(cross.frame.minX, top.frame.maxX)
+        attach(app, "PS1 landscape with comfortable side controls")
+        returnToLibrary(app)
+    }
+    @MainActor private func assertPS1Pixels(_ app: XCUIApplication) {
+        let top = app.images["topScreen"]
+        XCTAssertTrue(top.waitForExistence(timeout: 30)); XCTAssertFalse(app.images["bottomScreen"].exists)
+        let rendered = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            let count = Int((top.value as? String ?? "").split(separator: " ").first ?? "0") ?? 0
+            return count >= 120 && self.hasColoredContent(app, in: top.frame)
+        }, object: nil)
+        let result = XCTWaiter.wait(for: [rendered], timeout: 45)
+        if result != .completed { print("PS1 failed render probe: \(String(describing: top.value))\n\(app.debugDescription)") }
+        XCTAssertEqual(result, .completed)
+    }
+
+    @MainActor func testOriginalBoxCoverSourceAndOfflineRelaunch() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["EMUDEN_TEST_ARTWORK"] = "1"
+        app.launchArguments = ["-hasArtworkChoice", "YES", "-onlineArtworkEnabled", "NO"]
+        app.launch()
+        XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 25)); app.buttons["System setup"].tap()
+        let catalog = app.buttons["openArtworkCatalog"]; reveal(catalog, in: app); catalog.tap()
+        let field = app.textFields["boxArtworkLink"]
+        XCTAssertTrue(field.waitForExistence(timeout: 10)); field.tap()
+        field.typeText("https://artwork-test.example/Named_Boxarts/")
+        app.buttons["connectBoxCovers"].tap()
+        let status = app.staticTexts["boxArtworkStatus"]
+        XCTAssertTrue(status.waitForExistence(timeout: 10))
+        let saved = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == 'Saved 4 original covers.'"), object: status)
+        XCTAssertEqual(XCTWaiter.wait(for: [saved], timeout: 30), .completed)
+        attach(app, "One source fills matching covers while protecting a manual image")
+        app.terminate(); app.launchEnvironment["EMUDEN_TEST_ARTWORK_OFFLINE"] = "1"; app.launch()
+        XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 20)); app.buttons["System setup"].tap()
+        reveal(catalog, in: app); catalog.tap()
+        XCTAssertTrue(field.waitForExistence(timeout: 10))
+        XCTAssertEqual(field.value as? String, "https://artwork-test.example/Named_Boxarts/")
+        app.buttons["connectBoxCovers"].tap()
+        let cached = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == 'Saved 0 original covers.'"), object: status)
+        XCTAssertEqual(XCTWaiter.wait(for: [cached], timeout: 15), .completed)
+        app.buttons["disconnectBoxCovers"].tap()
+        XCTAssertFalse(app.buttons["disconnectBoxCovers"].exists)
+        attach(app, "Offline relaunch and disconnect retain saved covers")
+    }
+    @MainActor func testMultiConsoleArtworkFillAndOfflineRelaunch() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["EMUDEN_TEST_ARTWORK"] = "1"
+        app.launch()
+        XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 25)); app.buttons["System setup"].tap()
+        let catalog = app.buttons["openArtworkCatalog"]; reveal(catalog, in: app); catalog.tap()
+        let field = app.textFields["artworkCatalogLink"]
+        func showCatalogControl(_ control: XCUIElement) {
+            let scroll = app.scrollViews["artworkCatalogScroll"].firstMatch
+            XCTAssertTrue(scroll.waitForExistence(timeout: 8))
+            for _ in 0..<7 {
+                let visible = scroll.frame.intersection(app.frame).insetBy(dx: 0, dy: 12)
+                if control.exists, control.isHittable, visible.contains(control.frame) { return }
+                scroll.swipeUp()
+            }
+        }
+        XCTAssertTrue(field.waitForExistence(timeout: 8)); showCatalogControl(field); field.tap()
+        if !app.keyboards.firstMatch.waitForExistence(timeout: 3) { field.tap() }
+        field.typeText("https://artwork-test.example/")
+        app.buttons["previewArtworkCatalog"].tap()
+        let matches = app.staticTexts["artworkCatalogMatches"]
+        XCTAssertTrue(matches.waitForExistence(timeout: 10)); XCTAssertEqual(matches.label, "2 covers · 2 backgrounds")
+        let fill = app.buttons["fillArtworkCatalog"]; showCatalogControl(fill); fill.tap()
+        let status = app.staticTexts["artworkCatalogStatus"]
+        XCTAssertTrue(status.waitForExistence(timeout: 10))
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "label BEGINSWITH 'Saved 4 images.'"), object: status)], timeout: 20), .completed)
+        attach(app, "All three consoles fill while manual cover and console background stay selected")
+        app.terminate(); app.launchEnvironment["EMUDEN_TEST_ARTWORK_OFFLINE"] = "1"; app.launch()
+        XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 20)); app.buttons["System setup"].tap()
+        reveal(catalog, in: app); catalog.tap()
+        XCTAssertTrue(field.waitForExistence(timeout: 8)); XCTAssertEqual(field.value as? String, "https://artwork-test.example/catalog.json")
+        showCatalogControl(app.buttons["disconnectArtworkCatalog"]); app.buttons["disconnectArtworkCatalog"].tap()
+        XCTAssertFalse(app.buttons["disconnectArtworkCatalog"].exists)
+        attach(app, "Multi-console source persists offline; disconnect keeps saved images")
+    }
+    @MainActor func testFoldedLibraryPlayDispatchesForEachConsole() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        for pose in ["--library-tabletop-preview", "--library-book-preview"] {
+            XCUIDevice.shared.orientation = pose == "--library-book-preview" ? .landscapeLeft : .portrait
+            for platform in ["3ds", "ps1", "gamecube"] {
+                app.launchArguments = [pose, "-favoriteConsole", platform, "-importedGameAccess", "undecided", "-menuSoundsEnabled", "NO"]
+                app.launch()
+                let play = app.buttons["startSelectedGame"]
+                XCTAssertTrue(play.waitForExistence(timeout: 25)); XCTAssertTrue(play.isHittable)
+                play.tap()
+                XCTAssertFalse(app.buttons["confirmAdultAccess"].exists)
+                let dispatched = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                    app.descendants(matching: .any)["topScreen"].firstMatch.exists || app.alerts["Something needs attention"].exists || app.buttons["Start normally"].exists
+                }, object: nil)
+                XCTAssertEqual(XCTWaiter.wait(for: [dispatched], timeout: 30), .completed, "Play must dispatch without the removed local declaration; OS regional checks may fail closed in Simulator")
+                attach(app, "Folded Play dispatch \(pose) \(platform)")
+                app.terminate()
+            }
+        }
+        XCUIDevice.shared.orientation = .portrait
+    }
+    @MainActor func testArtworkCatalogBulkFillAndOfflineRelaunch() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["EMUDEN_TEST_ARTWORK"] = "1"
+        app.launchArguments = ["-hasArtworkChoice", "YES", "-onlineArtworkEnabled", "YES"]
+        app.launch()
+        XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 25)); app.buttons["System setup"].tap()
+        let catalog = app.buttons["openArtworkCatalog"]; reveal(catalog, in: app); catalog.tap()
+        let field = app.textFields["artworkCatalogLink"]
+        XCTAssertTrue(field.waitForExistence(timeout: 8)); field.tap(); field.typeText("http://artwork-test.example/")
+        app.buttons["previewArtworkCatalog"].tap()
+        XCTAssertTrue(app.staticTexts["artworkCatalogError"].waitForExistence(timeout: 5))
+        app.terminate(); app.launch()
+        XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 20)); app.buttons["System setup"].tap()
+        reveal(catalog, in: app); catalog.tap()
+        XCTAssertTrue(field.waitForExistence(timeout: 8)); field.tap()
+        field.typeText("https://artwork-test.example/")
+        app.buttons["previewArtworkCatalog"].tap()
+        let matches = app.staticTexts["artworkCatalogMatches"]
+        XCTAssertTrue(matches.waitForExistence(timeout: 10)); XCTAssertEqual(matches.label, "1 cover · 1 background")
+        let fill = app.buttons["fillArtworkCatalog"]; reveal(fill, in: app); fill.tap()
+        let status = app.staticTexts["artworkCatalogStatus"]
+        XCTAssertTrue(status.waitForExistence(timeout: 10))
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "label BEGINSWITH 'Saved 2 images.'"), object: status)], timeout: 20), .completed)
+        attach(app, "Bulk artwork fill preserves a manual cover and console preference")
+        app.terminate(); app.launchEnvironment["EMUDEN_TEST_ARTWORK_OFFLINE"] = "1"; app.launch()
+        XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 20)); app.buttons["System setup"].tap()
+        reveal(catalog, in: app); catalog.tap()
+        XCTAssertTrue(field.waitForExistence(timeout: 8))
+        XCTAssertEqual(field.value as? String, "https://artwork-test.example/catalog.json")
+        app.buttons["previewArtworkCatalog"].tap()
+        XCTAssertTrue(app.staticTexts["artworkCatalogError"].waitForExistence(timeout: 8))
+        XCTAssertTrue(app.buttons["disconnectArtworkCatalog"].exists)
+        reveal(app.buttons["disconnectArtworkCatalog"], in: app)
+        app.buttons["disconnectArtworkCatalog"].tap()
+        XCTAssertFalse(app.buttons["disconnectArtworkCatalog"].exists)
+        attach(app, "Offline error and catalog disconnect keep saved artwork")
+    }
     @MainActor func testWidgetGameRoutesOpenAndResume() throws {
         // Host prepares two copies of the bundled licensed homebrew in the isolated QA library.
         continueAfterFailure = false
@@ -77,28 +1002,17 @@ final class EmulatorUITests: XCTestCase {
         attach(app, "Local artwork release with legacy online preference enabled")
     }
 
-    @MainActor func testImportedGameAgeGateAndDemoLink() {
+    @MainActor func testDemoLinkRemainsAvailableWithoutLocalAgeChoice() {
         continueAfterFailure = false
-        let app = XCUIApplication()
-        app.launchArguments = ["-importedGameAccess", "undecided"]
+        let app = XCUIApplication(); app.launchArguments = ["-importedGameAccess","under18"]
         launchPrepared(app)
-        let play = app.buttons["startSelectedGame"]
-        XCTAssertTrue(play.waitForExistence(timeout: 20)); play.tap()
-        XCTAssertTrue(app.buttons["restrictImportedAccess"].waitForExistence(timeout: 6))
-        attach(app, "Unrated imported software requires an adult declaration")
-        app.buttons["restrictImportedAccess"].tap()
-        XCTAssertTrue(play.waitForExistence(timeout: 6)); play.tap()
-        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "Imported software is unrated and restricted to adults.")).firstMatch.waitForExistence(timeout: 6))
-        app.buttons["OK"].tap()
-        app.open(URL(string: "emuden://demo/homebrew")!)
-        let open = XCUIApplication(bundleIdentifier: "com.apple.springboard").buttons["Open"]
-        if open.waitForExistence(timeout: 3) { open.tap() }
-        if app.buttons["Start normally"].waitForExistence(timeout: 15) { app.buttons["Start normally"].tap() }
-        assertGamePixels(app)
-        attach(app, "Licensed homebrew demo remains available through its link")
+        app.open(URL(string:"emuden://demo/homebrew")!)
+        let open = XCUIApplication(bundleIdentifier:"com.apple.springboard").buttons["Open"]
+        if open.waitForExistence(timeout:3) { open.tap() }
+        if app.buttons["Start normally"].waitForExistence(timeout:8) { app.buttons["Start normally"].tap() }
+        assertGamePixels(app); XCTAssertFalse(app.buttons["confirmAdultAccess"].exists)
         returnToLibrary(app)
     }
-
     @MainActor func testOptionalTipsUseVerifiedRepeatableStoreKitPurchases() throws {
         continueAfterFailure = false
         let configuration = try XCTUnwrap(Bundle(for: Self.self).url(forResource: "TipJar", withExtension: "storekit"))
@@ -136,14 +1050,14 @@ final class EmulatorUITests: XCTestCase {
         let tile = app.buttons["selectedGameTile"]
         XCTAssertTrue(tile.waitForExistence(timeout: 20))
         tile.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).press(forDuration: 1.1)
-        XCTAssertTrue(app.buttons["Game settings"].waitForExistence(timeout: 4)); app.buttons["Game settings"].tap()
+        XCTAssertTrue(app.buttons["Graphics settings"].waitForExistence(timeout: 4)); app.buttons["Graphics settings"].tap()
         let custom = app.switches["customizeGame"]
         XCTAssertTrue(custom.waitForExistence(timeout: 5)); setSwitch(custom, on: true, in: app)
         app.buttons["internalResolution"].tap(); app.buttons["3× · Sharpest"].tap()
         app.buttons["textureSampling"].tap(); app.buttons["Smooth"].tap()
         attach(app, "Per-game graphics profile")
         app.buttons["playerSettingsDone"].tap()
-        tile.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).press(forDuration: 1.1); app.buttons["Game settings"].tap()
+        tile.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).press(forDuration: 1.1); app.buttons["Graphics settings"].tap()
         XCTAssertEqual(app.buttons["internalResolution"].value as? String, "3× · Sharpest")
         XCTAssertTrue(custom.value as? String == "1")
         setSwitch(custom, on: false, in: app); app.buttons["playerSettingsDone"].tap()
@@ -168,7 +1082,7 @@ final class EmulatorUITests: XCTestCase {
         defer { XCUIDevice.shared.orientation = .portrait }
         let app = XCUIApplication(); app.launchArguments = ["--input-test", "--controller-preview"]; launchPrepared(app)
         XCTAssertTrue(app.buttons["Controller connected"].waitForExistence(timeout: 15))
-        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Player Settings"].tap(); openPlayerLayout(app)
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap(); openPlayerLayout(app)
         app.buttons["Fill display"].tap(); app.buttons["duoLayoutDone"].tap(); app.buttons["playerSettingsDone"].tap()
         if app.buttons["Resume game"].exists { app.buttons["Resume game"].tap() }
         for orientation in [UIDeviceOrientation.portrait, .landscapeLeft] {
@@ -191,7 +1105,7 @@ final class EmulatorUITests: XCTestCase {
             attach(app, app.frame.width > app.frame.height ? "Outer display filled in landscape" : "Outer display filled in portrait")
         }
         XCUIDevice.shared.orientation = .portrait
-        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Player Settings"].tap(); openPlayerLayout(app)
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap(); openPlayerLayout(app)
         app.buttons["Console skin"].tap(); app.buttons["duoLayoutDone"].tap(); app.buttons["playerSettingsDone"].tap()
     }
     @MainActor func testKnownBackgroundWaitsInDarkThenFadesIn() throws {
@@ -226,7 +1140,7 @@ final class EmulatorUITests: XCTestCase {
         XCTAssertTrue(menu.waitForExistence(timeout: 3))
         XCTAssertEqual(app.images["topScreen"].frame.width, size.width, accuracy: 1)
         XCTAssertEqual(app.images["topScreen"].frame.height, size.height, accuracy: 1)
-        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Player Settings"].tap()
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
         let fps = app.switches["showFPS"]
         XCTAssertTrue(fps.waitForExistence(timeout: 5)); XCTAssertEqual(fps.value as? String, "0")
         setSwitch(fps, on: true, in: app)
@@ -237,9 +1151,9 @@ final class EmulatorUITests: XCTestCase {
         attach(app, "Faded game header with optional corner FPS")
         app.terminate(); launchPrepared(app); assertGamePixels(app)
         XCTAssertTrue(app.buttons["frameRate"].exists, "FPS preference persists after relaunch")
-        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Player Settings"].tap()
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
         XCTAssertTrue(fps.waitForExistence(timeout: 5)); XCTAssertEqual(fps.value as? String, "1")
-        attach(app, "Player settings with FPS enabled")
+        attach(app, "Graphics settings with FPS enabled")
         setSwitch(fps, on: false, in: app)
         app.buttons["playerSettingsDone"].tap(); app.buttons["Resume game"].tap()
         XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: hidden, object: wake)], timeout: 8), .completed)
@@ -251,8 +1165,8 @@ final class EmulatorUITests: XCTestCase {
 
     @MainActor func testResolutionChoicesPersistAcrossSettings() {
         XCUIDevice.shared.orientation = .portrait
-        let app = XCUIApplication(); launchPrepared(app)
-        XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 25)); app.buttons["System setup"].tap()
+        let app = XCUIApplication(); app.launchArguments = ["-favoriteConsole", "3ds"]; launchPrepared(app)
+        XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 25)); app.buttons["System setup"].tap(); app.buttons["advancedPlayerSettings"].tap()
         let picker = app.buttons["internalResolution"]
         XCTAssertTrue(picker.waitForExistence(timeout: 5))
         for label in ["2× · Sharper", "3× · Sharpest"] {
@@ -260,12 +1174,12 @@ final class EmulatorUITests: XCTestCase {
             XCTAssertEqual(picker.value as? String, label)
         }
         app.terminate(); launchPrepared(app)
-        XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 25)); app.buttons["System setup"].tap()
+        XCTAssertTrue(app.buttons["System setup"].waitForExistence(timeout: 25)); app.buttons["System setup"].tap(); app.buttons["advancedPlayerSettings"].tap()
         XCTAssertTrue(picker.waitForExistence(timeout: 5)); XCTAssertEqual(picker.value as? String, "3× · Sharpest")
         attach(app, "3DS resolution options")
         app.terminate(); app.launchArguments = ["--input-test"]; launchPrepared(app)
         XCTAssertTrue(app.buttons["Game menu"].waitForExistence(timeout: 20)); openGameMenu(app)
-        app.buttons["moreGameOptions"].tap(); app.buttons["Player Settings"].tap()
+        app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
         XCTAssertTrue(picker.waitForExistence(timeout: 5)); XCTAssertEqual(picker.value as? String, "3× · Sharpest")
         picker.tap(); app.buttons["1× · Best performance"].tap()
         XCTAssertEqual(picker.value as? String, "1× · Best performance")
@@ -462,7 +1376,7 @@ final class EmulatorUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["--input-test", "--duo-tabletop-preview", "--controller-preview"]
         launchPrepared(app)
-        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Player Settings"].tap()
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
         let setting = app.switches["Reduce shader pauses"]
         XCTAssertTrue(setting.waitForExistence(timeout: 10))
         let initial = setting.value as? String
@@ -472,7 +1386,7 @@ final class EmulatorUITests: XCTestCase {
         let updated = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", changed), object: setting)
         XCTAssertEqual(XCTWaiter.wait(for: [updated], timeout: 3), .completed)
         app.terminate(); launchPrepared(app)
-        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Player Settings"].tap()
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
         XCTAssertEqual(setting.value as? String, changed)
         setting.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
         let restored = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", initial ?? "0"), object: setting)
@@ -576,12 +1490,12 @@ final class EmulatorUITests: XCTestCase {
         let bottom = app.otherElements["bottomScreenRegion"]
         XCTAssertTrue(bottom.waitForExistence(timeout: 10))
         XCTAssertTrue(app.buttons["Controller connected"].waitForExistence(timeout: 10))
-        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Player Settings"].tap()
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
         openPlayerLayout(app)
         app.buttons["Console skin"].tap(); app.buttons["duoLayoutDone"].tap(); app.buttons["playerSettingsDone"].tap()
         if app.buttons["Resume game"].exists { app.buttons["Resume game"].tap() }
         let skinWidth = bottom.frame.width
-        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Player Settings"].tap()
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
         openPlayerLayout(app)
         XCTAssertTrue(app.descendants(matching: .any)["openingConsolePreview"].firstMatch.waitForExistence(timeout: 5))
         app.buttons["Fill display"].tap(); app.buttons["duoLayoutDone"].tap(); app.buttons["playerSettingsDone"].tap()
@@ -589,7 +1503,7 @@ final class EmulatorUITests: XCTestCase {
         XCTAssertGreaterThan(bottom.frame.width, skinWidth)
         XCTAssertFalse(app.buttons["A"].exists)
         attach(app, "Duo controller full panels")
-        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Player Settings"].tap()
+        openGameMenu(app); app.buttons["moreGameOptions"].tap(); app.buttons["Graphics settings"].tap()
         openPlayerLayout(app)
         app.buttons["Console skin"].tap(); app.buttons["duoLayoutDone"].tap(); app.buttons["playerSettingsDone"].tap()
         if app.buttons["Resume game"].exists { app.buttons["Resume game"].tap() }
@@ -762,7 +1676,7 @@ final class EmulatorUITests: XCTestCase {
         XCTAssertTrue(app.descendants(matching: .any)["correspondingSourceLink"].exists)
         notices.tap()
         XCTAssertTrue(app.navigationBars["Open-source notices"].waitForExistence(timeout: 10))
-        XCTAssertEqual(app.staticTexts["noticeFileCount"].label, "84 license and notice files")
+        XCTAssertEqual(app.staticTexts["noticeFileCount"].label, "148 license and notice files")
         let coreLicense = app.buttons["notice-Vendor/Azahar/Source/LICENSE.txt"]
         for _ in 0..<6 { if coreLicense.isHittable { break }; app.swipeUp() }
         XCTAssertTrue(coreLicense.isHittable); coreLicense.tap()
@@ -818,12 +1732,17 @@ final class EmulatorUITests: XCTestCase {
     }
     @MainActor private func returnToLibrary(_ app: XCUIApplication) {
         let menuBack = app.buttons["gameMenuBack"]
-        if menuBack.exists { menuBack.tap() }
-        else { showPlayerHeader(app); app.buttons["playerBack"].tap() }
+        // Resume dismisses asynchronously after its chime; let that transition settle.
+        if !menuBack.waitForNonExistence(timeout: 2) {
+            XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "enabled == true AND hittable == true"), object: menuBack)], timeout: 10), .completed)
+            menuBack.tap()
+        } else { showPlayerHeader(app); app.buttons["playerBack"].tap() }
         let player = app.otherElements["topScreenRegion"]
         XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in !player.exists }, object: nil)], timeout: 45), .completed, "Wait for resume capture and player dismissal before relaunching")
     }
     @MainActor private func openPlayerLayout(_ app: XCUIApplication) {
+        let category = app.segmentedControls["graphicsCategory"]
+        if category.exists { category.buttons["Controls"].tap() }
         let layout = app.buttons["openPlayerDuoLayout"]
         reveal(layout, in: app); layout.tap()
     }
@@ -831,23 +1750,29 @@ final class EmulatorUITests: XCTestCase {
         let desired = on ? "1" : "0"
         if setting.value as? String != desired {
             reveal(setting, in: app)
-            setting.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
-            XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", desired), object: setting)], timeout: 4), .completed)
+            setting.tap()
+            XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", desired), object: setting)], timeout: 10), .completed,
+                           "\(setting.identifier): value=\(setting.value ?? "nil"), enabled=\(setting.isEnabled), frame=\(setting.frame)")
         }
     }
     @MainActor private func reveal(_ element: XCUIElement, in app: XCUIApplication) {
-        for _ in 0..<8 {
+        for _ in 0..<12 {
             if element.isHittable { return }
-            if element.exists && element.frame.minY < app.frame.minY + 90 { app.scrollViews.firstMatch.swipeDown() }
-            else { app.scrollViews.firstMatch.swipeUp() }
+            let settings = app.scrollViews["playerSettingsScroll"]
+            let scroll = settings.exists ? settings : app.scrollViews.firstMatch
+            let viewport = scroll.frame.intersection(app.frame)
+            let up = !element.exists || element.frame.midY > viewport.midY
+            // Short drags avoid jumping over a whole card and oscillating in landscape.
+            scroll.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: up ? 0.70 : 0.30)).press(forDuration: 0.05,
+                thenDragTo: scroll.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: up ? 0.30 : 0.70)))
         }
-        XCTAssertTrue(element.isHittable)
+        XCTAssertTrue(element.isHittable, "Reveal \(element.identifier): app \(app.frame), element \(element.exists ? element.frame : .zero)")
     }
     @MainActor private func attach(_ app: XCUIApplication, _ name: String) {
-        let attachment = XCTAttachment(screenshot: app.screenshot()); attachment.name = name; attachment.lifetime = .keepAlways; add(attachment)
+        let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot()); attachment.name = name; attachment.lifetime = .keepAlways; add(attachment)
     }
     @MainActor private func hasColoredContent(_ app: XCUIApplication, in frame: CGRect) -> Bool {
-        guard let cg = app.screenshot().image.cgImage else { return false }
+        guard let cg = XCUIScreen.main.screenshot().image.cgImage else { return false }
         let scaleX = CGFloat(cg.width) / app.frame.width, scaleY = CGFloat(cg.height) / app.frame.height
         let area = frame.insetBy(dx: 8, dy: 8)
         let rect = CGRect(x: (area.minX - app.frame.minX) * scaleX, y: (area.minY - app.frame.minY) * scaleY,
@@ -865,7 +1790,7 @@ final class EmulatorUITests: XCTestCase {
         }
     }
     @MainActor private func meanIntensity(_ app: XCUIApplication, in frame: CGRect) -> Double {
-        guard let cg = app.screenshot().image.cgImage else { return 255 }
+        guard let cg = XCUIScreen.main.screenshot().image.cgImage else { return 255 }
         let scaleX = CGFloat(cg.width) / app.frame.width, scaleY = CGFloat(cg.height) / app.frame.height
         let rect = CGRect(x: (frame.minX - app.frame.minX) * scaleX, y: (frame.minY - app.frame.minY) * scaleY,
                           width: frame.width * scaleX, height: frame.height * scaleY)

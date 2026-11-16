@@ -2,6 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+<key>EmuDenGameCubeEnabled</key><string>$(EMUDEN_EXPERIMENTAL_GAMECUBE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>EmuDen</string>
 	<key>CFBundleExecutable</key>
@@ -31,6 +32,8 @@
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSMotionUsageDescription</key>
+	<string>Use your phone’s motion sensors for tilt and gyroscope controls in 3DS games.</string>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

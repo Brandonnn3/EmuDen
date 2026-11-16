@@ -53,3 +53,67 @@ else
   /usr/bin/codesign --force --sign - --timestamp=none "$metal"
   /usr/bin/codesign --force --sign - --timestamp=none "$core"
 fi
+
+# PS1 uses the pinned interpreter and software GPU. It never requests JIT privileges.
+case "$PLATFORM_NAME" in
+  iphoneos) ps1_slice=Device ;;
+  iphonesimulator) ps1_slice=Simulator ;;
+esac
+ps1_source="$SRCROOT/Vendor/PCSX-ReARMed/$ps1_slice/PCSXReARMed.framework"
+if [ ! -d "$ps1_source" ]; then
+  echo "error: Missing PlayStation core. Run python3 Scripts/build-ps1-core.py."
+  exit 1
+fi
+ps1="$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/PCSXReARMed.framework"
+rm -rf "$ps1"
+/usr/bin/ditto "$ps1_source" "$ps1"
+cp "$SRCROOT/Resources/Privacy/PCSXReARMed.xcprivacy" "$ps1/PrivacyInfo.xcprivacy"
+if [ "$ACTION" = install ] && [ "$PLATFORM_NAME" = iphoneos ]; then
+  ps1_symbols="$SRCROOT/Vendor/PCSX-ReARMed/Device/PCSXReARMed.framework.dSYM"
+  python3 "$SRCROOT/Scripts/check-debug-symbols.py" "$ps1/PCSXReARMed" "$ps1_symbols"
+  /usr/bin/ditto "$ps1_symbols" "$DWARF_DSYM_FOLDER_PATH/PCSXReARMed.framework.dSYM"
+fi
+if [ "$CODE_SIGNING_ALLOWED" = YES ]; then
+  /usr/bin/codesign --force --sign "$EXPANDED_CODE_SIGN_IDENTITY" --timestamp=none "$ps1"
+else
+  /usr/bin/codesign --force --sign - --timestamp=none "$ps1"
+fi
+python3 "$SRCROOT/Scripts/make-ps1-homebrew.py" --output "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/ps1-demo.exe"
+
+
+# GameCube is an explicitly enabled internal candidate with a strict archive gate.
+
+if [ "${EMUDEN_EXPERIMENTAL_GAMECUBE:-NO}" = YES ]; then
+  if [ "$ACTION" = install ]; then
+    python3 "$SRCROOT/Scripts/validate-gamecube-candidate.py"
+  fi
+  gc_source="$SRCROOT/Vendor/Dolphin/$ps1_slice/EmuDenGameCube.framework"
+  if [ ! -f "$gc_source/EmuDenGameCube" ]; then
+    echo "error: Missing GameCube core. Run Scripts/build-gamecube-core.py first."
+    exit 1
+  fi
+  python3 "$SRCROOT/Scripts/check-framework-metadata.py" "$gc_source" --app-minimum "$IPHONEOS_DEPLOYMENT_TARGET"
+  gc="$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/EmuDenGameCube.framework"
+  rm -rf "$gc"
+  /usr/bin/ditto "$gc_source" "$gc"
+  rm -rf "$gc/Headers" "$gc/Modules"
+  cp "$SRCROOT/Resources/Privacy/EmuDenGameCube.xcprivacy" "$gc/PrivacyInfo.xcprivacy"
+  if [ "$ACTION" = install ] && [ "$PLATFORM_NAME" = iphoneos ]; then
+    gc_symbols="$SRCROOT/Vendor/Dolphin/Device/EmuDenGameCube.framework.dSYM"
+    python3 "$SRCROOT/Scripts/check-debug-symbols.py" "$gc/EmuDenGameCube" "$gc_symbols"
+    /usr/bin/ditto "$gc_symbols" "$DWARF_DSYM_FOLDER_PATH/EmuDenGameCube.framework.dSYM"
+  fi
+  /usr/bin/codesign --force --sign "${EXPANDED_CODE_SIGN_IDENTITY:--}" --timestamp=none "$gc"
+  mkdir -p "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/GameCubeCompatibility"
+  cp "$SRCROOT/Resources/GameCubeCompatibility/GZD.ini" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/GameCubeCompatibility/GZD.ini"
+  python3 "$SRCROOT/Scripts/make-gamecube-homebrew.py" --full-input --output "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/gamecube-demo.dol"
+  python3 "$SRCROOT/Scripts/make-gamecube-disc.py" --output "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/gamecube-disc-demo.iso"
+  cp "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/gamecube-disc-demo.iso" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/gamecube-gcm-demo.gcm"
+  python3 "$SRCROOT/Scripts/make-gamecube-homebrew.py" --gx --native-card --full-input --output "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/gamecube-gx-card.dol"
+else
+  rm -rf "$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/EmuDenGameCube.framework"
+  rm -rf "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/GameCubeCompatibility"
+  rm -f "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/gamecube-demo.dol"
+  rm -f "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/gamecube-disc-demo.iso"
+  rm -f "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/gamecube-gcm-demo.gcm" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/gamecube-gx-card.dol"
+fi

@@ -1,0 +1,179 @@
+{
+  "component": "Dolphin",
+  "upstream": "https://github.com/dolphin-emu/dolphin",
+  "upstreamRevision": "f84df02055ab9610feec48e65648cac5a3c098fa",
+  "upstreamTag": "2609",
+  "archive": "dolphin-f84df020-emuden-gc-only.tar.gz",
+  "archiveSHA256": "f0481bdf455d4039ea6177b9c6a9f149e56b2df11699c00e477d0045898f095f",
+  "archiveBytes": 49735351,
+  "archiveFiles": 23182,
+  "sourcePolicy": {
+    "upstream": "f84df02055ab9610feec48e65648cac5a3c098fa",
+    "scope": "GC-only; no bundled Wii factory keys/identity, GC DSP ROM/coefficients or console fonts/Wii resources",
+    "originalIOSCSHA256": "1050ef0d7caa061ecf5807d4664492001fd12cb52c048a00c9c975fbe281fc11",
+    "sanitizedIOSCSHA256": "752a8754d04c3e0799683807d9fed3349df48079c3c20101f946beef33b1fc76",
+    "omittedResources": [
+      {
+        "path": "Data/Sys/GC/font_western.bin",
+        "sha256": "4ad991be2b0aa305f09b90a79fc50f57833b30b008890b5ef1336cc3d9d0bae0",
+        "bytes": 6478
+      },
+      {
+        "path": "Data/Sys/GC/dsp_rom.bin",
+        "sha256": "4ea1fea6c649bcf9f627007bc9403d5437896c681d3e089b083263a7646cd3ae",
+        "bytes": 8192
+      },
+      {
+        "path": "Data/Sys/GC/font_japanese.bin",
+        "sha256": "38f9f59d505bc4e2d86b0196706195f33ad72b7fe9d029cf263072cde19d044f",
+        "bytes": 259626
+      },
+      {
+        "path": "Data/Sys/GC/dsp_coef.bin",
+        "sha256": "d7741279c2e8ec5c5fb318f8fbdd6de6bf583520d288e836a5383233a4238179",
+        "bytes": 4096
+      },
+      {
+        "path": "Data/Sys/Wii/shared2/wc24/nwc24fls.bin",
+        "sha256": "c3a4a5649d6ed2322a0de98d2258b96a6a1d3c0179854fd21e9835d529736822",
+        "bytes": 12800
+      },
+      {
+        "path": "Data/Sys/Wii/shared2/wc24/nwc24fl.bin",
+        "sha256": "ed94af416c47ed3bc2c944ebcd1d734b8935d9697feb0f7039d8fea3ec514c18",
+        "bytes": 32864
+      },
+      {
+        "path": "Data/Sys/Wii/shared2/wc24/nwc24msg.cbk",
+        "sha256": "7afebf33eeb0035397cc74e15e892e700cd2903641d26562f5d46cfbb6171109",
+        "bytes": 1024
+      },
+      {
+        "path": "Data/Sys/Wii/shared2/wc24/misc.bin",
+        "sha256": "13dd5b6b2682defd3b23afd8e2983d00edc25bd4dc28a8389380dee0ec45a4a5",
+        "bytes": 1024
+      },
+      {
+        "path": "Data/Sys/Wii/shared2/wc24/nwc24msg.cfg",
+        "sha256": "7afebf33eeb0035397cc74e15e892e700cd2903641d26562f5d46cfbb6171109",
+        "bytes": 1024
+      },
+      {
+        "path": "Data/Sys/Wii/shared2/wc24/nwc24dl.bin",
+        "sha256": "057b6f840c19b41ce080318bc7e717e2b910965ce72ab781a7e319017636c38e",
+        "bytes": 63488
+      },
+      {
+        "path": "Data/Sys/Wii/shared2/wc24/mbox/wc24recv.ctl",
+        "sha256": "efa39268e7071941e4fe429d49c86d73bee952df95d91d7909c478dd1bc9050a",
+        "bytes": 32768
+      },
+      {
+        "path": "Data/Sys/Wii/shared2/wc24/mbox/wc24recv.mbx",
+        "sha256": "dd2ad8c9fb38884523459963bfaec5d5aeaa5fd20efcdc209764d461e690e435",
+        "bytes": 48
+      },
+      {
+        "path": "Data/Sys/Wii/shared2/wc24/mbox/wc24send.ctl",
+        "sha256": "430c3795f1a0aeb198bf626a4a2ff6d123321d453807dd7b904dc3b74db35d13",
+        "bytes": 16384
+      },
+      {
+        "path": "Data/Sys/Wii/shared2/wc24/mbox/Readme.txt",
+        "sha256": "e5a888912968050c6c1d46d1c364c324684e1d15aaa62cfe36cf7fce2c687b21",
+        "bytes": 103
+      },
+      {
+        "path": "Data/Sys/Wii/shared2/wc24/mbox/wc24send.mbx",
+        "sha256": "c248dc031ce09f7be1e55956b6f173e79d6a47d913c22a16593c4687325692b7",
+        "bytes": 48
+      }
+    ],
+    "removedPatterns": [
+      {
+        "name": "ROOT_PUBLIC_KEY",
+        "bytes": 512,
+        "sha256": "ba5231ff4e972aed092a68772a375b437efa6ecb0b1fc86368f31c98bd234305"
+      },
+      {
+        "name": "ROOT_PUBLIC_KEY_DEV",
+        "bytes": 512,
+        "sha256": "ed68c4907d3ecfb515ecfd8fb157b5bdc52a7157e7758bac6d98eadc712b665c"
+      },
+      {
+        "name": "DEFAULT_PRIVATE_KEY",
+        "bytes": 30,
+        "sha256": "b384bcfe645af50df4f86f6340f484c6ade2a9256810ba2aa7a496c5a84ba0fd"
+      },
+      {
+        "name": "DEFAULT_SIGNATURE",
+        "bytes": 60,
+        "sha256": "6a8ea287bd35c660d12875098e331d2c0a2255c9aaf92426a1b61be38c65b90b"
+      },
+      {
+        "name": "unused-Wii-AES-0",
+        "bytes": 16,
+        "sha256": "de38aeab4fe0c36d828a47e6fd315100e7ce234d3b00aa25e6ad6f5ff2824af8"
+      },
+      {
+        "name": "unused-Wii-AES-1",
+        "bytes": 16,
+        "sha256": "5d8ab8193c88627d542cb1130d729e632222011c851ae390976ad7fe237c3a6a"
+      },
+      {
+        "name": "unused-Wii-AES-2",
+        "bytes": 16,
+        "sha256": "02c596910cebf5af0a03fe6ab0b36c5ba2a4f2ff49abbf387998c5d31e350666"
+      },
+      {
+        "name": "unused-Wii-AES-3",
+        "bytes": 16,
+        "sha256": "b9f42ca27a1e178f0f14ebf1a05d486fa8db8d08875336c4e6e8dfae29f2901c"
+      }
+    ]
+  },
+  "sourcePolicySHA256": "1cc8cb6f517f144f4df0bdfeb56eff7fa1cbc657bf84c3412f9b0c1ac37ec883",
+  "localPatches": {
+    "dolphin-generic-memtools.patch": "5f74694e71e0f995b8fe388661040fff46da7241d9cb63057575087528f564a1",
+    "dolphin-ios-port.patch": "ac871dbb628ee16f128357b13d1fa17a2eb27ae1ea3c141f11a6ebab69312265",
+    "sanitize-dolphin-source.py": "42646db5eac48733845d48f929cdd97f3c462186e204e77a6597dd9982c038e3"
+  },
+  "submodules": [
+    "-9bc087fbca36ce5a85eb4fd73f0c73813593e5a2 Externals/FFmpeg-bin",
+    "-306289108d29a4b31a5460f7b55d28fde7b96d1b Externals/Qt",
+    "-f87239e71e42da91ca317a12eefb82cfbf3393eb Externals/SDL/SDL",
+    " 0fa201c969e48ecc253581c5841ce73f44d42f49 Externals/SFML/SFML (0fa201c)",
+    "-39f924b810e561fd86b2558b6711ca68d4363f68 Externals/Vulkan-Headers",
+    "-3bab6924988e5f19bf36586a496156cf72f70d9f Externals/VulkanMemoryAllocator",
+    " 6a8690fc8d26c815e798c588f796eabe9d684cf0 Externals/bzip2/bzip2 (6a8690f)",
+    "-b6cbbc940e25ff898f09a40b107781cef6027b13 Externals/cpp-ipc/cpp-ipc",
+    " 2265d647232249a53a03b411099863ceca35f0d3 Externals/cpp-optparse/cpp-optparse (heads/main)",
+    "-54217bca3f3e0cd53c073690a23dd25d83557909 Externals/cubeb/cubeb",
+    " cfbfb65047e85e6b08af65fe9cdbcf68e9ad496a Externals/curl/curl (cfbfb65)",
+    " 2662c0de09e36f2a2030ccc2c528a3e4c9e8138a Externals/enet/enet (2662c0d)",
+    " e424e3f2e607da02742f73db84873b8084fc714c Externals/fmt/fmt (e424e3f)",
+    " a57276bf558f5cf94d3a9854ebdf5a2236849a5a Externals/glslang/glslang (a57276b)",
+    "-eb2d85edd0bff7a712b6aff147cd9f789f0d7d0b Externals/gtest",
+    " d6b2a974608dec3b76fb1e36c189f22b9cf3650c Externals/hidapi/hidapi-src (d6b2a97)",
+    " 45acd5e0e82f4c954432533ae9985ff0e1aad6d5 Externals/imgui/imgui (45acd5e)",
+    " 3da8bd34299965d3b0ab124df743fe3e076fa222 Externals/implot/implot (3da8bd3)",
+    "-8fae8ce254dfc1344527e05301e43f37dea2df80 Externals/libadrenotools",
+    " fb768002d4288590083a476af628e51c3f1d47cd Externals/libspng/libspng (fb76800)",
+    " 15a7ebb4d426c5ce196684347d2b7cafad862626 Externals/libusb/libusb (15a7ebb)",
+    " 5fc0630a0ed55e9755b0fe3990cd021ae1c3edc1 Externals/lz4/lz4 (5fc0630)",
+    "-0b40863f64d0940f333fa1c638e75f86f8a26a33 Externals/mGBA/mgba",
+    "-bf4215a7574f88aa55859db9db00e3ae58cf42d6 Externals/miniupnpc/miniupnp",
+    " 55db144e03027b43263e5ebcb599bf0878ba58de Externals/minizip-ng/minizip-ng (55db144)",
+    " ee86beb30e4973f5feffe3ce63bfa4fbadf72f38 Externals/pugixml/pugixml (ee86beb)",
+    "-926e4608f8dca7989267c787bbefb3ab1c835ac5 Externals/rcheevos/rcheevos",
+    " ebe2aa0cd80f5eb5cd8a605da604cacf72205f3b Externals/spirv_cross/SPIRV-Cross (ebe2aa0)",
+    " c5641f2c22d117da7971504591a8f6a41ece488b Externals/tinygltf/tinygltf (c5641f2)",
+    " b03bdcfc11549df595b77239cefe2643943a3e2f Externals/watcher/watcher (b03bdcf)",
+    "-7447d38337abf23a5c2286305b743506455aa9cc Externals/wil",
+    " e626a72bc2321cd320e953a0ccf1584cad60f363 Externals/xxhash/xxHash (e626a72)",
+    " ce01b1e41da298334f8214389cc9369540a7560f Externals/zlib-ng/zlib-ng (ce01b1e)",
+    " 711e17da98510a3567bf47f85a08a76f64811474 Externals/zstd/zstd (711e17d)"
+  ],
+  "license": "Most upstream files GPL-2.0-or-later; aggregate GPLv3-compatible; retain COPYING, LICENSES and dependency notices",
+  "scope": "Complete pinned source and initialized dependencies for the GC-only target, with explicit unused factory-key/system-resource omissions. No .git history or owner files."
+}

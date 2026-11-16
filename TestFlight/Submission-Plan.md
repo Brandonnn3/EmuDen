@@ -20,7 +20,7 @@ Apple requires an active paid-apps agreement, banking/tax setup as applicable, a
 
 ## Age/content entry
 
-Build 19 treats imported software as unrated and requires a local adult declaration (18+) before launching an imported entry, including widget/link launches. Under-18 choices restrict those launches; the bundled licensed Homebrew Menu demo remains accessible. The declaration can be reviewed in Settings. No birth date/document/account or remote age profile is collected.
+Build37 removes the earlier blanket local adult-declaration UI and Unrated game labels. Supported iOS independently checks Apple regional eligibility and requests the required adult age band only where applicable, with failure/timeout handling. No per-game rating or scanning is claimed. App-level age-rating answers remain a separate draft, subject to actual Apple review.
 
 Prepare an adult-targeted age-rating override (18+ where offered) for unrestricted, unrated imports, with age assurance declared present. This is an engineering compliance design, not an official ESRB/PEGI rating. The actual App Store questionnaire must describe the shipped app and its imports honestly. No gambling service, messaging, advertising or commercial game collection is supplied.
 

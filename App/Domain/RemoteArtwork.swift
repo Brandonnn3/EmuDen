@@ -15,6 +15,9 @@ enum ArtworkNetwork {
         config.httpMaximumConnectionsPerHost = 2
         config.timeoutIntervalForRequest = 12
         config.timeoutIntervalForResource = 20
+        #if DEBUG && targetEnvironment(simulator)
+        if ProcessInfo.processInfo.environment["EMUDEN_TEST_ARTWORK"] == "1" { config.protocolClasses = [ArtworkCatalogQAProtocol.self] }
+        #endif
         return config
     }
 }
@@ -38,7 +41,7 @@ public struct ArtworkPackAsset: Codable, Equatable, Sendable {
         return kind == .cover ? (0.6...0.76).contains(ratio) && height >= 960
             : (1.3...2.4).contains(ratio) && ArtworkScenePolicy.isHighResolution(width: width, height: height)
     }
-    fileprivate func accepts(_ data: Data) -> Bool {
+    func accepts(_ data: Data) -> Bool {
         data.count == bytes && SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined() == sha256
     }
 }
@@ -49,7 +52,10 @@ public struct ArtworkPackGame: Decodable, Sendable {
     public let aliases: [String]
     public let programIDs: [String]
     public let cover: ArtworkPackAsset?
+    public let coverIsSceneFallback: Bool?
     public let scene: ArtworkPackAsset?
+    public let platform: GamePlatform?
+    public var console: GamePlatform { platform ?? .threeDS }
     public func asset(_ kind: ArtworkKind) -> ArtworkPackAsset? { kind == .cover ? cover : scene }
 }
 
@@ -59,18 +65,21 @@ public struct ArtworkPack: Decodable, Sendable {
     public let games: [ArtworkPackGame]
     private let ids: [String: Int]
     private let names: [String: Int]
-    private enum CodingKeys: String, CodingKey { case schema, version, baseURL, games }
+    private enum CodingKeys: String, CodingKey { case schema, version, baseURL, games, consoleGames }
 
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         version = try values.decode(Int.self, forKey: .version)
         baseURL = try values.decode(URL.self, forKey: .baseURL)
-        games = try values.decode([ArtworkPackGame].self, forKey: .games)
+        let legacy = try values.decode([ArtworkPackGame].self, forKey: .games)
+        let consoles = try values.decodeIfPresent([ArtworkPackGame].self, forKey: .consoleGames) ?? []
+        games = legacy + consoles
         guard try values.decode(Int.self, forKey: .schema) == 1, version > 0,
               baseURL.scheme == "https", baseURL.host?.isEmpty == false,
               baseURL.user == nil, baseURL.password == nil, baseURL.query == nil, baseURL.fragment == nil,
               baseURL.port == nil || baseURL.port == 443, baseURL.absoluteString.hasSuffix("/"),
-              (1...1000).contains(games.count) else {
+              (1...1000).contains(games.count), legacy.allSatisfy({ $0.console == .threeDS }),
+              consoles.allSatisfy({ ($0.platform == .ps1 || $0.platform == .gamecube) && $0.programIDs.isEmpty }) else {
             throw DecodingError.dataCorrupted(.init(codingPath: decoder.codingPath, debugDescription: "Invalid artwork catalog"))
         }
         var ids = [String: Int](), names = [String: Int](), keys = Set<String>()
@@ -89,8 +98,9 @@ public struct ArtworkPack: Decodable, Sendable {
                 ids[id] = index
             }
             for title in [game.title] + game.aliases {
-                let key = ArtworkCatalog.matchKey(title)
-                guard !key.isEmpty, title.count <= 200, names[key] == nil || names[key] == index else {
+                let titleKey = ArtworkCatalog.matchKey(title)
+                let key = game.console.rawValue + ":" + titleKey
+                guard !titleKey.isEmpty, title.count <= 200, names[key] == nil || names[key] == index else {
                     throw DecodingError.dataCorrupted(.init(codingPath: decoder.codingPath, debugDescription: "Ambiguous artwork title"))
                 }
                 names[key] = index
@@ -99,9 +109,10 @@ public struct ArtworkPack: Decodable, Sendable {
         self.ids = ids; self.names = names
     }
     public func match(_ game: Game) -> ArtworkPackGame? {
-        if let title = game.artworkTitle, !title.isEmpty { return names[ArtworkCatalog.matchKey(title)].map { games[$0] } }
-        if let id = game.programID?.uppercased(), let index = ids[id] { return games[index] }
-        return names[ArtworkCatalog.matchKey(game.title)].map { games[$0] }
+        let prefix = game.console.rawValue + ":"
+        if let title = game.artworkTitle, !title.isEmpty { return names[prefix + ArtworkCatalog.matchKey(title)].map { games[$0] } }
+        if game.console == .threeDS, let id = game.programID?.uppercased(), let index = ids[id] { return games[index] }
+        return names[prefix + ArtworkCatalog.matchKey(game.title)].map { games[$0] }
     }
 }
 
@@ -122,6 +133,17 @@ public actor RemoteArtworkCatalog {
     private var requests = [String: (id: UUID, task: Task<Data?, Never>)]()
     private var retryAfter = [String: Date]()
     private static let manifestLimit = 512 * 1024
+
+    public static func loadSource(_ text: String, session: URLSession? = nil) async throws -> ArtworkCatalogSource {
+        let url = try ArtworkCatalogSource.catalogURL(text)
+        let session = session ?? URLSession(configuration: ArtworkNetwork.configuration())
+        guard let data = await download(url, session: session, limit: manifestLimit) else {
+            try Task.checkCancellation()
+            throw ArtworkSourceError.unavailable
+        }
+        try Task.checkCancellation()
+        return try ArtworkCatalogSource(url: url, manifest: data)
+    }
 
     public init(seed: ArtworkPack, directory: URL, session: URLSession? = nil, initiallyEnabled: Bool = true) {
         self.seed = seed; self.directory = directory
@@ -218,12 +240,12 @@ public actor RemoteArtworkCatalog {
               let data = try? Data(contentsOf: url), data.count <= limit else { return nil }
         return data
     }
-    private static func download(_ url: URL, session: URLSession, limit: Int) async -> Data? {
+    static func download(_ url: URL, session: URLSession, limit: Int) async -> Data? {
         do {
             try Task.checkCancellation()
             var request = URLRequest(url: url); request.timeoutInterval = 20; request.cachePolicy = .reloadIgnoringLocalCacheData
             request.httpShouldHandleCookies = false
-            let (bytes, response) = try await session.bytes(for: request)
+            let (bytes, response) = try await session.bytes(for: request, delegate: ArtworkRedirectPolicy(origin: url))
             guard let response = response as? HTTPURLResponse, response.statusCode == 200,
                   response.url?.scheme == "https", response.url?.host == url.host, response.url?.port == url.port,
                   response.expectedContentLength <= Int64(limit) else { return nil }
@@ -236,5 +258,18 @@ public actor RemoteArtworkCatalog {
             try Task.checkCancellation()
             return data
         } catch { return nil }
+    }
+}
+
+final class ArtworkRedirectPolicy: NSObject, URLSessionTaskDelegate, @unchecked Sendable {
+    private let origin: URL
+    init(origin: URL) { self.origin = origin }
+    func allowed(_ target: URL) -> Bool {
+        target.scheme == "https" && target.host == origin.host && (target.port ?? 443) == (origin.port ?? 443)
+            && target.user == nil && target.password == nil
+    }
+    func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse,
+                    newRequest request: URLRequest, completionHandler: @escaping (URLRequest?) -> Void) {
+        completionHandler(request.url.map(allowed) == true ? request : nil)
     }
 }

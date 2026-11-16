@@ -41,7 +41,10 @@ final class ImmediateTouchView: UIView {
         guard let touch = activeTouch, touches.contains(touch) else { return }
         send(touch, down: false); activeTouch = nil
     }
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) { release() }
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = activeTouch, touches.contains(touch) else { return }
+        release()
+    }
     func release() {
         if activeTouch != nil { changed?(last, false); activeTouch = nil }
     }

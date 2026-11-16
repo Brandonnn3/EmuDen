@@ -1,11 +1,26 @@
-# Public submission handoff — build 21
+# Internal build28 and public-release hold
 
-Reuse the existing EmuDen app record. Do not create a duplicate or use the internal-only IPA as a public submission. Build 18 remains the owner's phone test build. Build21 keeps the tested core but its local-artwork/release controls still need final device validation.
+The owner requested one new local build with3DS, PS1 and GameCube. Build25/27
+and all older archives/source remain preserved. Build28 is local internal
+preparation only. No upload, public submission, agreements or purchases are
+authorized. Do not interpret a successful archive as public release clearance.
 
-Prepared decisions: free, United States only, manual release after review; only 3DS playable. StoreListing.json, PrivacyAnswers.json, AgeRatingAnswers.json and TipProducts.json contain reviewable field values. Public policy/support/source pages already exist. Current Review notes are in en-US/review-notes.txt. Contact details for Apple's private review form remain in Private/Contact.json and must not be copied to the public site/source.
+StoreListing/PrivacyAnswers/AgeRatingAnswers and en-US text are unsubmitted28
+drafts. Free/USA/manual public release remains the owner's plan. The exact
+source accompanies the local archive; public corresponding-source delivery,
+actual Apple/GPL distribution and name/presentation/provider/export decisions
+remain held in AppStoreReadiness.json. Reconcile actual signed phone/regional
+service/widget checks and truthful Apple forms before any future submission.
+Private contact belongs only in ignored Private/Contact.json and Apple's
+private review form. Never include it in a source package or public site.
 
-Live App Store Connect work remains: enter/check store metadata and categories, pricing/US availability, honest age/privacy questionnaire, export response as applicable, version/build selection, actual screenshots, content-rights declaration and agreements. Native Safari later allowed the listing, free US-only plan, general categories/subtitle, privacy URL and partial data disclosure to be saved. See Submission-Plan.md for exact pending fields. Do not infer other live fields or signed agreements from these local files.
+GameCube accepts original/owned MEM1 DOL and complete uncompressed GameCube
+ISO/GCM. RVZ/Wii are unsupported. Original GX/depth, full SI controls, audio,
+state/history/relaunch and raw-card persistence pass in owned Simulator.
+Native retail save-file allocation/compatibility and phone speed remain tests.
+PS1/3DS retain27 features and saves. Physical3DS motion and Duo folding remain
+phone checks; no owner's device or files were used during this preparation.
 
-Tips are optional for launch. If the owner has an active Paid Apps Agreement, banking/tax setup and wants tips immediately, create the three consumables, use their actual returned prices, supply review screenshots/notes, test Apple's sandbox and attach the first IAP submission as Apple requires. Otherwise leave products unavailable: the app remains entirely free with no tip card. Local StoreKit configuration tests do not prove live sandbox availability. Never use a real purchase to test.
-
-Build21 removes generated-character art/cover downloads and their old cache display. Masters and earlier assets remain outside the candidate. Release holds: GPL/store distribution terms and name screening remain documented questions, plus the live privacy/age forms, final distribution export and phone validation. Do not affirm an unsupported content-rights declaration. No qualified legal opinion or Apple acceptance is supplied by engineering preparation. Retain the generated images and older assets as the owner requested while these questions are settled. No public submission or automatic release is authorized by a passing technical validator.
+148 complete offline notices and pinned sanitized dependencies are bundled.
+Verify all six matching symbol bundles, private/resource exclusions, signatures
+and exact source inputs. The canceled automation must remain deleted.

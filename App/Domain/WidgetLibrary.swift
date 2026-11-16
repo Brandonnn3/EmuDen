@@ -28,6 +28,8 @@ enum EmuDenLink {
 struct WidgetGame: Codable, Equatable, Identifiable, Sendable {
     let id: UUID
     let title: String
+    var platform: String? = nil
+    var consoleName: String { platform == "ps1" ? "PLAYSTATION" : "NINTENDO 3DS" }
     var link: URL { EmuDenLink.game(id) }
     func imageURL(in directory: URL, scene: Bool = false) -> URL {
         directory.appendingPathComponent(id.uuidString + (scene ? "-scene.jpg" : "-cover.jpg"))

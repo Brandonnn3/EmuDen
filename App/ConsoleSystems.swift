@@ -3,8 +3,12 @@ import SwiftUI
 enum ConsoleSystem: String, CaseIterable, Identifiable {
     case threeDS = "3ds", psp, ps1, gamecube
     var id: String { rawValue }
-    var available: Bool { self == .threeDS }
-    static var visibleSystems: [ConsoleSystem] { [.threeDS] }
+    static var gameCubeAvailable: Bool {
+        Bundle.main.object(forInfoDictionaryKey:"EmuDenGameCubeEnabled") as? String == "YES" &&
+        Bundle.main.privateFrameworksPath.map { FileManager.default.fileExists(atPath:$0+"/EmuDenGameCube.framework/EmuDenGameCube") } == true
+    }
+    var available: Bool { self == .threeDS || self == .ps1 || (self == .gamecube && Self.gameCubeAvailable) }
+    static var visibleSystems: [ConsoleSystem] { allCases.filter(\.available) }
     var shortName: String {
         switch self { case .threeDS: "3DS"; case .psp: "PSP"; case .ps1: "PS1"; case .gamecube: "GC" }
     }

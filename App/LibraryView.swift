@@ -12,12 +12,16 @@ struct LibraryView: View {
     @State private var importing = false
     @State private var artworkGame: Game?
     @State private var settingsGame: Game?
+    @State private var deletingGame: Game?
+    @State private var renamingGame: Game?
+    @State private var renameText = ""
     @State private var pendingWidgetGameID: UUID?
     @State private var pendingHomebrew = false
     @State private var showingSystem = false
     @State private var showingMii = false
     @State private var showingLayout = false
     @State private var launch: Launch?
+    @State private var launchHost = LibraryLaunchHost()
     @State private var search = ""
     @State private var searching = false
     @State private var collection = false
@@ -26,40 +30,45 @@ struct LibraryView: View {
     @State private var selectedID: UUID?
     @State private var shelfPosition: UUID?
     @State private var handledLaunchArguments = false
+    @State private var initialConsoleChosen = false
     @State private var hoverTask: Task<Void, Never>?
-    @AppStorage("importedGameAccess") private var importedGameAccess = "undecided"
-    @State private var ageCheckedLaunch: Launch?
+    @AppStorage("favoriteConsole") private var favoriteConsole = "3ds"
+    @AppStorage("libraryOrder") private var libraryOrder = LibraryOrder.recentlyAdded
     @FocusState private var searchFocused: Bool
     @Namespace private var dockNamespace
     @Namespace private var searchNamespace
 
-    private var filtered: [Game] { library.sortedGames.filter { search.isEmpty || $0.title.localizedCaseInsensitiveContains(search) } }
+    private var filtered: [Game] {
+        let games = library.sortedGames.filter { $0.console.rawValue == system.rawValue && (search.isEmpty || ($0.displayName.localizedCaseInsensitiveContains(search) || $0.title.localizedCaseInsensitiveContains(search))) }
+        return collection || searching ? libraryOrder.sorted(games) : games
+    }
+    private var favoriteSystem: ConsoleSystem { ConsoleSystem(rawValue: favoriteConsole).flatMap { $0.available ? $0 : nil } ?? .threeDS }
     private var selected: Game? { filtered.first { $0.id == selectedID } ?? filtered.first }
     private var menuActive: Bool { launch == nil && !launchPending && !showingSystem && !showingLayout && !showingMii && !importing && artworkGame == nil && settingsGame == nil && !library.busy && scenePhase == .active }
     private var menuAudioActive: Bool { launch == nil && scenePhase == .active }
 
 
-    var body: some View {
+    private var libraryContent: some View {
         GeometryReader { geometry in
             ZStack(alignment: .topLeading) {
                 ConsoleBackdrop(moving: false)
                 if let division = foldDivision(in: geometry), !showingSystem {
                     let layout = DuoLayout(size: geometry.size, division: division, controls: false, immersive: true)
                     spotlight(size: layout.topPanel.size)
-                        .frame(width: layout.topPanel.width, height: layout.topPanel.height).clipped()
+                        .frame(width: layout.topPanel.width, height: layout.topPanel.height).contentShape(Rectangle()).clipped()
                         .position(x: layout.topPanel.midX, y: layout.topPanel.midY)
                         .accessibilityElement(children: .contain).accessibilityIdentifier("consoleSpotlightPanel")
                     VStack(spacing: 4) {
                         browser(folded: true)
                         if !searching { footer(compact: layout.bottomPanel.width < 260).transition(.opacity) }
-                    }.frame(width: layout.bottomPanel.width, height: layout.bottomPanel.height).clipped()
+                    }.frame(width: layout.bottomPanel.width, height: layout.bottomPanel.height).contentShape(Rectangle()).clipped()
                         .position(x: layout.bottomPanel.midX, y: layout.bottomPanel.midY)
                         .accessibilityElement(children: .contain).accessibilityIdentifier("consoleBrowsePanel")
                 } else {
                     CinematicScene(game: system.available ? selected : nil, system: system, subdued: showingSystem || collection || searching).ignoresSafeArea()
                     VStack(spacing: 0) {
                         header
-                        if showingSystem { SystemSetupView(testCore: launchHomebrew, testControls: launchControls, embedded: true) }
+                        if showingSystem { SystemSetupView(testCore: launchHomebrew, testControls: launchControls, embedded: true, system: system) }
                         else { browser() }
                         if !searching { footer(width: geometry.size.width, wide: geometry.size.width > geometry.size.height).transition(.opacity) }
                     }.padding(.top, geometry.size.height * 0.027)
@@ -68,22 +77,41 @@ struct LibraryView: View {
         }
         .ignoresSafeArea(.container, edges: .bottom)
         .foregroundStyle(.white).tint(.white).statusBarHidden(true)
-        .fileImporter(isPresented: $importing, allowedContentTypes: [.data], allowsMultipleSelection: true) { result in
+        .background { LibraryLaunchHostView(host: launchHost).allowsHitTesting(false).accessibilityHidden(true) }
+    }
+
+    var body: some View {
+        libraryContent
+        .fileImporter(isPresented: $importing, allowedContentTypes: [.data, .folder], allowsMultipleSelection: true) { result in
             switch result {
-            case .success(let urls): Task { await library.importGames(urls) }
+            case .success(let urls): Task {
+                let old = Set(library.games.map(\.id))
+                await library.importGames(urls)
+                if let game = library.games.last(where: { !old.contains($0.id) }) {
+                    system = ConsoleSystem(rawValue: game.console.rawValue) ?? .threeDS; selectedID = game.id
+                }
+            }
             case .failure(let error): library.error = error.localizedDescription
             }
         }
         .fullScreenCover(item: $artworkGame) { ArtworkEditorView(game: $0) }
         .sheet(item: $settingsGame) { PlayerSettingsView(game: $0) }
-        .fullScreenCover(isPresented: $showingLayout) { DuoLayoutSettingsView() }
-        .sheet(isPresented: $showingMii) { MiiSetupView() }
-        .sheet(item: $ageCheckedLaunch) { item in
-            ImportedGameAgeView { adult in
-                importedGameAccess = adult ? "adult" : "under18"; ageCheckedLaunch = nil
-                if adult { DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { beginLaunch(item) } }
+        .alert("Rename game", isPresented: Binding(get: { renamingGame != nil }, set: { if !$0 { renamingGame = nil } }), presenting: renamingGame) { game in
+            TextField("Game name", text: $renameText).accessibilityIdentifier("renameGameName")
+            Button("Save") {
+                library.renameGame(game, name: renameText)
+                renamingGame = nil
+            }.disabled(!Game.isValidDisplayName(renameText)).accessibilityIdentifier("confirmRenameGame")
+            Button("Cancel", role: .cancel) { renamingGame = nil }
+        } message: { _ in Text("Changes the name in EmuDen. Game files, saves and artwork stay in place.") }
+        .alert("Delete \(deletingGame?.displayName ?? "game") from EmuDen?", isPresented: Binding(get: { deletingGame != nil }, set: { if !$0 { deletingGame = nil } })) {
+            if let game = deletingGame {
+                Button("Delete game", role: .destructive) { deletingGame = nil; Task { await library.deleteGame(game) } }.accessibilityIdentifier("confirmDeleteGame")
             }
-        }
+            Button("Cancel", role: .cancel) { deletingGame = nil }
+        } message: { Text("Removes EmuDen’s imported copy and its library entry. Your original file in Files, saves, snapshots and saved artwork are kept.") }
+        .fullScreenCover(isPresented: $showingLayout) { DuoLayoutSettingsView(system: system) }
+        .sheet(isPresented: $showingMii) { MiiSetupView() }
         .fullScreenCover(item: $launch, onDismiss: openPendingWidgetGame) { item in
             PlayerView(launch: item, saves: library.storage.savesDirectory, onPreview: { image in
                 if let game = library.games.first(where: { library.storage.gameURL($0) == item.url }) { library.rememberScene(image, for: game) }
@@ -104,15 +132,21 @@ struct LibraryView: View {
         }
         .animation(ConsoleMotion.scene(reduceMotion), value: launchPending)
         .disabled(library.busy || launchPending)
-        .onAppear { repairSelection(); configureInput(); menuAudio.setActive(menuAudioActive) }
+        .onAppear {
+            if !initialConsoleChosen { system = favoriteSystem; initialConsoleChosen = true }
+            repairSelection(); configureInput(); menuAudio.setActive(menuAudioActive)
+        }
         .task {
             await library.prepareEmulationData()
             library.refreshWidgets()
         }
         .onChange(of: library.coreReady, initial: true) { _, ready in if ready { handleStartup(); openPendingWidgetGame() } }
-        .onChange(of: scenePhase) { _, phase in if phase == .active, library.coreReady { handleStartup(); openPendingWidgetGame(); library.refreshWidgets() } }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active, library.coreReady { handleStartup(); openPendingWidgetGame(); library.refreshWidgets() }
+            else if phase != .active { library.cancelArtworkImport() }
+        }
         .onChange(of: library.games) { _, _ in library.refreshWidgets() }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("EmuDenArtworkUpdated"))) { _ in library.refreshWidgets() }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("EmuDenArtworkUpdated")).receive(on: DispatchQueue.main)) { _ in library.refreshWidgets() }
         .onOpenURL(perform: openLink)
         .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in if let url = activity.webpageURL { openLink(url) } }
         .task(id: searching) {
@@ -141,29 +175,43 @@ struct LibraryView: View {
     private var header: some View {
       GeometryReader { area in
         CinematicGlassGroup {
-            HStack(spacing: 10) {
+            HStack(spacing: area.size.width < 300 ? 6 : 10) {
                 if !searching {
-                  if area.size.width >= 230 {
+                  if area.size.width >= 260 {
                     Text("EmuDen").font(.system(size: area.size.width > 600 ? 24 : 19, weight: .bold)).lineLimit(1).minimumScaleFactor(0.8)
                         .accessibilityLabel("EMUDEN").transition(.opacity)
-                  } else {
+                  } else if area.size.width >= 210 {
                     Image(systemName: "gamecontroller.fill").font(.system(size: 22, weight: .medium)).accessibilityLabel("EMUDEN")
                   }
-                    Spacer(minLength: 8)
+                    Spacer(minLength: area.size.width < 210 ? 0 : 8)
                 }
-                if !searching, area.size.width < 600, area.size.width >= 230 { controllerButton }
+                if !searching { headerConsolePicker; controllerButton }
                 searchControl(compact: area.size.width < 230)
-                if !searching, area.size.width >= 600 { controllerButton }
             }.frame(width: area.size.width, height: 48)
         }
-      }.frame(height: 48).padding(.horizontal, 28)
+      }.frame(height: 48).padding(.horizontal, 20)
             .animation(ConsoleMotion.response(reduceMotion), value: searching)
     }
 
     private var controllerButton: some View {
         Button { menuAudio.play(.open); showingLayout = true } label: {
-            Image(systemName: "gamecontroller").font(.system(size: 22, weight: .medium)).frame(width: 48, height: 48).cinematicGlass(radius: 24, interactive: true)
-        }.buttonStyle(ConsolePressStyle()).accessibilityLabel("Controller layout")
+            Group {
+                if system == .ps1 || system == .gamecube { DuoControllerArtwork(system: system).frame(width: 30, height: 17) }
+                else { Image(systemName: "gamecontroller").font(.system(size: 22, weight: .medium)) }
+            }.frame(width: 48, height: 48).cinematicGlass(radius: 24, interactive: true)
+        }.buttonStyle(ConsolePressStyle()).accessibilityLabel("Controller layout").accessibilityValue(system.name)
+    }
+
+    private var headerConsolePicker: some View {
+        Menu {
+            ForEach(ConsoleSystem.visibleSystems) { item in
+                Button { selectSystem(item) } label: { Label(item.name, systemImage: item == system ? "checkmark" : item.symbol) }
+                    .accessibilityIdentifier("header-system-\(item.rawValue)")
+            }
+        } label: {
+            Image(systemName: "square.stack.3d.up").font(.system(size: 20, weight: .medium))
+                .frame(width: 48, height: 48).cinematicGlass(radius: 24, interactive: true)
+        }.buttonStyle(ConsolePressStyle()).accessibilityLabel("Choose console").accessibilityValue(system.name).accessibilityIdentifier("headerConsolePicker")
     }
 
     @ViewBuilder private func searchControl(compact: Bool) -> some View {
@@ -193,10 +241,19 @@ struct LibraryView: View {
     }
 
     private func libraryFilters(wide: Bool) -> some View {
-        HStack(spacing: wide ? 16 : 12) {
-            consolePicker
-            librarySearch(compact: !wide)
-            if wide && ConsoleSystem.visibleSystems.contains(where: { !$0.available }) { plannedPicker }
+        VStack(spacing: 12) {
+            HStack(spacing: 12) {
+                consolePicker
+                if wide { librarySearch(compact: false) } else { Spacer(minLength: 0) }
+                Menu {
+                    Picker("Sort games", selection: $libraryOrder) {
+                        ForEach(LibraryOrder.allCases, id: \.self) { Text($0.title).tag($0) }
+                    }
+                } label: {
+                    Image(systemName: "arrow.up.arrow.down").frame(width: 44, height: 44).cinematicGlass(radius: 22, interactive: true)
+                }.accessibilityLabel("Sort games").accessibilityValue(libraryOrder.title).accessibilityIdentifier("librarySort")
+            }
+            if !wide { librarySearch(compact: false) }
         }
     }
 
@@ -209,11 +266,11 @@ struct LibraryView: View {
             }
         } label: {
             HStack(spacing: 9) {
-                Image(systemName: "rectangle.split.1x2").font(.system(size: 13))
-                Text("Nintendo 3DS").font(.system(size: 13, weight: .semibold)).lineLimit(1)
+                Image(systemName: system.symbol).font(.system(size: 13))
+                Text(system.name).font(.system(size: 13, weight: .semibold)).lineLimit(1)
                 Image(systemName: "chevron.down").font(.system(size: 10, weight: .semibold))
             }.foregroundStyle(ConsoleTheme.ink).padding(.horizontal, 14).frame(height: 40).background(.white, in: Capsule())
-        }.fixedSize(horizontal: true, vertical: false).frame(minHeight: 44).accessibilityIdentifier("consoleFilter").accessibilityLabel("Choose console")
+        }.fixedSize(horizontal: true, vertical: false).frame(minHeight: 44).accessibilityIdentifier("consoleFilter").accessibilityLabel("Choose console").accessibilityValue(system.name)
     }
 
     private func librarySearch(compact: Bool) -> some View {
@@ -241,9 +298,9 @@ struct LibraryView: View {
     private func browser(folded: Bool = false) -> some View {
         GeometryReader { area in
             if !system.available { plannedSystem(size: area.size) }
-            else if library.games.isEmpty { emptyLibrary.frame(maxWidth: .infinity, maxHeight: .infinity) }
-            else if filtered.isEmpty { ContentUnavailableView.search(text: search) }
             else if collection || searching { collectionGrid }
+            else if filtered.isEmpty && !searching { emptyLibrary.frame(maxWidth: .infinity, maxHeight: .infinity) }
+            else if filtered.isEmpty { ContentUnavailableView.search(text: search) }
             else if folded {
                 let height = min(230, max(56, min(area.size.height - 80, (area.size.width - 48) / 0.92)))
                 VStack(spacing: 8) { carousel(cardHeight: height); playButton() }
@@ -252,7 +309,7 @@ struct LibraryView: View {
                 let wide = area.size.width > 600
                 let gap: CGFloat = wide ? 14 : 6
                 let cardWidth = max(60, (area.size.width - (wide ? 48 : 28) - gap * 3) / 4)
-                let cardHeight = min(235, cardWidth / (wide ? 1.31 : 0.71))
+                let cardHeight = min(235, cardWidth / ArtworkCoverPolicy.posterAspect)
                 ScrollView {
                     VStack(alignment: .leading, spacing: 14) {
                         VStack(alignment: .leading, spacing: 14) { selectedInfo(wide: wide); playButton(wide: wide) }
@@ -275,13 +332,13 @@ struct LibraryView: View {
                 }
             } label: {
                 if wide {
-                    Label("Nintendo 3DS", systemImage: "rectangle.split.1x2").font(.system(size: 13, weight: .medium))
+                    Label(system.name, systemImage: system.symbol).font(.system(size: 13, weight: .medium))
                         .padding(.horizontal, 15).frame(height: 30).cinematicGlass(radius: 20, interactive: true)
                 } else {
-                    Text("NINTENDO 3DS").font(.system(size: 11, weight: .semibold)).tracking(0.8).frame(minHeight: 30)
+                    Text(system.name.uppercased()).font(.system(size: 11, weight: .semibold)).tracking(0.8).frame(minHeight: 30)
                 }
             }.accessibilityLabel("Choose console").accessibilityIdentifier("consoleFilter")
-            Text(selected.map { displayTitle($0.title).replacingOccurrences(of: " - ", with: "\n") } ?? "Your next adventure")
+            Text(selected.map { displayTitle($0).replacingOccurrences(of: " - ", with: "\n") } ?? "Your next adventure")
                 .font(.system(size: compact ? 25 : (wide ? 40 : 30), weight: .bold)).lineLimit(3).minimumScaleFactor(0.65)
                 .contentTransition(.opacity).accessibilityIdentifier("selectedGameTitle")
         }.frame(maxWidth: .infinity, alignment: .leading)
@@ -296,7 +353,7 @@ struct LibraryView: View {
                 .background(.white, in: Capsule()).shadow(color: .black.opacity(0.18), radius: 14, y: 6)
                 .frame(minHeight: 44).contentShape(Capsule())
         }.buttonStyle(ConsolePressStyle()).disabled(selected == nil)
-            .accessibilityIdentifier("startSelectedGame").accessibilityLabel(selected.map { "Play \(displayTitle($0.title))" } ?? "Start game")
+            .accessibilityIdentifier("startSelectedGame").accessibilityLabel(selected.map { "Play \(displayTitle($0))" } ?? "Start game")
     }
 
     private func carousel(cardHeight: CGFloat, wide: Bool = false) -> some View {
@@ -306,7 +363,7 @@ struct LibraryView: View {
                 ForEach(filtered) { game in
                     Button { selectGame(game) } label: { gameTile(game, height: cardHeight, wide: wide) }
                         .buttonStyle(ConsolePressStyle()).contextMenu { gameActions(game) }
-                        .accessibilityLabel("Select \(displayTitle(game.title))")
+                        .accessibilityLabel("Select \(displayTitle(game))")
                         .accessibilityIdentifier(selected?.id == game.id ? "selectedGameTile" : "gameTile-\(game.id)")
                         .accessibilityValue(selected?.id == game.id ? "Selected" : "")
                         .onHover { hover(game, inside: $0) }.id(game.id)
@@ -324,7 +381,7 @@ struct LibraryView: View {
 
     private func gameTile(_ game: Game, height: CGFloat, wide: Bool = false) -> some View {
         let focused = selected?.id == game.id
-        return GameArtwork(game: game, wide: wide).frame(width: height * (wide ? 1.31 : 0.71), height: height)
+        return GameArtwork(game: game).frame(width: height * ArtworkCoverPolicy.posterAspect, height: height)
             .contentShape(RoundedRectangle(cornerRadius: 15))
             .background(.black.opacity(0.45)).clipShape(RoundedRectangle(cornerRadius: 15))
             .overlay { RoundedRectangle(cornerRadius: 15).strokeBorder(.white.opacity(focused ? 0.95 : 0.15), lineWidth: focused ? 2 : 0.75) }
@@ -339,6 +396,11 @@ struct LibraryView: View {
             VStack(alignment: .leading, spacing: 20) {
                 Text(searching ? "Search games" : "Library").font(.system(.title).weight(.bold))
                 libraryFilters(wide: area.size.width > 600)
+                if filtered.isEmpty {
+                    ContentUnavailableView(search.isEmpty ? "No \(system.shortName) games yet" : "No matching games", systemImage: system.symbol,
+                        description: Text(search.isEmpty ? "Add games to this console to see them here." : "Try another title or clear your search."))
+                        .frame(maxWidth: .infinity).accessibilityIdentifier("emptyConsoleLibrary")
+                }
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 20), count: area.size.width > 600 ? 4 : (area.size.width > 280 ? 2 : 1)), alignment: .leading, spacing: 24) {
                     ForEach(filtered) { game in
                         Button {
@@ -346,11 +408,11 @@ struct LibraryView: View {
                             withAnimation(ConsoleMotion.response(reduceMotion)) { collection = false; searching = false; search = "" }
                         } label: {
                             VStack(alignment: .leading, spacing: 10) {
-                                GameArtwork(game: game).aspectRatio(0.71, contentMode: .fit).background(.black.opacity(0.3)).clipShape(RoundedRectangle(cornerRadius: 15))
+                                GameArtwork(game: game).aspectRatio(ArtworkCoverPolicy.posterAspect, contentMode: .fit).background(.black.opacity(0.3)).clipShape(RoundedRectangle(cornerRadius: 15))
                                     .overlay { RoundedRectangle(cornerRadius: 15).strokeBorder(.white.opacity(selected?.id == game.id ? 0.9 : 0.1), lineWidth: 1) }
-                                Text(displayTitle(game.title)).font(.system(.subheadline, design: .default).weight(.medium)).lineLimit(2).frame(maxWidth: .infinity, alignment: .leading)
+                                Text(displayTitle(game)).font(.system(.subheadline, design: .default).weight(.medium)).lineLimit(2).frame(maxWidth: .infinity, alignment: .leading)
                             }
-                        }.buttonStyle(ConsolePressStyle()).accessibilityLabel("Select \(displayTitle(game.title))")
+                        }.buttonStyle(ConsolePressStyle()).accessibilityLabel("Select \(displayTitle(game))")
                             .contextMenu { gameActions(game) }.onHover { hover(game, inside: $0) }
                     }
                 }
@@ -360,12 +422,12 @@ struct LibraryView: View {
     }
 
     @ViewBuilder private func gameActions(_ game: Game) -> some View {
-        Text("Age rating: Unrated · Adult access required")
         Button("Play game", systemImage: "play.fill") { selectedID = game.id; startSelected() }
+        Button("Rename game", systemImage: "pencil") { renameText = game.customTitle ?? game.artworkName; renamingGame = game }.accessibilityIdentifier("renameGame")
         Button("Change artwork", systemImage: "photo.stack") { menuAudio.play(.open); artworkGame = game }.accessibilityIdentifier("changeArtwork")
-        Button("Game settings", systemImage: "slider.horizontal.3") { settingsGame = game }
+        Button("Graphics settings", systemImage: "slider.horizontal.3") { settingsGame = game }
         ShareLink(item: EmuDenLink.game(game.id)) { Label("Share game link", systemImage: "link") }
-
+        Button("Delete game", systemImage: "trash", role: .destructive) { deletingGame = game }.accessibilityIdentifier("deleteGame").disabled(library.busy)
     }
 
     private func footer(width: CGFloat = 0, compact: Bool = false, wide: Bool = false) -> some View {
@@ -373,10 +435,10 @@ struct LibraryView: View {
         return layout {
             dockItem("Home", icon: "house", active: !collection && !showingSystem, compact: compact, wide: wide) { menuAudio.play(.confirm); backToHome() }.accessibilityIdentifier("consoleHome")
             dockItem("Library", icon: "book", active: collection && !showingSystem, compact: compact, wide: wide) {
-                menuAudio.play(.open); system = .threeDS; showingSystem = false
+                menuAudio.play(.open); showingSystem = false
                 withAnimation(ConsoleMotion.response(reduceMotion)) { collection = true; searching = false; search = "" }
             }.accessibilityIdentifier("consoleCollection")
-            dockItem("Add", icon: "plus", active: false, compact: compact, wide: wide) { menuAudio.play(.open); showingSystem = false; collection = true; system = .threeDS; importing = true }
+            dockItem("Add", icon: "plus", active: false, compact: compact, wide: wide) { menuAudio.play(.open); showingSystem = false; collection = true; importing = true }
                 .accessibilityLabel("Add games").accessibilityIdentifier("addGames")
             dockItem("Settings", icon: "gearshape", active: showingSystem, compact: compact, wide: wide) { menuAudio.play(.open); withAnimation(ConsoleMotion.response(reduceMotion)) { showingSystem = true; searching = false; search = "" } }.accessibilityLabel("System setup")
         }.padding(wide ? 8 : 6).cinematicGlass(radius: compact ? 26 : 60)
@@ -424,13 +486,20 @@ struct LibraryView: View {
 
     private var emptyLibrary: some View {
         VStack(spacing: 20) {
+            consolePicker
             Image(systemName: "gamecontroller.fill").font(.system(size: 48, weight: .light)).foregroundStyle(.white.opacity(0.85))
             Text("Your next adventure starts here.").font(.system(.title, design: .default).weight(.bold))
             Text("Add your games and make yourself at home.").font(.subheadline).foregroundStyle(ConsoleTheme.quiet)
             Button { menuAudio.play(.open); importing = true } label: {
                 Label("Add your first game", systemImage: "plus").font(.headline).padding(.horizontal, 24).frame(height: 50).foregroundStyle(ConsoleTheme.ink).background(.white, in: Capsule())
             }.buttonStyle(ConsolePressStyle())
-            Button("Launch 3DS test", action: launchHomebrew).font(.caption.weight(.medium)).frame(minHeight: 44).accessibilityIdentifier("launchHomebrew")
+            if system == .ps1 {
+                Button("Try the PS1 demo", action: launchPS1Demo).font(.caption.weight(.medium)).frame(minHeight: 44).accessibilityIdentifier("launchPS1Demo")
+            } else if system == .gamecube {
+                Button("Try the GameCube demo",action:launchGameCubeDemo).font(.caption.weight(.medium)).frame(minHeight:44).accessibilityIdentifier("launchGameCubeDemo")
+            } else {
+                Button("Launch 3DS test", action: launchHomebrew).font(.caption.weight(.medium)).frame(minHeight: 44).accessibilityIdentifier("launchHomebrew")
+            }
         }.multilineTextAlignment(.center).padding(24).cinematicEntrance()
     }
 
@@ -443,7 +512,7 @@ struct LibraryView: View {
         if ProcessInfo.processInfo.arguments.contains("--library-book-preview") { return CGRect(x: geometry.size.width / 2 - 10, y: 0, width: 20, height: geometry.size.height) }
 #endif
         if #available(iOS 27.1, *), let region = geometry.reservedRegions(kind: .division, options: [], layoutDirectionBehavior: .fixed).first {
-            return region.frame.inset(by: UIEdgeInsets(top: -region.margins.top, left: -region.margins.leading, bottom: -region.margins.bottom, right: -region.margins.trailing))
+            return DuoLayout.usableDivision(region.frame.inset(by: UIEdgeInsets(top: -region.margins.top, left: -region.margins.leading, bottom: -region.margins.bottom, right: -region.margins.trailing)), in: geometry.size)
         }
         return nil
     }
@@ -468,29 +537,23 @@ struct LibraryView: View {
         if !system.available { system = .threeDS }
         withAnimation(ConsoleMotion.response(reduceMotion)) { searching.toggle(); if !searching { search = "" } }
     }
-    private func backToHome() { withAnimation(ConsoleMotion.response(reduceMotion)) { showingSystem = false; system = .threeDS; collection = false; searching = false; search = "" } }
+    private func backToHome() { withAnimation(ConsoleMotion.response(reduceMotion)) { showingSystem = false; system = favoriteSystem; collection = false; searching = false; search = "" } }
     private func startSelected() {
         guard system.available, let game = selected else { return }; searchFocused = false
-        beginLaunch(Launch(title: game.title, url: library.storage.gameURL(game)))
+        beginLaunch(Launch(title: game.displayName, url: library.storage.gameURL(game), platform: game.console))
     }
     private func beginLaunch(_ item: Launch) {
         guard library.coreReady, !launchPending, launch == nil else { return }
-        if let url = item.url, url != Bundle.main.url(forResource: "boot", withExtension: "3dsx"),
-           !ImportedGameAccess.stored(importedGameAccess).allowsImportedGames {
-            if ImportedGameAccess.stored(importedGameAccess) == .under18 {
-                library.error = "Imported software is unrated and restricted to adults. The bundled homebrew demo is available. You can review your declared age group in Settings."
-            } else { ageCheckedLaunch = item }
-            return
-        }
         launchPending = true
         Task { @MainActor in
             defer { launchPending = false }
-            if let url = item.url, url != Bundle.main.url(forResource: "boot", withExtension: "3dsx"),
+            if let url = item.url, !isBundledDemo(url),
                !(await regionalAdultAccessAllowed()) { return }
-            guard UIApplication.shared.applicationState == .active else { return }
+            guard await waitForLaunchDisplay() else { library.error = "This display is still becoming active. Please try Play again."; return }
             let duration = max(reduceMotion ? 0 : 0.22, menuAudio.play(.launch))
             if duration > 0 { try? await Task.sleep(for: .seconds(duration)) }
-            if UIApplication.shared.applicationState == .active { launch = item }
+            if await waitForLaunchDisplay() { library.cancelArtworkImport(); launch = item }
+            else { library.error = "The active display changed before the game opened. Please try Play again." }
         }
     }
     @MainActor private func regionalAdultAccessAllowed() async -> Bool {
@@ -502,18 +565,25 @@ struct LibraryView: View {
                 try await AgeRangeService.shared.isEligibleForAgeFeatures
             }
             guard eligible else { return true }
-            guard let window = UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene })
-                .first(where: { $0.activationState == .foregroundActive })?.windows.first(where: \.isKeyWindow),
+            guard let window = launchHost.view?.window, window.windowScene?.activationState == .foregroundActive,
                   var presenter = window.rootViewController else {
                 library.error = "Age confirmation couldn’t open. Please try again."; return false
             }
             while let presented = presenter.presentedViewController { presenter = presented }
             let response = try await AgeRangeService.shared.requestAgeRange(ageGates: 18, in: presenter)
             if case .sharing(let range) = response,
-               ImportedGameAccess.isAdultAgeBand(lowerBound: range.lowerBound, upperBound: range.upperBound) { return true }
-            library.error = "Apple hasn’t confirmed an adult age range for imported software. The included homebrew demo is still available."
+               RegionalAgeAccess.isAdultAgeBand(lowerBound: range.lowerBound, upperBound: range.upperBound) { return true }
+            library.error = "Apple hasn’t confirmed eligibility for this app’s age restriction. The included homebrew demo is still available."
         } catch {
             library.error = "Apple’s regional age check is unavailable. Please try again before opening imported software. The included homebrew demo is still available."
+        }
+        return false
+    }
+    private var launchDisplayIsActive: Bool { launchHost.view?.window?.windowScene?.activationState == .foregroundActive }
+    @MainActor private func waitForLaunchDisplay() async -> Bool {
+        for _ in 0..<40 {
+            if launchDisplayIsActive { return true }
+            do { try await Task.sleep(for: .milliseconds(50)) } catch { return false }
         }
         return false
     }
@@ -525,8 +595,8 @@ struct LibraryView: View {
         guard let game = library.games.first(where: { $0.id == id }) else { library.error = "This game is no longer in your library."; return }
         guard FileManager.default.fileExists(atPath: library.storage.gameURL(game).path) else { library.error = "This game's file is missing. Import it again to play."; return }
         showingSystem = false; showingMii = false; showingLayout = false; artworkGame = nil; settingsGame = nil
-        searching = false; searchFocused = false; system = .threeDS; selectedID = game.id
-        beginLaunch(Launch(title: game.title, url: library.storage.gameURL(game)))
+        searching = false; searchFocused = false; system = ConsoleSystem(rawValue: game.console.rawValue) ?? .threeDS; selectedID = game.id
+        beginLaunch(Launch(title: game.displayName, url: library.storage.gameURL(game), platform: game.console))
     }
     private func openLink(_ url: URL) {
         guard let destination = EmuDenLink.destination(url) else { return }
@@ -549,10 +619,35 @@ struct LibraryView: View {
         if ProcessInfo.processInfo.arguments.contains("--input-test") { launch = Launch(title: "Input & display test", url: nil) }
         if ProcessInfo.processInfo.arguments.contains("--boot-homebrew"), launch == nil { launchHomebrew() }
 #if targetEnvironment(simulator)
+        if ProcessInfo.processInfo.arguments.contains("--boot-ps1-demo"), launch == nil { launchPS1Demo() }
+        let discDemo = ProcessInfo.processInfo.arguments.contains("--boot-gamecube-disc")
+        let gcmDemo = ProcessInfo.processInfo.arguments.contains("--boot-gamecube-gcm")
+        let gxCardDemo = ProcessInfo.processInfo.arguments.contains("--boot-gamecube-gx-card")
+        let demoName = gcmDemo ? "gamecube-gcm-demo" : (discDemo ? "gamecube-disc-demo" : (gxCardDemo ? "gamecube-gx-card" : "gamecube-demo"))
+        if (discDemo || gcmDemo || gxCardDemo || ProcessInfo.processInfo.arguments.contains("--boot-gamecube-demo")), launch == nil,
+           let bundled = Bundle.main.url(forResource: demoName, withExtension: gcmDemo ? "gcm" : (discDemo ? "iso" : "dol")) {
+            Task {
+                guard let fixture = try? Data(contentsOf: bundled), fixture.count <= 1024 * 1024 else { return }
+                @MainActor func matchingDemo() -> Game? {
+                    library.games.first { game in
+                        guard game.console == .gamecube, game.title == demoName else { return false }
+                        let url = library.storage.gameURL(game)
+                        guard (try? url.resourceValues(forKeys: [.fileSizeKey]).fileSize) == fixture.count else { return false }
+                        return (try? Data(contentsOf: url)) == fixture
+                    }
+                }
+                // Keep older QA saves; a changed original fixture gets a separate import.
+                if matchingDemo() == nil { await library.importGames([bundled]) }
+                if let game = matchingDemo() {
+                    launch = Launch(title: "EmuDen GameCube Homebrew", url: library.storage.gameURL(game), platform: .gamecube)
+                }
+            }
+        }
         if ProcessInfo.processInfo.arguments.contains("--boot-test-game"), launch == nil {
             let url = ProcessInfo.processInfo.environment["EMULATOR_TEST_ROM_PATH"].map { URL(fileURLWithPath: $0) }
                 ?? library.storage.root.appendingPathComponent("TestGames/MarioGolf.3ds")
-            if FileManager.default.fileExists(atPath: url.path) { launch = Launch(title: url.deletingPathExtension().lastPathComponent, url: url) }
+            let ext = url.pathExtension.lowercased()
+            if FileManager.default.fileExists(atPath: url.path) { launch = Launch(title: url.deletingPathExtension().lastPathComponent, url: url, platform: ext == "dol" ? .gamecube : (["chd", "cue", "exe"].contains(ext) ? .ps1 : .threeDS)) }
         }
 #endif
         configureInput()
@@ -560,7 +655,7 @@ struct LibraryView: View {
     private func confirmSelection() { if system.available { startSelected() } else { selectSystem(.threeDS) } }
     private func selectSystem(_ value: ConsoleSystem) {
         guard value != system else { return }; menuAudio.play(value.available ? .confirm : .planned)
-        withAnimation(ConsoleMotion.response(reduceMotion)) { search = ""; searching = false; collection = false; system = value }
+        withAnimation(ConsoleMotion.response(reduceMotion)) { system = value; showingSystem = false; if !collection { search = ""; searching = false } }
     }
     private func moveSystem(_ offset: Int) { let list = ConsoleSystem.visibleSystems; let index = list.firstIndex(of: system) ?? 0; selectSystem(list[(index + offset + list.count) % list.count]) }
     private func back() { if searching { toggleSearch() } else { menuAudio.play(.back); backToHome() } }
@@ -578,6 +673,7 @@ struct LibraryView: View {
             }
         }
     }
+    private func displayTitle(_ game: Game) -> String { game.customTitle ?? displayTitle(game.title) }
     private func displayTitle(_ title: String) -> String {
         title.replacingOccurrences(of: #"\s*\([^)]*\)"#, with: "", options: .regularExpression)
             .replacingOccurrences(of: #"^(.+), The( - |$)"#, with: "The $1$2", options: .regularExpression)
@@ -588,29 +684,63 @@ struct LibraryView: View {
         guard let url = Bundle.main.url(forResource: "boot", withExtension: "3dsx") else { library.error = "The bundled homebrew test is missing from this build."; return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { beginLaunch(Launch(title: "3DS Homebrew Menu", url: url)) }
     }
+    private func launchPS1Demo() {
+        guard library.coreReady else { return }
+        guard let url = Bundle.main.url(forResource: "ps1-demo", withExtension: "exe") else { library.error = "The PS1 homebrew demo is missing from this build."; return }
+        beginLaunch(Launch(title: "EmuDen PS1 Demo", url: url, platform: .ps1))
+    }
+    private func isBundledDemo(_ url: URL) -> Bool {
+        [("boot","3dsx"),("ps1-demo","exe"),("gamecube-demo","dol")].contains { url == Bundle.main.url(forResource:$0.0,withExtension:$0.1) }
+    }
+    private func launchGameCubeDemo() {
+        guard ConsoleSystem.gameCubeAvailable,let url=Bundle.main.url(forResource:"gamecube-demo",withExtension:"dol") else { return }
+        beginLaunch(Launch(title:"EmuDen GameCube Demo",url:url,platform:.gamecube))
+    }
+}
+
+@MainActor private final class LibraryLaunchHost {
+    weak var view: UIView?
+}
+
+private struct LibraryLaunchHostView: UIViewRepresentable {
+    let host: LibraryLaunchHost
+    func makeUIView(context: Context) -> UIView {
+        let view = UIView(); view.isUserInteractionEnabled = false; host.view = view
+        return view
+    }
+    func updateUIView(_ view: UIView, context: Context) { host.view = view }
 }
 
 struct GameArtwork: View {
     @EnvironmentObject private var library: GameLibrary
     let game: Game
-    var wide = false
     @State private var image: UIImage?
     var body: some View {
         GeometryReader { geometry in
             ZStack {
                 if let image {
-                    Image(uiImage: image).resizable().scaledToFill().frame(width: geometry.size.width, height: geometry.size.height, alignment: .top)
-                } else { ConsoleArtwork(title: game.title) }
+                    Image(uiImage: image).resizable().scaledToFill()
+                        .frame(width: geometry.size.width, height: geometry.size.height)
+                } else if game.console == .ps1 { ConsoleEmblem(system: .ps1).frame(maxWidth: .infinity, maxHeight: .infinity).background(ConsoleTheme.ink) }
+                else if game.console == .gamecube { ConsoleEmblem(system: .gamecube).frame(maxWidth: .infinity, maxHeight: .infinity).background(ConsoleTheme.ink) }
+                else { ConsoleArtwork(title: game.displayName) }
             }.clipped()
         }.contentShape(Rectangle()).accessibilityHidden(true)
         .task(id: "\(game.id)-\(library.artworkRevision)") {
             let chosen = await library.artwork.image(for: game)
-            if !Task.isCancelled { image = chosen }
+            guard !Task.isCancelled else { return }
+            if game.console == .threeDS, let cg = chosen?.cgImage {
+                let width = ArtworkCoverPolicy.frontWidth(width: cg.width, height: cg.height)
+                if width < cg.width, let front = cg.cropping(to: CGRect(x: 0, y: 0, width: width, height: cg.height)) {
+                    image = UIImage(cgImage: front); return
+                }
+            }
+            image = chosen
         }
     }
 }
 
-// Original illustrations are used until the user chooses a local cover image.
+// Original illustrations are used until a cover is available.
 private struct ConsoleArtwork: View {
     let title: String
     private var theme: Int {

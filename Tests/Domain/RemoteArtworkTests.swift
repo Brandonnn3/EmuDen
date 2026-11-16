@@ -35,6 +35,31 @@ import CryptoKit
         XCTAssertEqual(accepted?.data, bytes); XCTAssertEqual(ArtworkProtocol.count, 1)
     }
     private let root = URL(string: "https://artwork.example/")!
+    func testConsoleDownloadsUseVerifiedCacheAcrossOfflineRelaunch() async throws {
+        var json = manifest(), entries = [[String: Any]](), games = [Game](), images = [Data]()
+        let transport = session(), folder = try directory()
+        for platform in [GamePlatform.ps1, .gamecube] {
+            let key = platform.rawValue + "-homebrew", bytes = Data((platform.rawValue + " original image").utf8)
+            let image = asset(bytes, key: key)
+            entries.append(["key": key, "title": "Same homebrew", "aliases": [], "programIDs": [], "platform": platform.rawValue, "cover": image])
+            games.append(Game(title: "Same homebrew", fileName: "original", platform: platform)); images.append(bytes)
+            ArtworkProtocol.reply("/" + (image["path"] as! String), data: bytes)
+        }
+        json["consoleGames"] = entries
+        let source = try pack(json), catalog = RemoteArtworkCatalog(seed: source, directory: folder, session: transport)
+        for (index, game) in games.enumerated() {
+            let downloaded = await catalog.image(for: game, kind: .cover)
+            XCTAssertEqual(downloaded?.data, images[index])
+        }
+        XCTAssertEqual(ArtworkProtocol.count, 2)
+        await catalog.setFetchingEnabled(false)
+        let offline = RemoteArtworkCatalog(seed: source, directory: folder, session: transport, initiallyEnabled: false)
+        for (index, game) in games.enumerated() {
+            let cached = await offline.cachedImage(for: game, kind: .cover)
+            XCTAssertEqual(cached?.data, images[index])
+        }
+        XCTAssertEqual(ArtworkProtocol.count, 2)
+    }
     private let game = Game(title: "Renamed", fileName: "a.cci", programID: "00040000000CCE00")
     private func asset(_ bytes: Data, key: String = "donkey-kong", scene: Bool = false) -> [String: Any] {
         let digest = SHA256.hash(data: bytes).map { String(format: "%02x", $0) }.joined()
@@ -73,6 +98,16 @@ import CryptoKit
         var override = game; override.artworkTitle = "Another game"
         XCTAssertNil(catalog.match(override), "An explicit artwork choice must override the ROM ID")
     }
+    func testCatalogDistinguishesPortraitCoversFromSceneCropsWithoutBreakingOlderSources() throws {
+        XCTAssertNil(try pack(manifest()).match(game)?.coverIsSceneFallback)
+        var json = manifest(), entries = json["games"] as! [[String: Any]]
+        entries[0]["coverIsSceneFallback"] = true; json["games"] = entries
+        XCTAssertEqual(try pack(json).match(game)?.coverIsSceneFallback, true)
+        entries[0]["coverIsSceneFallback"] = false; json["games"] = entries
+        XCTAssertEqual(try pack(json).match(game)?.coverIsSceneFallback, false)
+        entries[0]["coverIsSceneFallback"] = "yes"; json["games"] = entries
+        XCTAssertThrowsError(try pack(json))
+    }
     func testWidgetCacheReadsNeverDownloadAndRejectChangedBytes() async throws {
         let json = manifest(), folder = try directory(), transport = session(), bytes = Data("first image".utf8)
         let catalog = RemoteArtworkCatalog(seed: try pack(json), directory: folder, session: transport)
@@ -88,11 +123,27 @@ import CryptoKit
         let damaged = await catalog.cachedImage(for: game, kind: .cover)
         XCTAssertNil(damaged); XCTAssertEqual(ArtworkProtocol.count, 1)
     }
-    func testReleaseDoesNotBundleOrCompileTheRemoteArtworkService() throws {
+    func testReleaseHasNoBundledDefaultCatalogOrHardcodedProvider() throws {
         let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
         XCTAssertFalse(FileManager.default.fileExists(atPath: root.appendingPathComponent("Resources/CinematicArt/Artwork-Pack.json").path))
         let project = try String(contentsOf: root.appendingPathComponent("EmulatorApp.xcodeproj/project.pbxproj"), encoding: .utf8)
-        XCTAssertFalse(project.contains("App/Domain/RemoteArtwork.swift in Sources"))
+        XCTAssertTrue(project.contains("App/Domain/RemoteArtwork.swift in Sources"))
+        let source = try String(contentsOf: root.appendingPathComponent("App/GameLibrary.swift"), encoding: .utf8)
+        XCTAssertFalse(source.contains("emuden-artwork-catalog"))
+        XCTAssertFalse(source.contains("onlineArtworkEnabled"))
+    }
+
+    func testUserLinkPreviewDownloadsOnlyTheManifestAndRejectsForeignImageOrigin() async throws {
+        let transport = session()
+        ArtworkProtocol.reply("/catalog.json", data: try encode(manifest()))
+        let source = try await RemoteArtworkCatalog.loadSource(root.absoluteString, session: transport)
+        XCTAssertEqual(source.url, root.appendingPathComponent("catalog.json"))
+        XCTAssertEqual(ArtworkImportPlan(pack: source.pack, games: [game]).items.count, 1)
+        XCTAssertEqual(ArtworkProtocol.count, 1, "A preview must not download images")
+        var foreign = manifest(); foreign["baseURL"] = "https://another.example/"
+        ArtworkProtocol.reply("/catalog.json", data: try encode(foreign))
+        do { _ = try await RemoteArtworkCatalog.loadSource(root.absoluteString, session: transport); XCTFail("Foreign asset host accepted") }
+        catch { XCTAssertTrue(error is ArtworkSourceError) }
     }
 
     func testSceneAvailabilityUsesMetadataWithoutDownloadingAndFollowsUpdates() async throws {

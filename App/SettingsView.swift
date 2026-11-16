@@ -9,41 +9,36 @@ struct SystemSetupView: View {
     @State private var playerSettings = false
     @State private var miiSetup = false
     @State private var duoLayout = false
-    @State private var importingMii = false
-    @State private var importingFolder = false
     @State private var importingAvatar = false
     @State private var showingWidgets = false
     @State private var soundOptions = false
     @State private var showingNotices = false
+    @State private var showingArtworkCatalog = false
     @AppStorage("buttonHaptics") private var haptics = true
-    @AppStorage("asyncShaderCompilation") private var asyncShaders = true
-    @AppStorage("showFPS") private var showFPS = false
-    @AppStorage("importedGameAccess") private var importedGameAccess = "undecided"
-    @State private var showingAgeChoice = false
+        @AppStorage("favoriteConsole") private var favoriteConsole = "3ds"
     @StateObject private var tips = TipJarStore()
     let testCore: () -> Void
     let testControls: () -> Void
     var embedded = false
+    var system: ConsoleSystem = .threeDS
 
     var body: some View {
         Group {
             if embedded { content }
             else {
                 NavigationStack {
-                    content.background { CinematicScene(game: library.featuredGame, subdued: true).ignoresSafeArea() }
+                    content.background { CinematicScene(game: library.featuredGame.flatMap { $0.console.rawValue == system.rawValue ? $0 : nil }, system: system, subdued: true).ignoresSafeArea() }
                         .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { menuAudio.play(.back); dismiss() }.accessibilityIdentifier("settingsDone") } }
                 }
             }
         }.tint(.green).foregroundStyle(.white).buttonStyle(ConsolePressStyle())
-            .sheet(isPresented: $playerSettings) { PlayerSettingsView() }
+            .sheet(isPresented: $playerSettings) { PlayerSettingsView(initialSystem: system) }
             .sheet(isPresented: $showingWidgets) { WidgetShowcaseView() }
             .sheet(isPresented: $miiSetup) { MiiSetupView() }
-            .sheet(isPresented: $showingAgeChoice) { ImportedGameAgeView { adult in importedGameAccess = adult ? "adult" : "under18"; showingAgeChoice = false } }
             .sheet(isPresented: $showingNotices) { OpenSourceNoticesView() }
+            .sheet(isPresented: $showingArtworkCatalog) { ArtworkCatalogView() }
             .task { await tips.load() }
-            .fullScreenCover(isPresented: $duoLayout) { DuoLayoutSettingsView() }
-            .fileImporter(isPresented: $importingMii, allowedContentTypes: [.item]) { importFile($0, archive: true) }
-            .fileImporter(isPresented: $importingFolder, allowedContentTypes: [.folder]) { importFile($0, archive: false) }
+            .fullScreenCover(isPresented: $duoLayout) { DuoLayoutSettingsView(system: system) }
             .fileImporter(isPresented: $importingAvatar, allowedContentTypes: [.image]) { result in
                 switch result {
                 case .success(let url): Task { await library.importAvatar(url) }
@@ -60,20 +55,26 @@ struct SystemSetupView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     Text("Settings").font(.system(size: 32, weight: .bold)).cinematicEntrance()
+                    VStack(alignment: .leading, spacing: 12) {
+                        Label("Your Home console", systemImage: "house").font(.headline)
+                        Picker("Favorite console", selection: $favoriteConsole) {
+                            ForEach(ConsoleSystem.visibleSystems) { Text($0.name).tag($0.rawValue) }
+                        }.accessibilityIdentifier("favoriteConsole")
+                        Text("Home opens this console, including when you launch EmuDen. Use the console button at the top to browse another console anytime.")
+                            .font(.caption).foregroundStyle(ConsoleTheme.quiet)
+                    }.cinematicCard()
                     let layout = area.size.width >= 650 ? AnyLayout(HStackLayout(alignment: .top, spacing: 22)) : AnyLayout(VStackLayout(spacing: 18))
                     layout {
-                        VStack(spacing: 18) { performanceCard; appearanceCard }.frame(maxWidth: .infinity)
-                        VStack(spacing: 18) { miiCard; layoutCard }.frame(maxWidth: .infinity)
+                        VStack(spacing: 18) { performanceCard; layoutCard }.frame(maxWidth: .infinity)
+                        VStack(spacing: 18) { appearanceCard; systemCard }.frame(maxWidth: .infinity)
                     }.cinematicEntrance(delay: 0.04)
                     VStack(alignment: .leading, spacing: 14) {
-                        Label("Artwork & privacy", systemImage: "photo.on.rectangle.angled").font(.headline)
-                        Text("Choose a game’s cover or background from Files using Change artwork in its menu. Images and captured gameplay previews stay on your device; this release does not download game artwork.")
+                        Label("Library & artwork", systemImage: "photo.on.rectangle.angled").font(.headline)
+                        Button { showingArtworkCatalog = true; menuAudio.play(.open) } label: {
+                            CinematicSettingRow(title: "Artwork catalogs", detail: library.artworkSourceURL == nil && library.boxArtSourceURL == nil ? "Automatic covers & backgrounds" : "Connected · Manage artwork", symbol: "photo.stack")
+                        }.accessibilityIdentifier("openArtworkCatalog")
+                        Text("Connect an original box-art collection for automatic covers and a separate catalog for backgrounds. You can also choose images from Files. Saved images work offline; no service is enabled by default.")
                             .font(.caption).foregroundStyle(ConsoleTheme.quiet).accessibilityIdentifier("localArtworkPolicy")
-                        Divider()
-                        Button { showingAgeChoice = true } label: { CinematicSettingRow(title: "Imported game access", detail: importedGameAccess == "adult" ? "Adult access confirmed" : "Unrated imports require adult confirmation", symbol: "person.crop.circle.badge.checkmark") }
-                            .accessibilityIdentifier("importedGameAccess")
-                        Text("Imported software is unrated by EmuDen. Play is restricted to users who declare they are 18 or older. The bundled homebrew demo stays available. Only your choice is stored locally; no birth date or identity document is requested.")
-                            .font(.caption).foregroundStyle(ConsoleTheme.quiet)
                     }.cinematicCard()
                     if !tips.products.isEmpty {
                         VStack(alignment: .leading, spacing: 14) {
@@ -112,7 +113,7 @@ struct SystemSetupView: View {
                             }
                             Text("EmuDen 0.1.0 · Build \(Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "—")")
                             Text("Azahar 2127.0-rc1 · GPL-3.0-or-later\n3DS Homebrew Menu 2.4.4 · bundled notice\nMoltenVK 1.4.2 · Apache-2.0").font(.caption).foregroundStyle(ConsoleTheme.quiet)
-                            Text("No Nintendo games or system resources are bundled. Only Nintendo 3DS is currently playable.").font(.caption).foregroundStyle(ConsoleTheme.quiet)
+                            Text(ConsoleSystem.gameCubeAvailable ? "Nintendo 3DS, PlayStation and GameCube are included in this internal test build. No commercial games or proprietary system resources are bundled." : "Nintendo 3DS and PlayStation are playable. No commercial games or proprietary system resources are bundled.").font(.caption).foregroundStyle(ConsoleTheme.quiet)
                             Link("Azahar source & release notes", destination: URL(string: "https://github.com/azahar-emu/azahar/releases/tag/2127.0-rc1")!)
                         }.padding(.top, 12)
                     }.font(.caption).foregroundStyle(ConsoleTheme.quiet)
@@ -122,17 +123,33 @@ struct SystemSetupView: View {
     }
 
     private var performanceCard: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Label("3DS performance", systemImage: "rectangle.split.1x2").font(.headline)
-            Toggle("Reduce shader pauses", isOn: $asyncShaders).font(.subheadline)
-                .onChange(of: asyncShaders) { _, _ in menuAudio.play(.focus) }
-            Divider()
-            ResolutionSetting()
-            Toggle("Show FPS", isOn: $showFPS).font(.subheadline).accessibilityIdentifier("showFPS")
-                .onChange(of: showFPS) { _, _ in menuAudio.play(.focus) }
+        VStack(alignment: .leading, spacing: 14) {
+            Label("Graphics & display", systemImage: "sparkles.tv").font(.headline)
+            Text("Choose resolution, textures and picture sizing for each console.").font(.subheadline).foregroundStyle(ConsoleTheme.quiet)
             Button { menuAudio.play(.open); playerSettings = true } label: {
-                CinematicSettingRow(title: "Graphics & performance", detail: "Defaults, shader cache and frame graph", symbol: "slider.horizontal.3")
+                CinematicSettingRow(title: "Graphics settings", detail: system.name + " · App defaults & game overrides", symbol: "slider.horizontal.3")
             }.accessibilityIdentifier("advancedPlayerSettings")
+        }.cinematicCard()
+    }
+    private var systemCard: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Label("Console setup", systemImage: "externaldrive").font(.headline)
+            Button { menuAudio.play(.open); miiSetup = true } label: {
+                CinematicSettingRow(title: "3DS system & Miis", detail: library.mii.archiveFound ? "Original face resources ready" : "Import resources or choose a profile picture", symbol: "person.crop.circle")
+            }.accessibilityIdentifier("openMiiSetup")
+            Button { menuAudio.play(.open); importingAvatar = true } label: {
+                HStack(spacing: 12) {
+                    Group {
+                        if let image = library.miiAvatar { Image(uiImage: image).resizable().scaledToFill().accessibilityIdentifier("customMiiAvatar") }
+                        else { Image(systemName: "person.crop.circle.fill").resizable().scaledToFit() }
+                    }.frame(width: 38, height: 38).clipShape(Circle())
+                    Text("Profile picture").font(.subheadline)
+                    Spacer(); Image(systemName: "photo")
+                }.frame(minHeight: 44)
+            }.accessibilityIdentifier("miiAvatar").accessibilityLabel("Choose Mii profile picture")
+                .accessibilityValue(library.miiAvatar == nil ? "Default portrait" : "Custom portrait")
+                .contextMenu { if library.miiAvatar != nil { Button("Reset profile picture", role: .destructive) { library.resetAvatar() } } }
+            Text("PlayStation BIOS and save options are in Graphics settings → Saves & system.").font(.caption).foregroundStyle(ConsoleTheme.quiet)
         }.cinematicCard()
     }
     private var appearanceCard: some View {
@@ -153,46 +170,16 @@ struct SystemSetupView: View {
             }.font(.caption)
         }.cinematicCard()
     }
-    private var miiCard: some View {
-        VStack(alignment: .leading, spacing: 15) {
-            Label("Mii faces", systemImage: "person.crop.circle").font(.headline)
-            HStack(spacing: 14) {
-                Button { menuAudio.play(.open); importingAvatar = true } label: {
-                    ZStack(alignment: .bottomTrailing) {
-                        Group {
-                            if let image = library.miiAvatar { Image(uiImage: image).resizable().scaledToFill().accessibilityIdentifier("customMiiAvatar") }
-                            else { Image(systemName: "person.crop.circle.fill").resizable().scaledToFit().foregroundStyle(ConsoleTheme.blue) }
-                        }.frame(width: 54, height: 54).clipShape(Circle())
-                        Image(systemName: library.mii.archiveFound ? "checkmark.circle.fill" : "plus.circle.fill")
-                            .font(.system(size: 17)).foregroundStyle(library.mii.archiveFound ? .green : .white).background(.black, in: Circle()).offset(x: 3, y: 3)
-                    }
-                }.accessibilityLabel("Choose Mii profile picture").accessibilityIdentifier("miiAvatar")
-                    .accessibilityValue(library.miiAvatar == nil ? "Default portrait" : "Custom portrait")
-                    .contextMenu { if library.miiAvatar != nil { Button("Reset profile picture", role: .destructive) { library.resetAvatar() } } }
-                Text(library.mii.archiveFound ? "Original faces ready" : "Using guest face").font(.subheadline.weight(.medium))
-            }
-            Button { menuAudio.play(.open); importingMii = true } label: { CinematicActionLabel(title: "Import Mii file", symbol: "square.and.arrow.down", primary: true) }
-            Button { menuAudio.play(.open); importingFolder = true } label: {
-                CinematicActionLabel(title: "Import system folder", symbol: "folder")
-            }.cinematicGlass(radius: 28, interactive: true)
-            Text("Face archives supply shared models, not a personal avatar. Tap the portrait to choose a Mii picture or another image.").font(.caption).foregroundStyle(ConsoleTheme.quiet)
-        }.cinematicCard()
-    }
     private var layoutCard: some View {
-        VStack(spacing: 0) {
-            Button { menuAudio.play(.open); duoLayout = true } label: { CinematicSettingRow(title: "Duo layout", detail: "Console skin and expanded screens", symbol: "rectangle.split.1x2") }.accessibilityIdentifier("openDuoLayout")
-            Divider()
-            Button { menuAudio.play(.open); playerSettings = true } label: { CinematicSettingRow(title: "Player settings", detail: "Performance and controls", symbol: "slider.horizontal.3") }.accessibilityLabel("Player settings")
-            Divider()
-            Button { menuAudio.play(.open); miiSetup = true } label: { CinematicSettingRow(title: "Mii setup details", detail: "Compatibility and personal Miis", symbol: "person.crop.circle") }.accessibilityIdentifier("openMiiSetup")
+        VStack(alignment: .leading, spacing: 14) {
+            Label("Controls & Duo", systemImage: "gamecontroller").font(.headline)
+            Button { menuAudio.play(.open); duoLayout = true } label: {
+                CinematicSettingRow(title: "Duo layout", detail: system.name + " · Skin and controller display", symbol: "rectangle.split.1x2")
+            }.accessibilityIdentifier("openDuoLayout")
+            Text("To move touch buttons and sticks, open a game, then Game menu → More → Customize controls. Layouts are saved separately for each console and orientation.").font(.caption).foregroundStyle(ConsoleTheme.quiet)
         }.cinematicCard()
     }
-    private func importFile(_ result: Result<URL, Error>, archive: Bool) {
-        switch result {
-        case .success(let url): Task { await library.importSystem(url, miiArchive: archive); if library.error == nil { menuAudio.play(.save) } }
-        case .failure(let error): library.error = error.localizedDescription
-        }
-    }
+
 }
 
 private struct OpenSourceNoticesView: View {
@@ -248,24 +235,6 @@ private struct NoticeTextView: UIViewRepresentable {
     }
     func updateUIView(_ view: UITextView, context: Context) {
         if view.text != text { view.text = text }
-    }
-}
-
-struct ImportedGameAgeView: View {
-    let choose: (Bool) -> Void
-    var body: some View {
-        VStack(alignment: .leading, spacing: 22) {
-            Image(systemName: "person.crop.circle.badge.checkmark").font(.system(size: 42)).foregroundStyle(ConsoleTheme.blue)
-            Text("Your games. Your age group.").font(.system(size: 32, weight: .bold))
-            Text("Imported games and homebrew are unrated by EmuDen and may contain mature content. You must be 18 or older to enable imported software. The bundled homebrew demo remains available.")
-                .foregroundStyle(ConsoleTheme.quiet)
-            Text("Your choice stays on this device. No date of birth or identity document is collected.").font(.caption).foregroundStyle(ConsoleTheme.quiet)
-            Spacer(minLength: 12)
-            Button { choose(true) } label: { CinematicActionLabel(title: "I’m 18 or older", symbol: "checkmark", primary: true) }.accessibilityIdentifier("confirmAdultAccess")
-            Button { choose(false) } label: { CinematicActionLabel(title: "I’m under 18", symbol: "arrow.uturn.backward", disclosure: false) }.accessibilityIdentifier("restrictImportedAccess")
-        }.padding(30).frame(maxWidth: 660).frame(maxWidth: .infinity)
-            .foregroundStyle(.white).background(ConsoleTheme.ink.ignoresSafeArea()).tint(ConsoleTheme.blue)
-            .buttonStyle(ConsolePressStyle()).presentationDetents([.large])
     }
 }
 
@@ -374,7 +343,7 @@ struct WidgetShowcaseView: View {
         }.foregroundStyle(.white).statusBarHidden(true)
             .task {
                 library.refreshWidgets()
-                snapshot = WidgetLibrary(games: Array(library.sortedGames.prefix(4)).map { WidgetGame(id: $0.id, title: $0.artworkName) }, updated: Date())
+                snapshot = WidgetLibrary(games: Array(library.sortedGames.prefix(4)).map { WidgetGame(id: $0.id, title: $0.customTitle ?? $0.artworkName) }, updated: Date())
                 directory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: WidgetLibrary.groupID)?.appendingPathComponent(WidgetLibrary.directoryName, isDirectory: true)
                 try? await Task.sleep(for: .seconds(3))
                 if let directory, let saved = WidgetLibrary.read(from: directory) { snapshot = saved }

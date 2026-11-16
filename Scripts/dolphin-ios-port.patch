@@ -1,0 +1,404 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5ea7f8e..2a89d07 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -468,6 +468,17 @@ if(ENABLE_HEADLESS)
+   set(USE_DISCORD_PRESENCE 0)
+ endif()
+ 
++if(IOS)
++  add_definitions(-DIPHONEOS -DFMT_EXCEPTIONS=0)
++  # New SDKs expose pipe2 even when the iOS deployment target cannot call it.
++  set(HAVE_PIPE2 0 CACHE INTERNAL "Use curl's portable pipe fallback on iOS" FORCE)
++  find_library(COREFOUNDATION_LIBRARY CoreFoundation REQUIRED)
++  find_library(FOUNDATION_LIBRARY Foundation REQUIRED)
++  set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
++  set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
++  set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
++endif()
++
+ # Set file offset size to 64 bits. On modern Unixes, this is typically already the case. Exceptions:
+ #
+ # glibc may default to 32 bits. This can be configured by setting _FILE_OFFSET_BITS=64.
+@@ -647,7 +658,7 @@ if(ENABLE_VULKAN)
+   endif()
+ endif()
+ 
+-if(NOT (WIN32 AND _M_ARM_64))
++if(NOT (WIN32 AND _M_ARM_64) AND NOT IOS)
+   # OpenGL is available on all platforms except windows-arm64
+   add_definitions(-DHAS_OPENGL)
+ endif()
+@@ -701,7 +712,7 @@ if(ENABLE_CUBEB)
+   add_definitions(-DHAVE_CUBEB)
+ endif()
+ 
+-if(NOT ANDROID)
++if(NOT ANDROID AND NOT IOS)
+   dolphin_find_optional_system_library(LibUSB Externals/libusb)
+   add_definitions(-D__LIBUSB__)
+ endif()
+@@ -722,7 +733,7 @@ dolphin_find_optional_system_library(MBEDTLS Externals/mbedtls 2.28)
+ 
+ dolphin_find_optional_system_library(CURL Externals/curl)
+ 
+-if(NOT ANDROID)
++if(NOT ANDROID AND NOT IOS)
+   dolphin_find_optional_system_library(HIDAPI Externals/hidapi)
+ endif()
+ 
+diff --git a/Source/Core/Common/CMakeLists.txt b/Source/Core/Common/CMakeLists.txt
+index 97d8ad8..0e703ea 100644
+--- a/Source/Core/Common/CMakeLists.txt
++++ b/Source/Core/Common/CMakeLists.txt
+@@ -279,6 +279,7 @@ else()
+ endif()
+ 
+ # OpenGL Interface
++if(NOT IOS)
+ target_sources(common PRIVATE
+   GL/GLContext.cpp
+   GL/GLContext.h
+@@ -287,6 +288,7 @@ target_sources(common PRIVATE
+   GL/GLExtensions/GLExtensions.cpp
+   GL/GLExtensions/GLExtensions.h
+ )
++endif()
+ 
+ if(ENABLE_EGL AND EGL_FOUND)
+   target_sources(common PRIVATE
+@@ -317,7 +319,7 @@ if(WIN32)
+     WindowsDevice.h
+     WindowsRegistry.cpp
+   )
+-elseif(APPLE)
++elseif(APPLE AND NOT IOS)
+   target_sources(common PRIVATE
+     GL/GLInterface/AGL.h
+     GL/GLInterface/AGL.mm
+diff --git a/Source/Core/Common/FileUtil.cpp b/Source/Core/Common/FileUtil.cpp
+index 053614f..f3c40fa 100644
+--- a/Source/Core/Common/FileUtil.cpp
++++ b/Source/Core/Common/FileUtil.cpp
+@@ -68,7 +68,7 @@ static std::string s_android_driver_directory;
+ static std::string s_android_lib_directory;
+ #endif
+ 
+-#ifdef __APPLE__
++#if defined(__APPLE__) && !defined(IPHONEOS)
+ static Common::DynamicLibrary s_security_framework;
+ 
+ using DolSecTranslocateIsTranslocatedURL = Boolean (*)(CFURLRef path, bool* isTranslocated,
+@@ -675,7 +675,7 @@ std::string GetTempFilenameForAtomicWrite(std::string path)
+ std::string GetBundleDirectory()
+ {
+   CFURLRef bundle_ref = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+-
++#if !defined(IPHONEOS)
+   // Starting in macOS Sierra, apps downloaded from the Internet may be
+   // "translocated" to a read-only DMG and executed from there. This is
+   // done to prevent a scenario where an attacker can replace a trusted
+@@ -707,6 +707,7 @@ std::string GetBundleDirectory()
+     CFRelease(bundle_ref);
+     bundle_ref = untranslocated_ref;
+   }
++#endif
+ 
+   char app_bundle_path[MAXPATHLEN];
+   CFStringRef bundle_path = CFURLCopyFileSystemPath(bundle_ref, kCFURLPOSIXPathStyle);
+@@ -760,7 +761,9 @@ std::string GetExeDirectory()
+ static std::string CreateSysDirectoryPath()
+ {
+ #define SYS_FOLDER_NAME "Sys"
+-#if defined __APPLE__
++#if defined(IPHONEOS)
++#define SYSDATA_DIR SYS_FOLDER_NAME
++#elif defined __APPLE__
+ #define SYSDATA_DIR "Contents/Resources/" SYS_FOLDER_NAME
+ #else
+ #define SYSDATA_DIR DATA_DIR SYS_FOLDER_NAME
+diff --git a/Source/Core/Common/FilesystemWatcher.cpp b/Source/Core/Common/FilesystemWatcher.cpp
+index 9497023..39c03a0 100644
+--- a/Source/Core/Common/FilesystemWatcher.cpp
++++ b/Source/Core/Common/FilesystemWatcher.cpp
+@@ -3,7 +3,9 @@
+ 
+ #include "Common/FilesystemWatcher.h"
+ 
++#if !defined(IPHONEOS)
+ #include <wtr/watcher.hpp>
++#endif
+ 
+ #include "Common/Logging/Log.h"
+ #include "Common/StringUtil.h"
+@@ -15,6 +17,10 @@ FilesystemWatcher::~FilesystemWatcher() = default;
+ 
+ void FilesystemWatcher::Watch(const std::string& path)
+ {
++#if defined(IPHONEOS)
++  // shortcut: mobile custom-asset hot reload needs a public watcher before it is exposed.
++  WARN_LOG_FMT(COMMON, "Live custom-asset folder watching is unavailable on iOS");
++#else
+   const auto [iter, inserted] = m_watched_paths.try_emplace(path, nullptr);
+   if (inserted)
+   {
+@@ -58,10 +64,13 @@ void FilesystemWatcher::Watch(const std::string& path)
+       }
+     });
+   }
++#endif
+ }
+ 
+ void FilesystemWatcher::Unwatch(const std::string& path)
+ {
++#if !defined(IPHONEOS)
+   m_watched_paths.erase(path);
++#endif
+ }
+ }  // namespace Common
+diff --git a/Source/Core/Common/FilesystemWatcher.h b/Source/Core/Common/FilesystemWatcher.h
+index ad1c822..7b08701 100644
+--- a/Source/Core/Common/FilesystemWatcher.h
++++ b/Source/Core/Common/FilesystemWatcher.h
+@@ -42,6 +42,8 @@ private:
+   // A file or folder was deleted in one of the watched paths
+   virtual void PathDeleted(std::string_view path) {}
+ 
++#if !defined(IPHONEOS)
+   std::map<std::string, std::unique_ptr<wtr::watch>> m_watched_paths;
++#endif
+ };
+ }  // namespace Common
+diff --git a/Source/Core/Common/MemoryUtil.cpp b/Source/Core/Common/MemoryUtil.cpp
+index 0d66890..fa5ae63 100644
+--- a/Source/Core/Common/MemoryUtil.cpp
++++ b/Source/Core/Common/MemoryUtil.cpp
+@@ -35,7 +35,11 @@ namespace Common
+ 
+ void* AllocateExecutableMemory(size_t size)
+ {
+-#if defined(_WIN32)
++#if defined(IPHONEOS)
++  // The mobile frontend uses the cached interpreter's non-executable data blocks.
++  PanicAlertFmt("Executable memory is disabled in EmuDen's iOS interpreter build");
++  return nullptr;
++#elif defined(_WIN32)
+   void* ptr = VirtualAlloc(nullptr, size, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+ #else
+   int map_flags = MAP_ANON | MAP_PRIVATE;
+@@ -46,11 +50,12 @@ void* AllocateExecutableMemory(size_t size)
+   if (ptr == MAP_FAILED)
+     ptr = nullptr;
+ #endif
+-
++#if !defined(IPHONEOS)
+   if (ptr == nullptr)
+     PanicAlertFmt("Failed to allocate executable memory");
+ 
+   return ptr;
++#endif
+ }
+ // This function is used to provide a counter for the JITPageWrite*Execute*
+ // functions to enable nesting. The static variable is wrapped in a a function
+diff --git a/Source/Core/Core/CMakeLists.txt b/Source/Core/Core/CMakeLists.txt
+index 56c8dba..0a257b5 100644
+--- a/Source/Core/Core/CMakeLists.txt
++++ b/Source/Core/Core/CMakeLists.txt
+@@ -693,8 +693,6 @@ PUBLIC
+   pugixml
+   sfml-network
+   videonull
+-  videoogl
+-  videosoftware
+ 
+ PRIVATE
+   FatFs
+@@ -704,6 +702,10 @@ PRIVATE
+   ZLIB::ZLIB
+ )
+ 
++if(NOT IOS)
++  target_link_libraries(core PUBLIC videoogl videosoftware)
++endif()
++
+ if(LIBUDEV_FOUND)
+   target_include_directories(core PRIVATE ${LIBUDEV_INCLUDE_DIR})
+   target_link_libraries(core PRIVATE ${LIBUDEV_LIBRARY})
+@@ -779,7 +781,7 @@ if(WIN32)
+     iphlpapi.lib
+   )
+   target_compile_definitions(core PRIVATE "-D_WINSOCK_DEPRECATED_NO_WARNINGS")
+-elseif(APPLE)
++elseif(APPLE AND NOT IOS)
+   target_sources(core PRIVATE
+     HW/EXI/BBA/TAP_Apple.cpp
+   )
+diff --git a/Source/Core/InputCommon/CMakeLists.txt b/Source/Core/InputCommon/CMakeLists.txt
+index 5cc6b66..3c14ff9 100644
+--- a/Source/Core/InputCommon/CMakeLists.txt
++++ b/Source/Core/InputCommon/CMakeLists.txt
+@@ -108,7 +108,7 @@ if(WIN32)
+     ControllerInterface/ForceFeedback/ForceFeedbackDevice.cpp
+     ControllerInterface/ForceFeedback/ForceFeedbackDevice.h
+   )
+-elseif(APPLE)
++elseif(APPLE AND NOT IOS)
+   target_sources(inputcommon PRIVATE
+     ControllerInterface/Quartz/Quartz.h
+     ControllerInterface/Quartz/Quartz.mm
+@@ -144,7 +144,7 @@ elseif(ANDROID)
+   )
+ endif()
+ 
+-if(NOT ANDROID)
++if(NOT ANDROID AND NOT IOS)
+   target_link_libraries(inputcommon PUBLIC LibUSB::LibUSB)
+ endif()
+ 
+diff --git a/Source/Core/InputCommon/ControllerInterface/ControllerInterface.h b/Source/Core/InputCommon/ControllerInterface/ControllerInterface.h
+index 8f7f4ba..3eed3b0 100644
+--- a/Source/Core/InputCommon/ControllerInterface/ControllerInterface.h
++++ b/Source/Core/InputCommon/ControllerInterface/ControllerInterface.h
+@@ -22,7 +22,7 @@
+ #ifdef HAVE_X11
+ #define CIFACE_USE_XLIB
+ #endif
+-#if defined(__APPLE__)
++#if defined(__APPLE__) && !defined(IPHONEOS)
+ #define CIFACE_USE_OSX
+ #endif
+ #if defined(HAVE_LIBEVDEV) && defined(HAVE_LIBUDEV)
+diff --git a/Source/Core/InputCommon/GCAdapter.cpp b/Source/Core/InputCommon/GCAdapter.cpp
+index dbffc4d..37dbd91 100644
+--- a/Source/Core/InputCommon/GCAdapter.cpp
++++ b/Source/Core/InputCommon/GCAdapter.cpp
+@@ -3,7 +3,10 @@
+ 
+ #include "InputCommon/GCAdapter.h"
+ 
+-#ifndef ANDROID
++#if defined(IPHONEOS)
++#define GCADAPTER_USE_LIBUSB_IMPLEMENTATION 0
++#define GCADAPTER_USE_ANDROID_IMPLEMENTATION 0
++#elif !defined(ANDROID)
+ #define GCADAPTER_USE_LIBUSB_IMPLEMENTATION true
+ #define GCADAPTER_USE_ANDROID_IMPLEMENTATION false
+ #else
+@@ -1070,6 +1073,10 @@ bool IsDetected(const char** error_message)
+   return false;
+ #elif GCADAPTER_USE_ANDROID_IMPLEMENTATION
+   return s_detected;
++#else
++  if (error_message)
++    *error_message = "USB GameCube adapters are unavailable on this platform";
++  return false;
+ #endif
+ }
+ 
+diff --git a/Source/Core/UICommon/UICommon.cpp b/Source/Core/UICommon/UICommon.cpp
+index 51e0798..d9e1e9d 100644
+--- a/Source/Core/UICommon/UICommon.cpp
++++ b/Source/Core/UICommon/UICommon.cpp
+@@ -53,7 +53,7 @@
+ #include "UICommon/DBusUtils.h"
+ #endif
+ 
+-#ifdef __APPLE__
++#if defined(__APPLE__) && !defined(IPHONEOS)
+ #include <IOKit/pwr_mgt/IOPMLib.h>
+ #endif
+ 
+@@ -513,7 +513,7 @@ void InhibitScreenSaver(bool inhibit)
+                           (inhibit ? (ES_DISPLAY_REQUIRED | ES_SYSTEM_REQUIRED) : 0));
+ #endif
+ 
+-#ifdef __APPLE__
++#if defined(__APPLE__) && !defined(IPHONEOS)
+   static IOPMAssertionID s_power_assertion = kIOPMNullAssertionID;
+   if (inhibit)
+   {
+diff --git a/Source/Core/VideoBackends/CMakeLists.txt b/Source/Core/VideoBackends/CMakeLists.txt
+index 9d20d6d..eb122e8 100644
+--- a/Source/Core/VideoBackends/CMakeLists.txt
++++ b/Source/Core/VideoBackends/CMakeLists.txt
+@@ -1,6 +1,8 @@
+-add_subdirectory(OGL)
++if(NOT IOS)
++  add_subdirectory(OGL)
++  add_subdirectory(Software)
++endif()
+ add_subdirectory(Null)
+-add_subdirectory(Software)
+ 
+ if(WIN32)
+   add_subdirectory(D3DCommon)
+diff --git a/Source/Core/VideoBackends/Metal/MTLGfx.mm b/Source/Core/VideoBackends/Metal/MTLGfx.mm
+index 4b744fe..6bb554b 100644
+--- a/Source/Core/VideoBackends/Metal/MTLGfx.mm
++++ b/Source/Core/VideoBackends/Metal/MTLGfx.mm
+@@ -21,7 +21,9 @@
+ Metal::Gfx::Gfx(MRCOwned<CAMetalLayer*> layer) : m_layer(std::move(layer))
+ {
+   UpdateActiveConfig();
++#if TARGET_OS_OSX
+   [m_layer setDisplaySyncEnabled:g_ActiveConfig.bVSyncActive];
++#endif
+ 
+   SetupSurface();
+   g_state_tracker->FlushEncoders();
+@@ -288,8 +290,10 @@ void Metal::Gfx::OnConfigChanged(u32 bits)
+ {
+   AbstractGfx::OnConfigChanged(bits);
+ 
++#if TARGET_OS_OSX
+   if (bits & CONFIG_CHANGE_BIT_VSYNC)
+     [m_layer setDisplaySyncEnabled:g_ActiveConfig.bVSyncActive];
++#endif
+ 
+   if (bits & CONFIG_CHANGE_BIT_ANISOTROPY)
+   {
+diff --git a/Source/Core/VideoBackends/Metal/MTLUtil.h b/Source/Core/VideoBackends/Metal/MTLUtil.h
+index 1752c82..935475f 100644
+--- a/Source/Core/VideoBackends/Metal/MTLUtil.h
++++ b/Source/Core/VideoBackends/Metal/MTLUtil.h
+@@ -3,7 +3,10 @@
+ 
+ #pragma once
+ 
++#include <TargetConditionals.h>
++#if TARGET_OS_OSX
+ #include <AppKit/NSScreen.h>
++#endif
+ #include <Metal/Metal.h>
+ 
+ #include <vector>
+diff --git a/Source/Core/VideoBackends/Metal/MTLUtil.mm b/Source/Core/VideoBackends/Metal/MTLUtil.mm
+index 9298c5b..4b076be 100644
+--- a/Source/Core/VideoBackends/Metal/MTLUtil.mm
++++ b/Source/Core/VideoBackends/Metal/MTLUtil.mm
+@@ -78,8 +78,12 @@ void Metal::Util::PopulateBackendInfo(BackendInfo* backend_info)
+   backend_info->bSupportsPartialMultisampleResolve = false;
+   backend_info->bSupportsDynamicVertexLoader = true;
+   backend_info->bSupportsVSLinePointExpand = true;
++#if TARGET_OS_OSX
+   backend_info->bSupportsHDROutput =
+       1.0 < [[NSScreen deepestScreen] maximumPotentialExtendedDynamicRangeColorComponentValue];
++#else
++  backend_info->bSupportsHDROutput = false;
++#endif
+ }
+ 
+ void Metal::Util::PopulateBackendInfoAdapters(BackendInfo* backend_info,
+diff --git a/Source/Core/VideoCommon/Present.h b/Source/Core/VideoCommon/Present.h
+index 91ba870..7a15535 100644
+--- a/Source/Core/VideoCommon/Present.h
++++ b/Source/Core/VideoCommon/Present.h
+@@ -104,6 +104,8 @@ public:
+   void SetMousePress(u32 button_mask);
+ 
+   int FrameCount() const { return m_frame_count; }
++  const AbstractTexture* GetXFBForPreview() const { return m_xfb_entry ? m_xfb_entry->texture.get() : nullptr; }
++  const MathUtil::Rectangle<int>& GetXFBPreviewRect() const { return m_xfb_rect; }
+ 
+   void DoState(PointerWrap& p);
+ 

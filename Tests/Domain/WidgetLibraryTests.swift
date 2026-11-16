@@ -11,20 +11,13 @@ final class WidgetLibraryTests: XCTestCase {
         XCTAssertNil(EmuDenLink.destination(URL(string: "https://\(EmuDenLink.host)/play/?demo=other")!))
         XCTAssertNil(EmuDenLink.destination(URL(string: "https://\(EmuDenLink.host)/play/?game=../../outside")!))
     }
-    func testUnratedSoftwareRequiresAnExplicitAdultDeclaration() {
-        XCTAssertFalse(ImportedGameAccess.stored("").allowsImportedGames)
-        XCTAssertFalse(ImportedGameAccess.stored("unexpected").allowsImportedGames)
-        XCTAssertFalse(ImportedGameAccess.under18.allowsImportedGames)
-        XCTAssertFalse(ImportedGameAccess.undecided.allowsImportedGames)
-        XCTAssertTrue(ImportedGameAccess.adult.allowsImportedGames)
-    }
     func testSystemAgeBandMustExcludeMinors() {
-        XCTAssertTrue(ImportedGameAccess.isAdultAgeBand(lowerBound: 18, upperBound: nil))
-        XCTAssertTrue(ImportedGameAccess.isAdultAgeBand(lowerBound: 21, upperBound: 30))
-        XCTAssertFalse(ImportedGameAccess.isAdultAgeBand(lowerBound: nil, upperBound: nil))
-        XCTAssertFalse(ImportedGameAccess.isAdultAgeBand(lowerBound: nil, upperBound: 99))
-        XCTAssertFalse(ImportedGameAccess.isAdultAgeBand(lowerBound: 17, upperBound: 99))
-        XCTAssertFalse(ImportedGameAccess.isAdultAgeBand(lowerBound: 21, upperBound: 17))
+        XCTAssertTrue(RegionalAgeAccess.isAdultAgeBand(lowerBound: 18, upperBound: nil))
+        XCTAssertTrue(RegionalAgeAccess.isAdultAgeBand(lowerBound: 21, upperBound: 30))
+        XCTAssertFalse(RegionalAgeAccess.isAdultAgeBand(lowerBound: nil, upperBound: nil))
+        XCTAssertFalse(RegionalAgeAccess.isAdultAgeBand(lowerBound: nil, upperBound: 99))
+        XCTAssertFalse(RegionalAgeAccess.isAdultAgeBand(lowerBound: 17, upperBound: 99))
+        XCTAssertFalse(RegionalAgeAccess.isAdultAgeBand(lowerBound: 21, upperBound: 17))
     }
     func testSnapshotContainsOnlyMetadataAndReadsAtomically() throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)

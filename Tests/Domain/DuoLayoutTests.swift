@@ -3,6 +3,15 @@ import CoreGraphics
 @testable import EmulatorDomain
 
 final class DuoLayoutTests: XCTestCase {
+    func testInactiveOuterDisplayHingeDoesNotHideControls() {
+        let size = CGSize(width: 466, height: 678)
+        for rect in [CGRect(x: 0, y: 678, width: 466, height: 0), CGRect(x: 466, y: 0, width: 0, height: 678), CGRect(x: 0, y: -10, width: 466, height: 0)] {
+            XCTAssertNil(DuoLayout.usableDivision(rect, in: size))
+        }
+        for rect in [CGRect(x: 0, y: 330, width: 466, height: 18), CGRect(x: 233, y: 0, width: 0, height: 678)] {
+            XCTAssertEqual(DuoLayout.usableDivision(rect, in: size), rect)
+        }
+    }
     func testScreenBalancePartitionsEveryPixelAndPreservesDefaultLandscapeRatio() {
         for size in [CGSize(width: 466, height: 678), CGSize(width: 678, height: 466)] {
             let horizontal = size.width > size.height

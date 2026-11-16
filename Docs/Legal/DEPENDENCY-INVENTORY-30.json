@@ -1,0 +1,191 @@
+{
+  "build": "30",
+  "basis": "Preserved sanitized27 dependencies plus pinned GC-only Dolphin and148 verbatim offline notice texts. Source/dependency manifests and clean core build records are included.",
+  "records": [
+    {
+      "component": "Azahar",
+      "licenseDescription": "GPL-3.0-or-later",
+      "licenseSource": "Vendor/Azahar/Source/LICENSE.txt",
+      "sourceSHA256": "52b66866c785f554207a4685d3d6f5f067938050f61c4cdc0a05b4bf20c6e037",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "OpenSSL3.5.9",
+      "licenseDescription": "Apache-2.0",
+      "licenseSource": "Vendor/OpenSSL/Source/LICENSE.txt",
+      "sourceSHA256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "MoltenVK",
+      "licenseDescription": "Apache-2.0",
+      "licenseSource": "Vendor/MoltenVK/Source/LICENSE",
+      "sourceSHA256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "Boost",
+      "licenseDescription": "BSL-1.0",
+      "licenseSource": "Vendor/Azahar/Source/externals/boost/LICENSE_1_0.txt",
+      "sourceSHA256": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "fmt",
+      "licenseDescription": "MIT",
+      "licenseSource": "Vendor/Azahar/Source/externals/fmt/LICENSE",
+      "sourceSHA256": "07580f2a3b35709ce703d523f447b242f6dfec7582a8c0df102c7fa2849375f8",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "Crypto++",
+      "licenseDescription": "Public-domain components and compilation license as provided",
+      "licenseSource": "Vendor/Azahar/Source/externals/cryptopp/LICENSE",
+      "sourceSHA256": "5bb6b564ac9bb3663c0d76d18dea5a3bcd863476870a95dd3806068d65c3c4f0",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "LodePNG",
+      "licenseDescription": "Zlib",
+      "licenseSource": "Vendor/Azahar/Source/externals/lodepng/lodepng/LICENSE",
+      "sourceSHA256": "bdafa318b8e637d600ca1b60545e894881977a16a16b74809c95e805701621e3",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "ENet",
+      "licenseDescription": "MIT-style license as provided",
+      "licenseSource": "Vendor/Azahar/Source/externals/enet/LICENSE",
+      "sourceSHA256": "a29cd246638974da7c6edf423a0a69d4a6f7d759940b7cfa9a2bc3442ac3834c",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "Dynarmic",
+      "licenseDescription": "0BSD",
+      "licenseSource": "Vendor/Azahar/Source/externals/dynarmic/LICENSE.txt",
+      "sourceSHA256": "14ef8e5ce8e564bbbe28bc7a306de80c786124de34955b2b4e868cb64bbe9faa",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "MCL",
+      "licenseDescription": "MIT",
+      "licenseSource": "Vendor/Azahar/Source/externals/dynarmic/externals/mcl/LICENSE",
+      "sourceSHA256": "63343a4ec1a8ae9a0183dafe2663c1ea5a95eb583c1447ec2e93c9c9f02817ee",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "SoundTouch",
+      "licenseDescription": "LGPL-2.1-or-later",
+      "licenseSource": "Vendor/Azahar/Source/externals/soundtouch/COPYING.TXT",
+      "sourceSHA256": "84c6d82dc7de80f5b73f231edfd3ddc5b53513908117452bfa37ea36bb4b7e0a",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "Teakra",
+      "licenseDescription": "MIT",
+      "licenseSource": "Vendor/Azahar/Source/externals/teakra/LICENSE",
+      "sourceSHA256": "84ac887a2ae105eacfb5aeb1921502ef91e0bd230bb2e6de3e8507f79177adf5",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "FAAD2",
+      "licenseDescription": "GPL-2.0-or-later; preserve specific Nero credit",
+      "licenseSource": "Vendor/Azahar/Source/externals/faad2/faad2/libfaad/decoder.c",
+      "sourceSHA256": "96242998d77a56753d9d3b0a91b26d0dc9efd2b5ea560b90cceba28074d37516",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "Sirit",
+      "licenseDescription": "BSD-3-Clause",
+      "licenseSource": "Vendor/Azahar/Source/externals/sirit/sirit/LICENSE.txt",
+      "sourceSHA256": "85037eeef55658177becb552477576a41bbc933705534b529c4c4818bb490480",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "glslang",
+      "licenseDescription": "Mixed permissive notices as provided",
+      "licenseSource": "Vendor/Azahar/Source/externals/glslang/LICENSE.txt",
+      "sourceSHA256": "adb783e734e906d1f46db5df29991dbde84bdb0ceab502ac2febb44fe3c2b5f4",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "SPIRV-Tools",
+      "licenseDescription": "Apache-2.0",
+      "licenseSource": "Vendor/Azahar/Source/externals/spirv-tools/LICENSE",
+      "sourceSHA256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "microtar",
+      "licenseDescription": "MIT",
+      "licenseSource": "Vendor/Azahar/Source/externals/microtar/LICENSE",
+      "sourceSHA256": "235ac8c3e43c67ced4a89fad8af65dc9f92a7627e5ce3e0016627b7505ead0ae",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "zstd",
+      "licenseDescription": "BSD alternative selected; preserve both provided texts",
+      "licenseSource": "Vendor/Azahar/Source/externals/zstd/LICENSE",
+      "sourceSHA256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "xxHash library",
+      "licenseDescription": "BSD-2-Clause; CLI GPL source is not the library license",
+      "licenseSource": "Vendor/Azahar/Source/externals/xxHash/LICENSE",
+      "sourceSHA256": "6ffedbc0f7878612d2b23589f1ff2ab15633e1df7963a5d9fc750ec5500c7e7a",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "Bundled 3DS Homebrew Menu",
+      "licenseDescription": "Upstream attribution/code-use statement and credits",
+      "licenseSource": "Resources/Homebrew-NOTICE.txt",
+      "sourceSHA256": "2b9cd5f5d75d6d136378e97a0de21031c0cac8ea63a22bf5bf2cd99aeee8e067",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "Montserrat4.000",
+      "licenseDescription": "OFL-1.1",
+      "licenseSource": "Resources/Licenses/Montserrat-OFL.txt",
+      "sourceSHA256": "b6bc7536af55ff6086b139373942cfde251f64ccdb2635ce567e48b4b613eae2",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "Unifont10.0.05",
+      "licenseDescription": "GPL-2.0-or-later with Font Embedding Exception",
+      "licenseSource": "Resources/Licenses/Unifont-10.0.05-COPYING.txt",
+      "sourceSHA256": "6017b0fc5910282d5fd22ad274fa6697e1db3d469707e15e0211e5a4d40fa5e6",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "Independent replacement-resource generators",
+      "licenseDescription": "GPL-2.0 as provided; no later grant inferred",
+      "licenseSource": "Resources/Licenses/Citra-System-Archives-NOTICE.txt",
+      "sourceSHA256": "14505639fc4ec250db7b5e8be73625e2523ff662eef57e7791cf8c1ec9491800",
+      "scope": "Declared upstream terms/notice inventory; not a rights-holder exception or App Store compatibility clearance"
+    },
+    {
+      "component": "PCSX ReARMed",
+      "licenseDescription": "GPL-2.0-or-later with dependency notices retained individually",
+      "licenseSource": "Vendor/PCSX-ReARMed/Source/COPYING",
+      "revision": "7b0e8f8fadfbce3d170d195b9d9eecaabfa08c8e",
+      "reproducibleSourceManifest": "Vendor/PCSX-ReARMed/source-manifest.json",
+      "scope": "Interpreter-only PS1 core; source/dependency terms are not an App Store distribution clearance",
+      "sourceSHA256": "0efb4db8000c609bd2f06e61fcbc59af05519d122f5b3597b7c493224946c61d"
+    },
+    {
+      "component": "Dolphin2609 GC-only",
+      "revision": "f84df02055ab9610feec48e65648cac5a3c098fa",
+      "licenseSource": "Vendor/Dolphin/Source/COPYING",
+      "licenseDescription": "GPL-2.0-or-later upstream, with individual component terms retained; GPLv3-compatible aggregate as described upstream",
+      "sourceSHA256": "695114256e306a5e1ca407bc6e2a11877b112328dbe990253b52f59726e01b4b",
+      "reproducibleSourceManifest": "Vendor/Dolphin/source-manifest.json",
+      "scope": "Generic Cached Interpreter, native Metal, local input/audio/cards; no Qt, analytics, update, CPU JIT, firmware or key bundle"
+    }
+  ],
+  "excludedImplementation": "Bundled legacy LibreSSL is not linked in22; its unmodified source notices remain in the complete upstream-source archive.",
+  "appStoreLicenseQuestionResolved": false,
+  "completeNoticeManifest": "Docs/Legal/Notice-Sources.json",
+  "build28Change": "Dolphin/dependencies are included through the complete pinned sanitized portable archive. No libogc SDK is linked; GameCube diagnostics are original freestanding PPC/GX/EXI source.",
+  "build29Change": "Framework minimum-OS, platform/name/version metadata only; identical normalized GameCube executable and gameplay/core/dependency/crypto sources. Inherit engineering assessment and all existing public review holds, not a government/Apple ruling.",
+  "build30Change": "Bounded GameCube CISO import validation/retention only, using the unchanged existing pinned CISO backend. No new core/dependency/cryptography/firmware or CPU JIT. No new gameplay tests at owner request; no legal/Apple clearance."
+}

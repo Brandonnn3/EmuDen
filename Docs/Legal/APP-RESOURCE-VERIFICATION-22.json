@@ -1,0 +1,32 @@
+{
+  "scope": "Unsigned development app verification after legal-only dependency/notice changes",
+  "targets": {
+    "Simulator": {
+      "version": "0.1.0",
+      "build": "22",
+      "appSHA256": "f6718e0130166fcc83ca4cfd2565a3437ed80851166d72eeef7dbfadf0bb17d3",
+      "coreSHA256": "6fdaadb07a54b25c08614834149c9c4c9c1a082a5a4c08d1c9fa89a1855090f1",
+      "noticeCount": 89,
+      "noticeSHA256": "9f2c3e89d85e77a95e1ab6fed6d3ffdfd03abcd71dfcce212faa7e583d198985",
+      "distributionSigned": false
+    },
+    "Device": {
+      "version": "0.1.0",
+      "build": "22",
+      "appSHA256": "0af46b39b9fa680059974ae5c3939ec0b062c6d46ad35f6338fc7677fb3c76c0",
+      "coreSHA256": "255f577135d848e696b0db6fdf8f80a90033f79a26b82dcfdfbf1529ae437289",
+      "noticeCount": 89,
+      "noticeSHA256": "9f2c3e89d85e77a95e1ab6fed6d3ffdfd03abcd71dfcce212faa7e583d198985",
+      "distributionSigned": false
+    }
+  },
+  "nativeChecks": {
+    "result": "2 passed,0 failures",
+    "scenarios": [
+      "89-entry offline notice list/full GPL text and policy-link controls",
+      "Original licensed3DS homebrew boot/close/reopen after TLS repair"
+    ],
+    "resultBundle": "build/LegalReview/Legal-Checks-22-Final.xcresult",
+    "limits": "No phone, retail-game/network-TLS interoperability, Apple acceptance or legal-clearance claim"
+  }
+}

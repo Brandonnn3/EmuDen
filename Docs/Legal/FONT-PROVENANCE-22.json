@@ -1,0 +1,59 @@
+{
+  "fonts": {
+    "Montserrat-Regular.otf": {
+      "source": "https://raw.githubusercontent.com/B3n30/citra_system_archives/848af476fb2fad4144962dfb2548bd7841f1b72a/shared_font/Montserrat-Regular.otf",
+      "blobSHA1": "f61d57ec133c0c759d302854a5ceea055faf8a25",
+      "sha256": "16772fa219f7b40708b8d5779952505fb263c865d29bf8437c1c457b1bc2f7aa",
+      "nameTable": {
+        "0": [
+          "Copyright 2011 - 2016 The Montserrat Project Authors (julieta.ulanovsky@gmail.com)"
+        ],
+        "1": [
+          "Montserrat"
+        ],
+        "2": [
+          "Regular"
+        ],
+        "5": [
+          "Version 4.000;PS 004.000;hotconv 1.0.88;makeotf.lib2.5.64775"
+        ],
+        "13": [
+          "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: http://scripts.sil.org/OFL"
+        ],
+        "14": [
+          "http://scripts.sil.org/OFL"
+        ]
+      }
+    },
+    "unifont-10.0.05.ttf": {
+      "source": "https://raw.githubusercontent.com/B3n30/citra_system_archives/848af476fb2fad4144962dfb2548bd7841f1b72a/shared_font/unifont-10.0.05.ttf",
+      "blobSHA1": "3e3f3bd54f0f11e5ed6dc8d2b995076497efb9c8",
+      "sha256": "a850db8a860ab6e01524a9da1740d157a4594efdba5c21d9cf3f3d277f10cd47",
+      "nameTable": {
+        "0": [
+          "Copyright (C) 1998-2017 Roman Czyborra, Paul Hardy, Qianqian Fang, Andrew Miller, et al. Licensed under the GNU General Public License; either version 2, or (at your option) a later version, with the GNU Font Embedding Exception."
+        ],
+        "1": [
+          "Unifont"
+        ],
+        "2": [
+          "Medium"
+        ],
+        "5": [
+          "Version 10.0.05 "
+        ]
+      }
+    }
+  },
+  "unifontSource": {
+    "url": "https://unifoundry.com/pub/unifont/unifont-10.0.05/unifont-10.0.05.tar.gz",
+    "sha256": "8b85367401729bf22217c44d914dee08770665ff01b5faccb7760a2a06934a1f",
+    "bytes": 15645240,
+    "purpose": "Exact GPL2-or-later font source/embedding-exception notices used by the existing fallback shared font, not Nintendo system data."
+  },
+  "montserratLicense": {
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/montserrat/OFL.txt",
+    "sha256": "8b7141c03fa4f8d44e6345d5d4931709290f0f67875e452e95ac1fd3a027802e"
+  },
+  "scope": "Licenses and preferred source preserved for independent fallback font data; no blanket Apple/GPL compatibility determination"
+}

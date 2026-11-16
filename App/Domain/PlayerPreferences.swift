@@ -42,6 +42,12 @@ struct PlayerPreferences: Codable, Equatable, Sendable {
         case automatic, original, fill
         var title: String { switch self { case .automatic: "Follow layout"; case .original: "Original proportions"; case .fill: "Fill screen regions" } }
     }
+    enum Presentation: String, Codable, CaseIterable, Sendable {
+        case automatic, full, reduced
+        var title: String { switch self { case .automatic: "Automatic"; case .full: "Game rate"; case .reduced: "30 fps" } }
+        func limit(thermal: Int) -> Int { self == .reduced || (self == .automatic && thermal >= 2) ? 30 : 0 }
+    }
+    enum Preset: String, CaseIterable { case performance = "Performance", balanced = "Balanced", sharp = "Sharp" }
     var resolution = 1
     var asyncShaders = true
     var prepareShaders = false
@@ -49,13 +55,77 @@ struct PlayerPreferences: Codable, Equatable, Sendable {
     var sizing = Sizing.automatic
     var screenBalance = 0.5
     var automaticQuality = false
+    var ps1Analog = false
+    var ps1Resolution = 1
+    var ps1Dithering = true
+    var ps1Smooth = false
+    var ps1TextureFix = true
+    var ps1AutomaticQuality = false
+    var presentation = Presentation.automatic
+    var gameCubeResolution = 1
+    var gameCubeSampling = Sampling.game
+    var gameCubeAnisotropy = 0
+    var ps1Folded = true
+    var ps1PanelSpeed = true
+    var ps1PanelFPS = true
+    var ps1PanelSaves = true
+    var ps1PanelTouch = true
+    var gameCubeFolded = true
+    var gameCubePanelFPS = true
+    var gameCubePanelSaves = true
+    var gameCubePanelTouch = true
+    var gameCubePanelBlank = false
+    var motionControls = true
     var normalized: Self {
         var value = self
         value.resolution = (1...3).contains(resolution) ? resolution : 1
+        value.ps1Resolution = ps1Resolution == 2 ? 2 : 1
+        value.gameCubeResolution = (1...4).contains(gameCubeResolution) ? gameCubeResolution : 1
+        value.gameCubeAnisotropy = [0, 1, 2, 4, 8, 16].contains(gameCubeAnisotropy) ? gameCubeAnisotropy : 0
         value.screenBalance = screenBalance.isFinite ? min(0.65, max(0.35, screenBalance)) : 0.5
         return value
     }
     init() {}
+    private enum CodingKeys: String, CodingKey {
+        case resolution, asyncShaders, prepareShaders, sampling, sizing, screenBalance, automaticQuality
+        case ps1Resolution, ps1Folded, ps1PanelSpeed, ps1PanelFPS, ps1PanelSaves, ps1PanelTouch
+        case ps1Dithering, ps1Smooth, ps1TextureFix, gameCubeResolution, gameCubeSampling, gameCubeAnisotropy
+        case motionControls, ps1Analog
+        case presentation, ps1AutomaticQuality, gameCubeFolded, gameCubePanelFPS, gameCubePanelSaves, gameCubePanelTouch, gameCubePanelBlank
+    }
+    init(from decoder: Decoder) throws {
+        self.init()
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        resolution = try c.decodeIfPresent(Int.self, forKey: .resolution) ?? resolution
+        asyncShaders = try c.decodeIfPresent(Bool.self, forKey: .asyncShaders) ?? asyncShaders
+        prepareShaders = try c.decodeIfPresent(Bool.self, forKey: .prepareShaders) ?? prepareShaders
+        sampling = try c.decodeIfPresent(Sampling.self, forKey: .sampling) ?? sampling
+        sizing = try c.decodeIfPresent(Sizing.self, forKey: .sizing) ?? sizing
+        screenBalance = try c.decodeIfPresent(Double.self, forKey: .screenBalance) ?? screenBalance
+        automaticQuality = try c.decodeIfPresent(Bool.self, forKey: .automaticQuality) ?? automaticQuality
+        ps1Analog = try c.decodeIfPresent(Bool.self, forKey: .ps1Analog) ?? ps1Analog
+        ps1Resolution = try c.decodeIfPresent(Int.self, forKey: .ps1Resolution) ?? ps1Resolution
+        ps1Dithering = try c.decodeIfPresent(Bool.self, forKey: .ps1Dithering) ?? ps1Dithering
+        ps1Smooth = try c.decodeIfPresent(Bool.self, forKey: .ps1Smooth) ?? ps1Smooth
+        ps1TextureFix = try c.decodeIfPresent(Bool.self, forKey: .ps1TextureFix) ?? ps1TextureFix
+        ps1AutomaticQuality = try c.decodeIfPresent(Bool.self, forKey: .ps1AutomaticQuality) ?? ps1AutomaticQuality
+        presentation = try c.decodeIfPresent(Presentation.self, forKey: .presentation) ?? presentation
+        gameCubeResolution = try c.decodeIfPresent(Int.self, forKey: .gameCubeResolution) ?? gameCubeResolution
+        gameCubeSampling = try c.decodeIfPresent(Sampling.self, forKey: .gameCubeSampling) ?? gameCubeSampling
+        gameCubeAnisotropy = try c.decodeIfPresent(Int.self, forKey: .gameCubeAnisotropy) ?? gameCubeAnisotropy
+        ps1Folded = try c.decodeIfPresent(Bool.self, forKey: .ps1Folded) ?? ps1Folded
+        ps1PanelSpeed = try c.decodeIfPresent(Bool.self, forKey: .ps1PanelSpeed) ?? ps1PanelSpeed
+        ps1PanelFPS = try c.decodeIfPresent(Bool.self, forKey: .ps1PanelFPS) ?? ps1PanelFPS
+        ps1PanelSaves = try c.decodeIfPresent(Bool.self, forKey: .ps1PanelSaves) ?? ps1PanelSaves
+        ps1PanelTouch = try c.decodeIfPresent(Bool.self, forKey: .ps1PanelTouch) ?? ps1PanelTouch
+        gameCubeFolded = try c.decodeIfPresent(Bool.self, forKey: .gameCubeFolded) ?? gameCubeFolded
+        gameCubePanelFPS = try c.decodeIfPresent(Bool.self, forKey: .gameCubePanelFPS) ?? gameCubePanelFPS
+        gameCubePanelSaves = try c.decodeIfPresent(Bool.self, forKey: .gameCubePanelSaves) ?? gameCubePanelSaves
+        gameCubePanelTouch = try c.decodeIfPresent(Bool.self, forKey: .gameCubePanelTouch) ?? gameCubePanelTouch
+        gameCubePanelBlank = try c.decodeIfPresent(Bool.self, forKey: .gameCubePanelBlank) ?? gameCubePanelBlank
+        motionControls = try c.decodeIfPresent(Bool.self, forKey: .motionControls) ?? motionControls
+        self = normalized
+    }
     init(defaults: UserDefaults) {
         resolution = defaults.object(forKey: "resolutionFactor") == nil ? 1 : defaults.integer(forKey: "resolutionFactor")
         asyncShaders = defaults.object(forKey: "asyncShaderCompilation") == nil ? true : defaults.bool(forKey: "asyncShaderCompilation")
@@ -64,6 +134,27 @@ struct PlayerPreferences: Codable, Equatable, Sendable {
         sizing = Sizing(rawValue: defaults.string(forKey: "screenSizing") ?? "") ?? .automatic
         screenBalance = defaults.object(forKey: "screenBalance") == nil ? 0.5 : defaults.double(forKey: "screenBalance")
         automaticQuality = defaults.bool(forKey: "automaticQuality")
+        ps1Analog = defaults.bool(forKey: "ps1Analog")
+        ps1Resolution = defaults.object(forKey: "ps1Resolution") == nil ? 1 : defaults.integer(forKey: "ps1Resolution")
+        ps1Dithering = defaults.object(forKey: "ps1Dithering") == nil || defaults.bool(forKey: "ps1Dithering")
+        ps1Smooth = defaults.bool(forKey: "ps1Smooth")
+        ps1TextureFix = defaults.object(forKey: "ps1TextureFix") == nil || defaults.bool(forKey: "ps1TextureFix")
+        ps1AutomaticQuality = defaults.bool(forKey: "ps1AutomaticQuality")
+        presentation = Presentation(rawValue: defaults.string(forKey: "framePresentation") ?? "") ?? .automatic
+        gameCubeResolution = defaults.object(forKey: "gameCubeResolution") == nil ? 1 : defaults.integer(forKey: "gameCubeResolution")
+        gameCubeSampling = Sampling(rawValue: defaults.string(forKey: "gameCubeSampling") ?? "") ?? .game
+        gameCubeAnisotropy = defaults.integer(forKey: "gameCubeAnisotropy")
+        ps1Folded = defaults.object(forKey: "ps1Folded") == nil || defaults.bool(forKey: "ps1Folded")
+        ps1PanelSpeed = defaults.object(forKey: "ps1PanelSpeed") == nil || defaults.bool(forKey: "ps1PanelSpeed")
+        ps1PanelFPS = defaults.object(forKey: "ps1PanelFPS") == nil || defaults.bool(forKey: "ps1PanelFPS")
+        ps1PanelSaves = defaults.object(forKey: "ps1PanelSaves") == nil || defaults.bool(forKey: "ps1PanelSaves")
+        ps1PanelTouch = defaults.object(forKey: "ps1PanelTouch") == nil || defaults.bool(forKey: "ps1PanelTouch")
+        gameCubeFolded = defaults.object(forKey: "gameCubeFolded") == nil || defaults.bool(forKey: "gameCubeFolded")
+        gameCubePanelFPS = defaults.object(forKey: "gameCubePanelFPS") == nil || defaults.bool(forKey: "gameCubePanelFPS")
+        gameCubePanelSaves = defaults.object(forKey: "gameCubePanelSaves") == nil || defaults.bool(forKey: "gameCubePanelSaves")
+        gameCubePanelTouch = defaults.object(forKey: "gameCubePanelTouch") == nil || defaults.bool(forKey: "gameCubePanelTouch")
+        gameCubePanelBlank = defaults.bool(forKey: "gameCubePanelBlank")
+        motionControls = defaults.object(forKey: "motionControls") == nil || defaults.bool(forKey: "motionControls")
         self = normalized
     }
     func saveDefaults(_ defaults: UserDefaults) {
@@ -75,6 +166,41 @@ struct PlayerPreferences: Codable, Equatable, Sendable {
         defaults.set(p.sizing.rawValue, forKey: "screenSizing")
         defaults.set(p.screenBalance, forKey: "screenBalance")
         defaults.set(p.automaticQuality, forKey: "automaticQuality")
+        defaults.set(p.ps1Analog, forKey: "ps1Analog")
+        defaults.set(p.ps1Resolution, forKey: "ps1Resolution")
+        defaults.set(p.ps1Dithering, forKey: "ps1Dithering")
+        defaults.set(p.ps1Smooth, forKey: "ps1Smooth")
+        defaults.set(p.ps1TextureFix, forKey: "ps1TextureFix")
+        defaults.set(p.ps1AutomaticQuality, forKey: "ps1AutomaticQuality")
+        defaults.set(p.presentation.rawValue, forKey: "framePresentation")
+        defaults.set(p.gameCubeResolution, forKey: "gameCubeResolution")
+        defaults.set(p.gameCubeSampling.rawValue, forKey: "gameCubeSampling")
+        defaults.set(p.gameCubeAnisotropy, forKey: "gameCubeAnisotropy")
+        defaults.set(p.ps1Folded, forKey: "ps1Folded")
+        defaults.set(p.ps1PanelSpeed, forKey: "ps1PanelSpeed")
+        defaults.set(p.ps1PanelFPS, forKey: "ps1PanelFPS")
+        defaults.set(p.ps1PanelSaves, forKey: "ps1PanelSaves")
+        defaults.set(p.ps1PanelTouch, forKey: "ps1PanelTouch")
+        defaults.set(p.gameCubeFolded, forKey: "gameCubeFolded")
+        defaults.set(p.gameCubePanelFPS, forKey: "gameCubePanelFPS")
+        defaults.set(p.gameCubePanelSaves, forKey: "gameCubePanelSaves")
+        defaults.set(p.gameCubePanelTouch, forKey: "gameCubePanelTouch")
+        defaults.set(p.gameCubePanelBlank, forKey: "gameCubePanelBlank")
+        defaults.set(p.motionControls, forKey: "motionControls")
+    }
+    mutating func apply(_ preset: Preset, for platform: GamePlatform) {
+        switch platform {
+        case .threeDS:
+            resolution = preset == .performance ? 1 : (preset == .balanced ? 2 : 3)
+            asyncShaders = true; automaticQuality = preset == .balanced; sampling = .game
+        case .ps1:
+            ps1Resolution = preset == .performance ? 1 : 2
+            ps1AutomaticQuality = preset == .balanced; ps1Dithering = preset != .performance
+            ps1Smooth = preset == .sharp; ps1TextureFix = true
+        case .gamecube:
+            gameCubeResolution = preset == .performance ? 1 : (preset == .balanced ? 2 : 3)
+            gameCubeSampling = .game; gameCubeAnisotropy = preset == .performance ? 0 : (preset == .balanced ? 2 : 8)
+        }
     }
 }
 

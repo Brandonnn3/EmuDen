@@ -103,7 +103,7 @@ struct CinematicScene: View {
             ZStack {
                 Color.black
                 if showsConsole {
-                    ConsoleSceneBackground(system: system).blur(radius: subdued ? 8 : 0).opacity(subdued ? 0.75 : 1).transition(.opacity)
+                    ConsoleSceneBackground(system: game.flatMap { ConsoleSystem(rawValue: $0.console.rawValue) } ?? system).blur(radius: subdued ? 8 : 0).opacity(subdued ? 0.75 : 1).transition(.opacity)
                 }
                 if game?.useConsoleBackground != true {
                     if loadedKey == sceneKey, let image {

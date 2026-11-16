@@ -1,3 +1,33 @@
+# Current internal candidate: build28
+
+This isolated branch combines3DS, PS1 and GameCube for the owner's requested
+local test build. [Features/formats/rebuild steps](Docs/BUILD-28.md) and the
+[actual checkpoint](Docs/BUILD-28-PROGRESS.md) supersede the historical notes
+below. Original native GX/input/raw-card, ISO/GCM/state/lifecycle/landscape
+checks pass. No phone speed, broad retail compatibility, legal clearance or
+Apple acceptance is claimed. Public distribution remains held. No28 upload
+is authorized. The old continuation automation was deleted; do not recreate it.
+
+---
+
+# Current build25 work
+
+The latest source supports gated raw GameCube ISO/GCM and MEM1 DOL imports. An original disc/apploader boots in EmuDen; its input/state and real PCM-to-AVAudioSourceNode output checks pass. Build25 is still research, not a signed phone-testing candidate: GX, full controls, native card saves and complete distribution packaging remain. Read [the current checkpoint](Docs/BUILD-25-PROGRESS.md), including active processes, before continuing. The hourly task is active; no binary upload or physical-phone use is authorized. Earlier notes below are historical.
+
+# Build25 GameCube research preview
+
+This separate worktree preserves signed PS1 build24 in /Volumes/SamsungT7/EmuDenMultiEmulator. It adds the gated existing Dolphin prototype and original `.dol` homebrew QA route to the repaired baseline. [Actual checkpoint and limits](Docs/GAMECUBE-25-PROGRESS.md). No normal GameCube disc imports, audio, GX3D/card/retail/phone claims, signed archive or TestFlight upload. Default release menus keep GameCube unavailable. TestFlight/source-delivery records below remain historical24 metadata; the packager refuses the25/24 build mismatch. Earlier notes follow.
+
+# Current internal candidate: build24
+
+This worktree resumes emulator development from frozen build23. PlayStation imports/player, per-game memory cards and save history are added while preserving the sanitized3DS core and user-selected artwork catalogs. GameCube is not enabled or bundled. See [build24](Docs/BUILD-24.md) and [actual checks/artifact status](Docs/MULTI-24-PROGRESS.md). Public distribution remains held; nothing is uploaded by the build scripts. Earlier notes below are historical.
+
+# Current legal-remediation candidate22
+
+Current development change: [build23 optional artwork catalogs](Docs/BUILD-23.md). This isolated 3DS branch preserves the build22 legal repairs and adds user-selected catalog links/bulk fill. No provider is configured by default. Public release remains held.
+
+This 3DS-only worktree contains legal fixes only, based on frozen21. Build22 is unsubmitted and not cleared for public release. See [the legal decision packet](Docs/Legal/RELEASE-22-LEGAL-DECISION.md) and [exact dependency/source build steps](Docs/BUILD-22.md). The linked TLS implementation is Apache-2.0 OpenSSL3.5.9, and the offline license/source inventory explicitly preserves decoder, font and replacement-resource terms. Before any public22 binary distribution, provide its exact source package and resolve the actual Apple/GPL distribution decision. Earlier release notes below remain historical.
+
 # EmuDen for iPhone and iPad
 
 **Public-release hold:** EmuDen remains an internal beta. Public source/support publication is authorized; remaining artwork, distribution/privacy/export and final review requirements are tracked separately. The artwork expansion is paused. See [the legal/App Review audit](Docs/Legal/REVIEW-2026-11-11.md) and `python3 Scripts/validate-app-store-readiness.py`.

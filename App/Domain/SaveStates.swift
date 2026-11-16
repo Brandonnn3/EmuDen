@@ -26,14 +26,27 @@ struct SaveStateStore: Sendable {
     let directory: URL
     private let savesRoot: URL
     private let previousCoreDirectory: URL
-    init(saves: URL, game: URL) {
+    init(saves: URL, game: URL, platform: GamePlatform = .threeDS) {
         savesRoot = saves.standardizedFileURL
-        let key = SHA256.hash(data: Data(game.lastPathComponent.utf8)).map { String(format: "%02x", $0) }.joined()
+        let identity = platform == .threeDS ? game.lastPathComponent : game.deletingLastPathComponent().lastPathComponent + "/" + game.lastPathComponent
+        let key = SHA256.hash(data: Data(identity.utf8)).map { String(format: "%02x", $0) }.joined()
         previousCoreDirectory = saves.appendingPathComponent("SaveStates/\(key)", isDirectory: true)
-        let revisionFile = saves.appendingPathComponent(".system-resource-revision")
+        let revisionPath: String
+        switch platform {
+        case .threeDS: revisionPath = ".system-resource-revision"
+        case .ps1: revisionPath = "PlayStation/.bios-revision"
+        case .gamecube: revisionPath = "GameCube/.system-resource-revision"
+        }
+        let revisionFile = saves.appendingPathComponent(revisionPath)
         let revision = (try? String(contentsOf: revisionFile, encoding: .utf8)).flatMap(UUID.init(uuidString:))?.uuidString ?? "original"
         // Older core snapshots remain on disk; native game saves use the existing Azahar folder.
-        directory = saves.appendingPathComponent("SaveStates/\(Self.coreGeneration)/\(key)/\(revision)", isDirectory: true)
+        let generation: String
+        switch platform {
+        case .threeDS: generation = Self.coreGeneration
+        case .ps1: generation = "pcsx-rearmed-7b0e8f8-interpreter"
+        case .gamecube: generation = "dolphin-f84df02055-generic"
+        }
+        directory = saves.appendingPathComponent("SaveStates/\(generation)/\(key)/\(revision)", isDirectory: true)
     }
     var hasOlderSnapshots: Bool {
         let fm = FileManager.default

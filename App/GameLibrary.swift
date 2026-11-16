@@ -1,6 +1,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 import WidgetKit
+import CryptoKit
 
 @MainActor
 final class GameLibrary: ObservableObject {
@@ -14,6 +15,18 @@ final class GameLibrary: ObservableObject {
     @Published var sceneRevision = 0
     @Published var featuredGameID: UUID?
     @Published private(set) var coreReady = false
+    @Published private(set) var artworkSourceURL: URL?
+    @Published private(set) var artworkImporting = false
+    @Published private(set) var artworkImportProgress = 0.0
+    @Published private(set) var artworkImportStatus: String?
+    @Published private(set) var boxArtSourceURL: URL?
+    @Published private(set) var boxArtImporting = false
+    @Published private(set) var boxArtStatus: String?
+    private var boxArtSource: BoxArtworkSource?
+    private var boxArtTask: Task<Void, Never>?
+    private var artworkSource: ArtworkCatalogSource?
+    private var artworkImportTask: Task<Void, Never>?
+    private var activeArtworkCatalog: RemoteArtworkCatalog?
     private var catalogReadable = true
     private var widgetTask: Task<Void, Never>?
     let storage: LibraryStorage
@@ -25,6 +38,10 @@ final class GameLibrary: ObservableObject {
         artwork = ArtworkStore(directory: documents.appendingPathComponent("Artwork", isDirectory: true))
         scenes = ArtworkStore(directory: documents.appendingPathComponent("Scenes", isDirectory: true), kind: .scene)
         mii = storage.inspectMii()
+        artworkSource = ArtworkCatalogSource.read(from: documents.appendingPathComponent("artwork-source.json"))
+        artworkSourceURL = artworkSource?.url
+        boxArtSource = BoxArtworkSource.read(from: documents.appendingPathComponent("box-art-source.txt"))
+        boxArtSourceURL = boxArtSource?.url
         do { try storage.prepare(); games = try storage.read() }
         catch { self.error = error.localizedDescription; catalogReadable = false }
         let avatar = documents.appendingPathComponent("profile-avatar.jpg")
@@ -67,7 +84,7 @@ final class GameLibrary: ObservableObject {
             guard !Task.isCancelled, let group = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: WidgetLibrary.groupID) else { return }
             let directory = group.appendingPathComponent(WidgetLibrary.directoryName, isDirectory: true)
             let recent = Array(sortedGames.prefix(4))
-            let snapshot = WidgetLibrary(games: recent.map { WidgetGame(id: $0.id, title: String($0.artworkName.prefix(240))) }, updated: Date())
+            let snapshot = WidgetLibrary(games: recent.map { WidgetGame(id: $0.id, title: String(($0.customTitle ?? $0.artworkName).prefix(240)), platform: $0.console.rawValue) }, updated: Date())
             let previous = WidgetLibrary.read(from: directory)
             var changed = previous?.games != snapshot.games
             do {
@@ -76,7 +93,7 @@ final class GameLibrary: ObservableObject {
                     for scene in [false, true] {
                         var image = scene ? await scenes.cachedImage(for: game) : await artwork.cachedImage(for: game)
                         guard !Task.isCancelled else { return }
-                        if scene, game.useConsoleBackground == true || image == nil { image = ArtworkResources.consoleImage(.threeDS) }
+                        if scene, game.useConsoleBackground == true || image == nil { image = ArtworkResources.consoleImage(ConsoleSystem(rawValue: game.console.rawValue) ?? .threeDS) }
                         let item = WidgetGame(id: game.id, title: game.title), file = item.imageURL(in: directory, scene: scene)
                         guard let image else {
                             if FileManager.default.fileExists(atPath: file.path) { try FileManager.default.removeItem(at: file); changed = true }
@@ -119,6 +136,139 @@ final class GameLibrary: ObservableObject {
         do { try await artwork.importImage(url, for: game); artworkRevision += 1 }
         catch { self.error = error.localizedDescription }
     }
+    func artworkPlan(for source: ArtworkCatalogSource, games selection: [Game]? = nil) async -> ArtworkImportPlan {
+        let selection = selection ?? games
+        var covers = Set<UUID>(), backgrounds = Set<UUID>()
+        for game in selection {
+            let entry = source.pack.match(game)
+            if boxArtSource != nil, entry?.coverIsSceneFallback == true { covers.insert(game.id) }
+            else if await artwork.hasImportedImage(for: game, matching: entry?.cover) { covers.insert(game.id) }
+            if await scenes.hasImportedImage(for: game, matching: entry?.scene) { backgrounds.insert(game.id) }
+        }
+        return ArtworkImportPlan(pack: source.pack, games: selection, protectedCovers: covers, protectedScenes: backgrounds)
+    }
+    func fillArtwork(from source: ArtworkCatalogSource) {
+        guard !artworkImporting, catalogReadable else { return }
+        do { try source.write(to: storage.root.appendingPathComponent("artwork-source.json")) }
+        catch { artworkImportStatus = "Couldn’t remember this catalog. \(error.localizedDescription)"; return }
+        artworkSource = source; artworkSourceURL = source.url
+        artworkImporting = true; artworkImportProgress = 0; artworkImportStatus = "Checking your artwork…"
+        artworkImportTask = Task { @MainActor in
+            let key = SHA256.hash(data: Data(source.url.absoluteString.utf8)).map { String(format: "%02x", $0) }.joined()
+            let cache = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0].appendingPathComponent("SelectedArtworkCatalog/" + key)
+            let catalog = RemoteArtworkCatalog(seed: source.pack, directory: cache)
+            activeArtworkCatalog = catalog
+            var processed = Set<UUID>(), saved = 0, failed = 0, unmatched = 0
+            // Re-read the library so games added during a fill join the same pass.
+            while !Task.isCancelled, let game = games.first(where: { !processed.contains($0.id) }) {
+                processed.insert(game.id)
+                if let entry = source.pack.match(game), let asset = entry.cover {
+                    do {
+                        if try await artwork.updateCatalogCoverPriority(for: game, asset: asset, isSceneFallback: entry.coverIsSceneFallback == true) { artworkRevision += 1 }
+                    } catch { failed += 1 }
+                }
+                let plan = await artworkPlan(for: source, games: [game])
+                unmatched += plan.unmatchedGames
+                if let item = plan.items.first {
+                    artworkImportStatus = "Adding artwork for \(game.title)…"
+                    for kind in [ArtworkKind.cover, .scene] where kind == .cover ? item.cover : item.scene {
+                        guard !Task.isCancelled else { break }
+                        guard let image = await catalog.image(for: game, kind: kind, force: true),
+                              image.asset == source.pack.match(game)?.asset(kind) else {
+                            if !Task.isCancelled { failed += 1 }; continue
+                        }
+                        guard !Task.isCancelled else { break }
+                        // A manual choice made while downloading must still win.
+                        if kind == .scene, games.first(where: { $0.id == game.id })?.useConsoleBackground == true { continue }
+                        do {
+                            let store = kind == .cover ? artwork : scenes
+                            if try await store.importCatalogImage(image, for: game, coverIsSceneFallback: source.pack.match(game)?.coverIsSceneFallback == true) {
+                                saved += 1
+                                if kind == .cover { artworkRevision += 1 } else { sceneRevision += 1 }
+                            }
+                        } catch { failed += 1 }
+                    }
+                }
+                artworkImportProgress = Double(processed.count) / Double(max(1, games.count))
+            }
+            let cancelled = Task.isCancelled
+            await catalog.setFetchingEnabled(false)
+            activeArtworkCatalog = nil; artworkImporting = false; artworkImportTask = nil
+            if cancelled { artworkImportStatus = "Stopped. Artwork already saved is kept." }
+            else {
+                artworkImportProgress = 1
+                artworkImportStatus = "Saved \(saved) image\(saved == 1 ? "" : "s")."
+                    + (failed > 0 ? " \(failed) unavailable; check the link and retry to fill the remaining images." : "")
+                    + (unmatched > 0 ? " \(unmatched) game\(unmatched == 1 ? "" : "s") without a catalog match keep their existing artwork." : "")
+            }
+            refreshWidgets()
+            if !cancelled { fillBoxCovers() }
+        }
+    }
+    func cancelArtworkImport() {
+        artworkImportTask?.cancel()
+        cancelBoxCovers()
+        if let catalog = activeArtworkCatalog { Task { await catalog.setFetchingEnabled(false) } }
+    }
+    func cancelBoxCovers() { boxArtTask?.cancel() }
+    func connectBoxCovers(_ text: String) {
+        guard !boxArtImporting, catalogReadable else { return }
+        do {
+            let source = try BoxArtworkSource(text)
+            try Data(source.url.absoluteString.utf8).write(to: storage.root.appendingPathComponent("box-art-source.txt"), options: .atomic)
+            boxArtSource = source; boxArtSourceURL = source.url
+            fillBoxCovers()
+        } catch { boxArtStatus = error.localizedDescription }
+    }
+    func fillBoxCovers() {
+        guard !boxArtImporting, catalogReadable, let source = boxArtSource else { return }
+        boxArtImporting = true; boxArtStatus = "Finding original covers…"
+        boxArtTask = Task { @MainActor in
+            let session = URLSession(configuration: ArtworkNetwork.configuration())
+            defer { session.invalidateAndCancel() }
+            var processed = Set<UUID>(), saved = 0, failed = 0, unmatched = 0
+            while !Task.isCancelled, let game = games.first(where: { $0.console == .threeDS && !processed.contains($0.id) }) {
+                processed.insert(game.id)
+                guard let url = source.imageURL(for: game.artworkName, catalog: ArtworkResources.covers) else { unmatched += 1; continue }
+                if await artwork.hasBoxCover(for: game, from: url) { continue }
+                boxArtStatus = "Finding cover for \(game.title)…"
+                guard let data = await RemoteArtworkCatalog.download(url, session: session, limit: 4 * 1024 * 1024) else {
+                    if !Task.isCancelled { failed += 1 }; continue
+                }
+                guard !Task.isCancelled, boxArtSource == source else { break }
+                do {
+                    if try await artwork.importBoxCover(data, from: url, for: game) { saved += 1; artworkRevision += 1 }
+                } catch { failed += 1 }
+            }
+            boxArtImporting = false; boxArtTask = nil
+            if boxArtSource == nil { boxArtStatus = "Cover source disconnected. Saved covers are kept." }
+            else if Task.isCancelled { boxArtStatus = "Stopped. Saved covers are kept." }
+            else {
+                boxArtStatus = "Saved \(saved) original cover\(saved == 1 ? "" : "s")."
+                    + (failed > 0 ? " \(failed) unavailable; retry when connected." : "")
+                    + (unmatched > 0 ? " \(unmatched) games have no matching cover." : "")
+            }
+            refreshWidgets()
+        }
+    }
+    func disconnectBoxCovers() {
+        do {
+            let file = storage.root.appendingPathComponent("box-art-source.txt")
+            if FileManager.default.fileExists(atPath: file.path) { try FileManager.default.removeItem(at: file) }
+            cancelBoxCovers(); boxArtSource = nil; boxArtSourceURL = nil
+            boxArtStatus = "Cover source disconnected. Saved covers are kept."
+        } catch { boxArtStatus = error.localizedDescription }
+    }
+    func disconnectArtworkSource() {
+        do {
+            let file = storage.root.appendingPathComponent("artwork-source.json")
+            if FileManager.default.fileExists(atPath: file.path) { try FileManager.default.removeItem(at: file) }
+            artworkImportTask?.cancel()
+            if let catalog = activeArtworkCatalog { Task { await catalog.setFetchingEnabled(false) } }
+            artworkSource = nil; artworkSourceURL = nil
+            if !artworkImporting { artworkImportStatus = "Catalog disconnected. Saved artwork is kept." }
+        } catch { artworkImportStatus = "Couldn’t disconnect this catalog. \(error.localizedDescription)" }
+    }
     func setConsoleBackground(_ enabled: Bool, for game: Game) {
         do { try updateArtwork(game) { $0.useConsoleBackground = enabled }; sceneRevision += 1 }
         catch { self.error = error.localizedDescription }
@@ -147,30 +297,51 @@ final class GameLibrary: ObservableObject {
         } catch { self.error = "Couldn’t prepare a backup for the new 3DS core. Your data is unchanged. \(error.localizedDescription)" }
         busy = false
     }
-    func importGames(_ urls: [URL]) async {
+    func importGames(_ urls: [URL], allowGameCube requestedGameCube: Bool? = nil) async {
         guard !busy, catalogReadable else { return }
         activity = "Adding your games…"; busy = true
         let storage = storage
+        let allowGameCube = requestedGameCube ?? ConsoleSystem.gameCubeAvailable
         let oldGames = games
         do {
             games = try await Task.detached(priority: .userInitiated) {
                 var imported = [Game]()
+                let scoped = urls.filter { $0.startAccessingSecurityScopedResource() }
+                defer { for url in scoped { url.stopAccessingSecurityScopedResource() } }
                 do {
-                    for url in urls {
-                        let scoped = url.startAccessingSecurityScopedResource()
-                        defer { if scoped { url.stopAccessingSecurityScopedResource() } }
-                        imported.append(try storage.importGame(url))
-                    }
+                    imported = try storage.importBatch(urls, allowGameCube: allowGameCube)
                     let all = oldGames + imported
                     try storage.write(all)
                     return all
                 } catch {
-                    for game in imported { try? FileManager.default.removeItem(at: storage.gameURL(game)) }
+                    for game in imported { try? FileManager.default.removeItem(at: storage.gameAssetsURL(game)) }
                     throw error
                 }
             }.value
         } catch { self.error = error.localizedDescription }
         busy = false
+        if let source = artworkSource, !artworkImporting { fillArtwork(from: source) }
+        fillBoxCovers()
+    }
+    func renameGame(_ game: Game, name: String) {
+        guard !busy, catalogReadable, let i = games.firstIndex(where: { $0.id == game.id }) else { return }
+        guard Game.isValidDisplayName(name) else { error = "Choose a name from 1 to 160 characters without line breaks."; return }
+        do {
+            var updated = games; updated[i] = try updated[i].renamed(name)
+            try storage.write(updated); games = updated; refreshWidgets()
+        } catch { self.error = "Couldn’t rename the game. " + error.localizedDescription }
+    }
+    func deleteGame(_ game: Game) async {
+        guard !busy, catalogReadable else { return }
+        cancelArtworkImport(); boxArtTask?.cancel()
+        activity = "Deleting game…"; busy = true
+        let storage = storage
+        do { games = try await Task.detached(priority: .userInitiated) { try storage.deleteGame(id: game.id) }.value }
+        catch {
+            if let current = try? storage.read() { games = current }
+            self.error = error.localizedDescription
+        }
+        busy = false; refreshWidgets()
     }
     func importSystem(_ url: URL, miiArchive: Bool = false) async {
         guard !busy else { return }; activity = "Setting up system data…"; busy = true
@@ -198,5 +369,6 @@ struct Launch: Identifiable {
     let id = UUID()
     let title: String
     let url: URL?
+    var platform: GamePlatform = .threeDS
     var diagnostic: Bool { url == nil }
 }

@@ -1,0 +1,25 @@
+{
+  "scope": "TLS-license remediation only; no App Store/GPL distribution clearance",
+  "targets": {
+    "Device": {
+      "binarySHA256": "584d4bc832f987fbd95f8aff1fee7c8dc31de5e6886fbfb9922eac0f5784712a",
+      "bytes": 47385568,
+      "TLSVersions": [
+        "OpenSSL 3.5.9 29 Sep 2026"
+      ],
+      "systemCMakeOptionIsExternalBundledLibraryNotGPLSystemLibraryException": true,
+      "buildCacheSHA256": "f834f72efdf402542c2b1cdddab6833088d3b000edb030df5f1e5f340d652442",
+      "platform": "/Volumes/SamsungT7/EmuDenLegal3DS/Vendor/Azahar/azahar_libretro.dylib:\nLoad command 10\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform IOS\n    minos 18.0\n      sdk 27.2\n   ntools 1\n     tool LD\n  version 27106.1\n"
+    },
+    "Simulator": {
+      "binarySHA256": "08834c2fb816cb41b25caf75185bc8e90a667df0b71cff27ac1a70adda8db298",
+      "bytes": 41940856,
+      "TLSVersions": [
+        "OpenSSL 3.5.9 29 Sep 2026"
+      ],
+      "systemCMakeOptionIsExternalBundledLibraryNotGPLSystemLibraryException": true,
+      "buildCacheSHA256": "45aaa4581691b795db4ec8ddcb21099a52ae8e55745cfa3c239961026a8dc576",
+      "platform": "/Volumes/SamsungT7/EmuDenLegal3DS/Vendor/Azahar/Simulator/azahar_libretro.dylib:\nLoad command 10\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform IOSSIMULATOR\n    minos 18.0\n      sdk 27.2\n   ntools 1\n     tool LD\n  version 27106.1\n"
+    }
+  }
+}

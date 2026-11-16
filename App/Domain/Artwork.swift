@@ -1,6 +1,18 @@
 import Foundation
 
 enum LocalArtworkFiles {
+    static func hasCurrentOrCustomImage(for id: UUID, matching asset: ArtworkPackAsset?, in directory: URL) -> Bool {
+        if customImage(for: id, in: directory) != nil { return true }
+        let file = directory.appendingPathComponent(id.uuidString + ".catalog.jpg")
+        guard let asset,
+              let values = try? file.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey]),
+              values.isRegularFile == true, values.isSymbolicLink != true,
+              (1...4 * 1024 * 1024).contains(asset.bytes), values.fileSize == asset.bytes,
+              let handle = try? FileHandle(forReadingFrom: file) else { return false }
+        defer { try? handle.close() }
+        guard let data = try? handle.read(upToCount: asset.bytes + 1) else { return false }
+        return asset.accepts(data)
+    }
     static func customImage(for id: UUID, in directory: URL) -> URL? {
         let marker = directory.appendingPathComponent(id.uuidString + ".custom")
         guard let values = try? marker.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey]),
@@ -24,6 +36,7 @@ public enum ArtworkScenePolicy {
 }
 
 public enum ArtworkCoverPolicy {
+    public static let posterAspect = 0.71
     public static func frontWidth(width: Int, height: Int) -> Int {
         guard width > 0, height > 0 else { return 0 }
         let ratio = Double(width) / Double(height)
@@ -37,7 +50,10 @@ public struct ArtworkIdentityCatalog: Sendable {
     public init(titles: [String: String]) { self.titles = titles }
     public func name(for game: Game, covers: ArtworkCatalog) -> String {
         if let choice = game.artworkTitle, !choice.isEmpty { return choice }
-        if let id = game.programID?.uppercased(), let name = titles[id], covers.match(name) != nil { return name }
+        if let id = game.programID?.uppercased(), let name = titles[id], covers.match(name) != nil {
+            // Keep region/revision tags when the imported name agrees with the verified identity.
+            return ArtworkCatalog.matchKey(game.title) == ArtworkCatalog.matchKey(name) ? game.title : name
+        }
         return game.title
     }
 }

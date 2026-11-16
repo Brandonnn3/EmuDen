@@ -1,0 +1,13 @@
+# Build23 — optional artwork catalogs
+
+The owner explicitly requested bulk artwork imports through a link after testing build22. This separate worktree (`/Volumes/SamsungT7/EmuDenArtwork3DS`, branch `artwork-import-build23`) adds only that feature to the sanitized, OpenSSL3-based 3DS branch. Frozen signed/source builds21–22 and all main PS1/GameCube/artwork work remain untouched. Existing nonlegal automations stay paused.
+
+Settings → Artwork catalogs accepts a user-supplied HTTPS schema-1 catalog link or collection folder. Preview downloads only a bounded JSON index and matches locally by title ID, then normalized title/alias. Applying connects the catalog, fills matching missing covers/backgrounds together, and uses the remembered source after future game imports. No provider is bundled, prefilled or enabled by default, and legacy online-artwork defaults do not select one. An ordinary gallery/image/ROM URL is not a compatible catalog.
+
+Existing individually chosen images and console-background preferences are protected, including changes made while a download is pending. Imported images are kept as separate `.catalog.jpg` files and remain offline across relaunch and disconnect. The old automatically downloaded cache remains ignored. Reset artwork removes a game's selected catalog images. Gameplay/backgrounding and Stop cancel active work. Failed images can be retried without redoing saved ones; missing games retain their fallback.
+
+The existing catalog decoder, matching and verified cache are reused. Source documents and responses are bounded; manifests must use their own image origin/folder. Redirects cannot downgrade HTTPS or contact another host. Images must match their SHA256, byte count and actual decoded dimensions before installation. Networking is ephemeral with no persistent cookie, credential or HTTP cache. No game files, saves, personal Mii data or complete library are uploaded; selected hosts see IP address and requested catalog/image paths.
+
+Privacy/review drafts reflect the changed optional networking. This feature does not establish rights for the old generated-character gallery, and a user-entered link is not a rights or App Review workaround. Exact source publication, public-policy/provider disclosures and the existing distribution decisions remain on hold. The app still has the same conservative age-access policy, interpreted 3DS core, original assets and89 notices as22; no PS1/GameCube feature is introduced.
+
+Validation and artifact paths are recorded in Docs/ARTWORK-CATALOG-PROGRESS.md. No binary upload/submission, site publication/audience change, owner phone access or legal-clearance claim is authorized by this work.

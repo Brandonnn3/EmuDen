@@ -1,0 +1,55 @@
+{
+  "build": "22",
+  "records": [
+    {
+      "binary": "Vendor/Azahar/azahar_libretro.dylib",
+      "sha256": "584d4bc832f987fbd95f8aff1fee7c8dc31de5e6886fbfb9922eac0f5784712a",
+      "excludedPayloads": [
+        {
+          "source": "src/core/hw/default_keys.h",
+          "bytes": 9648,
+          "sha256": "017bcf81ddd9323a37cb5611e4b6f5d529db49a08073e8d2f1759c3f5568668f",
+          "foundInBinary": false
+        },
+        {
+          "source": "src/core/hle/service/http/ctr-common-1-cert.h",
+          "bytes": 1264,
+          "sha256": "112d33785c00a56ed37be2bd51fce5e0f74606450f589ee613ca58382f3a9278",
+          "foundInBinary": false
+        },
+        {
+          "source": "src/core/hle/service/http/ctr-common-1-key.h",
+          "bytes": 1232,
+          "sha256": "6201f628c060332bd3989e302769353bbb0c6e7938f11975916d63bee28f87fd",
+          "foundInBinary": false
+        }
+      ]
+    },
+    {
+      "binary": "Vendor/Azahar/Simulator/azahar_libretro.dylib",
+      "sha256": "08834c2fb816cb41b25caf75185bc8e90a667df0b71cff27ac1a70adda8db298",
+      "excludedPayloads": [
+        {
+          "source": "src/core/hw/default_keys.h",
+          "bytes": 9648,
+          "sha256": "017bcf81ddd9323a37cb5611e4b6f5d529db49a08073e8d2f1759c3f5568668f",
+          "foundInBinary": false
+        },
+        {
+          "source": "src/core/hle/service/http/ctr-common-1-cert.h",
+          "bytes": 1264,
+          "sha256": "112d33785c00a56ed37be2bd51fce5e0f74606450f589ee613ca58382f3a9278",
+          "foundInBinary": false
+        },
+        {
+          "source": "src/core/hle/service/http/ctr-common-1-key.h",
+          "bytes": 1232,
+          "sha256": "6201f628c060332bd3989e302769353bbb0c6e7938f11975916d63bee28f87fd",
+          "foundInBinary": false
+        }
+      ]
+    }
+  ],
+  "noPayloadBytesRecorded": true,
+  "scope": "Negative checks for the three known console-default payloads; not comprehensive legal clearance"
+}

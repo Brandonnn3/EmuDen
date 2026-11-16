@@ -1,0 +1,217 @@
+{
+  "build": "37",
+  "finalCompileLog": "build/Build37/compile-9.log",
+  "debugSimulatorExecutableSHA256": "f6718e0130166fcc83ca4cfd2565a3437ed80851166d72eeef7dbfadf0bb17d3",
+  "coreBinariesUnchangedFrom36": true,
+  "renewedDistinctNativePasses": 15,
+  "stages": [
+    {
+      "bundle": "build/Build37/LiveSave-1.xcresult",
+      "resultJSONSHA256": "748d2c9a3b7bbbc63f14331c0e712fd75446fcafca0839f9b6c997b83f10a452",
+      "cases": [
+        {
+          "name": "testLiveQuickSaveBannerForAllConsoles()",
+          "result": "Failed",
+          "seconds": 141.64660704135895
+        }
+      ],
+      "startedAt": 1794844100.732,
+      "finishedAt": 1794844293.201,
+      "summaryJSONSHA256": "2573ed163c1939f7702b1e3c4aa65661b1da27892f7e7dc31093c2ceab9a1ba4"
+    },
+    {
+      "bundle": "build/Build37/LibrarySave-2.xcresult",
+      "resultJSONSHA256": "0fc73e88807e126776d06fb81ccd58f02e54eff4ce449f50a63bd5dbb91df20b",
+      "cases": [
+        {
+          "name": "testDemoLinkRemainsAvailableWithoutLocalAgeChoice()",
+          "result": "Passed",
+          "seconds": 47.106199979782104
+        },
+        {
+          "name": "testFoldedLibraryPlayDispatchesForEachConsole()",
+          "result": "Passed",
+          "seconds": 163.82474398612976
+        },
+        {
+          "name": "testLiveQuickSaveBannerForAllConsoles()",
+          "result": "Passed",
+          "seconds": 103.66250395774841
+        },
+        {
+          "name": "testRenameAndNoBlanketAgeLabelsSurviveRelaunch()",
+          "result": "Failed",
+          "seconds": 22.850088953971863
+        }
+      ],
+      "startedAt": 1794844655.661,
+      "finishedAt": 1794845027.857,
+      "summaryJSONSHA256": "07c927e119096cc13231f1728e63ba9fd03cca1c29d12aef45b037c164a5631c"
+    },
+    {
+      "bundle": "build/Build37/Integration-3.xcresult",
+      "resultJSONSHA256": "169b43c7dea15df8e7c9196cb3ee4e673e9d641804e5572f520293546b8b720c",
+      "cases": [
+        {
+          "name": "testConsoleNavigationFavoriteAndLibraryFilters()",
+          "result": "Passed",
+          "seconds": 62.32847607135773
+        },
+        {
+          "name": "testGameCubeFoldedControllerQuickPanelAndBlankPersistence()",
+          "result": "Failed",
+          "seconds": 76.23137295246124
+        },
+        {
+          "name": "testGameCubeGXDepthAndNativeCardRelaunch()",
+          "result": "Passed",
+          "seconds": 37.88227200508118
+        },
+        {
+          "name": "testGameCubeHomebrewInputStateHistoryAndRelaunch()",
+          "result": "Failed",
+          "seconds": 40.811336040496826
+        },
+        {
+          "name": "testGameCubeTeardownAllowsPlayStationAndThreeDS()",
+          "result": "Failed",
+          "seconds": 34.00458097457886
+        },
+        {
+          "name": "testMultiConsoleArtworkFillAndOfflineRelaunch()",
+          "result": "Passed",
+          "seconds": 47.94857096672058
+        },
+        {
+          "name": "testPlayStationFoldedQuickPanelSpeedAndBlankOptions()",
+          "result": "Passed",
+          "seconds": 79.4550769329071
+        },
+        {
+          "name": "testRenameAndNoBlanketAgeLabelsSurviveRelaunch()",
+          "result": "Failed",
+          "seconds": 28.018808960914612
+        },
+        {
+          "name": "testSettingsOrganizationGameCubeBackgroundAndDeleteConfirmation()",
+          "result": "Passed",
+          "seconds": 31.364853024482727
+        },
+        {
+          "name": "testThreeDSCoreRequestsMotionAndPauseStopsInput()",
+          "result": "Passed",
+          "seconds": 26.500465035438538
+        }
+      ],
+      "startedAt": 1794845304.139,
+      "finishedAt": 1794845812.313,
+      "summaryJSONSHA256": "66e2e0f218cd6e654fba4d08a9a26037c4503ba1230169dd8361348330698f56"
+    },
+    {
+      "bundle": "build/Build37/Lifecycle-4.xcresult",
+      "resultJSONSHA256": "2425c677aef8e44ebf94345113291132b75e3fcdc7cb0ccc7462d705e3d5c471",
+      "cases": [
+        {
+          "name": "testGameCubeTeardownAllowsPlayStationAndThreeDS()",
+          "result": "Passed",
+          "seconds": 96.82713198661804
+        }
+      ],
+      "startedAt": 1794846046.968,
+      "finishedAt": 1794846242.087,
+      "summaryJSONSHA256": "6fec9fdef4bfebec4a6ad043e32a94f0b28ccc6ab85c1b9cc977b6253dc15fb8"
+    },
+    {
+      "bundle": "build/Build37/Final-5.xcresult",
+      "resultJSONSHA256": "6cb40b20c4f77d8b139dcab09d54678eb398c71bce63f1fc8f7bba6cc73599be",
+      "cases": [
+        {
+          "name": "testGameCubeFoldedControllerQuickPanelAndBlankPersistence()",
+          "result": "Passed",
+          "seconds": 127.51546502113342
+        },
+        {
+          "name": "testGameCubeGCMImportBootAndState()",
+          "result": "Passed",
+          "seconds": 43.882176995277405
+        },
+        {
+          "name": "testGameCubeHomebrewInputStateHistoryAndRelaunch()",
+          "result": "Passed",
+          "seconds": 101.27162599563599
+        },
+        {
+          "name": "testGameCubeOriginalDiscImportBootAndState()",
+          "result": "Passed",
+          "seconds": 44.687069058418274
+        },
+        {
+          "name": "testLiveQuickSaveBannerForAllConsoles()",
+          "result": "Passed",
+          "seconds": 163.245334982872
+        },
+        {
+          "name": "testRenameAndNoBlanketAgeLabelsSurviveRelaunch()",
+          "result": "Failed",
+          "seconds": 30.61408293247223
+        }
+      ],
+      "startedAt": 1794846275.789,
+      "finishedAt": 1794846821.582,
+      "summaryJSONSHA256": "c5e415db7ef05df47b59f10a7cc718c3f9a085572b2dfcb01467c40e5dcac553"
+    },
+    {
+      "bundle": "build/Build37/Rename-6.xcresult",
+      "resultJSONSHA256": "41edc37e0be904f1b085aee3367c8fe0f7ae03b99d443ff1903772c62828a8b6",
+      "cases": [
+        {
+          "name": "testRenameAndNoBlanketAgeLabelsSurviveRelaunch()",
+          "result": "Failed",
+          "seconds": 34.57358705997467
+        }
+      ],
+      "startedAt": 1794846949.46,
+      "finishedAt": 1794847018.054,
+      "summaryJSONSHA256": "d243695e30a607b0c9afb5bc8b5c158880f0d7e513727d7ab5058383371f4bd2"
+    },
+    {
+      "bundle": "build/Build37/Rename-7.xcresult",
+      "resultJSONSHA256": "dff095313fdcfd568d50000ca468fed85c3c26b86d9e1dd4dd00353ab3556fae",
+      "cases": [
+        {
+          "name": "testRenameAndNoBlanketAgeLabelsSurviveRelaunch()",
+          "result": "Failed",
+          "seconds": 32.92067098617554
+        }
+      ],
+      "startedAt": 1794847139.836,
+      "finishedAt": 1794847208.849,
+      "summaryJSONSHA256": "795bef8665ba7c67f1e27c6bac4e3fe761bfed3b312be64bf75e01557431056d"
+    },
+    {
+      "bundle": "build/Build37/Rename-8.xcresult",
+      "resultJSONSHA256": "b9464591970737e89ad57448ecf449afb34335b5e977a631f8beba5c3af193bf",
+      "cases": [
+        {
+          "name": "testRenameAndNoBlanketAgeLabelsSurviveRelaunch()",
+          "result": "Passed",
+          "seconds": 40.40792691707611
+        }
+      ],
+      "startedAt": 1794847411.827,
+      "finishedAt": 1794847485.697,
+      "summaryJSONSHA256": "a2c84d68f073f0217ebc8be142d7bd4b2dd8bb8cde11fc1a22ef8994135dd8e8"
+    }
+  ],
+  "sourceBoundary": {
+    "priorCompile": "build/Build37/compile-4-inputs.json",
+    "finalCompile": "build/Build37/final-debug-inputs.json",
+    "notes": "LibrarySave-2/Integration-3 use compile3/4; compile6 changes rename action capture and Simulator-only snapshot diagnostics. Lifecycle-4/Final-5/Rename-6 renew affected native lifecycle, snapshot/state/history/import/panel/rename paths. Earlier passing source/cache/navigation/settings/motion/fold-dispatch scope remains relevant; no core/render/input/source-host behavior change."
+  },
+  "notes": [
+    "Original homebrew and owned QA Simulators only. No phone, owner ROM/save/Mii/account or retail performance claim.",
+    "Retains every actual earlier failure. Original GameCube test flag, native TextField query, rename test caret left an old suffix (the original action persisted it); explicit alert-value capture is retained for robustness, obsolete paused-counter diagnostic and populated-library hidden-demo failures are resolved by later relevant passes.",
+    "Counter3 sampled before capture and counter1 after write bracket the actual snapshot. Restore counter must be in that range after later gameplay advances beyond it; diagnostics do not pause or alter the core.",
+    "All Device bridge text matches36 after excluding the Simulator-only diagnostic insertion. Old core/framework/source/dependency/symbol identities are unchanged."
+  ]
+}

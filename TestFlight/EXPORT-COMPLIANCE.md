@@ -1,3 +1,7 @@
+# Build22 dependency note
+
+The legal-remediation candidate replaces LibreSSL with bundled Apache-2.0 OpenSSL3.5.9. It is not OS-only encryption. The entertainment-runtime scope is unchanged; the updated source inventory and actual export answer still need review before live filing. No CCATS, regulatory ruling or Apple acceptance is claimed.
+
 # Export-compliance assessment — build 21
 
 Builds 17–18 retain their original metadata and unresolved declaration. Build 19 has a documented engineering self-classification for the consumer gaming runtime, with initial App Store availability limited to the United States. This is not a BIS classification ruling, an Apple approval or a legal opinion.

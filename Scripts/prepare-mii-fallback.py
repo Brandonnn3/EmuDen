@@ -2,7 +2,7 @@
 """Generate an original three-dimensional guest head in the open-source archive.
 
 Console-imported Mii resources still take precedence. This is not an authentic Mii model.
-Archive layout: B3n30/citra_system_archives, mii/mii-archive-format.md (GPL-2.0-or-later).
+Archive layout: B3n30/citra_system_archives, mii/mii-archive-format.md (upstream GPL2).
 """
 from pathlib import Path
 import argparse

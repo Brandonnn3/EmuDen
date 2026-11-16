@@ -19,6 +19,24 @@
       "noticeText": "complete file"
     },
     {
+      "source": "Resources/Licenses/Citra-System-Archives-NOTICE.txt",
+      "sha256": "14505639fc4ec250db7b5e8be73625e2523ff662eef57e7791cf8c1ec9491800",
+      "bytes": 18302,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Resources/Licenses/Montserrat-OFL.txt",
+      "sha256": "b6bc7536af55ff6086b139373942cfde251f64ccdb2635ce567e48b4b613eae2",
+      "bytes": 4611,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Resources/Licenses/Unifont-10.0.05-COPYING.txt",
+      "sha256": "6017b0fc5910282d5fd22ad274fa6697e1db3d469707e15e0211e5a4d40fa5e6",
+      "bytes": 43641,
+      "noticeText": "complete file"
+    },
+    {
       "source": "Resources/MenuAudio/NOTICE.txt",
       "sha256": "94edb471902e1b4f6b8910b1b7e4b27c6258ab7576083954ef9643bfdfdf158b",
       "bytes": 351,
@@ -178,6 +196,12 @@
       "source": "Vendor/Azahar/Source/externals/faad2/faad2/COPYING",
       "sha256": "d3baf3a54943cf12a994c85867a18dec84f810901b2f2878ddfd77efcc3c150f",
       "bytes": 18272,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Azahar/Source/externals/faad2/faad2/libfaad/decoder.c",
+      "sha256": "96242998d77a56753d9d3b0a91b26d0dc9efd2b5ea560b90cceba28074d37516",
+      "bytes": 37864,
       "noticeText": "complete file"
     },
     {
@@ -427,6 +451,324 @@
       "noticeText": "complete file"
     },
     {
+      "source": "Vendor/Dolphin/Source/COPYING",
+      "sha256": "695114256e306a5e1ca407bc6e2a11877b112328dbe990253b52f59726e01b4b",
+      "bytes": 494,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/FatFs/LICENSE.txt",
+      "sha256": "b896e32fb2cdb3fc8b3b6fd854706fca4ac55619fbb6d5eb2429cb05ee338966",
+      "bytes": 1913,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/LZO/COPYING",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "bytes": 18092,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/MoltenVK/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/SFML/SFML/license.md",
+      "sha256": "6fcb099a677ac6198ddf9ae8f3a368fe1880eb62ecf4bc56d8914969edb1c563",
+      "bytes": 876,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/SFML/license.txt",
+      "sha256": "d077528956532ae91d04a40c1c17cc6839e8327661ce958b12e94857b0dee4ed",
+      "bytes": 908,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/bzip2/bzip2/LICENSE",
+      "sha256": "c6dbbf828498be844a89eaa3b84adbab3199e342eb5cb2ed2f0d4ba7ec0f38a3",
+      "bytes": 1896,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/cpp-optparse/cpp-optparse/LICENSE",
+      "sha256": "d638447635afa6837615553bcebbba60bc80a0e62ed9b158b4ed969e8bb72421",
+      "bytes": 1082,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/curl/curl/COPYING",
+      "sha256": "e18f1989333b70044b2adfb7dc2f905d0119dbdcac3bc9f4bc9d540e3a29de5b",
+      "bytes": 1088,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/discord-rpc/LICENSE",
+      "sha256": "12054cc15e274c9a10966fd7d8740c12dbd679dec2468e370818d899f9a3a634",
+      "bytes": 1053,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/ed25519/license.txt",
+      "sha256": "f68d76b9c1c2271422e55134ea94cf71f2ac3fc3ed6a7ec6b83a1a0538753214",
+      "bytes": 874,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/enet/enet/LICENSE",
+      "sha256": "a29cd246638974da7c6edf423a0a69d4a6f7d759940b7cfa9a2bc3442ac3834c",
+      "bytes": 1060,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/expr/LICENSE",
+      "sha256": "9d384ed698915ee19fef1e5563b79a29d7c14615a426a1eeccff5ee2d91053ff",
+      "bytes": 1080,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/fmt/fmt/LICENSE",
+      "sha256": "07580f2a3b35709ce703d523f447b242f6dfec7582a8c0df102c7fa2849375f8",
+      "bytes": 1431,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/glslang/glslang/LICENSE.txt",
+      "sha256": "17e70c676e1521ff3e4686f04a2053d93a7e28a33be8de7ec37ab0ff72feb677",
+      "bytes": 54615,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/hidapi/hidapi-src/LICENSE-bsd.txt",
+      "sha256": "30eb1bef29b46f8ba7ab8b416035dbd93cb034a45481dd97815b944284582cd2",
+      "bytes": 1534,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/hidapi/hidapi-src/LICENSE-gpl3.txt",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/hidapi/hidapi-src/LICENSE-orig.txt",
+      "sha256": "fb5436aa63d1b71a8dfbf74ecaf1a5b4e1ec4df7f80074d11fec99284f69ca5f",
+      "bytes": 264,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/hidapi/hidapi-src/LICENSE.txt",
+      "sha256": "7d3b087c34f35d4d538e3bcddd1ff8f66e92f9ef336881999482800ddf840913",
+      "bytes": 530,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/imgui/imgui/LICENSE.txt",
+      "sha256": "c80c5789748d955c4a650562baa0d750494e2c7128c2ca66aaebe2e3c4e198bf",
+      "bytes": 1083,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/imgui/imgui/examples/libs/glfw/COPYING.txt",
+      "sha256": "da2fb2c802537710cdebe8881b55356d07b88a6dbd7e4b912ac3091f8e6b5f6a",
+      "bytes": 934,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/implot/LICENSE",
+      "sha256": "38bd30c2111fe7e3d8fb86d8607491239659eff1df1b1004b9a8349e20a91967",
+      "bytes": 1068,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/implot/implot/LICENSE",
+      "sha256": "38bd30c2111fe7e3d8fb86d8607491239659eff1df1b1004b9a8349e20a91967",
+      "bytes": 1068,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/liblzma/COPYING",
+      "sha256": "bcb02973ef6e87ea73d331b3a80df7748407f17efdb784b61b47e0e610d3bb5c",
+      "bytes": 2775,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/libspng/libspng/LICENSE",
+      "sha256": "0622b0794d0fecde47d743f1bb70a03e6fdf082be8e71f39de672ed995d96ff9",
+      "bytes": 1341,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/libusb/libusb/COPYING",
+      "sha256": "5df07007198989c622f5d41de8d703e7bef3d0e79d62e24332ee739a452af62a",
+      "bytes": 26436,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/licenses.md",
+      "sha256": "5b5cb160184dc08beaa05aed49d35212beb98b4013ad68a43eba462923bf37c7",
+      "bytes": 5024,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/lz4/lz4/LICENSE",
+      "sha256": "2949fcf758d3c9bcb05f8393ca42cadfa15be04eb4ae4b3327c4ad7957511e1b",
+      "bytes": 635,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/lz4/lz4/contrib/debian/copyright",
+      "sha256": "4f6ef9d0e844bf432d6a0abb2623f5a61175ae40f7f0e3665490311d89e3af87",
+      "bytes": 321,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/lz4/lz4/contrib/djgpp/LICENSE",
+      "sha256": "d011d1e02cb32b71c1ce2922ab41a2e2ad30f4ecf8de22c078d53618205abc05",
+      "bytes": 1292,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/lz4/lz4/examples/COPYING",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "bytes": 18092,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/lz4/lz4/lib/LICENSE",
+      "sha256": "8b58c446121a109ccf32edc094bba3010a3d85e4ee3702950db55e4d3e87736c",
+      "bytes": 1311,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/lz4/lz4/programs/COPYING",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "bytes": 18092,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/lz4/lz4/tests/COPYING",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "bytes": 18092,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/mbedtls/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/minizip-ng/minizip-ng/LICENSE",
+      "sha256": "675181c03fc1302a1c8554c00f7be9bb420c5dbc9dcc2013433cec144413de03",
+      "bytes": 877,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/picojson/LICENSE",
+      "sha256": "5585fe141cc7bb08c953f3859db608852968d0bbc625b9b6d95c0bd6349bacb6",
+      "bytes": 1336,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/pugixml/pugixml/LICENSE.md",
+      "sha256": "0d0b3772af2fa45628a548a3b34583707ebcc68bb6f83ec48ca273aab4a510f1",
+      "bytes": 1079,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/spirv_cross/SPIRV-Cross/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/tinygltf/tinygltf/LICENSE",
+      "sha256": "2ae461f8c8b78ed77c14e9c3b7e353ba277e44cb3dbfb5a6d380f76f2ae081a2",
+      "bytes": 1112,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/tinygltf/tinygltf/examples/common/nativefiledialog/LICENSE",
+      "sha256": "b332d6f507142c66a0e904838b6437e6273734589c22a16b57392b89bfdccb2a",
+      "bytes": 820,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/watcher/watcher/license",
+      "sha256": "886ea6db16060f5396d35effdb1f646cb26e2d3ed8a76f1994f76e7f2ead3384",
+      "bytes": 1070,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/xxhash/xxHash/LICENSE",
+      "sha256": "6ffedbc0f7878612d2b23589f1ff2ab15633e1df7963a5d9fc750ec5500c7e7a",
+      "bytes": 1389,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/xxhash/xxHash/cli/COPYING",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "bytes": 18092,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/xxhash/xxHash/tests/bench/LICENSE",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "bytes": 18092,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/xxhash/xxHash/tests/collisions/LICENSE",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "bytes": 18092,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/zlib-ng/zlib-ng/LICENSE.md",
+      "sha256": "d3c80be055d94d798eaa786116e84fa0b010bc11420b5d2060d978ea77845436",
+      "bytes": 867,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/zstd/zstd/COPYING",
+      "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
+      "bytes": 18091,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/Externals/zstd/zstd/LICENSE",
+      "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+      "bytes": 1549,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/LICENSES/BSD-3-Clause.txt",
+      "sha256": "42639b2e5507163d35069be166e37a784f48a5f17e3577c16eb48fab215247cd",
+      "bytes": 1480,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/LICENSES/CC0-1.0.txt",
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+      "bytes": 7048,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/LICENSES/GPL-2.0-or-later.txt",
+      "sha256": "aaf135472f81c5b4a0dca9367e5bb5e9750032b5bebe5442b36e4c0a47430df3",
+      "bytes": 17337,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/Dolphin/Source/LICENSES/MIT.txt",
+      "sha256": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0",
+      "bytes": 1078,
+      "noticeText": "complete file"
+    },
+    {
       "source": "Vendor/MoltenVK/Source/External/SPIRV-Cross/LICENSE",
       "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
       "bytes": 11358,
@@ -503,8 +845,50 @@
       "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
       "bytes": 11358,
       "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/OpenSSL/Source/LICENSE.txt",
+      "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "bytes": 10175,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/PCSX-ReARMed/Source/AUTHORS",
+      "sha256": "48d866645e4083ca01e935aca899c01f988ba0aaead81a98db3e8ba22a62cb3e",
+      "bytes": 1680,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/PCSX-ReARMed/Source/COPYING",
+      "sha256": "0efb4db8000c609bd2f06e61fcbc59af05519d122f5b3597b7c493224946c61d",
+      "bytes": 18730,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/PCSX-ReARMed/Source/deps/libchdr/LICENSE.txt",
+      "sha256": "e3989a7aee74a91b8cdbdfe204a6b8d03288863ec7533a21c51f1a987ba73539",
+      "bytes": 1493,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/PCSX-ReARMed/Source/deps/libchdr/deps/lzma-26.02/LICENSE",
+      "sha256": "06721414a6decad6d6677feb470f01f47126e154d895d85bc1e17628697715e5",
+      "bytes": 261,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/PCSX-ReARMed/Source/deps/lightning/COPYING",
+      "sha256": "fc82ca8b6fdb18d4e3e85cfd8ab58d1bcd3f1b29abe782895abd91d64763f8e7",
+      "bytes": 35068,
+      "noticeText": "complete file"
+    },
+    {
+      "source": "Vendor/PCSX-ReARMed/Source/deps/lightrec/COPYING",
+      "sha256": "20e50fe7aae3e56378ebf0417d9de904f55a0e61e4df315333e632a4d3555d95",
+      "bytes": 26419,
+      "noticeText": "complete file"
     }
   ],
-  "noticeSHA256": "fa6db9f242fcc06cb031120ef8a556a90428c67096546a390914d467deecb413",
-  "structuredNoticeSHA256": "d26f2ffd3a74fcd67b59f8c8b378d6521b694c27fd430aee39f184ea3453da2d"
+  "noticeSHA256": "25fccb123f0c8b03b4a3885f1db040f35eef40848964f858ad46c6c50aad0034",
+  "structuredNoticeSHA256": "19815e4ac43935b73bbd9e55780eee2bcf563eb9059eb5f69d07a8b785f12382"
 }

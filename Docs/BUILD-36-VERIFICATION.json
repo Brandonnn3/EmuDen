@@ -1,0 +1,361 @@
+{
+  "build": "36",
+  "internalOnly": true,
+  "publicReleaseHeld": true,
+  "binaryUploadAuthorized": false,
+  "sourceInputs": {
+    "App/ArtworkCatalogView.swift": "e914f8287c9aa31d9f6294c4d9fce0d8a378a03e8c9489da1212e604a86f072a",
+    "App/ArtworkEditorView.swift": "b64a366714b922372a35c06fdf7f4c3cb569750ee2a13cf5c1b5f0e7838e08ad",
+    "App/ArtworkStore.swift": "ff3bdb406b57673d5f011f6bf1ace2694f454aa0bd184313888fe6562a8de753",
+    "App/CinematicArt.swift": "bdbe7b3ae8d3e777524301613f0735fceeb2ce9506ec153fd256572a75b01f64",
+    "App/CinematicStyle.swift": "b95b1b35aceef7eb4d9e6f0929ab6749c12c661ebbbf7a8f7a480909a68d1ebe",
+    "App/ConsoleBackdrop.swift": "359ee7bb4b479b2dfcb98177d9cb744febb92f48234f7b9fcef4a651d933c067",
+    "App/ConsoleMenuInput.swift": "143df43ad521dad00e8f0145f7583521eca45b477385fce0b1ff72617494b4a7",
+    "App/ConsoleSystems.swift": "59b18fe3dfb167753e16170675595c8571e46ae68f42fe3b63e5a016d14b4391",
+    "App/ControllerScene.swift": "46eb986f22b77ce0c388e00b855b14413bfe6d982cdd569ff5510d73c6b44161",
+    "App/Domain/Artwork.swift": "3de09b5e50afc5c05b34e13952f9281e559184aef0c5e7c2fa9add3c69761960",
+    "App/Domain/ArtworkSource.swift": "4fe6e10e0c4f5085d57ae4440f5b642d9476eadd857df6e6b20b78add6c9f2e0",
+    "App/Domain/ControlLayouts.swift": "5b9d3cc3408e5e5fe09739317cec29cb325d20e53ba8c9f96225fa7318333fb7",
+    "App/Domain/DuoLayout.swift": "4bef6a9f8ab1b9dfcad0fc516936fb5b2ee5a5962ae2f52851d04dd5cd0a9fca",
+    "App/Domain/Library.swift": "fbcd3fedca8012f507d84de252f51d73405001ed22da6d9a03d2f1882dcbf9bf",
+    "App/Domain/MotionAxes.swift": "591c03420039be168ca2bf60c240252ca70869dae7a2a6079b5ce4df4f672b58",
+    "App/Domain/PlayerPreferences.swift": "339e9f3d78efb714d7c0055961b87108b087fab2814c3a9d20f619e3708ca986",
+    "App/Domain/RemoteArtwork.swift": "9e5f8432862cecc9625db59f13caea64487dc93949a3ae68de78c735e2429623",
+    "App/Domain/SaveStates.swift": "3b022e1061652dc5c9df39cd813739528501d602f55e50573c0dc828be8b37cc",
+    "App/Domain/WidgetLibrary.swift": "64765b3c22c625a278d7657224b7c17406cec257d1072cba373df7b26159ade2",
+    "App/DuoLayoutSettings.swift": "ce0a8edbafc170483b48b21c184f36114fd2026948777442b70abef79d759fa0",
+    "App/EmulatorApp.swift": "a6111d2d660fff30eb240f4a2483b575b9650b0ae6f809486d22156dc179c60c",
+    "App/EmulatorSession.swift": "6aadc3e32723005efe0405073f8727f72ddc816110561fd8dcfb01dff63f4f31",
+    "App/GameLibrary.swift": "3f7f37cabb4435863dd5d0d4c72808ced89d39ca8eb98f212b0bae1ce59537a8",
+    "App/LibraryView.swift": "70bf90516182a7113220082c86bb2b0740523b979bf51e05586dada545da2fa2",
+    "App/MenuAudio.swift": "ccdb281fb0dda04cea4a4ed4cd48423d464c1bb8e2d66f1642faece9e94e7df6",
+    "App/PlayerSettingsView.swift": "8cb7ec0388aa215b1f2bb2b6ef181fc10260f5b06db2f8fa3ee08352f143264e",
+    "App/PlayerView.swift": "4b67511f004939f993d6f3868a02efbd95ce1a9ff75c85d0dce45ef8020b0965",
+    "App/SettingsView.swift": "4534adcddff9d911603fc8a5c7ae9132ced01df50b0c8f3edb7049a8096ac0dc",
+    "App/TouchControls.swift": "5a38f914a0feb8a02a21a4725f09f3a64da8e1b4d8b37434df9add78cb7acea6",
+    "App/TouchSurface.swift": "644349a883f0ecf95785448a2db72cb5185a76117f71147dba176f579cb6db31",
+    "Bridge/EmulatorApp-Bridging-Header.h": "5ecf71e3244594838cd97565e6c53ead42581f6ce48522ba3748c1c973224d08",
+    "Bridge/EmulatorBridge.h": "3274d427c0524f0e314b6560a43a6d45d6e42a8dbf5b5cd3d1d5d8aecd18cd76",
+    "Bridge/EmulatorBridge.mm": "bfe7e51ece75427fe4cf232e194eb6a6ec56db2b6709ecd191881088db8a32b4",
+    "Bridge/FrameDelivery.h": "19cf905dc00569d0532cabb8c00bd4b769a193371d66b00984c6644eebedd6bf",
+    "Bridge/GameCubeCore.cpp": "466695e6649bd3ff86bcf4ca4b78b494e507b504e8570b36ee4c26bb081143b2",
+    "Bridge/GameCubeCore.h": "a2747f332cd39177e8e74adff5a2102bbe7f1f252929b915c9a8e3f8421f1eb2",
+    "Bridge/GameCubeHost.cpp": "20cbecafd37d6ed0b6afdb39925fd3d92077a192c9c20dc75b48cf139eb05df7",
+    "Bridge/GameCubeHost.h": "64582f33cd0a490ba553392fd9216d9cf893e02c2e1b0e84300cf40fdfc73d4c",
+    "Bridge/InputLatch.h": "e6b037be2b6456fb85d90826df8f6542de9f45651a512c3adb66a60c1bfb3a5d",
+    "Bridge/MotionInput.h": "f1a0ae072ec777de6b37a641583be5525559adb2eb6cda018245f1e636d51ae1",
+    "Bridge/VulkanVideo.cpp": "ccd19685301140e07c27b965612236bafff894a693d484a0168d9ec4e43b7bb2",
+    "Bridge/VulkanVideo.h": "702f4f4613d5d0a215c6774fac5d5e96d3cb5edfde482dab1f334c3cba4261e8",
+    "Bridge/libretro.h": "5b6d8fe1056a39591ee6c479512eed4a6f6efd8f89f64f10cf8b4757a2aa48a0",
+    "Bridge/libretro_vulkan.h": "c6c11e4c4e792c0466e494bcfc8c10fa3d83f9b1d70e0fbf6307720d9f79823e",
+    "EmulatorApp.xcodeproj/project.pbxproj": "e047d75e0675b1b1404283dd3ebc4eef06a9aa18d47ebbdd642867acd8750914",
+    "Resources/3ds-artwork-index.json": "ff10ac0099ee9a39c23c0032f1eeea70ec4c69a16762eac72ff02c669b3e503b",
+    "Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png": "bc40880179c7c8d0612f22c86575ad8012110b3f1279b2c973a39e801d236db9",
+    "Resources/Assets.xcassets/AppIcon.appiconset/Contents.json": "1b2cc6b6e1ad340faeaae5f07d292eb20c7a22c9995ac8795ea6aa604efa491d",
+    "Resources/Assets.xcassets/ConsoleLaunch.colorset/Contents.json": "e5642262becf5831d716aff1c1bfbe048776e1e4086ea81b1c39c2b5a438a78b",
+    "Resources/Assets.xcassets/Contents.json": "e8e8ef4b27126d62305af321d12a6e64b866ca0b160f0f83efae90111f0ee576",
+    "Resources/Azahar-LICENSE.txt": "52b66866c785f554207a4685d3d6f5f067938050f61c4cdc0a05b4bf20c6e037",
+    "Resources/CinematicArt/Console-3ds.png": "efb57eb23b3933452a8f4f8e0f2eab7639c07113c499fd14c4754058c15275ed",
+    "Resources/CinematicArt/Console-gamecube.png": "e9bf893b0bb78e409b45f41df373182615a834a9c177ed2836854e0ddb0ebd86",
+    "Resources/CinematicArt/Console-ps1.png": "e9a380928608db3593a42761e36077eb2598da8a15f74f8805dd290dc62e5bdc",
+    "Resources/CinematicArt/PROVENANCE.md": "c4e25f8928d7181d30d0ecbabdc42d5236a5ed8a33553d058e37833b7f64c9ab",
+    "Resources/CinematicArt/Title-IDs.json": "94fc92b5d211d9eb74619f841afa2c5481bd8ab140b98af359bb21bc2403cdb0",
+    "Resources/EmuDen-App.entitlements": "9243c0d29c6864433510c348443926c17c8a250695e76b84d49fec71aa22399e",
+    "Resources/EmuDen.entitlements": "bbebeb16d2194a951614473a5664821f8b005ff93d24f42d093ad0cd1bc0f4b7",
+    "Resources/GameCubeCompatibility/GZD.ini": "5207e848500eedfda01aa435b76d34d29fcefbe834366814166d3ff42a09ba89",
+    "Resources/Homebrew-NOTICE.txt": "2b9cd5f5d75d6d136378e97a0de21031c0cac8ea63a22bf5bf2cd99aeee8e067",
+    "Resources/Info.plist": "31078e53e91e716da250814b18908d0aaf70fa737a950d7f6d1ec8fb9b7ea474",
+    "Resources/Licenses/Citra-System-Archives-NOTICE.txt": "14505639fc4ec250db7b5e8be73625e2523ff662eef57e7791cf8c1ec9491800",
+    "Resources/Licenses/Montserrat-OFL.txt": "b6bc7536af55ff6086b139373942cfde251f64ccdb2635ce567e48b4b613eae2",
+    "Resources/Licenses/Unifont-10.0.05-COPYING.txt": "6017b0fc5910282d5fd22ad274fa6697e1db3d469707e15e0211e5a4d40fa5e6",
+    "Resources/MenuAudio/NOTICE.txt": "94edb471902e1b4f6b8910b1b7e4b27c6258ab7576083954ef9643bfdfdf158b",
+    "Resources/MenuAudio/back.wav": "2cb03aa1ea6a9b655bf553ce1d9e10e0c084607f8b8fadffd2f5ede1da96d017",
+    "Resources/MenuAudio/confirm.wav": "5951a604e3b04048685196acc02b5d016bd49d388387be7a26f77602479453f6",
+    "Resources/MenuAudio/focus.wav": "5013b6851104a90e1bd876d691e1a4897efa4b8e3f0823cac4a554ffd756e28d",
+    "Resources/MenuAudio/launch.wav": "53103c84f1a1cb3baad422c25fc40d93caaf8d2e812a50068f4eb7f8eea21ef1",
+    "Resources/MenuAudio/open.wav": "ff5a509f251c33973352b708e9a237728b07eb198f57c5d522fdd719f575fe8d",
+    "Resources/MenuAudio/planned.wav": "539bca471cf973f52edcfa88b1094c23c4f3bb94e463a2e452f2277af2764ada",
+    "Resources/MenuAudio/save.wav": "a6d203106c26161ba91eb17221ec63c2fbe3deb70157ce60f856b38e2657e057",
+    "Resources/MenuAudio/search.wav": "002cef60dbd036572215ef47aa8090127f2e5c3e5a1ad8788d34a983f28f0234",
+    "Resources/MenuAudio/unfold.wav": "e7a7de502fcac43851f98aa77c5ef5a44df5afed035126172b8e0e8bd261cf1e",
+    "Resources/Privacy/Azahar.xcprivacy": "6b8f486e46137707a641bd49019391606629a3987f9dd8c98d97c096f31e933f",
+    "Resources/Privacy/EmuDenGameCube.xcprivacy": "6b8f486e46137707a641bd49019391606629a3987f9dd8c98d97c096f31e933f",
+    "Resources/Privacy/MoltenVK.xcprivacy": "0fa7080ca25c6d2cb60ccad41559c6d6758e7826d46e22bbdee390c10f287c40",
+    "Resources/Privacy/PCSXReARMed.xcprivacy": "6b8f486e46137707a641bd49019391606629a3987f9dd8c98d97c096f31e933f",
+    "Resources/PrivacyInfo.xcprivacy": "f1a7723744a4378b9eb67f29c31ac5c6d337d26401f71d1d06109a905d2a8eb6",
+    "Resources/ThirdPartyNotices.json": "19815e4ac43935b73bbd9e55780eee2bcf563eb9059eb5f69d07a8b785f12382",
+    "Resources/ThirdPartyNotices.txt": "25fccb123f0c8b03b4a3885f1db040f35eef40848964f858ad46c6c50aad0034",
+    "Resources/boot.3dsx": "ee0759707f87bf16d17c5dbe3332d1c5f57bc80b27ef7eaf375b20fb7ec7aefb",
+    "Scripts/GameCubeFramework-Info.plist.in": "4da22652387c473c5bec8fd7a4515f7c6db7dc77880bbd371d1e5d0b05a99b0f",
+    "Scripts/check-framework-metadata.py": "efcd2f15d25ef712682d13b4d990faa98afd028868b015f4505425f38e130dfa",
+    "Scripts/dolphin-frontend.cmake": "d96952ad27743dce288a196b4e657b0ec611474f317576ad00e6b040e9cb5e94",
+    "Scripts/dolphin-generic-memtools.patch": "5f74694e71e0f995b8fe388661040fff46da7241d9cb63057575087528f564a1",
+    "Scripts/dolphin-ios-port.patch": "ac871dbb628ee16f128357b13d1fa17a2eb27ae1ea3c141f11a6ebab69312265",
+    "Scripts/embed-core.sh": "8548f633251ff05568602904366b8bca3b27fece2a28504bc3aa38ec72c25c72",
+    "Scripts/gamecube-gx-commands.py": "52751e1ad35e179c2aa76c64fce8f41e6a043f404ba2a10ebd8d3eef40aee742",
+    "Scripts/make-gamecube-disc.py": "1aa0df3df5a3cc4a52e1831e308b063d219c02cb0b39308144c26c7278bcf4e5",
+    "Scripts/make-gamecube-homebrew.py": "ffd4bfa9a6253b4a991b76cd721444b9ea734d03e6fb1ba39eb12b692caf03d2",
+    "Scripts/prepare-dolphin-audio.py": "82e9163758e5fb371bfc974ce76b5c0ce6a913afb21227013fdd9305d22f01e1",
+    "Tests/Fixtures/ArtworkCatalogQAProtocol.swift": "3856458468d2f4c04f8c3e0b4388381194530e88f7e2a0c31000d6315f5ae0da",
+    "Tests/UI/EmulatorUITests.swift": "3b6a74a74f2925e8598e750e9cd4aa5a613614c8eea967958ca8feba63a3ba8e",
+    "Widgets/EmuDenWidgets.swift": "260f0c564a23cd215fd8df08e916d7f5e3fc0bf52ffcea1a74c5552015da6d69",
+    "Widgets/Info.plist": "82530b2bcaadc2a229cc2bfc10a05c021474b3d73df201c994e875a4c33133f5",
+    "Widgets/PrivacyInfo.xcprivacy": "37f23fa7aabe84ee3c9a1f162c2c036612e5142aa6e3ce1dfc711161572d3131",
+    "Widgets/WidgetViews.swift": "f6b705d9eb28e11ccdcadcbb48f6d6eb34051f480db83a68faf55222b8fd3026"
+  },
+  "nativeResults": [
+    {
+      "bundle": "build/Build36/polish-1.xcresult",
+      "resultJSONSHA256": "d4157adb094b78f7560f92226d190acc7099c7495a144daf18b1df16fe28b1c2",
+      "cases": [
+        {
+          "name": "testConsoleSpecificControllerConnections()",
+          "result": "Passed",
+          "seconds": 59.43175506591797
+        },
+        {
+          "name": "testGameCubeFoldedControllerQuickPanelAndBlankPersistence()",
+          "result": "Failed",
+          "seconds": 25.847244024276733
+        },
+        {
+          "name": "testGameCubeFoldedTouchExcursionAndEditableLayout()",
+          "result": "Passed",
+          "seconds": 73.85045492649078
+        }
+      ],
+      "startedAt": 1794803927.149,
+      "finishedAt": 1794804124.49,
+      "summaryJSONSHA256": "be6cbc6e5d5f411c6e12168989cc4695c15fa6e7aeb8b7a24a8a08c91b01aa28"
+    },
+    {
+      "bundle": "build/Build36/polish-final.xcresult",
+      "resultJSONSHA256": "5708e603060e364d1389ede90be56b747838fa86b38cfd683863f4c87fd293c3",
+      "cases": [
+        {
+          "name": "testConsoleSpecificControllerConnections()",
+          "result": "Passed",
+          "seconds": 59.61704397201538
+        },
+        {
+          "name": "testGameCubeFoldedControllerQuickPanelAndBlankPersistence()",
+          "result": "Failed",
+          "seconds": 38.62118899822235
+        },
+        {
+          "name": "testGameCubeFoldedTouchExcursionAndEditableLayout()",
+          "result": "Passed",
+          "seconds": 73.57312500476837
+        }
+      ],
+      "startedAt": 1794804316.996,
+      "finishedAt": 1794804529.421,
+      "summaryJSONSHA256": "c54bbe216ad8681dc1ea9d4014058ec99d6e066d7a46d1ca61d14d62131e3d3e"
+    },
+    {
+      "bundle": "build/Build36/integration-1.xcresult",
+      "resultJSONSHA256": "ad96ca2a70462d0895dca665f0559943d8eaca452f4d5bef56426828590a9a44",
+      "cases": [
+        {
+          "name": "testConsoleNavigationFavoriteAndLibraryFilters()",
+          "result": "Failed",
+          "seconds": 29.066112995147705
+        },
+        {
+          "name": "testFoldedLibraryPlayDispatchesForEachConsole()",
+          "result": "Failed",
+          "seconds": 41.41029608249664
+        },
+        {
+          "name": "testGameCubeBothSticksAnalogTriggersAndDisconnect()",
+          "result": "Passed",
+          "seconds": 36.46566998958588
+        },
+        {
+          "name": "testGameCubeFoldedControllerQuickPanelAndBlankPersistence()",
+          "result": "Failed",
+          "seconds": 56.78128504753113
+        },
+        {
+          "name": "testGameCubeGCMImportBootAndState()",
+          "result": "Passed",
+          "seconds": 41.52969300746918
+        },
+        {
+          "name": "testGameCubeGraphicsChangeActualEFBAndReturnToNative()",
+          "result": "Failed",
+          "seconds": 97.54300892353058
+        },
+        {
+          "name": "testGameCubeGXDepthAndNativeCardRelaunch()",
+          "result": "Passed",
+          "seconds": 66.38239598274231
+        },
+        {
+          "name": "testGameCubeHomebrewInputStateHistoryAndRelaunch()",
+          "result": "Passed",
+          "seconds": 94.28193807601929
+        },
+        {
+          "name": "testGameCubeLandscapeControllerFillsDisplay()",
+          "result": "Passed",
+          "seconds": 24.683936953544617
+        },
+        {
+          "name": "testGameCubeLandscapeTouchControlsHaveSpace()",
+          "result": "Passed",
+          "seconds": 27.254578948020935
+        },
+        {
+          "name": "testGameCubeOriginalDiscImportBootAndState()",
+          "result": "Passed",
+          "seconds": 38.43078792095184
+        },
+        {
+          "name": "testGameCubeSettingsUseSingleScreenOptions()",
+          "result": "Passed",
+          "seconds": 32.028379917144775
+        },
+        {
+          "name": "testGameCubeTeardownAllowsPlayStationAndThreeDS()",
+          "result": "Passed",
+          "seconds": 70.82474505901337
+        },
+        {
+          "name": "testPlayStationDualAnalogTouchAndRelease()",
+          "result": "Passed",
+          "seconds": 87.0196750164032
+        },
+        {
+          "name": "testPlayStationEnhancedResolutionAndLiveReturnToNative()",
+          "result": "Passed",
+          "seconds": 85.09437704086304
+        },
+        {
+          "name": "testPlayStationFoldedQuickPanelSpeedAndBlankOptions()",
+          "result": "Passed",
+          "seconds": 84.89044904708862
+        },
+        {
+          "name": "testSettingsOrganizationGameCubeBackgroundAndDeleteConfirmation()",
+          "result": "Failed",
+          "seconds": 41.94379794597626
+        },
+        {
+          "name": "testThreeDSCoreRequestsMotionAndPauseStopsInput()",
+          "result": "Passed",
+          "seconds": 29.211171984672546
+        },
+        {
+          "name": "testThreeDSFreelyMovableTouchControls()",
+          "result": "Passed",
+          "seconds": 58.09340000152588
+        }
+      ],
+      "startedAt": 1794804833.712,
+      "finishedAt": 1794805938.779,
+      "summaryJSONSHA256": "fb4ad4f204bd4636d9c0abeebe8c10a031a6ca46c914248c7c249099eafd6f16"
+    },
+    {
+      "bundle": "build/Build36/panel-2.xcresult",
+      "resultJSONSHA256": "0ddc6b49ab69e7e02ed44f2771e648250e38f5f758247ed0512bbc58b7a7cc52",
+      "cases": [
+        {
+          "name": "testGameCubeFoldedControllerQuickPanelAndBlankPersistence()",
+          "result": "Passed",
+          "seconds": 132.52392709255219
+        },
+        {
+          "name": "testGameCubeGraphicsChangeActualEFBAndReturnToNative()",
+          "result": "Passed",
+          "seconds": 71.63599801063538
+        }
+      ],
+      "startedAt": 1794806141.584,
+      "finishedAt": 1794806398.884,
+      "summaryJSONSHA256": "6596842fe8d36ed10994c326344e757bfded90c7938bd75f09004feb82501a0a"
+    },
+    {
+      "bundle": "build/Build36/library-final2.xcresult",
+      "resultJSONSHA256": "132e7e2b15fb6f6001317b31f5aacdb152656dd1f1083568050ac7911ff5e7f4",
+      "cases": [
+        {
+          "name": "testConsoleNavigationFavoriteAndLibraryFilters()",
+          "result": "Passed",
+          "seconds": 61.2775399684906
+        },
+        {
+          "name": "testFoldedLibraryPlayDispatchesForEachConsole()",
+          "result": "Passed",
+          "seconds": 64.20753300189972
+        },
+        {
+          "name": "testSettingsOrganizationGameCubeBackgroundAndDeleteConfirmation()",
+          "result": "Passed",
+          "seconds": 24.655506014823914
+        }
+      ],
+      "startedAt": 1794806646.788,
+      "finishedAt": 1794806829.232,
+      "summaryJSONSHA256": "912978e8335bb4695a00e6f6cae7271f4b941b6d0f0e576dde58aeb70a861943"
+    },
+    {
+      "bundle": "build/Build36/panel-final.xcresult",
+      "resultJSONSHA256": "e53c896d50ad5eb9db33dcdcd80469bf6cec1cecd62406d1045c7dabff20be35",
+      "cases": [
+        {
+          "name": "testGameCubeFoldedControllerQuickPanelAndBlankPersistence()",
+          "result": "Passed",
+          "seconds": 105.68098199367523
+        },
+        {
+          "name": "testPlayStationFoldedQuickPanelSpeedAndBlankOptions()",
+          "result": "Failed",
+          "seconds": 65.33065402507782
+        }
+      ],
+      "startedAt": 1794806921.76,
+      "finishedAt": 1794807144.817,
+      "summaryJSONSHA256": "2b04eedd17b6d8ce90a9ee9b4e3ddee808dd71fd7ae6a994892c1ef7cc978150"
+    },
+    {
+      "bundle": "build/Build36/ps1-panel-final.xcresult",
+      "resultJSONSHA256": "e19a14f150e8596a56fc1fa0db5e5eeeaaac6b1fe84c37b16b7e5693ac00e548",
+      "cases": [
+        {
+          "name": "testPlayStationFoldedQuickPanelSpeedAndBlankOptions()",
+          "result": "Passed",
+          "seconds": 92.40430402755737
+        }
+      ],
+      "startedAt": 1794807255.975,
+      "finishedAt": 1794807399.577,
+      "summaryJSONSHA256": "c45c5214184683421c4aa20259f50d1ca36464dbcc8b38549fa8eceb92cd885f"
+    },
+    {
+      "bundle": "../EmuDenArtwork35/build/Build35/artwork-final3.xcresult",
+      "resultJSONSHA256": "c5bef0185ca223b2f26b660d697268ba418685de069e364ef36c5186c9f876f5",
+      "cases": [
+        {
+          "name": "testMultiConsoleArtworkFillAndOfflineRelaunch()",
+          "result": "Passed",
+          "seconds": 57.27104699611664
+        }
+      ],
+      "startedAt": 1794796154.405,
+      "finishedAt": 1794796243.878,
+      "summaryJSONSHA256": "b0fc80de0e3fc6ca45a7199451eee39164172b3ea6c6d848a0f441cb8f6ac482"
+    }
+  ],
+  "limits": [
+    "Original homebrew/owned Simulator evidence, not phone speed or retail compatibility",
+    "Raw native-card sector persistence, not allocated retail save-file verification",
+    "Physical gyro/fold and signed regional/widget services remain device checks"
+  ],
+  "nativeStagesSHA256": "42e4006658106f9fc3708713abde4323779b01a32e69332a4ccdc65f146038fe",
+  "performanceRecordSHA256": "ac493ba674da45dbdcf5f9aaeb8b2d3f367489a3218527940ddcf9287c7c4b07",
+  "inheritedBuild35VerificationSHA256": "2bb8491720a9a7d100956cd872a0b1a917dcfd01b6fcb298676a608eac58c3d8",
+  "inheritedNativeScope": "Only the unchanged artwork source/import/offline/disconnect scenario inherits the actual35 artwork-final3 bundle. All21other required scenarios have renewed36 results. Native stages explain the final folded-row-only delta and later relevant passes; all earlier failures/interruption logs remain preserved.",
+  "threeDSSaveLoopFixVerified": false,
+  "godzillaGameplayFixVerified": false
+}
