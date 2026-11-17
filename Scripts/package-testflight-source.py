@@ -66,48 +66,53 @@ files += [ROOT/name for name in ('Docs/BUILD-28.md','Docs/BUILD-28-INPUTS.json',
     'Docs/BUILD-28-PROGRESS.md','Docs/Legal/EXPORT-ASSESSMENT-28.json','Docs/Legal/DEPENDENCY-INVENTORY-28.json',
     'Docs/Legal/GAMECUBE-CORE-BUILD-28.json','Vendor/Dolphin/source-manifest.json','Vendor/Dolphin/PROVENANCE.md')]
 frozen = json.loads((ROOT/'Docs/BUILD-28-INPUTS.json').read_text())
-if metadata['build'] in ['29','30','31','32','33','34','35','36','37']:
+if metadata['build'] in ['29','30','31','32','33','34','35','36','37','38']:
     files += [ROOT/name for name in ['Docs/BUILD-29.md','Docs/BUILD-29-PROGRESS.md','Docs/BUILD-29-INPUTS.json',
         'Docs/BUILD-29-VERIFICATION.json','Docs/Legal/GAMECUBE-CORE-BUILD-29.json','Docs/Legal/EXPORT-ASSESSMENT-29.json','Docs/Legal/DEPENDENCY-INVENTORY-29.json']]
     frozen=json.loads((ROOT/'Docs/BUILD-29-INPUTS.json').read_text())
-if metadata['build'] in ['30','31','32','33','34','35','36','37']:
+if metadata['build'] in ['30','31','32','33','34','35','36','37','38']:
     files += [ROOT/name for name in ['Docs/BUILD-30.md','Docs/BUILD-30-PROGRESS.md','Docs/BUILD-30-INPUTS.json',
         'Docs/BUILD-30-VERIFICATION.json','Docs/Legal/GAMECUBE-CORE-BUILD-30.json','Docs/Legal/EXPORT-ASSESSMENT-30.json','Docs/Legal/DEPENDENCY-INVENTORY-30.json']]
     frozen=json.loads((ROOT/'Docs/BUILD-30-INPUTS.json').read_text())
-if metadata['build'] in ['31','32','33','34','35','36','37']:
+if metadata['build'] in ['31','32','33','34','35','36','37','38']:
     files += [ROOT/name for name in ['Docs/BUILD-31.md','Docs/BUILD-31-PROGRESS.md','Docs/BUILD-31-INPUTS.json',
         'Docs/BUILD-31-VERIFICATION.json','Docs/Legal/GAMECUBE-CORE-BUILD-31.json','Docs/Legal/EXPORT-ASSESSMENT-31.json','Docs/Legal/DEPENDENCY-INVENTORY-31.json']]
     frozen=json.loads((ROOT/'Docs/BUILD-31-INPUTS.json').read_text())
-if metadata['build'] in ['32','33','34','35','36','37']:
+if metadata['build'] in ['32','33','34','35','36','37','38']:
     files += [ROOT/name for name in ['Docs/BUILD-32.md','Docs/BUILD-32-PROGRESS.md','Docs/BUILD-32-INPUTS.json',
         'Docs/BUILD-32-VERIFICATION.json','Docs/Legal/GAMECUBE-CORE-BUILD-32.json','Docs/Legal/EXPORT-ASSESSMENT-32.json','Docs/Legal/DEPENDENCY-INVENTORY-32.json']]
     frozen=json.loads((ROOT/'Docs/BUILD-32-INPUTS.json').read_text())
-if metadata['build'] in ['33','34','35','36','37']:
+if metadata['build'] in ['33','34','35','36','37','38']:
     files += [ROOT/name for name in ['Docs/BUILD-33.md','Docs/BUILD-33-PROGRESS.md','Docs/BUILD-33-INPUTS.json',
         'Docs/BUILD-33-VERIFICATION.json','Docs/Legal/GAMECUBE-CORE-BUILD-33.json','Docs/Legal/EXPORT-ASSESSMENT-33.json','Docs/Legal/DEPENDENCY-INVENTORY-33.json']]
     frozen=json.loads((ROOT/'Docs/BUILD-33-INPUTS.json').read_text())
-if metadata['build'] in ['34','35','36','37']:
+if metadata['build'] in ['34','35','36','37','38']:
     files += [ROOT/name for name in ['Docs/BUILD-34.md','Docs/BUILD-34-PROGRESS.md','Docs/BUILD-34-INPUTS.json',
         'Docs/BUILD-34-VERIFICATION.json','Docs/BUILD-34-NATIVE-STAGES.json','Docs/Legal/GAMECUBE-CORE-BUILD-34.json','Docs/Legal/EXPORT-ASSESSMENT-34.json','Docs/Legal/DEPENDENCY-INVENTORY-34.json','Docs/Legal/ASSET-REGISTER-34.json','Docs/Design/Build34-Console-Art/prompt.json','Docs/Design/Build34-Console-Art/PROVENANCE.md','Docs/Design/Build34-Console-Art/Console-gamecube-master.png']]
     frozen=json.loads((ROOT/'Docs/BUILD-34-INPUTS.json').read_text())
-if metadata['build'] in ['35','36','37']:
+if metadata['build'] in ['35','36','37','38']:
     files += [ROOT/name for name in ['Docs/BUILD-35.md','Docs/BUILD-35-PROGRESS.md','Docs/BUILD-35-INPUTS.json',
         'Docs/BUILD-35-VERIFICATION.json','Docs/BUILD-35-NATIVE-STAGES.json','Docs/Legal/GAMECUBE-CORE-BUILD-35.json','Docs/Legal/EXPORT-ASSESSMENT-35.json','Docs/Legal/DEPENDENCY-INVENTORY-35.json']]
     frozen=json.loads((ROOT/'Docs/BUILD-35-INPUTS.json').read_text())
-if metadata['build'] in ['36','37']:
+if metadata['build'] in ['36','37','38']:
     files += [ROOT/name for name in ['Docs/BUILD-36.md','Docs/BUILD-36-PROGRESS.md','Docs/BUILD-36-INPUTS.json',
         'Docs/BUILD-36-VERIFICATION.json','Docs/BUILD-36-PERFORMANCE.json','Docs/BUILD-36-NATIVE-STAGES.json',
         'Docs/Legal/GAMECUBE-CORE-BUILD-36.json','Docs/Legal/EXPORT-ASSESSMENT-36.json','Docs/Legal/DEPENDENCY-INVENTORY-36.json']]
     frozen=json.loads((ROOT/'Docs/BUILD-36-INPUTS.json').read_text())
-if metadata['build']=='37':
+if metadata['build'] in ['37','38']:
     files += [ROOT/name for name in ['Docs/BUILD-37.md','Docs/BUILD-37-PROGRESS.md','Docs/BUILD-37-INPUTS.json',
         'Docs/BUILD-37-VERIFICATION.json','Docs/BUILD-37-NATIVE-STAGES.json','Docs/BUILD-37-ARTWORK.json',
         'Docs/Legal/GAMECUBE-CORE-BUILD-37.json','Docs/Legal/EXPORT-ASSESSMENT-37.json','Docs/Legal/DEPENDENCY-INVENTORY-37.json']]
     frozen=json.loads((ROOT/'Docs/BUILD-37-INPUTS.json').read_text())
-assert frozen['build']==metadata['build'] and metadata['build'] in ['28','29','30','31','32','33','34','35','36','37']
+if metadata['build']=='38':
+    files += [ROOT/name for name in ['Docs/BUILD-38.md','Docs/BUILD-38-PROGRESS.md','Docs/BUILD-38-INPUTS.json',
+        'Docs/BUILD-38-VERIFICATION.json','Docs/Legal/EXPORT-ASSESSMENT-38.json','Docs/Legal/DEPENDENCY-INVENTORY-38.json',
+        'Docs/Legal/PRIVACY-ASSESSMENT-38.json','Docs/Legal/GAMECUBE-CORE-BUILD-38.json']]
+    frozen=json.loads((ROOT/'Docs/BUILD-38-INPUTS.json').read_text())
+assert frozen['build']==metadata['build'] and metadata['build'] in ['28','29','30','31','32','33','34','35','36','37','38']
 for name,sha in frozen['inputs'].items():
     assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==sha, name
-with tarfile.open(output, "w:gz", compresslevel=6) as archive:
+with tarfile.open(output, "w:gz", compresslevel=6, dereference=True) as archive:
     for path in sorted(files):
         assert path.suffix.lower() not in {".3ds", ".cci", ".cxi", ".cia", ".p8", ".p12", ".mobileprovision"}, path
         archive.add(path, arcname="EmuDenSource/" + path.relative_to(ROOT).as_posix(), recursive=False)
@@ -115,6 +120,9 @@ with tarfile.open(output, "w:gz", compresslevel=6) as archive:
     for path, _ in extra_sources:
         archive.add(path, arcname="EmuDenSource/Upstream/" + path.name, recursive=False)
 with tarfile.open(output) as archive:
+    assert all(member.isfile() for member in archive.getmembers()), 'Portable source must contain regular files, not checkout symlinks'
+    for path, sha in extra_sources:
+        assert hashlib.sha256(archive.extractfile('EmuDenSource/Upstream/'+path.name).read()).hexdigest()==sha, path
     names = archive.getnames()
     assert not any("Private/" in name or "TestGames/" in name or "Contact.json" in name for name in names)
     assert "EmuDenSource/Scripts/patch-azahar.py" in names

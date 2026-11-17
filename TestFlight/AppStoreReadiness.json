@@ -1,6 +1,6 @@
 {
-  "reviewDate": "2026-11-16",
-  "auditedBuild": "37",
+  "reviewDate": "2026-11-17",
+  "auditedBuild": "38",
   "publicReleaseCleared": false,
   "reviewDocument": "Docs/Legal/RELEASE-22-LEGAL-DECISION.md",
   "criteria": [
@@ -72,7 +72,7 @@
         "TestFlight/Privacy-policy-draft.md",
         "Resources/PrivacyInfo.xcprivacy"
       ],
-      "resolution": "Local-only21 manifest/disclosure and version-aware public policy v5 are verified; live App Store Connect privacy draft still needs revision/publication after Mac access."
+      "resolution": "New38 manifest matches Product Interaction and Other Data Types, linked, App Functionality, no tracking, for optional developer-host request/connection/security data. Provider/Apple policy basis in Docs/Legal/PRIVACY-ASSESSMENT-38.json. Live label publication pending Store sign-in."
     },
     {
       "id": "export-compliance",
@@ -91,7 +91,7 @@
         "App/LibraryView.swift",
         "TestFlight/Submission/AgeRatingAnswers.json"
       ],
-      "resolution": "37 removes the blanket local adult declaration/Unrated labels, retains OS-required regional Apple checks and index/links. Final regional device validation and live questionnaire remain."
+      "resolution": "Calculated4+ saved and verified in App Store Connect; no higher override, Made for KidsNo. New38 minimum4 regional request retains OS eligibility/timeout safeguards; real regional service remains phone/account validation."
     },
     {
       "id": "branding-clearance",
@@ -109,7 +109,13 @@
         "Docs/Legal/TECHNICAL-VALIDATION-21.json",
         "Docs/RELEASE-21-PROGRESS.md"
       ],
-      "resolution": "Final signed development archive,4 real matching dSYMs/profile/capability/asset/payload checks,70domain (1private skip),3tooling and8distinct native scenarios pass. Signed-device/regional checks and distribution IPA remain pending; no binary upload/phone-performance claim."
+      "resolution": "Owner explicitly defers Detective Pikachu native-save fix. Other known title compatibility/performance and physical phone/regional checks remain documented; new38 native launch/switch/capture evidence and unchanged37 core evidence are required. No broad retail compatibility or phone performance claim."
     }
-  ]
+  ],
+  "deferredKnownIssue": {
+    "game": "Detective Pikachu",
+    "console": "3DS",
+    "issue": "Native creating-save-data stall reproduced; not fixed",
+    "ownerDecision": "Explicitly skip investigation and continue remaining release preparation"
+  }
 }

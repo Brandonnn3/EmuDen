@@ -113,7 +113,7 @@ struct SystemSetupView: View {
                             }
                             Text("EmuDen 0.1.0 · Build \(Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "—")")
                             Text("Azahar 2127.0-rc1 · GPL-3.0-or-later\n3DS Homebrew Menu 2.4.4 · bundled notice\nMoltenVK 1.4.2 · Apache-2.0").font(.caption).foregroundStyle(ConsoleTheme.quiet)
-                            Text(ConsoleSystem.gameCubeAvailable ? "Nintendo 3DS, PlayStation and GameCube are included in this internal test build. No commercial games or proprietary system resources are bundled." : "Nintendo 3DS and PlayStation are playable. No commercial games or proprietary system resources are bundled.").font(.caption).foregroundStyle(ConsoleTheme.quiet)
+                            Text(ConsoleSystem.gameCubeAvailable ? "Play compatible Nintendo 3DS, PlayStation and GameCube software. No commercial games or proprietary system resources are bundled." : "Nintendo 3DS and PlayStation are playable. No commercial games or proprietary system resources are bundled.").font(.caption).foregroundStyle(ConsoleTheme.quiet)
                             Link("Azahar source & release notes", destination: URL(string: "https://github.com/azahar-emu/azahar/releases/tag/2127.0-rc1")!)
                         }.padding(.top, 12)
                     }.font(.caption).foregroundStyle(ConsoleTheme.quiet)

@@ -548,7 +548,7 @@ struct LibraryView: View {
         Task { @MainActor in
             defer { launchPending = false }
             if let url = item.url, !isBundledDemo(url),
-               !(await regionalAdultAccessAllowed()) { return }
+               !(await regionalAgeAccessAllowed()) { return }
             guard await waitForLaunchDisplay() else { library.error = "This display is still becoming active. Please try Play again."; return }
             let duration = max(reduceMotion ? 0 : 0.22, menuAudio.play(.launch))
             if duration > 0 { try? await Task.sleep(for: .seconds(duration)) }
@@ -556,7 +556,7 @@ struct LibraryView: View {
             else { library.error = "The active display changed before the game opened. Please try Play again." }
         }
     }
-    @MainActor private func regionalAdultAccessAllowed() async -> Bool {
+    @MainActor private func regionalAgeAccessAllowed() async -> Bool {
         // The OS determines whether regional age assurance applies. Never infer it
         // from the storefront, a location permission or the user's local choice.
         guard #available(iOS 26.2, *) else { return true }
@@ -570,9 +570,9 @@ struct LibraryView: View {
                 library.error = "Age confirmation couldn’t open. Please try again."; return false
             }
             while let presented = presenter.presentedViewController { presenter = presented }
-            let response = try await AgeRangeService.shared.requestAgeRange(ageGates: 18, in: presenter)
+            let response = try await AgeRangeService.shared.requestAgeRange(ageGates: RegionalAgeAccess.minimumAge, in: presenter)
             if case .sharing(let range) = response,
-               RegionalAgeAccess.isAdultAgeBand(lowerBound: range.lowerBound, upperBound: range.upperBound) { return true }
+               RegionalAgeAccess.isAllowedAgeBand(lowerBound: range.lowerBound, upperBound: range.upperBound) { return true }
             library.error = "Apple hasn’t confirmed eligibility for this app’s age restriction. The included homebrew demo is still available."
         } catch {
             library.error = "Apple’s regional age check is unavailable. Please try again before opening imported software. The included homebrew demo is still available."

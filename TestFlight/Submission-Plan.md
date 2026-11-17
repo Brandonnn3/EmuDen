@@ -20,9 +20,9 @@ Apple requires an active paid-apps agreement, banking/tax setup as applicable, a
 
 ## Age/content entry
 
-Build37 removes the earlier blanket local adult-declaration UI and Unrated game labels. Supported iOS independently checks Apple regional eligibility and requests the required adult age band only where applicable, with failure/timeout handling. No per-game rating or scanning is claimed. App-level age-rating answers remain a separate draft, subject to actual Apple review.
+Build37 removes the earlier blanket local adult-declaration UI and Unrated game labels. Supported iOS independently checks Apple regional eligibility and requests the age band matching the4+ app requirement only where applicable, with failure/timeout handling. No per-game rating or scanning is claimed. App-level age-rating answers remain a separate draft, subject to actual Apple review.
 
-Prepare an adult-targeted age-rating override (18+ where offered) for unrestricted, unrated imports, with age assurance declared present. This is an engineering compliance design, not an official ESRB/PEGI rating. The actual App Store questionnaire must describe the shipped app and its imports honestly. No gambling service, messaging, advertising or commercial game collection is supplied.
+Use the saved calculated4+ rating, no higher-age override, Made for KidsNo, with age assurance declared present. This is an engineering compliance design, not an official ESRB/PEGI rating. The actual App Store questionnaire must describe the shipped app and its imports honestly. No gambling service, messaging, advertising or commercial game collection is supplied.
 
 ## What remains outside this prepared record
 
@@ -31,3 +31,6 @@ Native Safari access recovered after the owner unlocked the Mac. The existing Em
 The development archive's new capabilities and profiles validate. Local CLI public export still reports NoAccounts/no local iOSDistribution identity and an old Store profile; a successful development archive does not resolve distribution signing. Finish local AppStore export through the owner's Xcode account when desktop access resumes.
 
 Artwork/name and GPL/store distribution questions remain explicitly recorded, rather than certified by owner consent. Owner phone tests currently cover build18; the new release controls require final device/regional age-service validation too.
+
+
+Build38 owner-directed public preparation supersedes the adult override plan above: calculated4+, no override, Made for KidsNo. Regional request uses minimum4 with OS eligibility/timeout/fail-closed checks retained. Optional developer-host request/connection data are disclosed by the app manifest and Store label; no default provider, tracking or ROM upload. Detective Pikachu saving explicitly deferred, not fixed. No review submission or public release is authorized by these local checks.

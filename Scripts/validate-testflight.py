@@ -80,7 +80,7 @@ def check_manifest(path, reasons):
     data = load_plist(path)
     assert data["NSPrivacyTracking"] is False, path
     expected_collection = []
-    if path.name == "PrivacyInfo.xcprivacy" and (path.parent == ROOT / "Resources" or path.parent.name == "EmuDen.app") and int(json.loads((ROOT / "TestFlight/AppInformation.json").read_text())["build"]) in (19, 20):
+    if path.name == "PrivacyInfo.xcprivacy" and (path.parent == ROOT / "Resources" or path.parent.name == "EmuDen.app") and int(json.loads((ROOT / "TestFlight/AppInformation.json").read_text())["build"]) in (19, 20, 38):
         expected_collection = [{"NSPrivacyCollectedDataType": name, "NSPrivacyCollectedDataTypeLinked": True,
             "NSPrivacyCollectedDataTypeTracking": False, "NSPrivacyCollectedDataTypePurposes": ["NSPrivacyCollectedDataTypePurposeAppFunctionality"]}
             for name in ["NSPrivacyCollectedDataTypeProductInteraction", "NSPrivacyCollectedDataTypeOtherDataTypes"]]

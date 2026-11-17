@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "build": "38",
+  "date": "2026-11-17",
+  "decision": "Disclose optional developer-operated artwork-host connection/request data; do not claim Data Not Collected",
+  "dataTypes": [
+    {
+      "appStoreName": "Product Interaction",
+      "manifest": "NSPrivacyCollectedDataTypeProductInteraction",
+      "examples": [
+        "Requested catalog/image paths and request activity"
+      ],
+      "linked": true,
+      "tracking": false,
+      "purposes": [
+        "App Functionality"
+      ]
+    },
+    {
+      "appStoreName": "Other Data Types",
+      "manifest": "NSPrivacyCollectedDataTypeOtherDataTypes",
+      "examples": [
+        "IP/connection/routing information used for delivery and security"
+      ],
+      "linked": true,
+      "tracking": false,
+      "purposes": [
+        "App Functionality"
+      ]
+    }
+  ],
+  "basis": [
+    "Cloudflare policy describes processing end-user interactions/IP/traffic information, Customer Logs and stored network security/availability data, with purpose-based retention.",
+    "No app-authored server logging or analytics is present; provider infrastructure handling is included rather than inferred absent.",
+    "Apple requires applicable collection even when optional or solely for app functionality."
+  ],
+  "interpretation": [
+    "Types/purpose/linking are an engineering mapping of disclosed host practices and actual app requests, not a provider audit or Apple ruling.",
+    "No exact retention duration or claim that every request is stored.",
+    "IP is used for connection/security; no location extraction or stable app/device identifier was observed, so do not invent location or Device ID collection.",
+    "No anonymization before provider ingress; linked classification is retained for address-associated request data."
+  ],
+  "unchanged": [
+    "No tracking, analytics/advertising SDK, default/hardcoded provider, uploaded ROM/save/library/photo/motion/age result, or new endpoint",
+    "Arbitrary user-selected hosts control their own practices; independent external Safari browsing is separate",
+    "Optional user-initiated external support email is not an automatic diagnostic upload"
+  ],
+  "sources": [
+    "https://www.cloudflare.com/privacypolicy/#2-information-we-collect",
+    "https://www.cloudflare.com/privacypolicy/#11-data-retention",
+    "https://developer.apple.com/app-store/app-privacy-details/"
+  ],
+  "status": "New38 manifest prepared; live label save/publication pending signed-in Store access"
+}

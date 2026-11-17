@@ -1,9 +1,5 @@
-# EmuDen0.1.0 build37
+# EmuDen0.1.0 build38
 
-Local internal Nintendo3DS, PlayStation and experimental GameCube candidate. See Docs/BUILD-37.md and actual verification/delivery receipts.
+Public-review preparation candidate with Nintendo3DS, PlayStation and GameCube. All exact37 emulator binaries and matching symbols remain; no gameplay/core change. Region-specific age gate now uses minimum4 matching the saved Store rating, with OS eligibility, timeout and unavailable/invalid-range handling retained. Optional developer-operated artwork hosting connection/request data is disclosed in the manifest and Store privacy plan; no tracking or default artwork provider.
 
-Removes the blanket local18+ box and Unrated labels while retaining OS-required regional checks. Adds metadata-only Rename game, cleaner compound .nkit.iso names and a compact nonblocking Quick Save banner. Atomic core snapshot capture may still briefly hitch. All four cores and existing saves/artwork identities are preserved.
-
-Local outputs after validation: build/TestFlight/EmuDen-0.1.0-37.xcarchive and exact -37-source.tar.gz. Use them together. Source excludes owner/private files. Optional artwork remains user-selected; catalog16 adds the requested Sonic Riders/Disney Quest covers and scenes on the existing link.
-
-No37 binary upload/public submission. Public release is held; automation stays deleted. Phone folding/gyro/controller feel, sustained performance, regional/widget services and retail saves remain owner-device checks. Existing3DS saving-loop/Godzilla reports remain unresolved.
+Build37 archive/source/publicIPA and all older releases are preserved. Detective Pikachu native saving is deferred at the owner’s request, not fixed. No owner data, new artwork, app upload, public review submission, release or automation. See Docs/BUILD-38-PROGRESS.md for actual validation and remaining steps.

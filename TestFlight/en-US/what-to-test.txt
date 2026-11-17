@@ -1,4 +1,4 @@
-Build37 — names, artwork and quiet Quick Save for all three consoles.
+Build38 — names, artwork and quiet Quick Save for all three consoles.
 
 Long-press a game → Rename game. Confirm the custom name survives restart and is used in search/A–Z order. Files, artwork matching and all save identities should stay unchanged. New GameCube .nkit.iso/.nkit.gcm imports should display a clean title without the NKit suffix.
 
@@ -12,4 +12,6 @@ Retains36 graphics presets, optional30fps display delivery, PS1 adaptive quality
 
 Accepted: decrypted3DS software; PS1 CHD v5, CUE with all referenced BIN tracks, PS-X EXE homebrew; GameCube DOL, uncompressed ISO/GCM and Dolphin CISO. RVZ/Wii unsupported. No commercial game/proprietary firmware supplied.
 
-Phone speed/heat, physical fold/gyro, controller feel and retail compatibility need device checks. Mario Golf/Detective Pikachu/Ocarina3DS in-game save loops and Godzilla freeze/performance remain unresolved. Compare Start normally/Resume only with a safe in-game save. No binary upload or public release for37.
+Phone speed/heat, physical fold/gyro, controller feel and retail compatibility need device checks. Mario Golf/Detective Pikachu/Ocarina3DS in-game save loops and Godzilla freeze/performance remain unresolved. Compare Start normally/Resume only with a safe in-game save. No review submission or public release.
+
+Build38 age policy uses minimum4 in applicable regional checks, and its privacy manifest discloses optional developer-host connection/request data. Core binaries and save behavior are unchanged. Detective Pikachu saving is explicitly deferred, not fixed.

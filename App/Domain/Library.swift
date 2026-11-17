@@ -146,8 +146,9 @@ public enum GameCubeDisc {
 }
 
 enum RegionalAgeAccess {
-    static func isAdultAgeBand(lowerBound: Int?, upperBound: Int?) -> Bool {
-        guard let lowerBound, lowerBound >= 18 else { return false }
+    static let minimumAge = 4
+    static func isAllowedAgeBand(lowerBound: Int?, upperBound: Int?) -> Bool {
+        guard let lowerBound, lowerBound >= minimumAge else { return false }
         return upperBound.map { $0 >= lowerBound } ?? true
     }
 }

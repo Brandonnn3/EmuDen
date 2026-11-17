@@ -37,7 +37,7 @@ def source_inputs():
                'make-gamecube-disc.py','gamecube-gx-commands.py','prepare-dolphin-audio.py',
                'dolphin-frontend.cmake','dolphin-ios-port.patch','dolphin-generic-memtools.patch']]
     paths += [ROOT/'Scripts/GameCubeFramework-Info.plist.in',ROOT/'Scripts/check-framework-metadata.py']
-    if json.loads((ROOT/'TestFlight/AppInformation.json').read_text())['build'] in ['35','36','37']:
+    if json.loads((ROOT/'TestFlight/AppInformation.json').read_text())['build'] in ['35','36','37','38']:
         paths.append(ROOT/'Tests/Fixtures/ArtworkCatalogQAProtocol.swift')
     return {p.relative_to(ROOT).as_posix():digest(p) for p in sorted(set(paths))}
 
@@ -101,7 +101,7 @@ def core_checks(build):
             assert digest(binary.parent/'Info.plist')==correction['infoPlistSHA256']
             assert digest(ROOT/'Scripts/GameCubeFramework-Info.plist.in')==correction['templateSHA256']
             validation.framework_metadata.check(binary.parent,'IOS' if target=='Device' else 'IOSSIMULATOR','18.0')
-        if build in ['33','34','35','36','37']:
+        if build in ['33','34','35','36','37','38']:
             spec=importlib.util.spec_from_file_location('candidate_validation',ROOT/'Scripts/validate-testflight.py')
             validation=importlib.util.module_from_spec(spec);spec.loader.exec_module(validation)
             assert digest(binary.parent/'Info.plist')==evidence['metadata']['infoPlistSHA256']
@@ -112,17 +112,55 @@ def core_checks(build):
         subprocess.run([sys.executable,str(ROOT/'Scripts/check-debug-symbols.py'),str(binary),str(binary.parent)+'.dSYM'],check=True)
 
 
+def verify_build38(args, record):
+    baseline_path = ROOT/'Docs/BUILD-37-VERIFICATION.json'
+    baseline = json.loads(baseline_path.read_text())
+    current = source_inputs()
+    assert current.keys() == baseline['sourceInputs'].keys()
+    allowed = {'App/Domain/Library.swift', 'App/LibraryView.swift', 'App/SettingsView.swift',
+               'Resources/PrivacyInfo.xcprivacy', 'EmulatorApp.xcodeproj/project.pbxproj'}
+    for name, sha in baseline['sourceInputs'].items():
+        if name not in allowed:
+            assert current[name] == sha, '38 must preserve unchanged gameplay inputs: '+name
+    assert json.loads((ROOT/'Docs/Legal/GAMECUBE-CORE-BUILD-38.json').read_text())['targets'] == json.loads((ROOT/'Docs/Legal/GAMECUBE-CORE-BUILD-37.json').read_text())['targets']
+    verify_native_cases(baseline['nativeResults'], REQUIRED, True)
+    for result in baseline['nativeResults']:
+        assert native_results(ROOT/result['bundle'], True) == result, 'Inherited37 native evidence changed'
+    renewed_required = {'testFoldedLibraryPlayDispatchesForEachConsole()',
+                        'testGameCubeTeardownAllowsPlayStationAndThreeDS()',
+                        'testCaptureStoreScreenshotsWithLicensedDemo()'}
+    if args.record:
+        results = [native_results(p.resolve(), True) for p in args.record]
+        verify_native_cases(results, renewed_required, True)
+        assert all(r['bundle'].startswith('build/Build38/') for r in results)
+        record.write_text(json.dumps({'build':'38','publicReleaseHeld':True,
+            'sourceInputs':current,'inheritedBuild37VerificationSHA256':digest(baseline_path),
+            'nativeResults':results,'nativeScope':'Renewed three-console launch/switch, folded launch and licensed-demo Store captures. Exact unchanged37 core/bridge/input/save/graphics/card/artwork evidence is inherited and re-read, with earlier failures preserved.',
+            'knownDeferredIssue':'Detective Pikachu native saving remains broken; owner explicitly deferred it. No fix or commercial-game compatibility asserted.'},indent=2)+'\n')
+    data = json.loads(record.read_text())
+    assert data['build']=='38' and data['publicReleaseHeld']
+    assert data['sourceInputs']==current
+    assert data['inheritedBuild37VerificationSHA256']==digest(baseline_path)
+    verify_native_cases(data['nativeResults'],renewed_required,True)
+    for result in data['nativeResults']:
+        assert native_results(ROOT/result['bundle'],True)==result
+    print('38 matching cores/symbols, inherited37 evidence and renewed launch/capture checks passed; no save fix claimed.')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--record', nargs='+', type=Path, metavar='XCRESULT')
     args = parser.parse_args()
     metadata = json.loads((ROOT/'TestFlight/AppInformation.json').read_text())
     build=metadata['build'];record=ROOT/f'Docs/BUILD-{build}-VERIFICATION.json'
-    assert build in ['28','29','30','31','32','33','34','35','36','37'] and metadata['currentEmulation']==['Nintendo 3DS','PlayStation','GameCube']
+    assert build in ['28','29','30','31','32','33','34','35','36','37','38'] and metadata['currentEmulation']==['Nintendo 3DS','PlayStation','GameCube']
     assert json.loads((ROOT/'TestFlight/AppStoreReadiness.json').read_text())['publicReleaseCleared'] is False
     core_checks(build)
+    if build == '38':
+        verify_build38(args, record)
+        return
     required = REQUIRED | ({'testConsoleNavigationFavoriteAndLibraryFilters()', 'testConsoleSpecificControllerConnections()',
-        'testGameCubeGraphicsChangeActualEFBAndReturnToNative()', 'testPlayStationEnhancedResolutionAndLiveReturnToNative()'} if build in ['33','34','35','36','37'] else set())
+        'testGameCubeGraphicsChangeActualEFBAndReturnToNative()', 'testPlayStationEnhancedResolutionAndLiveReturnToNative()'} if build in ['33','34','35','36','37','38'] else set())
     if build in ['34','35','36','37']:
         required |= {'testGameCubeFoldedTouchExcursionAndEditableLayout()', 'testPlayStationDualAnalogTouchAndRelease()',
                      'testSettingsOrganizationGameCubeBackgroundAndDeleteConfirmation()', 'testThreeDSFreelyMovableTouchControls()'}
@@ -214,8 +252,8 @@ def main():
             if name.split('/')[0] in ['App','Bridge','Resources','Widgets'] or name=='Tests/UI/EmulatorUITests.swift':
                 assert current[name]==sha, 'Metadata-only29 must preserve verified28 gameplay inputs: '+name
     if args.record:
-        results = [native_results(p.resolve(),build in ['33','34','35','36','37']) for p in args.record]
-        verify_native_cases(results,required,build in ['33','34','35','36','37'])
+        results = [native_results(p.resolve(),build in ['33','34','35','36','37','38']) for p in args.record]
+        verify_native_cases(results,required,build in ['33','34','35','36','37','38'])
         data = {'build':build,'internalOnly':True,'publicReleaseHeld':True,'binaryUploadAuthorized':False,
                 'sourceInputs':source_inputs(),'nativeResults':results,
                 'limits':['Original homebrew/owned Simulator evidence, not phone speed or retail compatibility',
@@ -232,7 +270,7 @@ def main():
     data = json.loads(record.read_text())
     assert data['build']==build and data['internalOnly'] and data['publicReleaseHeld']
     assert data['sourceInputs']==source_inputs(), 'Changed candidate inputs require renewed relevant validation/evidence'
-    verify_native_cases(data['nativeResults'],required,build in ['33','34','35','36','37'])
+    verify_native_cases(data['nativeResults'],required,build in ['33','34','35','36','37','38'])
     if build=='37':
         baseline=json.loads((ROOT/'Docs/BUILD-36-VERIFICATION.json').read_text())
         assert data['inheritedBuild36VerificationSHA256']==digest(ROOT/'Docs/BUILD-36-VERIFICATION.json')
@@ -254,7 +292,7 @@ def main():
         inherited_artwork=os.path.relpath((ROOT/'build/Build35/artwork-final3.xcresult').resolve(),ROOT)
         assert all(r['bundle'].startswith('build/Build36/') or r['bundle']==inherited_artwork for r in data['nativeResults']), 'Only the unchanged artwork scenario may inherit35 evidence'
     for result in data['nativeResults']:
-        assert native_results(ROOT/result['bundle'],build in ['33','34','35','36','37'])==result, 'Native evidence differs from its actual result bundle'
+        assert native_results(ROOT/result['bundle'],build in ['33','34','35','36','37','38'])==result, 'Native evidence differs from its actual result bundle'
     print(f'Internal{build} GameCube native evidence, exact inputs, sanitized source/core hashes and matching symbols passed; public release remains held')
 
 

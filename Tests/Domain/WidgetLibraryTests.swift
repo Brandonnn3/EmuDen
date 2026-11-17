@@ -11,13 +11,14 @@ final class WidgetLibraryTests: XCTestCase {
         XCTAssertNil(EmuDenLink.destination(URL(string: "https://\(EmuDenLink.host)/play/?demo=other")!))
         XCTAssertNil(EmuDenLink.destination(URL(string: "https://\(EmuDenLink.host)/play/?game=../../outside")!))
     }
-    func testSystemAgeBandMustExcludeMinors() {
-        XCTAssertTrue(RegionalAgeAccess.isAdultAgeBand(lowerBound: 18, upperBound: nil))
-        XCTAssertTrue(RegionalAgeAccess.isAdultAgeBand(lowerBound: 21, upperBound: 30))
-        XCTAssertFalse(RegionalAgeAccess.isAdultAgeBand(lowerBound: nil, upperBound: nil))
-        XCTAssertFalse(RegionalAgeAccess.isAdultAgeBand(lowerBound: nil, upperBound: 99))
-        XCTAssertFalse(RegionalAgeAccess.isAdultAgeBand(lowerBound: 17, upperBound: 99))
-        XCTAssertFalse(RegionalAgeAccess.isAdultAgeBand(lowerBound: 21, upperBound: 17))
+    func testSystemAgeBandMatchesFourPlusRating() {
+        XCTAssertTrue(RegionalAgeAccess.isAllowedAgeBand(lowerBound: 4, upperBound: 12))
+        XCTAssertTrue(RegionalAgeAccess.isAllowedAgeBand(lowerBound: 13, upperBound: 17))
+        XCTAssertTrue(RegionalAgeAccess.isAllowedAgeBand(lowerBound: 18, upperBound: nil))
+        XCTAssertFalse(RegionalAgeAccess.isAllowedAgeBand(lowerBound: nil, upperBound: nil))
+        XCTAssertFalse(RegionalAgeAccess.isAllowedAgeBand(lowerBound: nil, upperBound: 99))
+        XCTAssertFalse(RegionalAgeAccess.isAllowedAgeBand(lowerBound: 3, upperBound: 3))
+        XCTAssertFalse(RegionalAgeAccess.isAllowedAgeBand(lowerBound: 4, upperBound: 3))
     }
     func testSnapshotContainsOnlyMetadataAndReadsAtomically() throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
